@@ -54,6 +54,7 @@ public class GameState extends State {
 
     private void initDefaultUI(){
         uiManager.createJoystick();
+        uiManager.createHealthBar();
         uiManager.addUIObject(new UIImageButton(64, 64, 128, 128,
                 new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, () -> handler.getWorld().getPlayer().getInventory().setActive()));
         uiManager.addUIObject(new UIImageButton(64, 256, 128, 128,

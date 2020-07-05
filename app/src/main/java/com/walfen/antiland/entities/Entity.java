@@ -154,6 +154,14 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
         this.health = health;
     }
 
+    public int getMaxHP() {
+        return maxHP;
+    }
+
+    public void setMaxHP(int maxHP) {
+        this.maxHP = maxHP;
+    }
+
     public int getId() {
         return id;
     }

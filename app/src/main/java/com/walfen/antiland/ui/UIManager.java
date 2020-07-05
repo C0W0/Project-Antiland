@@ -76,6 +76,10 @@ public class UIManager implements TouchEventListener{
         addUIObject(attack);
     }
 
+    public void createHealthBar(){
+        addUIObject(new HealthBar(handler,256,100,640,64));
+    }
+
     public void removeJoystick(){
         removeUIObject(movement);
         removeUIObject(attack);

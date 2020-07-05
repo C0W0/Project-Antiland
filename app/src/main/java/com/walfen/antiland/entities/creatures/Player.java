@@ -40,12 +40,13 @@ public class Player extends Creature{
         this.x = x;
         this.y = y;
         this.handler = handler;
-        
 
         bounds.left = 42;
         bounds.top = 60;
         bounds.right = bounds.left+64;
         bounds.bottom = bounds.top+64;
+
+        //setHealth(5); Test Health
 
         //attack timer
         attackCooldown = 800;
