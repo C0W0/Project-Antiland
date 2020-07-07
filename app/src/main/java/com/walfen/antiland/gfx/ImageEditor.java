@@ -18,6 +18,12 @@ public class ImageEditor {
                 (int)(ratio*original.getHeight()), true);
     }
 
+    public static Bitmap scaleBitmapForced(Bitmap original, float size){
+        return Bitmap.createScaledBitmap(original, (int)size, (int)size, true);
+    }
 
+    public static Bitmap scaleBitmapForced(Bitmap original, float xSize, float ySize){
+        return Bitmap.createScaledBitmap(original, (int)xSize, (int)ySize, true);
+    }
 
 }

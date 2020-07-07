@@ -46,7 +46,7 @@ public class Player extends Creature{
         bounds.right = bounds.left+64;
         bounds.bottom = bounds.top+64;
 
-        //setHealth(5); Test Health
+//        setHealth(5); //Test Health
 
         //attack timer
         attackCooldown = 800;
