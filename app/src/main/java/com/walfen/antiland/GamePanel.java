@@ -2,6 +2,7 @@ package com.walfen.antiland;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -12,7 +13,7 @@ import com.walfen.antiland.items.Item;
 import com.walfen.antiland.states.GameState;
 import com.walfen.antiland.states.State;
 
-public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
+public class GamePanel extends SurfaceView implements SurfaceHolder.Callback, KeyEvent.Callback{
 
     private MainThread thread;
     private Handler handler;
@@ -68,6 +69,18 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     public boolean onTouchEvent(MotionEvent event){
         State.getCurrentState().onTouchEvent(event);
         return true;
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        State.getCurrentState().onKeyDown(keyCode, event);
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public boolean onKeyLongPress(int keyCode, KeyEvent event) {
+        State.getCurrentState().onKeyLongPress(keyCode, event);
+        return super.onKeyLongPress(keyCode, event);
     }
 
     public void update(){

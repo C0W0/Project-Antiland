@@ -2,10 +2,12 @@ package com.walfen.antiland.states;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 
 import com.walfen.antiland.Handler;
 import com.walfen.antiland.gfx.Assets;
+import com.walfen.antiland.ui.HealthBar;
 import com.walfen.antiland.ui.UIManager;
 import com.walfen.antiland.ui.buttons.UIImageButton;
 import com.walfen.antiland.ui.conversation.Conversation;
@@ -45,6 +47,18 @@ public class GameState extends State {
     }
 
     @Override
+    public void onKeyDown(int keyCode, KeyEvent event) {
+        if(uiManager != null)
+            uiManager.getKeyIOManager().onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public void onKeyLongPress(int keyCode, KeyEvent event) {
+        if(uiManager != null)
+            uiManager.getKeyIOManager().onKeyLongPress(keyCode, event);
+    }
+
+    @Override
     public void init() {
         uiManager = new UIManager(handler);
         world = new World(handler);
@@ -54,7 +68,7 @@ public class GameState extends State {
 
     private void initDefaultUI(){
         uiManager.createJoystick();
-        uiManager.createHealthBar();
+        uiManager.addUIObject(new HealthBar(handler,256,100,640));
         uiManager.addUIObject(new UIImageButton(64, 64, 128, 128,
                 new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, () -> handler.getWorld().getPlayer().getInventory().setActive()));
         uiManager.addUIObject(new UIImageButton(64, 256, 128, 128,

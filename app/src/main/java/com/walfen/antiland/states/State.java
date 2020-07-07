@@ -4,8 +4,9 @@ package com.walfen.antiland.states;
 import com.walfen.antiland.Handler;
 import com.walfen.antiland.ui.TouchEventListener;
 import com.walfen.antiland.ui.UIManager;
+import com.walfen.antiland.ui.keyIO.KeyEventListener;
 
-public abstract class State implements TouchEventListener {
+public abstract class State implements TouchEventListener, KeyEventListener {
 
     private static State currentState = null;
 

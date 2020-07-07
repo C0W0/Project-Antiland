@@ -8,6 +8,7 @@ import com.walfen.antiland.Constants;
 import com.walfen.antiland.Handler;
 import com.walfen.antiland.ui.conversation.ConversationBox;
 import com.walfen.antiland.ui.joystick.Joystick;
+import com.walfen.antiland.ui.keyIO.KeyIOManager;
 
 import java.util.ArrayList;
 
@@ -19,12 +20,14 @@ public class UIManager implements TouchEventListener{
     private Joystick attack;
     private boolean hide;
     private ConversationBox convBox;
+    private KeyIOManager keyIOManager;
 
     public UIManager(Handler handler){
         this.handler = handler;
         uiObjects = new ArrayList<>();
         hide = false;
         convBox = new ConversationBox(this);
+        keyIOManager = new KeyIOManager(handler);
     }
 
     @Override
@@ -33,6 +36,7 @@ public class UIManager implements TouchEventListener{
             convBox.update();
         if(hide)
             return;
+        keyIOManager.update();
         for(UIObject o: uiObjects)
             o.update();
     }
@@ -43,6 +47,7 @@ public class UIManager implements TouchEventListener{
             convBox.draw(canvas);
         if(hide)
             return;
+        keyIOManager.draw(canvas);
         for(UIObject o: uiObjects)
             o.draw(canvas);
     }
@@ -53,6 +58,7 @@ public class UIManager implements TouchEventListener{
             convBox.onTouchEvent(event);
         if(hide)
             return;
+        keyIOManager.onTouchEvent(event);
         for(UIObject o: uiObjects)
             o.onTouchEvent(event);
         handler.getWorld().getPlayer().getInventory().onTouchEvent(event);
@@ -74,10 +80,6 @@ public class UIManager implements TouchEventListener{
         attack.setDeadZone(0.3f);
         addUIObject(movement);
         addUIObject(attack);
-    }
-
-    public void createHealthBar(){
-        addUIObject(new HealthBar(handler,256,100,640,64));
     }
 
     public void removeJoystick(){
@@ -116,5 +118,9 @@ public class UIManager implements TouchEventListener{
 
     public ConversationBox getConvBox() {
         return convBox;
+    }
+
+    public KeyIOManager getKeyIOManager() {
+        return keyIOManager;
     }
 }

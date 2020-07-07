@@ -1,92 +1,65 @@
-package com.walfen.antiland.ui;
+package com.walfen.antiland.ui.keyIO;
 
 
 import android.graphics.Canvas;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 
 import com.walfen.antiland.Constants;
 import com.walfen.antiland.Handler;
+import com.walfen.antiland.ui.TouchEventListener;
+import com.walfen.antiland.ui.UIObject;
 import com.walfen.antiland.ui.conversation.ConversationBox;
 import com.walfen.antiland.ui.joystick.Joystick;
 
 import java.util.ArrayList;
 
-public class UIManager implements TouchEventListener{
+public class KeyIOManager implements TouchEventListener, KeyEventListener{
 
     private Handler handler;
-    private ArrayList<UIObject> uiObjects;
-    private Joystick movement;
-    private Joystick attack;
-    private boolean hide;
-    private ConversationBox convBox;
+    private ArrayList<InputField> inputObjects;
 
-    public UIManager(Handler handler){
+    public KeyIOManager(Handler handler){
         this.handler = handler;
-        uiObjects = new ArrayList<>();
-        hide = false;
-        convBox = new ConversationBox(this);
+        inputObjects = new ArrayList<>();
     }
 
     @Override
     public void update(){
-        if(convBox.active)
-            convBox.update();
-        if(hide)
-            return;
-        for(UIObject o: uiObjects)
-            o.update();
+        for(InputField iField: inputObjects)
+            iField.update();
     }
 
     @Override
     public void draw(Canvas canvas){
-        if(convBox.active)
-            convBox.draw(canvas);
-        if(hide)
-            return;
-        for(UIObject o: uiObjects)
-            o.draw(canvas);
+        for(InputField iField: inputObjects)
+            iField.draw(canvas);
     }
 
     @Override
     public void onTouchEvent(MotionEvent event){
-        if(convBox.active)
-            convBox.onTouchEvent(event);
-        if(hide)
-            return;
-        for(UIObject o: uiObjects)
-            o.onTouchEvent(event);
-        handler.getWorld().getPlayer().getInventory().onTouchEvent(event);
-        handler.getWorld().getPlayer().getFabricator().onTouchEvent(event);
-        handler.getWorld().getPlayer().getMissionManager().onTouchEvent(event);
+        for(InputField iField: inputObjects)
+            iField.onTouchEvent(event);
     }
 
-    public void addUIObject(UIObject o){
-        uiObjects.add(o);
+    @Override
+    public void onKeyDown(int keyCode, KeyEvent event) {
+        for(InputField iField: inputObjects)
+            iField.onKeyDown(keyCode, event);
     }
 
-    public void removeUIObject(UIObject o){
-        uiObjects.remove(o);
+    @Override
+    public void onKeyLongPress(int keyCode, KeyEvent event) {
+        for(InputField iField: inputObjects)
+            iField.onKeyLongPress(keyCode, event);
     }
 
-    public void createJoystick(){
-        movement = new Joystick(128, Constants.SCREEN_HEIGHT-300-128, 150);
-        attack = new Joystick(Constants.SCREEN_WIDTH-300-128, Constants.SCREEN_HEIGHT-300-128, 150);
-        attack.setDeadZone(0.3f);
-        addUIObject(movement);
-        addUIObject(attack);
+    public void addInputObject(InputField iField){
+        inputObjects.add(iField);
     }
 
-    public void removeJoystick(){
-        removeUIObject(movement);
-        removeUIObject(attack);
-    }
-
-    public void hideUI(){
-        hide = true;
-    }
-
-    public void showUI(){
-        hide = false;
+    public void removeInputObject(InputField iField){
+        inputObjects.remove(iField);
     }
 
     //getters and setters
@@ -98,19 +71,8 @@ public class UIManager implements TouchEventListener{
         this.handler = handler;
     }
 
-    public ArrayList<UIObject> getUiObjects() {
-        return uiObjects;
+    public ArrayList<InputField> getInputObjects() {
+        return inputObjects;
     }
 
-    public Joystick getMovementJoystick() {
-        return movement;
-    }
-
-    public Joystick getAttackJoystick() {
-        return attack;
-    }
-
-    public ConversationBox getConvBox() {
-        return convBox;
-    }
 }
