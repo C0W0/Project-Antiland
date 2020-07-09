@@ -21,6 +21,8 @@ public class Constants {
 
     public static AssetManager WORLD_FILES;
 
+    public static String DIR;
+
 
     public static Paint getRenderPaint(){
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);

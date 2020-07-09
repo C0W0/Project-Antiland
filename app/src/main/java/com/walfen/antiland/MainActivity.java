@@ -32,6 +32,7 @@ public class MainActivity extends Activity {
         Constants.SCREEN_WIDTH = dm.widthPixels;
         Constants.RES = getResources();
         Constants.WORLD_FILES = getAssets();
+        Constants.DIR = getFilesDir().toString();
         setContentView(new GamePanel(this));
     }
 }

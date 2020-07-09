@@ -13,6 +13,7 @@ import com.walfen.antiland.Constants;
 import com.walfen.antiland.entities.Entity;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -95,6 +96,14 @@ public class Utils {
         }
         output.add(builder.toString());
         return output;
+    }
+
+    public static boolean deleteDirectory(File directory){
+        File[] dirFiles = directory.listFiles();
+        if(dirFiles != null)
+            for(File f: dirFiles)
+                deleteDirectory(f);
+        return directory.delete();
     }
 
     public static int parseInt(String number){
