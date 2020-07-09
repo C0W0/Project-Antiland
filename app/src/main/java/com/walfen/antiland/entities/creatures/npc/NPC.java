@@ -17,11 +17,11 @@ public abstract class NPC extends Creature {
     }
 
     public boolean interactionCheck(){
-//        return isInRangeOf(handler.getWorld().getPlayer(), interRange*64);
+//        return isInRangeOf(handler.getPlayer(), interRange*64);
         // the circular distance ("actual" distance)
         return new Rect((int)(x-interRange*Tile.TILEWIDTH), (int)(y-interRange*Tile.TILEHEIGHT),
                 (int)(x+interRange*Tile.TILEWIDTH+width), (int)(y+interRange*Tile.TILEHEIGHT+height)).
-                intersect(handler.getWorld().getPlayer().getCollisionBounds(0,0));
+                intersect(handler.getPlayer().getCollisionBounds(0,0));
         // block distance
     }
 

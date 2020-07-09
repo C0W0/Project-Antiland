@@ -1,6 +1,8 @@
 package com.walfen.antiland;
 
+import com.walfen.antiland.entities.creatures.Player;
 import com.walfen.antiland.gfx.GameCamera;
+import com.walfen.antiland.states.GameState;
 import com.walfen.antiland.states.State;
 import com.walfen.antiland.ui.UIManager;
 import com.walfen.antiland.world.World;
@@ -32,6 +34,11 @@ public class Handler {
 
     public World getWorld() {
         return world;
+    }
+
+    public Player getPlayer(){
+        GameState gs = (GameState)(State.getCurrentState());
+        return gs.getPlayer();
     }
 
 }

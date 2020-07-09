@@ -32,8 +32,8 @@ public class HealthBar extends UIObject {
 
     @Override
     public void update() {
-        healthTotal = (float) handler.getWorld().getPlayer().getMaxHP();
-        healthCurrent = (float) handler.getWorld().getPlayer().getHealth();
+        healthTotal = (float) handler.getPlayer().getMaxHP();
+        healthCurrent = (float) handler.getPlayer().getHealth();
     }
 
     @Override

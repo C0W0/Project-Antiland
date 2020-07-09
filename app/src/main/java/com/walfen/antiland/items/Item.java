@@ -32,9 +32,9 @@ public abstract class Item implements GameHierarchyElement {
     public static void initItems(Handler handler){
         woodItem = new NeutralItems(Assets.wood, "wood", 0);
         appleItem = new UsableItems(Assets.apple, "apple", 1,
-                () -> handler.getWorld().getPlayer().changeHealth(1));
+                () -> handler.getPlayer().changeHealth(1));
         potionItem = new UsableItems(Assets.potion, "potion", 2,
-                () -> handler.getWorld().getPlayer().changeHealth(10));
+                () -> handler.getPlayer().changeHealth(10));
 //        stoneItem = new NeutralItems(Assets.stone, "stone", 3);
         shieldItem = new NeutralItems(Assets.wood, "shield", 4);
         swordItem = new NeutralItems(Assets.apple, "sword", 5);//TODO: GIVE ME AN ACTUAL SWORD

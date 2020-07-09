@@ -35,7 +35,7 @@ public class NPC1 extends NPC {
 
     @Override
     protected void assignMission(int missionID) {
-        handler.getWorld().getPlayer().getMissionManager().addMission(missionID);
+        handler.getPlayer().getMissionManager().addMission(missionID);
     }
 
     @Override

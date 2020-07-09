@@ -17,7 +17,7 @@ public class UsableItems extends Item {
     @Override
     public void onActive(){
         onUseEvent.onUse();
-        for(Item i: handler.getWorld().getPlayer().getInventory().getInventoryItems())
+        for(Item i: handler.getPlayer().getInventory().getInventoryItems())
             if(i.getId() == id)
                 i.setCount(i.getCount()-1);
     }

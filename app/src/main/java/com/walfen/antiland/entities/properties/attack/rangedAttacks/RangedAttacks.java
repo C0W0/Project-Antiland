@@ -63,7 +63,7 @@ public abstract class RangedAttacks extends Attacks {
             }
             for(Entity e : handler.getWorld().getEntityManager().getEntities()){
                 if(r.intersect(e.getCollisionBounds(0,0))) {
-                    if ((carrier == null && e.equals(handler.getWorld().getPlayer())) || e.equals(carrier))
+                    if ((carrier == null && e.equals(handler.getPlayer())) || e.equals(carrier))
                         continue;
                     if (carrier != null) {
                         if (e.getFaction() != carrier.getFaction()) {

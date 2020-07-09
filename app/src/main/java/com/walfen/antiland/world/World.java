@@ -39,19 +39,18 @@ public class World implements GameHierarchyElement {
 
     //entities
     private EntityManager entityManager;
-    private Player player;
+//    private Player player;
     private ArrayList<String> loadedEntities = new ArrayList<>();
 
     //items
     private ItemManager itemManager;
 
     public World(Handler handler){
-        player = new Player(handler,Constants.DEFAULT_SIZE,Constants.DEFAULT_SIZE);
-        entityManager = new EntityManager(handler, player);
+        entityManager = new EntityManager(handler, handler.getPlayer());
         this.handler = handler;
         loadWorld();
-        player.setX(spawnX*Constants.DEFAULT_SIZE);
-        player.setY(spawnY*Constants.DEFAULT_SIZE);
+        handler.getPlayer().setX(spawnX*Constants.DEFAULT_SIZE);
+        handler.getPlayer().setY(spawnY*Constants.DEFAULT_SIZE);
 
         itemManager = new ItemManager(handler);
 
@@ -160,7 +159,7 @@ public class World implements GameHierarchyElement {
                     ((int)(entityManager.getEntities().get(i).getY()) >= entityY - precision &&
                             (int)(entityManager.getEntities().get(i).getY()) <= entityY + precision ))
             {
-                if (entityManager.getEntities().get(i) != player) {
+                if (entityManager.getEntities().get(i) != handler.getPlayer()) {
                     entityManager.getEntities().get(i).setActive(false);
                 }
             }
@@ -213,7 +212,4 @@ public class World implements GameHierarchyElement {
         return height;
     }
 
-    public Player getPlayer() {
-        return player;
-    }
 }

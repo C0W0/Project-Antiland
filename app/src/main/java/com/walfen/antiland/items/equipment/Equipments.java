@@ -13,7 +13,7 @@ public abstract class Equipments extends Item {
     @Override
     public void onActive() {
         onEquip();
-//        for(Item i: handler.getWorld().getPlayer().getInventory().getInventoryItems())
+//        for(Item i: handler.getPlayer().getInventory().getInventoryItems())
 //            if(i.getId() == id)
 //                i.setCount(i.getCount()-1);
     }

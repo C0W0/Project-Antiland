@@ -40,8 +40,8 @@ public abstract class Attacks implements GameHierarchyElement {
             x = carrier.getX();
             y = carrier.getY();
         }else {
-            x = handler.getWorld().getPlayer().getX();
-            y = handler.getWorld().getPlayer().getY();
+            x = handler.getPlayer().getX();
+            y = handler.getPlayer().getY();
         }
     }
 

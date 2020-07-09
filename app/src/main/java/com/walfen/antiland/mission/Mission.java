@@ -58,7 +58,7 @@ public abstract class Mission {
     }
 
     protected void receiveReward(){
-        handler.getWorld().getPlayer().getInventory().addItem(
+        handler.getPlayer().getInventory().addItem(
                 Item.items[rewardItemID].addToInv(1)); // TODO: Variable number
     }
 

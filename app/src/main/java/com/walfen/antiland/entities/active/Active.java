@@ -55,7 +55,7 @@ public abstract class Active extends Creature {
     public void update() {
         attack.update();
         if(target == null)
-            target = handler.getWorld().getPlayer();
+            target = handler.getPlayer();
         if(faction == 1 && target != null){ // for now, 1 is hostile
             if(isInRange(target, spottingRange) &&
                     Utils.getDistance(target, oX, oY) < giveUpRange &&

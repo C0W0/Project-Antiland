@@ -23,7 +23,7 @@ public abstract class CollectorMission extends Mission {
 
     @Override
     public boolean isCompleted() {
-        ArrayList<Item> inventoryItems = handler.getWorld().getPlayer().getInventory().getInventoryItems();
+        ArrayList<Item> inventoryItems = handler.getPlayer().getInventory().getInventoryItems();
         for(int i = 0; i < inventoryItems.size(); i++){
             Item tempItem = inventoryItems.get(i);
             for(int j = 0; j < targetItemID.length; j++){

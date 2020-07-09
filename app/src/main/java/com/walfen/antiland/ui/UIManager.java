@@ -61,9 +61,9 @@ public class UIManager implements TouchEventListener{
         keyIOManager.onTouchEvent(event);
         for(UIObject o: uiObjects)
             o.onTouchEvent(event);
-        handler.getWorld().getPlayer().getInventory().onTouchEvent(event);
-        handler.getWorld().getPlayer().getFabricator().onTouchEvent(event);
-        handler.getWorld().getPlayer().getMissionManager().onTouchEvent(event);
+        handler.getPlayer().getInventory().onTouchEvent(event);
+        handler.getPlayer().getFabricator().onTouchEvent(event);
+        handler.getPlayer().getMissionManager().onTouchEvent(event);
     }
 
     public void addUIObject(UIObject o){
