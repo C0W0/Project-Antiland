@@ -1,7 +1,9 @@
 package com.walfen.antiland.ui.keyIO;
 
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -15,10 +17,10 @@ import com.walfen.antiland.ui.TouchEventListener;
 
 public abstract class InputField implements TouchEventListener, KeyEventListener {
 
-    private boolean control = true, active = false;
-    private Handler handler;
-    private StringBuilder sb;
-    private int x, y, width, height;
+    protected boolean control = true, active = false;
+    protected Handler handler;
+    protected StringBuilder sb;
+    protected int x, y, width, height;
 
     public InputField(Handler handler, int x, int y, int width, int height){
         this.handler = handler;
@@ -95,5 +97,13 @@ public abstract class InputField implements TouchEventListener, KeyEventListener
 
     public void setActive() {
         active = !active;
+    }
+
+    public String getText(){
+        return sb.toString();
+    }
+
+    public void clear(){
+        sb = new StringBuilder();
     }
 }

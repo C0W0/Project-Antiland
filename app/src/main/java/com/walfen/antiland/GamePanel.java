@@ -11,14 +11,19 @@ import com.walfen.antiland.gfx.Assets;
 import com.walfen.antiland.gfx.GameCamera;
 import com.walfen.antiland.items.Item;
 import com.walfen.antiland.states.GameState;
+import com.walfen.antiland.states.MenuState;
 import com.walfen.antiland.states.State;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 public class GamePanel extends SurfaceView implements SurfaceHolder.Callback, KeyEvent.Callback{
 
     private MainThread thread;
     private Handler handler;
     private GameCamera gameCamera;
-    private State gameState;
+    private State gameState, menuState;
 
     public GamePanel(Context context) {
         super(context);
@@ -41,8 +46,16 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback, Ke
         handler = new Handler(this);
         gameCamera = new GameCamera(handler, 0, 0);
         gameState = new GameState(handler);
-        State.setState(gameState);
-        gameState.init();
+        menuState = new MenuState(handler);
+        File main = new File(Constants.DIR+"/main");
+        File auto = new File(Constants.DIR+"/auto");
+        if(!main.exists())
+            main.mkdirs();
+        if(!auto.exists())
+            auto.mkdirs();
+
+        State.setState(menuState);
+//        gameState.init();
         Item.initItems(handler);
     }
 
@@ -99,5 +112,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback, Ke
         return gameCamera;
     }
 
-
+    public State getGameState() {
+        return gameState;
+    }
 }

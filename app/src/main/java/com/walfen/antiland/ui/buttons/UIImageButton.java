@@ -50,8 +50,7 @@ public class UIImageButton extends UIObject {
         if(event.getActionMasked() == MotionEvent.ACTION_DOWN ||
                 event.getActionMasked() == MotionEvent.ACTION_POINTER_DOWN) {
             for(int i = 0; i < event.getPointerCount(); i++)
-                if (new Rect((int) x, (int) y, (int) x + width, (int) y + height).contains
-                        ((int) event.getX(i), (int) event.getY(i))) {
+                if (new Rect(bounds).contains((int) event.getX(i), (int) event.getY(i))) {
                     onClick();
                     index = 1;
                     return;

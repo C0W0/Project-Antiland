@@ -1,6 +1,8 @@
 package com.walfen.antiland.untils;
 
 
+import android.app.Activity;
+import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
@@ -10,6 +12,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 
 import com.walfen.antiland.Constants;
+import com.walfen.antiland.Handler;
 import com.walfen.antiland.entities.Entity;
 
 import java.io.BufferedReader;
@@ -104,6 +107,18 @@ public class Utils {
             for(File f: dirFiles)
                 deleteDirectory(f);
         return directory.delete();
+    }
+
+    public static void deleteDirectoryFiles(File directory){
+        File[] dirFiles = directory.listFiles();
+        if(dirFiles != null)
+            for(File f: dirFiles)
+                deleteDirectory(f);
+    }
+
+    public static void changeOrientation(Handler handler, int orientation){
+        Activity mainActivity = (Activity)(handler.getGame().getContext());
+        mainActivity.setRequestedOrientation(orientation);
     }
 
     public static int parseInt(String number){

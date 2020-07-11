@@ -2,6 +2,7 @@ package com.walfen.antiland;
 
 import android.content.res.AssetManager;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.Paint;
 
 import com.walfen.antiland.gfx.Assets;
@@ -18,6 +19,8 @@ public class Constants {
     public static Resources RES;
 
     public static final int DEFAULT_SIZE = 128;
+
+    public static final int TEXT_COLOUR = Color.argb(255, 175, 238, 238);
 
     public static AssetManager WORLD_FILES;
 

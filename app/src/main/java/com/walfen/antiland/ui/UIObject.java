@@ -18,7 +18,7 @@ public abstract class UIObject implements TouchEventListener{
         this.y = y;
         this.width = width;
         this.height = height;
-        bounds = new Rect((int)x, (int)y, width, height);
+        bounds = new Rect((int)x, (int)y, (int) (x+width), (int) (y+height));
     }
 
     //getters and setters
