@@ -37,7 +37,7 @@ public class Handler {
     }
 
     public Player getPlayer(){
-        GameState gs = (GameState)(State.getCurrentState());
+        GameState gs = (GameState)(getGame().getGameState());
         return gs.getPlayer();
     }
 

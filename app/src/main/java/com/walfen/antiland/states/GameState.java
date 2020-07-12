@@ -61,11 +61,10 @@ public class GameState extends State {
             uiManager.getKeyIOManager().onKeyLongPress(keyCode, event);
     }
 
-    @Override
-    public void init() {
+    public void init(String path) {
         uiManager = new UIManager(handler);
         player = new Player(handler, Constants.DEFAULT_SIZE,Constants.DEFAULT_SIZE);
-        world = new World(handler);
+        world = new World(handler, path);
         initDefaultUI();
         handler.setWorld(world);
     }

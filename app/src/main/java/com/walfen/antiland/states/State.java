@@ -19,11 +19,14 @@ public abstract class State implements TouchEventListener, KeyEventListener {
         this.handler = handler;
     }
 
-    public abstract void init();
-
     //getters and setters
 
     public static void setState(State state){
+        currentState = state;
+    }
+
+    public static void setStateAndInit(GameState state, String initPath){
+        state.init(initPath);
         currentState = state;
     }
 

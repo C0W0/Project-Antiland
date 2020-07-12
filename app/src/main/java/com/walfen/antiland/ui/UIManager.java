@@ -29,6 +29,7 @@ public class UIManager implements TouchEventListener{
     private Joystick attack;
     private boolean hide;
     private ConversationBox convBox;
+    private PopUp popUp;
     private KeyIOManager keyIOManager;
 
     public UIManager(Handler handler){
@@ -36,6 +37,7 @@ public class UIManager implements TouchEventListener{
         uiObjects = new ArrayList<>();
         hide = false;
         convBox = new ConversationBox(this);
+        popUp = new PopUp(800, 400);
         keyIOManager = new KeyIOManager(handler);
     }
 
@@ -59,10 +61,16 @@ public class UIManager implements TouchEventListener{
         keyIOManager.draw(canvas);
         for(UIObject o: uiObjects)
             o.draw(canvas);
+        if(popUp.active)
+            popUp.draw(canvas);
     }
 
     @Override
     public void onTouchEvent(MotionEvent event){
+        if(popUp.active){
+            popUp.onTouchEvent(event);
+            return;
+        }
         if(convBox.active)
             convBox.onTouchEvent(event);
         if(hide)
@@ -107,29 +115,27 @@ public class UIManager implements TouchEventListener{
     }
 
     public void popUpMessage(String message, ClickListener effect){
-        PopUp popUp = new PopUp(800, 400, message, effect, this);
-        addUIObject(popUp);
+        popUp.activatePopup(message, effect);
     }
 
     private static class PopUp extends UIObject{
 
         private String message;
         private ClickListener effect;
-        private UIManager manager;
         private TextButton proceedButton, cancelButton;
 
-        private PopUp(int width, int height, String message, ClickListener effect, UIManager manager) {
+        private PopUp(int width, int height) {
             super(Constants.SCREEN_WIDTH/2.f-width/2.f, Constants.SCREEN_HEIGHT/2.f-height/2.f
                     , width, height);
-            this.message = message;
-            this.effect = effect;
-            this.manager = manager;
+            active = false;
             proceedButton = new TextButton(x+64, y+height-48, 33, "Yes", this::proceed);
             cancelButton = new TextButton(x+width-64, y+height-48, 33, "No", this::removePopup);
         }
 
         @Override
         public void onTouchEvent(MotionEvent event) {
+            if(!active)
+                return;
             proceedButton.onTouchEvent(event);
             cancelButton.onTouchEvent(event);
         }
@@ -157,12 +163,18 @@ public class UIManager implements TouchEventListener{
         }
 
         private void proceed(){
-            effect.onClick();
             removePopup();
+            effect.onClick();
         }
 
         private void removePopup(){
-            manager.removeUIObject(this);
+            active = false;
+        }
+
+        private void activatePopup(String message, ClickListener effect){
+            active = true;
+            this.message = message;
+            this.effect = effect;
         }
     }
 

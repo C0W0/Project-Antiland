@@ -13,10 +13,14 @@ import com.walfen.antiland.items.Item;
 import com.walfen.antiland.states.GameState;
 import com.walfen.antiland.states.MenuState;
 import com.walfen.antiland.states.State;
+import com.walfen.antiland.untils.Utils;
+import com.walfen.antiland.world.World;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 public class GamePanel extends SurfaceView implements SurfaceHolder.Callback, KeyEvent.Callback{
 
@@ -47,13 +51,21 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback, Ke
         gameCamera = new GameCamera(handler, 0, 0);
         gameState = new GameState(handler);
         menuState = new MenuState(handler);
-        File main = new File(Constants.DIR+"/main");
-        File auto = new File(Constants.DIR+"/auto");
-        if(!main.exists())
-            main.mkdirs();
-        if(!auto.exists())
-            auto.mkdirs();
-
+        File index = new File(Constants.DIR+"/Index.wld");
+        if(!index.exists()){
+            try {
+                initDirectory();
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+        }
+        try {
+            ArrayList<String> file = Utils.loadFileAsArrayList(new FileInputStream(Constants.DIR+"/Index.wld"));
+            if(!file.get(0).equals("A1000"))
+                updateDirectory(file.get(0));
+        } catch (IOException e){
+            e.printStackTrace();
+        }
         State.setState(menuState);
 //        gameState.init();
         Item.initItems(handler);
@@ -104,6 +116,23 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback, Ke
     public void draw(Canvas canvas) {
         super.draw(canvas);
         State.getCurrentState().draw(canvas);
+    }
+
+    private void initDirectory() throws IOException{
+        new File(Constants.DIR+"/main").mkdirs();
+        new File(Constants.DIR+"/auto").mkdirs();
+        File index = new File(Constants.DIR+"/Index.wld");
+        if(index.exists())
+            index.delete();
+        index.createNewFile();
+        PrintWriter writer = new PrintWriter(index);
+        writer.println(Constants.GAME_VERSION);
+        writer.println(Constants.GAME_VERSION_DISPLAY);
+        writer.close();
+    }
+
+    private void updateDirectory(String oVersion) throws IOException{
+        System.out.println("This should not happen");
     }
 
     //getters and setters

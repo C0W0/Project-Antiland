@@ -2,22 +2,19 @@ package com.walfen.antiland.world;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;
-import android.util.Log;
 
 import com.walfen.antiland.Constants;
 import com.walfen.antiland.GameHierarchyElement;
 import com.walfen.antiland.Handler;
 import com.walfen.antiland.entities.Entity;
 import com.walfen.antiland.entities.EntityManager;
-import com.walfen.antiland.entities.creatures.Player;
-import com.walfen.antiland.entities.statics.Tree;
 import com.walfen.antiland.items.ItemManager;
 import com.walfen.antiland.tiles.Tile;
 import com.walfen.antiland.untils.Utils;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
-
-import static android.content.Context.MODE_PRIVATE;
 
 public class World implements GameHierarchyElement {
 
@@ -35,7 +32,6 @@ public class World implements GameHierarchyElement {
 
     private final String TILE_FILENAME = "tiles.wld";
     private final String ENTITY_FILENAME = "entity.wld";
-    private final String RECIPE_FILENAME = "recipes.wld";
 
     //entities
     private EntityManager entityManager;
@@ -54,6 +50,16 @@ public class World implements GameHierarchyElement {
 
         itemManager = new ItemManager(handler);
 
+    }
+
+    public World(Handler handler, String saveDirectory){
+        entityManager = new EntityManager(handler, handler.getPlayer());
+        this.handler = handler;
+        loadWorld(saveDirectory);
+        handler.getPlayer().setX(spawnX*Constants.DEFAULT_SIZE);
+        handler.getPlayer().setY(spawnY*Constants.DEFAULT_SIZE);
+
+        itemManager = new ItemManager(handler);
     }
 
 
@@ -82,9 +88,38 @@ public class World implements GameHierarchyElement {
                     Utils.parseInt(entities[3]), Utils.parseInt(entities[4]), // offset x and y
                     Utils.parseInt(entities[5]))); // status
         }
+    }
 
+    private void loadWorld(String saveDirectory){
+        //loading the map file
+        try {
+            String[] tokens = Utils.loadFileAsString(
+                    new FileInputStream(saveDirectory+"/"+TILE_FILENAME)).split("\\s+");
+            width = Utils.parseInt(tokens[0]);
+            height = Utils.parseInt(tokens[1]);
+            spawnX = Utils.parseInt(tokens[2]);
+            spawnY = Utils.parseInt(tokens[3]);
 
+            worldTiles = new int[width][height];
 
+            for (int y = 0; y < height; y++) {
+                for (int x = 0; x < width; x++) {
+                    worldTiles[x][y] = Utils.parseInt(tokens[x + y * width + 4]);
+                }
+            }
+
+            //loading the entity file
+            loadedEntities = Utils.loadFileAsArrayList(new FileInputStream(saveDirectory+"/"+ENTITY_FILENAME));
+            for (int i = 0; i < loadedEntities.size(); i++) {
+                String[] entities = loadedEntities.get(i).split("\\s+");
+                entityManager.addEntity(getEntityWithID(Utils.parseInt(entities[0]), // id
+                        Utils.parseInt(entities[1]), Utils.parseInt(entities[2]), // initial x and y
+                        Utils.parseInt(entities[3]), Utils.parseInt(entities[4]), // offset x and y
+                        Utils.parseInt(entities[5]))); // status
+            }
+        }catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
 

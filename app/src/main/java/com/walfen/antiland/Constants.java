@@ -18,6 +18,9 @@ public class Constants {
     public static int iconSize;
     public static Resources RES;
 
+    public static final String GAME_VERSION = "A1000";
+    public static final String GAME_VERSION_DISPLAY = "Alpha - build 1000";
+
     public static final int DEFAULT_SIZE = 128;
 
     public static final int TEXT_COLOUR = Color.argb(255, 175, 238, 238);
