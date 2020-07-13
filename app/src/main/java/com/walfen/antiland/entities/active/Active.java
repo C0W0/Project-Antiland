@@ -21,8 +21,6 @@ public abstract class Active extends Creature {
 
     public Active(int width, int height, long attackCooldown, int id) {
         super(width, height, id);
-        oX = 0;
-        oY = 0;
         xMove = 0;
         yMove = 0;
         this.attackCooldown = attackCooldown;

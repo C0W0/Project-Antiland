@@ -27,7 +27,7 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
     protected int faction;
 
     protected float x,y;
-    protected int oX, oY; // o stands for original
+    protected int oX, oY; // o stands for offset
     protected Handler handler;
     protected int width, height; //the size of the entity
     protected Rect bounds; //collision detection
@@ -168,5 +168,12 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
 
     public int getFaction() {
         return faction;
+    }
+
+    public int getOX() {
+        return oX;
+    }
+    public int getOY(){
+        return oY;
     }
 }

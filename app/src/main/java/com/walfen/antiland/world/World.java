@@ -8,12 +8,16 @@ import com.walfen.antiland.GameHierarchyElement;
 import com.walfen.antiland.Handler;
 import com.walfen.antiland.entities.Entity;
 import com.walfen.antiland.entities.EntityManager;
+import com.walfen.antiland.entities.active.Active;
 import com.walfen.antiland.items.ItemManager;
+import com.walfen.antiland.states.State;
 import com.walfen.antiland.tiles.Tile;
 import com.walfen.antiland.untils.Utils;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class World implements GameHierarchyElement {
@@ -30,8 +34,10 @@ public class World implements GameHierarchyElement {
 
 
 
-    private final String TILE_FILENAME = "tiles.wld";
-    private final String ENTITY_FILENAME = "entity.wld";
+    private String TILE_FILENAME = "tiles.wld";
+    private String ENTITY_FILENAME = "entity.wld";
+
+//    private int worldId;
 
     //entities
     private EntityManager entityManager;
@@ -52,7 +58,7 @@ public class World implements GameHierarchyElement {
 
     }
 
-    public World(Handler handler, String saveDirectory){
+    public World(Handler handler, String saveDirectory /*, int worldId*/){
         entityManager = new EntityManager(handler, handler.getPlayer());
         this.handler = handler;
         loadWorld(saveDirectory);
@@ -148,6 +154,48 @@ public class World implements GameHierarchyElement {
             return Tile.dirtTile;
         }
         return t;
+    }
+
+    public void saveMap(){
+        try {
+            saveToLocation(Constants.DIR+"/main");
+            saveToLocation(Constants.DIR+"/auto");
+        }catch (IOException e){
+            e.printStackTrace();
+            State.getCurrentState().getUiManager().popUpMessage(
+                    "Game file corrupted, please re-install the game", () -> {});
+        }
+    }
+
+    private void saveToLocation(String path) throws IOException{
+        File mapFile = new File(path+"/"+TILE_FILENAME);
+        File entityFile = new File(path+"/"+ENTITY_FILENAME);
+        mapFile.delete();
+        entityFile.delete();
+        mapFile.createNewFile();
+        PrintWriter mapEditor = new PrintWriter(mapFile);
+        mapEditor.println(width+" "+height);
+        mapEditor.println(spawnX+" "+spawnY);
+
+        for(int y = 0; y < height; y++){
+            for(int x = 0; x < width; x++){
+                mapEditor.print(worldTiles[x][y]+" ");
+            }
+            mapEditor.println();
+        }
+        mapEditor.close();
+
+        entityFile.createNewFile();
+        PrintWriter entityEditor = new PrintWriter(entityFile);
+        for(int i = 0; i < entityManager.getEntities().size(); i++){
+            Entity e = entityManager.getEntities().get(i);
+            if(e.getId() == 0)
+                continue;
+            String line = e.getId()+" "+(int)e.getX()+" "+
+                    (int)e.getY()+" "+e.getOX()+" "+e.getOY()+" 0";
+            entityEditor.println(line);
+        }
+        entityEditor.close();
     }
 
     @Override

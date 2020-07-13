@@ -82,7 +82,7 @@ public class UIManager implements TouchEventListener{
             handler.getPlayer().getInventory().onTouchEvent(event);
             handler.getPlayer().getFabricator().onTouchEvent(event);
             handler.getPlayer().getMissionManager().onTouchEvent(event);
-        }catch (ClassCastException ignored){}
+        }catch (ClassCastException | NullPointerException ignored){}
     }
 
     public void addUIObject(UIObject o){

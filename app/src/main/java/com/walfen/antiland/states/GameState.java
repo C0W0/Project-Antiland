@@ -78,6 +78,8 @@ public class GameState extends State {
                 new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, () -> handler.getPlayer().getFabricator().setActive()));
         uiManager.addUIObject(new UIImageButton(64, 448, 128, 128,
                 new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, () -> handler.getPlayer().getMissionManager().setActive()));
+        uiManager.addUIObject(new UIImageButton(64, 640, 128, 128,
+                new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, () -> world.saveMap()));
 //        uiManager.hideUI();
 //        ArrayList<Conversation> c = new ArrayList<>();
 //        c.add(new Conversation("test build 1 wetega reeeeeeee eeeeeeee eee eeeeee eee eeeeee rerrr rrrrrrrr rrr rrrrrrr r rrrrrr rrrrrrrrrr rrr a", Assets.player_neutral, false));
