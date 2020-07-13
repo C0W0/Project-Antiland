@@ -15,6 +15,7 @@ import com.walfen.antiland.ui.buttons.UIImageButton;
 import com.walfen.antiland.ui.conversation.Conversation;
 import com.walfen.antiland.world.World;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class GameState extends State {
@@ -63,7 +64,7 @@ public class GameState extends State {
 
     public void init(String path) {
         uiManager = new UIManager(handler);
-        player = new Player(handler, Constants.DEFAULT_SIZE,Constants.DEFAULT_SIZE);
+        player = new Player(handler, path);
         world = new World(handler, path);
         initDefaultUI();
         handler.setWorld(world);
@@ -79,13 +80,23 @@ public class GameState extends State {
         uiManager.addUIObject(new UIImageButton(64, 448, 128, 128,
                 new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, () -> handler.getPlayer().getMissionManager().setActive()));
         uiManager.addUIObject(new UIImageButton(64, 640, 128, 128,
-                new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, () -> world.saveMap()));
+                new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, this::saveGame));
 //        uiManager.hideUI();
 //        ArrayList<Conversation> c = new ArrayList<>();
 //        c.add(new Conversation("test build 1 wetega reeeeeeee eeeeeeee eee eeeeee eee eeeeee rerrr rrrrrrrr rrr rrrrrrr r rrrrrr rrrrrrrrrr rrr a", Assets.player_neutral, false));
 //        c.add(new Conversation("test build 2 ftr saf grwww wwwww wwww wwwwww wwww wwwwww wewet agrwg wr ggggg ggg gggggg gggg gg gggggggg ggggg ggg", Assets.npcCrab[0], true));
 //        uiManager.getConvBox().setConversationList(c, () -> System.out.println("complete"));
 //        uiManager.getConvBox().setActive();
+    }
+
+    private void saveGame(){
+        try{
+            world.saveMap(Constants.DIR+"/main");
+            player.saveMap(Constants.DIR+"/main");
+        }catch (IOException e){
+            e.printStackTrace();
+            uiManager.popUpMessage("Game file corrupted, please re-install the game", () -> {});
+        }
     }
 
     public Player getPlayer(){

@@ -13,10 +13,17 @@ import com.walfen.antiland.gfx.Animation;
 import com.walfen.antiland.gfx.Assets;
 import com.walfen.antiland.inventory.Fabricator;
 import com.walfen.antiland.inventory.Inventory;
+import com.walfen.antiland.items.Item;
 import com.walfen.antiland.mission.Mission;
 import com.walfen.antiland.mission.MissionManager;
 import com.walfen.antiland.states.State;
 import com.walfen.antiland.untils.Utils;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 
 public class Player extends Creature{
 
@@ -34,11 +41,20 @@ public class Player extends Creature{
 
 
 
-    public Player(Handler handler, float x, float y) {
+    public Player(Handler handler, String path) {
         super(Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT, 0);
 
-        this.x = x;
-        this.y = y;
+        File playerFile = new File(path+"/player/player.wld");
+        File inventoryFile = new File(path+"/player/inventory.wld");
+        ArrayList<String> tokens;
+        try {
+            tokens = Utils.loadFileAsArrayList(new FileInputStream(playerFile));
+            x = Utils.parseInt(tokens.get(0).split("\\s+")[0]);
+            y = Utils.parseInt(tokens.get(0).split("\\s+")[1]);
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
         this.handler = handler;
 
         bounds.left = 42;
@@ -65,6 +81,16 @@ public class Player extends Creature{
 
         inventory = new Inventory(handler);
         fabricator = new Fabricator(handler, inventory, "res/worlds/worldSDK");
+        try {
+            tokens = Utils.loadFileAsArrayList(new FileInputStream(inventoryFile));
+            for(String str: tokens){
+                String[] line = str.split("\\s+");
+                inventory.addItem(Item.items[Utils.parseInt(line[0])].
+                        addToInv(Utils.parseInt(line[1])));
+            }
+        }catch (IOException e){
+            e.printStackTrace();
+        }
         missionManager = new MissionManager(handler);
 
         //only for temp. use
@@ -182,6 +208,21 @@ public class Player extends Creature{
         inventory.draw(canvas);
         missionManager.draw(canvas);
         fabricator.draw(canvas);
+    }
+
+    public void saveMap(String path) throws IOException{
+        File playerFile = new File(path+"/player/player.wld");
+        File inventoryFile = new File(path+"/player/inventory.wld");
+        playerFile.delete();
+        playerFile.createNewFile();
+        PrintWriter editor = new PrintWriter(playerFile);
+        editor.println((int)x+" "+(int)y);
+        editor.close();
+        editor = new PrintWriter(inventoryFile);
+        for(Item i: inventory.getInventoryItems()){
+            editor.println(i.getId()+" "+i.getCount());
+        }
+        editor.close();
     }
 
     public Inventory getInventory() {

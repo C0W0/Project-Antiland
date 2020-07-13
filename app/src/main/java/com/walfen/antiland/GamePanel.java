@@ -132,7 +132,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback, Ke
     }
 
     private void updateDirectory(String oVersion) throws IOException{
-        System.out.println("This should not happen");
+        System.out.println("You shouldn't see this");
     }
 
     //getters and setters

@@ -24,7 +24,6 @@ public class World implements GameHierarchyElement {
 
     private Handler handler;
     private int width, height;
-    private int spawnX, spawnY;
     private int [][] worldTiles;//a 2d array which associates the type of tiles to the location (x,y)
 
     private int xStart;
@@ -51,8 +50,6 @@ public class World implements GameHierarchyElement {
         entityManager = new EntityManager(handler, handler.getPlayer());
         this.handler = handler;
         loadWorld();
-        handler.getPlayer().setX(spawnX*Constants.DEFAULT_SIZE);
-        handler.getPlayer().setY(spawnY*Constants.DEFAULT_SIZE);
 
         itemManager = new ItemManager(handler);
 
@@ -62,8 +59,6 @@ public class World implements GameHierarchyElement {
         entityManager = new EntityManager(handler, handler.getPlayer());
         this.handler = handler;
         loadWorld(saveDirectory);
-        handler.getPlayer().setX(spawnX*Constants.DEFAULT_SIZE);
-        handler.getPlayer().setY(spawnY*Constants.DEFAULT_SIZE);
 
         itemManager = new ItemManager(handler);
     }
@@ -74,14 +69,12 @@ public class World implements GameHierarchyElement {
         String[] tokens = Utils.loadFileAsString(TILE_FILENAME).split("\\s+");
         width = Utils.parseInt(tokens[0]);
         height = Utils.parseInt(tokens[1]);
-        spawnX = Utils.parseInt(tokens[2]);
-        spawnY = Utils.parseInt(tokens[3]);
 
         worldTiles = new int[width][height];
 
         for(int y = 0; y < height; y++){
             for(int x = 0; x < width; x++){
-                worldTiles[x][y] = Utils.parseInt(tokens[x + y * width + 4]);
+                worldTiles[x][y] = Utils.parseInt(tokens[x + y * width + 2]);
             }
         }
 
@@ -103,14 +96,12 @@ public class World implements GameHierarchyElement {
                     new FileInputStream(saveDirectory+"/"+TILE_FILENAME)).split("\\s+");
             width = Utils.parseInt(tokens[0]);
             height = Utils.parseInt(tokens[1]);
-            spawnX = Utils.parseInt(tokens[2]);
-            spawnY = Utils.parseInt(tokens[3]);
 
             worldTiles = new int[width][height];
 
             for (int y = 0; y < height; y++) {
                 for (int x = 0; x < width; x++) {
-                    worldTiles[x][y] = Utils.parseInt(tokens[x + y * width + 4]);
+                    worldTiles[x][y] = Utils.parseInt(tokens[x + y * width + 2]);
                 }
             }
 
@@ -156,18 +147,7 @@ public class World implements GameHierarchyElement {
         return t;
     }
 
-    public void saveMap(){
-        try {
-            saveToLocation(Constants.DIR+"/main");
-            saveToLocation(Constants.DIR+"/auto");
-        }catch (IOException e){
-            e.printStackTrace();
-            State.getCurrentState().getUiManager().popUpMessage(
-                    "Game file corrupted, please re-install the game", () -> {});
-        }
-    }
-
-    private void saveToLocation(String path) throws IOException{
+    public void saveMap(String path) throws IOException {
         File mapFile = new File(path+"/"+TILE_FILENAME);
         File entityFile = new File(path+"/"+ENTITY_FILENAME);
         mapFile.delete();
@@ -175,7 +155,6 @@ public class World implements GameHierarchyElement {
         mapFile.createNewFile();
         PrintWriter mapEditor = new PrintWriter(mapFile);
         mapEditor.println(width+" "+height);
-        mapEditor.println(spawnX+" "+spawnY);
 
         for(int y = 0; y < height; y++){
             for(int x = 0; x < width; x++){
