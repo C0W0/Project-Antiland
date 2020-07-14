@@ -14,6 +14,7 @@ public class Constants {
 
     public static int UI_SCREEN_WIDTH;
     public static int UI_SCREEN_HEIGHT;
+    public static int UI_CLOSE_SIZE;
 
     public static int iconSize;
     public static Resources RES;
@@ -40,6 +41,7 @@ public class Constants {
     public static void init(){
         UI_SCREEN_WIDTH = SCREEN_WIDTH - 200;
         UI_SCREEN_HEIGHT = SCREEN_HEIGHT - 100;
+        UI_CLOSE_SIZE = (int)(54.f/384*UI_SCREEN_HEIGHT);
         iconSize = (int)(32.f/512* ImageEditor.scaleBitmap(Assets.craftingScreen,
                 UI_SCREEN_WIDTH, UI_SCREEN_HEIGHT).getWidth());
     }

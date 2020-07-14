@@ -84,7 +84,7 @@ public class Assets {
         joystick_pad = sheet1.crop(0, 0, width*3, height*3);
         joystick_controller = sheet1.crop(width*3, 0, width, height);
         hp_bar = ImageLoader.loadImage(R.drawable.hp_bar);
-        mp_bar = ImageLoader.loadImage(R.drawable.mp);
+        mp_bar = ImageLoader.loadImage(R.drawable.mp_bar);
         bar_frame = ImageLoader.loadImage(R.drawable.bar_frame);
 
         //entity

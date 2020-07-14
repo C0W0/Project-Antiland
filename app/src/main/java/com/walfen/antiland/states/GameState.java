@@ -9,14 +9,12 @@ import com.walfen.antiland.Constants;
 import com.walfen.antiland.Handler;
 import com.walfen.antiland.entities.creatures.Player;
 import com.walfen.antiland.gfx.Assets;
-import com.walfen.antiland.ui.HealthBar;
+import com.walfen.antiland.ui.BarA;
 import com.walfen.antiland.ui.UIManager;
 import com.walfen.antiland.ui.buttons.UIImageButton;
-import com.walfen.antiland.ui.conversation.Conversation;
 import com.walfen.antiland.world.World;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class GameState extends State {
 
@@ -72,15 +70,18 @@ public class GameState extends State {
 
     private void initDefaultUI(){
         uiManager.createJoystick();
-        uiManager.addUIObject(new HealthBar(handler,256,100,640));
+        uiManager.addUIObject(new BarA(handler,256,100,640, Assets.hp_bar,
+                () -> handler.getPlayer().getMaxHP(), () -> handler.getPlayer().getHealth()));
+        uiManager.addUIObject(new BarA(handler, 256, 170, 640, Assets.mp_bar,
+                () -> handler.getPlayer().getMaxMP(), () -> handler.getPlayer().getMp()));
         uiManager.addUIObject(new UIImageButton(64, 64, 128, 128,
-                new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, () -> handler.getPlayer().getInventory().setActive()));
-        uiManager.addUIObject(new UIImageButton(64, 256, 128, 128,
-                new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, () -> handler.getPlayer().getFabricator().setActive()));
-        uiManager.addUIObject(new UIImageButton(64, 448, 128, 128,
-                new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, () -> handler.getPlayer().getMissionManager().setActive()));
-        uiManager.addUIObject(new UIImageButton(64, 640, 128, 128,
                 new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, this::saveGame));
+//        uiManager.addUIObject(new UIImageButton(64, 256, 128, 128,
+//                new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, () -> handler.getPlayer().getFabricator().setActive()));
+        uiManager.addUIObject(new UIImageButton(32, 848, 128, 128,
+                new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, () -> handler.getPlayer().getMissionManager().setActive()));
+        uiManager.addUIObject(new UIImageButton(32, 624, 128, 128,
+                new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, () -> handler.getPlayer().getInventory().setActive()));
 //        uiManager.hideUI();
 //        ArrayList<Conversation> c = new ArrayList<>();
 //        c.add(new Conversation("test build 1 wetega reeeeeeee eeeeeeee eee eeeeee eee eeeeee rerrr rrrrrrrr rrr rrrrrrr r rrrrrr rrrrrrrrrr rrr a", Assets.player_neutral, false));

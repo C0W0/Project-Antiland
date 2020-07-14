@@ -14,6 +14,7 @@ import com.walfen.antiland.Handler;
 import com.walfen.antiland.gfx.Assets;
 import com.walfen.antiland.gfx.ImageEditor;
 import com.walfen.antiland.ui.TouchEventListener;
+import com.walfen.antiland.ui.buttons.UIImageButton;
 import com.walfen.antiland.untils.Utils;
 
 
@@ -29,8 +30,9 @@ public class MissionManager implements TouchEventListener {
 
     private Handler handler;
     private ArrayList<Mission> missions;
-    private boolean active = false;
+    private boolean active = false, buttonJustPressed = false;
     private final Bitmap missionScreen;
+    private UIImageButton closeButton;
 
     public MissionManager(Handler handler){
         this.handler = handler;
@@ -48,6 +50,9 @@ public class MissionManager implements TouchEventListener {
         misTtlY = (int)(70.f/384*misHeight+yDispute);
         progressY = (int)(190.f/384*misHeight+yDispute);
         scroll = 0;
+        closeButton = new UIImageButton(xDispute+misWidth-Constants.UI_CLOSE_SIZE, yDispute,
+                Constants.UI_CLOSE_SIZE, Constants.UI_CLOSE_SIZE,
+                new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, () -> setActive(false));
     }
 
     public void addMission(int missionID){
@@ -79,6 +84,11 @@ public class MissionManager implements TouchEventListener {
     public void onTouchEvent(MotionEvent event) {
         if(!active)
             return;
+        if(buttonJustPressed) {
+            buttonJustPressed = false;
+            return;
+        }
+        closeButton.onTouchEvent(event);
         if(event.getActionMasked() == MotionEvent.ACTION_DOWN ||
                 event.getActionMasked() == MotionEvent.ACTION_POINTER_DOWN) {
             int pointerIndex = event.findPointerIndex(event.getPointerId(event.getActionIndex()));
@@ -109,6 +119,7 @@ public class MissionManager implements TouchEventListener {
             paint.getTextBounds(text, 0, text.length(), r);
             canvas.drawText(text, misListCentreX-r.width()/2.f, misListCentreY+i*misListSpacing+r.height()/2.f, paint);
         }
+        closeButton.draw(canvas);
         if(selectedMission >= missions.size())
             return;
         //desc
@@ -158,10 +169,12 @@ public class MissionManager implements TouchEventListener {
     }
 
     public void setActive(){
+        buttonJustPressed = true;
         active = !active;
     }
 
     public void setActive(boolean active) {
+        buttonJustPressed = true;
         this.active = active;
     }
 }

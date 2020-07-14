@@ -21,8 +21,9 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
 
     //Entities
     public static final int DEFAULT_HEALTH = 10;
-    protected int health;
-    protected int maxHP;
+    public static final int DEFAULT_MP = 0;
+    protected int health, mp;
+    protected int maxHP, maxMP;
     protected boolean active;
     protected int faction;
 
@@ -42,6 +43,8 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
         active = true;
         health = DEFAULT_HEALTH; //TODO: CHANGE THIS!!!
         maxHP = health;
+        mp = DEFAULT_MP;
+        maxMP = mp;
         this.id = id;
         entityList[id] = this;
 
@@ -158,6 +161,18 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
         return maxHP;
     }
 
+    public int getMp() {
+        return mp;
+    }
+
+    public void setMp(int mp) {
+        this.mp = mp;
+    }
+
+    public int getMaxMP() {
+        return maxMP;
+    }
+
     public void setMaxHP(int maxHP) {
         this.maxHP = maxHP;
     }
@@ -173,6 +188,7 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
     public int getOX() {
         return oX;
     }
+
     public int getOY(){
         return oY;
     }

@@ -51,6 +51,10 @@ public class Player extends Creature{
             tokens = Utils.loadFileAsArrayList(new FileInputStream(playerFile));
             x = Utils.parseInt(tokens.get(0).split("\\s+")[0]);
             y = Utils.parseInt(tokens.get(0).split("\\s+")[1]);
+            health = Utils.parseInt(tokens.get(1).split("\\s+")[0]);
+            maxHP = Utils.parseInt(tokens.get(1).split("\\s+")[1]);
+            mp = Utils.parseInt(tokens.get(2).split("\\s+")[0]);
+            maxMP = Utils.parseInt(tokens.get(2).split("\\s+")[1]);
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -62,7 +66,6 @@ public class Player extends Creature{
         bounds.right = bounds.left+64;
         bounds.bottom = bounds.top+64;
 
-//        setHealth(5); //Test Health
 
         //attack timer
         attackCooldown = 800;
@@ -217,6 +220,8 @@ public class Player extends Creature{
         playerFile.createNewFile();
         PrintWriter editor = new PrintWriter(playerFile);
         editor.println((int)x+" "+(int)y);
+        editor.println(health+" "+maxHP);
+        editor.println(mp+" "+maxMP);
         editor.close();
         editor = new PrintWriter(inventoryFile);
         for(Item i: inventory.getInventoryItems()){

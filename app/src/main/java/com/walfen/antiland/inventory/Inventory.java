@@ -6,7 +6,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
-import android.graphics.RecordingCanvas;
 import android.graphics.Rect;
 import android.view.MotionEvent;
 
@@ -19,7 +18,6 @@ import com.walfen.antiland.ui.TouchEventListener;
 import com.walfen.antiland.ui.buttons.UIImageButton;
 
 import java.util.ArrayList;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Inventory implements TouchEventListener {
 
@@ -33,7 +31,7 @@ public class Inventory implements TouchEventListener {
     private int invImageX, invImageY, invNameX, invNameY, numOffsetX, numOffsetY;
     private final Bitmap inventoryScreen;
     final Bitmap blueSquare;
-    private UIImageButton useButton;
+    private UIImageButton useButton, fabSwitchButton, closeButton;
 
     public Inventory(Handler handler){
         this.handler = handler;
@@ -60,6 +58,12 @@ public class Inventory implements TouchEventListener {
         useButton = new UIImageButton(362.f/512*invWidth+xDispute, 146.f/384*invHeight+yDispute,
                 (int) (32.f/512*invWidth), (int) (16.f/384*invHeight),
                 new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, this::use);
+        fabSwitchButton = new UIImageButton(xDispute, yDispute*2+invHeight-itemBaseY,
+                Constants.UI_CLOSE_SIZE, Constants.UI_CLOSE_SIZE,
+                new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, () -> handler.getPlayer().getFabricator().setActive());
+        closeButton = new UIImageButton(xDispute*2+invWidth-itemBaseX, yDispute,
+                Constants.UI_CLOSE_SIZE, Constants.UI_CLOSE_SIZE,
+                new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, () -> setActive(false));
     }
 
     @Override
@@ -85,6 +89,8 @@ public class Inventory implements TouchEventListener {
             buttonJustPressed = false;
             return;
         }
+        fabSwitchButton.onTouchEvent(event);
+        closeButton.onTouchEvent(event);
         if(event.getActionMasked() == MotionEvent.ACTION_DOWN ||
         event.getActionMasked() == MotionEvent.ACTION_POINTER_DOWN) {
             int pointerIndex = event.findPointerIndex(event.getPointerId(event.getActionIndex()));
@@ -125,6 +131,8 @@ public class Inventory implements TouchEventListener {
             }
         }
         useButton.draw(canvas);
+        fabSwitchButton.draw(canvas);
+        closeButton.draw(canvas);
         if(inventoryItems.size() <= selectedY*5+selectedX)
             return;
         Item item = inventoryItems.get(selectedY*5+selectedX);
@@ -211,10 +219,12 @@ public class Inventory implements TouchEventListener {
     }
 
     public void setActive(){
+        buttonJustPressed = true;
         active = !active;
     }
 
     public void setActive(boolean active) {
+        buttonJustPressed = true;
         this.active = active;
     }
 }

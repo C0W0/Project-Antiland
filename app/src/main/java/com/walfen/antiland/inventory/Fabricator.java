@@ -34,7 +34,7 @@ public class Fabricator implements TouchEventListener {
     private int craftingWindowBaseX, craftingWindowBaseY;
     private int[][] recipeLocations;
     private int lastSelection; // efficiency mechanic
-    private UIImageButton craftButton;
+    private UIImageButton craftButton, invSwitchButton, closeButton;
     private final Bitmap craftingScreen, blueSquare, redSquare;
 
     public Fabricator(Handler handler, Inventory inventory, String recipeFilePath){
@@ -60,6 +60,12 @@ public class Fabricator implements TouchEventListener {
                 321.f / 384 * inventory.invHeight + inventory.yDispute,
                 (int) (170.f / 512 * inventory.invWidth), (int) (18.f / 384 * inventory.invHeight),
                 new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, this::craft);
+        invSwitchButton = new UIImageButton(inventory.xDispute, inventory.yDispute*2+inventory.invHeight-recipeBaseY,
+                Constants.UI_CLOSE_SIZE, Constants.UI_CLOSE_SIZE,
+                new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, this::setActive);
+        closeButton = new UIImageButton(inventory.xDispute*2+inventory.invWidth-recipeBaseX, inventory.yDispute,
+                Constants.UI_CLOSE_SIZE, Constants.UI_CLOSE_SIZE,
+                new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, () -> setActive(false));
         loadRecipes(recipeFilePath);
     }
 
@@ -127,6 +133,8 @@ public class Fabricator implements TouchEventListener {
             buttonJustPressed = false;
             return;
         }
+        invSwitchButton.onTouchEvent(event);
+        closeButton.onTouchEvent(event);
         if(event.getActionMasked() == MotionEvent.ACTION_DOWN ||
                 event.getActionMasked() == MotionEvent.ACTION_POINTER_DOWN) {
             int pointerIndex = event.findPointerIndex(event.getPointerId(event.getActionIndex()));
@@ -165,6 +173,8 @@ public class Fabricator implements TouchEventListener {
             }
         }
         craftButton.draw(canvas);
+        invSwitchButton.draw(canvas);
+        closeButton.draw(canvas);
         Recipe r = recipes.get(recipeLocations[selectedY][selectedX]);
         if(r == null)
             return;
@@ -250,8 +260,10 @@ public class Fabricator implements TouchEventListener {
 
     public void setActive(){
         active = !active;
+        buttonJustPressed = true;
         lastSelection = -1;
         inventory.setActive(!active);
+        System.out.println("called");
     }
 
     public void setActive(boolean active) {
