@@ -2,6 +2,7 @@ package com.walfen.antiland.states;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 
@@ -10,8 +11,10 @@ import com.walfen.antiland.Handler;
 import com.walfen.antiland.entities.creatures.Player;
 import com.walfen.antiland.gfx.Assets;
 import com.walfen.antiland.ui.BarA;
+import com.walfen.antiland.ui.decorative.UIDecoration;
 import com.walfen.antiland.ui.UIManager;
 import com.walfen.antiland.ui.buttons.UIImageButton;
+import com.walfen.antiland.ui.decorative.UITextDecoration;
 import com.walfen.antiland.world.World;
 
 import java.io.IOException;
@@ -70,11 +73,17 @@ public class GameState extends State {
 
     private void initDefaultUI(){
         uiManager.createJoystick();
-        uiManager.addUIObject(new BarA(handler,256,100,640, Assets.hp_bar,
+        uiManager.addUIObject(new UIDecoration(16, 16, 144, 144, Assets.player_neutral));
+        uiManager.addUIObject(new BarA(handler,192,32,600, Assets.hp_bar,
                 () -> handler.getPlayer().getMaxHP(), () -> handler.getPlayer().getHealth()));
-        uiManager.addUIObject(new BarA(handler, 256, 170, 640, Assets.mp_bar,
+        uiManager.addUIObject(new BarA(handler, 192, 102, 512, Assets.mp_bar,
                 () -> handler.getPlayer().getMaxMP(), () -> handler.getPlayer().getMp()));
-        uiManager.addUIObject(new UIImageButton(64, 64, 128, 128,
+        uiManager.addUIObject(new BarA(handler, Constants.SCREEN_WIDTH/2.f-512, Constants.SCREEN_HEIGHT-50,
+                1024, 48, Assets.mp_bar, () -> handler.getPlayer().getCurrLevelMaxXp(),
+                () -> handler.getPlayer().getCurrLevelXp()));
+        uiManager.addUIObject(new UITextDecoration(Constants.SCREEN_WIDTH/2.f-512-64, Constants.SCREEN_HEIGHT-25,
+                () -> Integer.toString(handler.getPlayer().getLevel()), 40, Constants.TEXT_COLOUR));
+        uiManager.addUIObject(new UIImageButton(64, 224, 128, 128,
                 new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, this::saveGame));
 //        uiManager.addUIObject(new UIImageButton(64, 256, 128, 128,
 //                new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, () -> handler.getPlayer().getFabricator().setActive()));

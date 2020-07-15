@@ -37,8 +37,10 @@ public class Player extends Creature{
     private Inventory inventory;
     private Fabricator fabricator;
 
+    //player stats
     private MissionManager missionManager;
-
+    private int level;
+    private int currLevelXp;
 
 
     public Player(Handler handler, String path) {
@@ -55,6 +57,8 @@ public class Player extends Creature{
             maxHP = Utils.parseInt(tokens.get(1).split("\\s+")[1]);
             mp = Utils.parseInt(tokens.get(2).split("\\s+")[0]);
             maxMP = Utils.parseInt(tokens.get(2).split("\\s+")[1]);
+            level = Utils.parseInt(tokens.get(3).split("\\s+")[0]);
+            currLevelXp = Utils.parseInt(tokens.get(3).split("\\s+")[1]);
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -222,6 +226,7 @@ public class Player extends Creature{
         editor.println((int)x+" "+(int)y);
         editor.println(health+" "+maxHP);
         editor.println(mp+" "+maxMP);
+        editor.println(level+" "+currLevelXp);
         editor.close();
         editor = new PrintWriter(inventoryFile);
         for(Item i: inventory.getInventoryItems()){
@@ -240,5 +245,27 @@ public class Player extends Creature{
 
     public MissionManager getMissionManager(){
         return missionManager;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public int getCurrLevelXp() {
+        return currLevelXp;
+    }
+
+    public int getCurrLevelMaxXp(){
+        return 5*level*level-5*level+10;
+    }
+
+    public void increaseXp(int xp) {
+        int remainingXp = getCurrLevelMaxXp()-currLevelXp;
+        if(xp >= remainingXp) {
+            level++;
+            currLevelXp = xp-remainingXp;
+        }else {
+            currLevelXp += xp;
+        }
     }
 }

@@ -105,6 +105,7 @@ public class Fabricator implements TouchEventListener {
                 }
             }
         }
+        handler.getPlayer().increaseXp(2);
         inventory.addItem(Item.items[recipeLocations[selectedY][selectedX]].addToInv(1)); // TODO: Variable number
         lastSelection = -1;
     }
