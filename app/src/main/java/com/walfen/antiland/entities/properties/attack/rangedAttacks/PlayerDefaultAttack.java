@@ -8,10 +8,15 @@ import com.walfen.antiland.Handler;
 import com.walfen.antiland.gfx.Animation;
 import com.walfen.antiland.gfx.Assets;
 
+import java.util.function.IntSupplier;
+
 public class PlayerDefaultAttack extends RangedAttacks {
 
-    public PlayerDefaultAttack(Handler handler) {
+    private IntSupplier damageSupplier;
+
+    public PlayerDefaultAttack(Handler handler, IntSupplier damageSupplier) {
         super(handler, 1, 1, 256, 10);
+        this.damageSupplier = damageSupplier;
     }
 
     @Override
@@ -30,5 +35,6 @@ public class PlayerDefaultAttack extends RangedAttacks {
     @Override
     public void update() {
         super.update();
+        baseDamage = damageSupplier.getAsInt();
     }
 }

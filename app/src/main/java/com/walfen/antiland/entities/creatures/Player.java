@@ -3,7 +3,6 @@ package com.walfen.antiland.entities.creatures;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.graphics.Rect;
 
 import com.walfen.antiland.Handler;
@@ -14,9 +13,7 @@ import com.walfen.antiland.gfx.Assets;
 import com.walfen.antiland.inventory.Fabricator;
 import com.walfen.antiland.inventory.Inventory;
 import com.walfen.antiland.items.Item;
-import com.walfen.antiland.mission.Mission;
 import com.walfen.antiland.mission.MissionManager;
-import com.walfen.antiland.states.State;
 import com.walfen.antiland.untils.Utils;
 
 import java.io.File;
@@ -41,6 +38,7 @@ public class Player extends Creature{
     private MissionManager missionManager;
     private int level;
     private int currLevelXp;
+    private int baseDamage;
 
 
     public Player(Handler handler, String path) {
@@ -62,6 +60,7 @@ public class Player extends Creature{
         }catch (IOException e){
             e.printStackTrace();
         }
+        baseDamage = 1;
 
         this.handler = handler;
 
@@ -83,7 +82,7 @@ public class Player extends Creature{
         neutralAnim = new Animation(0.15f, new Bitmap[]{Assets.player_neutral});
 
 
-        attack = new PlayerDefaultAttack(handler);
+        attack = new PlayerDefaultAttack(handler, () -> baseDamage);
 
 
         inventory = new Inventory(handler);
@@ -267,5 +266,13 @@ public class Player extends Creature{
         }else {
             currLevelXp += xp;
         }
+    }
+
+    public void setBaseDamage(int baseDamage) {
+        this.baseDamage = baseDamage;
+    }
+
+    public void changeBaseDamage(int damage) {
+        baseDamage += damage;
     }
 }

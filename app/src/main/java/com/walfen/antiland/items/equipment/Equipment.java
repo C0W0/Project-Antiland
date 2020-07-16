@@ -5,8 +5,8 @@ import android.graphics.Bitmap;
 
 import com.walfen.antiland.items.Item;
 
-public abstract class Equipments extends Item {
-    public Equipments(Bitmap texture, String name, int id) {
+public abstract class Equipment extends Item {
+    public Equipment(Bitmap texture, String name, int id) {
         super(texture, name, id);
     }
 

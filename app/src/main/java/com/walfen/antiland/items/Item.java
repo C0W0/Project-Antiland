@@ -1,7 +1,6 @@
 package com.walfen.antiland.items;
 
 
-import android.accounts.NetworkErrorException;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
@@ -10,11 +9,11 @@ import com.walfen.antiland.Constants;
 import com.walfen.antiland.GameHierarchyElement;
 import com.walfen.antiland.Handler;
 import com.walfen.antiland.gfx.Assets;
-import com.walfen.antiland.gfx.GraphicalTerminalElement;
 import com.walfen.antiland.gfx.ImageEditor;
-import com.walfen.antiland.items.functionless.NeutralItems;
-import com.walfen.antiland.items.usable.Usable;
-import com.walfen.antiland.items.usable.UsableItems;
+import com.walfen.antiland.items.equipment.Equipment;
+import com.walfen.antiland.items.equipment.SimpleSword;
+import com.walfen.antiland.items.functionless.NeutralItem;
+import com.walfen.antiland.items.usable.UsableItem;
 
 public abstract class Item implements GameHierarchyElement {
 
@@ -22,22 +21,22 @@ public abstract class Item implements GameHierarchyElement {
 
     public static Item[] items = new Item[256];
 
-    public static NeutralItems woodItem;
-    public static UsableItems appleItem;
-    public static UsableItems potionItem;
-    public static NeutralItems stoneItem;
-    public static NeutralItems shieldItem;
-    public static NeutralItems swordItem;
+    public static NeutralItem woodItem;
+    public static UsableItem appleItem;
+    public static UsableItem potionItem;
+    public static NeutralItem stoneItem;
+    public static NeutralItem shieldItem;
+    public static Equipment swordItem;
 
     public static void initItems(Handler handler){
-        woodItem = new NeutralItems(Assets.wood, "wood", 0);
-        appleItem = new UsableItems(Assets.apple, "apple", 1,
+        woodItem = new NeutralItem(Assets.wood, "wood", 0);
+        appleItem = new UsableItem(Assets.apple, "apple", 1,
                 () -> handler.getPlayer().changeHealth(1));
-        potionItem = new UsableItems(Assets.potion, "potion", 2,
+        potionItem = new UsableItem(Assets.potion, "potion", 2,
                 () -> handler.getPlayer().changeHealth(10));
 //        stoneItem = new NeutralItems(Assets.stone, "stone", 3);
-        shieldItem = new NeutralItems(Assets.wood, "shield", 4);
-        swordItem = new NeutralItems(Assets.sword, "sword", 5);
+        shieldItem = new NeutralItem(Assets.wood, "shield", 4);
+        swordItem = new SimpleSword(Assets.sword, "sword", 5);
     }
 
     //class

@@ -5,11 +5,11 @@ import android.graphics.Bitmap;
 
 import com.walfen.antiland.items.Item;
 
-public class UsableItems extends Item {
+public class UsableItem extends Item {
 
     private Usable onUseEvent;
 
-    public UsableItems(Bitmap texture, String name, int id, Usable onUseEvent) {
+    public UsableItem(Bitmap texture, String name, int id, Usable onUseEvent) {
         super(texture, name, id);
         this.onUseEvent = onUseEvent;
     }
@@ -23,8 +23,8 @@ public class UsableItems extends Item {
     }
 
     @Override
-    public UsableItems createNew(int x, int y, int count){
-        UsableItems i = new UsableItems(texture, name, id, onUseEvent);
+    public UsableItem createNew(int x, int y, int count){
+        UsableItem i = new UsableItem(texture, name, id, onUseEvent);
         i.count = count;
         i.setPosition(x, y);
         return i;
@@ -32,7 +32,7 @@ public class UsableItems extends Item {
 
     @Override
     public Item addToInv(int count) {
-        UsableItems i = new UsableItems(texture, name, id, onUseEvent);
+        UsableItem i = new UsableItem(texture, name, id, onUseEvent);
         i.setPickedUP(true);
         i.count = count;
         return i;
