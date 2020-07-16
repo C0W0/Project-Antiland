@@ -14,6 +14,7 @@ public class Assets {
 
     public static Bitmap grass, grassStone, dirt, dirtStone;
     public static Bitmap pathVertical, pathHorizontal, pathCornerUpRight, pathCornerUpLeft, pathCornerDownLeft, pathCornerDownRight;
+    public static Bitmap[] houseTiles;
 
     //player
     public static Bitmap player_neutral;
@@ -65,6 +66,8 @@ public class Assets {
         water[1] = townTiles.crop(width,height*4,width,height);
         water[2] = townTiles.crop(width*2,height*4,width,height);
         water[3] = townTiles.crop(width*3,height*4,width,height);
+        houseTiles = new Bitmap[18];
+        houseTiles = loadSpriteAsArray(new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.resident_test_1)), 6, 3, 128, 128);
         
         player_down = new Bitmap[2];
         player_down[0] = sheet.crop(0,0,width,height);
@@ -112,6 +115,7 @@ public class Assets {
         wood = sheet1.crop(width*7,height,width,height);
         apple = ImageLoader.loadImage(R.drawable.apple);
         potion = ImageLoader.loadImage(R.drawable.potion);
+        sword = ImageLoader.loadImage(R.drawable.sword);
         inventoryScreen = ImageLoader.loadImage(R.drawable.inventory_screen_new);
         craftingScreen = ImageLoader.loadImage(R.drawable.craft_screen);
         missionScreen = ImageLoader.loadImage(R.drawable.mission_screen);

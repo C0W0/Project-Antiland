@@ -37,7 +37,7 @@ public abstract class Item implements GameHierarchyElement {
                 () -> handler.getPlayer().changeHealth(10));
 //        stoneItem = new NeutralItems(Assets.stone, "stone", 3);
         shieldItem = new NeutralItems(Assets.wood, "shield", 4);
-        swordItem = new NeutralItems(Assets.apple, "sword", 5);//TODO: GIVE ME AN ACTUAL SWORD
+        swordItem = new NeutralItems(Assets.sword, "sword", 5);
     }
 
     //class
