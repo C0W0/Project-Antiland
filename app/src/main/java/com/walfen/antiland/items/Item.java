@@ -11,7 +11,7 @@ import com.walfen.antiland.Handler;
 import com.walfen.antiland.gfx.Assets;
 import com.walfen.antiland.gfx.ImageEditor;
 import com.walfen.antiland.items.equipment.Equipment;
-import com.walfen.antiland.items.equipment.SimpleSword;
+import com.walfen.antiland.items.equipment.weapons.SimpleSword;
 import com.walfen.antiland.items.functionless.NeutralItem;
 import com.walfen.antiland.items.usable.UsableItem;
 

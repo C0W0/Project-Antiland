@@ -27,7 +27,7 @@ public class FPSTimer {
             frames ++;
 
             if(time >= 1e9){
-                System.out.println("FPS: "+frames);
+//                System.out.println("FPS: "+frames);
                 time = 0;
                 frames = 0;
             }

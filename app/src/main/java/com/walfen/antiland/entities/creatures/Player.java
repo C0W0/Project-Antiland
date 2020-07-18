@@ -13,6 +13,7 @@ import com.walfen.antiland.gfx.Assets;
 import com.walfen.antiland.inventory.Fabricator;
 import com.walfen.antiland.inventory.Inventory;
 import com.walfen.antiland.items.Item;
+import com.walfen.antiland.items.equipment.Equipment;
 import com.walfen.antiland.mission.MissionManager;
 import com.walfen.antiland.untils.Utils;
 
@@ -232,6 +233,22 @@ public class Player extends Creature{
             editor.println(i.getId()+" "+i.getCount());
         }
         editor.close();
+    }
+
+    public void equip(int id, int location){
+        removeEquipment(location);
+        Equipment e = (Equipment)Item.items[id].addToInv(1);
+        e.setEquippedOn(true);
+        e.setHandler(handler);
+        inventory.getEquipments()[location] = e;
+        inventory.deductItem(e.getId(), 1);
+    }
+
+    public void removeEquipment(int location){
+        if(inventory.getEquipments()[location] == null)
+            return;
+        inventory.addItem(inventory.getEquipments()[location].addToInv(1));
+        inventory.getEquipments()[location] = null;
     }
 
     public Inventory getInventory() {

@@ -4,21 +4,31 @@ package com.walfen.antiland.items.equipment;
 import android.graphics.Bitmap;
 
 import com.walfen.antiland.items.Item;
+import com.walfen.antiland.items.equipment.weapons.SimpleSword;
 
 public abstract class Equipment extends Item {
+
+    public static final int WEAPON = 0;
+    public static final int AUXILIARY = 1;
+    public static final int ARMOUR = 2;
+    public static final int BOOTS = 3;
+
+    protected boolean equippedOn = false;
+
     public Equipment(Bitmap texture, String name, int id) {
         super(texture, name, id);
     }
 
-    @Override
-    public void onActive() {
-        onEquip();
-        for(Item i: handler.getPlayer().getInventory().getInventoryItems())
-            if(i.getId() == id)
-                i.setCount(i.getCount()-1);
+
+    protected abstract void onEquip();
+
+    protected abstract void onRemove();
+
+    public boolean isEquippedOn() {
+        return equippedOn;
     }
 
-    public abstract void onEquip();
-
-    public abstract void onRemove();
+    public void setEquippedOn(boolean equippedOn) {
+        this.equippedOn = equippedOn;
+    }
 }

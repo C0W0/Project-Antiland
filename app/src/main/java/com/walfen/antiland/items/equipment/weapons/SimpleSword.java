@@ -1,10 +1,10 @@
-package com.walfen.antiland.items.equipment;
+package com.walfen.antiland.items.equipment.weapons;
 
 import android.graphics.Bitmap;
 
-import com.walfen.antiland.items.Item;
+import com.walfen.antiland.items.equipment.Equipment;
 
-public class SimpleSword extends Equipment {
+public class SimpleSword extends Weapon {
 
     public SimpleSword(Bitmap texture, String name, int id) {
         super(texture, name, id);
@@ -18,11 +18,10 @@ public class SimpleSword extends Equipment {
     @Override
     public void onRemove() {
         handler.getPlayer().changeBaseDamage(-1);
-        addToInv(1);
     }
 
     @Override
-    public Item addToInv(int count) {
+    public Equipment addToInv(int count) {
         SimpleSword i = new SimpleSword(texture, name, id);
         i.setPickedUP(true);
         i.count = count;
@@ -30,7 +29,7 @@ public class SimpleSword extends Equipment {
     }
 
     @Override
-    public Item createNew(int x, int y, int count) {
+    public Equipment createNew(int x, int y, int count) {
         SimpleSword i = new SimpleSword(texture, name, id);
         i.count = count;
         i.setPosition(x, y);

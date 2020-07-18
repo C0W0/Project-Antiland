@@ -14,6 +14,7 @@ import com.walfen.antiland.Handler;
 import com.walfen.antiland.gfx.Assets;
 import com.walfen.antiland.gfx.ImageEditor;
 import com.walfen.antiland.items.Item;
+import com.walfen.antiland.items.equipment.Equipment;
 import com.walfen.antiland.ui.TouchEventListener;
 import com.walfen.antiland.ui.buttons.UIImageButton;
 
@@ -22,16 +23,22 @@ import java.util.ArrayList;
 public class Inventory implements TouchEventListener {
 
     private Handler handler;
-    private boolean active = false, buttonJustPressed = false;
     private ArrayList<Item> inventoryItems;
+    private Equipment[] equipments;
+    private Rect[] equipmentBox;
+
+    private boolean active = false, buttonJustPressed = false;
     int invHeight, invWidth;
     int xDispute, yDispute;
     private int selectedX = 0, selectedY = 0, scroll;
     int itemBaseX, itemBaseY, iconSize, itemDXConstant, itemDYConstant;
     private int invImageX, invImageY, invNameX, invNameY, numOffsetX, numOffsetY;
+    private int equipBaseX, equipBaseY, equipDYConstant;
     private final Bitmap inventoryScreen;
     final Bitmap blueSquare;
     private UIImageButton useButton, fabSwitchButton, closeButton;
+
+    private Item selectedItem;
 
     public Inventory(Handler handler){
         this.handler = handler;
@@ -55,6 +62,20 @@ public class Inventory implements TouchEventListener {
         invNameY = (int)(130.f/384*invHeight+yDispute);
         numOffsetX = (int)(36.f/512*invWidth);
         numOffsetY = (int)(36.f/384*invHeight);
+
+        equipBaseX = (int)(303.f/512*invWidth+xDispute);
+        equipBaseY = (int)(192.f/384*invHeight+yDispute);
+        equipDYConstant = (int)(44.f/384*invHeight);
+
+        equipments = new Equipment[4];
+        equipmentBox = new Rect[4];
+        for(int i = 0; i < equipmentBox.length; i++){
+            equipmentBox[i] = new Rect((int)(297.f/512*invWidth+xDispute), (int)((186.f+44.f*i)/384*invHeight+yDispute),
+                    (int)(340.f/512*invWidth+xDispute), (int)((229.f+44.f*i)/384*invHeight+yDispute));
+        }
+
+        selectedItem = null;
+
         useButton = new UIImageButton(362.f/512*invWidth+xDispute, 146.f/384*invHeight+yDispute,
                 (int) (32.f/512*invWidth), (int) (16.f/384*invHeight),
                 new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, this::use);
@@ -70,6 +91,14 @@ public class Inventory implements TouchEventListener {
     public void update(){
         if(!active){
             return;
+        }
+
+        if(selectedY == -1){
+            selectedItem = equipments[selectedX];
+        }else if(inventoryItems.size() > selectedY*5+selectedX) {
+            selectedItem = inventoryItems.get(selectedY * 5 + selectedX);
+        }else {
+            selectedItem = null;
         }
 
         for(int i = 0; i < inventoryItems.size(); i++) {
@@ -94,7 +123,9 @@ public class Inventory implements TouchEventListener {
         if(event.getActionMasked() == MotionEvent.ACTION_DOWN ||
         event.getActionMasked() == MotionEvent.ACTION_POINTER_DOWN) {
             int pointerIndex = event.findPointerIndex(event.getPointerId(event.getActionIndex()));
-            Point p = computeSelectedPoint(event.getX(pointerIndex), event.getY(pointerIndex));
+            float touchX = event.getX(pointerIndex);
+            float touchY = event.getY(pointerIndex);
+            Point p = computeSelectedPoint(touchX, touchY);
             selectedX = p.x;
             selectedY = p.y;
         }
@@ -133,37 +164,44 @@ public class Inventory implements TouchEventListener {
         useButton.draw(canvas);
         fabSwitchButton.draw(canvas);
         closeButton.draw(canvas);
-        if(inventoryItems.size() <= selectedY*5+selectedX)
+        for(int i = 0; i < 4; i++){
+            Equipment e = equipments[i];
+            if(e == null)
+                continue;
+            int top = equipBaseY+equipDYConstant*i;
+            canvas.drawBitmap(e.getInvTexture(), null, new Rect(
+                    equipBaseX, top, equipBaseX+iconSize, top+iconSize),
+                    Constants.getRenderPaint());
+        }
+        if(selectedItem == null)
             return;
-        Item item = inventoryItems.get(selectedY*5+selectedX);
-        canvas.drawBitmap(item.getInvTexture(), null, new Rect(
+        canvas.drawBitmap(selectedItem.getInvTexture(), null, new Rect(
                 invImageX, invImageY, invImageX+iconSize, invImageY+iconSize),Constants.getRenderPaint());
         Paint paint = new Paint();
         paint.setTextSize(34);
         Rect r = new Rect();
-        String name = item.getName();
+        String name = selectedItem.getName();
         paint.getTextBounds(name.toUpperCase(), 0, name.length(), r);
         paint.setColor(Color.BLACK);
         canvas.drawText(name, invNameX-r.width()/2.f, invNameY+r.height()/2.f, paint);
     }
 
-    private int computeSelectedLocationX(float x){
-        x = x-itemBaseX<0?0:x-itemBaseX;
-        int i = Math.floorDiv((int)x, itemDXConstant);
-        return i>4?0:i;
+    private int computeSelectedEquipment(float x, float y){
+        for(int i = 0; i < equipmentBox.length; i++)
+            if(new Rect(equipmentBox[i]).contains((int)x, (int)y))
+                return i;
+        return -1;
     }
 
-    private int computeSelectedLocationY(float y){
-        y = y-itemBaseY<0?0:y-itemBaseY;
-        int i = Math.floorDiv((int)y, itemDYConstant);
-        return (i>6?0:i)+scroll;
-    }
-
-    private Point computeSelectedPoint(float x, float y){
-        x = Math.floorDiv((int)(x-itemBaseX), itemDXConstant);
-        y = Math.floorDiv((int)(y-itemBaseY), itemDYConstant);
-        if(x < 0 || x > 4 || y < 0 || y > 4)
-            return new Point(0, scroll);
+    private Point computeSelectedPoint(float oX, float oY){
+        int x = Math.floorDiv((int)(oX-itemBaseX), itemDXConstant);
+        int y = Math.floorDiv((int)(oY-itemBaseY), itemDYConstant);
+        if(x < 0 || x > 4 || y < 0 || y > 4){
+            int e = computeSelectedEquipment(oX, oY);
+            if(e == -1)
+                return new Point(0, scroll);
+            return new Point(e, -1);
+        }
         return new Point((int)x, (int)y+scroll);
     }
 
@@ -183,9 +221,9 @@ public class Inventory implements TouchEventListener {
 
     public void use(){
         buttonJustPressed = true;
-        if(inventoryItems.size() <= selectedY*5+selectedX)
+        if(selectedItem == null)
             return;
-        inventoryItems.get(selectedY*5+selectedX).onActive();
+        selectedItem.onActive();
     }
 
     public int getItemCount(int id){
@@ -201,6 +239,7 @@ public class Inventory implements TouchEventListener {
             if(i.getId() == id)
                 i.setCount(i.getCount()-count);
     }
+
     //getters and setters
     public Handler getHandler() {
         return handler;
@@ -226,5 +265,9 @@ public class Inventory implements TouchEventListener {
     public void setActive(boolean active) {
         buttonJustPressed = true;
         this.active = active;
+    }
+
+    public Equipment[] getEquipments() {
+        return equipments;
     }
 }
