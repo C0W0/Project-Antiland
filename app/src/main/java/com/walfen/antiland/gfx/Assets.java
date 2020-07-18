@@ -116,6 +116,7 @@ public class Assets {
         apple = ImageLoader.loadImage(R.drawable.apple);
         potion = ImageLoader.loadImage(R.drawable.potion);
         sword = ImageLoader.loadImage(R.drawable.sword);
+        shield = ImageLoader.loadImage(R.drawable.shield);
         inventoryScreen = ImageLoader.loadImage(R.drawable.inventory_screen_new);
         craftingScreen = ImageLoader.loadImage(R.drawable.craft_screen);
         missionScreen = ImageLoader.loadImage(R.drawable.mission_screen);

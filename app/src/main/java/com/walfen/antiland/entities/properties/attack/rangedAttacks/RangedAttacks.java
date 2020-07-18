@@ -2,16 +2,14 @@ package com.walfen.antiland.entities.properties.attack.rangedAttacks;
 
 
 import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 
 import com.walfen.antiland.Handler;
 import com.walfen.antiland.entities.Entity;
-import com.walfen.antiland.entities.active.Active;
+import com.walfen.antiland.entities.creatures.active.Active;
 import com.walfen.antiland.entities.properties.attack.Attacks;
 import com.walfen.antiland.gfx.Animation;
-import com.walfen.antiland.untils.Utils;
 
 import java.util.ArrayList;
 

@@ -11,6 +11,7 @@ import com.walfen.antiland.Handler;
 import com.walfen.antiland.gfx.Assets;
 import com.walfen.antiland.gfx.ImageEditor;
 import com.walfen.antiland.items.equipment.Equipment;
+import com.walfen.antiland.items.equipment.auxiliaries.SimpleShield;
 import com.walfen.antiland.items.equipment.weapons.SimpleSword;
 import com.walfen.antiland.items.functionless.NeutralItem;
 import com.walfen.antiland.items.usable.UsableItem;
@@ -25,7 +26,7 @@ public abstract class Item implements GameHierarchyElement {
     public static UsableItem appleItem;
     public static UsableItem potionItem;
     public static NeutralItem stoneItem;
-    public static NeutralItem shieldItem;
+    public static Equipment shieldItem;
     public static Equipment swordItem;
 
     public static void initItems(Handler handler){
@@ -35,7 +36,7 @@ public abstract class Item implements GameHierarchyElement {
         potionItem = new UsableItem(Assets.potion, "potion", 2,
                 () -> handler.getPlayer().changeHealth(10));
 //        stoneItem = new NeutralItems(Assets.stone, "stone", 3);
-        shieldItem = new NeutralItem(Assets.wood, "shield", 4);
+        shieldItem = new SimpleShield(Assets.shield, "shield", 4);
         swordItem = new SimpleSword(Assets.sword, "sword", 5);
     }
 

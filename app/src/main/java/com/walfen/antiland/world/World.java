@@ -8,9 +8,7 @@ import com.walfen.antiland.GameHierarchyElement;
 import com.walfen.antiland.Handler;
 import com.walfen.antiland.entities.Entity;
 import com.walfen.antiland.entities.EntityManager;
-import com.walfen.antiland.entities.active.Active;
 import com.walfen.antiland.items.ItemManager;
-import com.walfen.antiland.states.State;
 import com.walfen.antiland.tiles.Tile;
 import com.walfen.antiland.untils.Utils;
 

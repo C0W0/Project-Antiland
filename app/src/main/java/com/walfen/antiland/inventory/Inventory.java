@@ -63,8 +63,8 @@ public class Inventory implements TouchEventListener {
         numOffsetX = (int)(36.f/512*invWidth);
         numOffsetY = (int)(36.f/384*invHeight);
 
-        equipBaseX = (int)(303.f/512*invWidth+xDispute);
-        equipBaseY = (int)(192.f/384*invHeight+yDispute);
+        equipBaseX = (int)(302.f/512*invWidth+xDispute);
+        equipBaseY = (int)(191.f/384*invHeight+yDispute);
         equipDYConstant = (int)(44.f/384*invHeight);
 
         equipments = new Equipment[4];

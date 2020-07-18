@@ -14,8 +14,10 @@ public abstract class Creature extends Entity {
     public static final int DEFAULT_CREATURE_HEIGHT = Constants.DEFAULT_SIZE;
 
 
-    //creatures
+    //creature status
     protected float speed;
+    protected int baseDamage, level;
+
 
     protected float xMove, yMove; // movement
 
@@ -127,5 +129,17 @@ public abstract class Creature extends Entity {
 
     public void setyMove(float yMove) {
         this.yMove = yMove;
+    }
+
+    public void setBaseDamage(int baseDamage) {
+        this.baseDamage = baseDamage;
+    }
+
+    public void changeBaseDamage(int damage) {
+        baseDamage += damage;
+    }
+
+    public int getLevel() {
+        return level;
     }
 }

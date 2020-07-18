@@ -2,11 +2,9 @@ package com.walfen.antiland.entities.properties.attack.meleeAttacks;
 
 
 import com.walfen.antiland.Handler;
-import com.walfen.antiland.entities.active.Active;
+import com.walfen.antiland.entities.creatures.active.Active;
 import com.walfen.antiland.gfx.Animation;
 import com.walfen.antiland.gfx.Assets;
-
-import java.util.Arrays;
 
 public class SlimeBash extends MeleeAttacks {
     public SlimeBash(Handler handler, Active carrier) {

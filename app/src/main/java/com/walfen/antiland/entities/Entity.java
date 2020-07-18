@@ -5,7 +5,7 @@ import android.graphics.Rect;
 
 import com.walfen.antiland.GameHierarchyElement;
 import com.walfen.antiland.Handler;
-import com.walfen.antiland.entities.active.Slime;
+import com.walfen.antiland.entities.creatures.active.Slime;
 import com.walfen.antiland.entities.creatures.npc.NPC1;
 import com.walfen.antiland.entities.statics.AirWall;
 import com.walfen.antiland.entities.statics.Tree;
@@ -26,6 +26,7 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
     protected int maxHP, maxMP;
     protected boolean active;
     protected int faction;
+    protected int defence;
 
     protected float x,y;
     protected int oX, oY; // o stands for offset
@@ -47,6 +48,7 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
         maxMP = mp;
         this.id = id;
         entityList[id] = this;
+        defence = 0;
 
         bounds = new Rect(0, 0, width, height);//default
     }
@@ -55,7 +57,8 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
 
 
     public void receiveDamage(int num){
-        health -= num;
+        int delta = (int) (num-4*Math.sqrt(defence)+0.5);
+        health -= Math.max(delta, 1);
         if(health <= 0){
             active = false;
             die();
@@ -191,5 +194,13 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
 
     public int getOY(){
         return oY;
+    }
+
+    public void setDefence(int defence) {
+        this.defence = defence;
+    }
+
+    public void changeDefence(int defenceValue) {
+        defence += defenceValue;
     }
 }

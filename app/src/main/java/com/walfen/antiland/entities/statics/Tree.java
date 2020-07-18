@@ -21,6 +21,7 @@ public class Tree extends StaticEntity {
         bounds.right = bounds.left + width - 100;
         bounds.bottom = bounds.top + height - 100;
         health = 2;
+        defence = 1;
         id = 2;
     }
 

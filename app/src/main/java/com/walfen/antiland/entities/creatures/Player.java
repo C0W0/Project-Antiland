@@ -37,9 +37,7 @@ public class Player extends Creature{
 
     //player stats
     private MissionManager missionManager;
-    private int level;
     private int currLevelXp;
-    private int baseDamage;
 
 
     public Player(Handler handler, String path) {
@@ -263,10 +261,6 @@ public class Player extends Creature{
         return missionManager;
     }
 
-    public int getLevel() {
-        return level;
-    }
-
     public int getCurrLevelXp() {
         return currLevelXp;
     }
@@ -283,13 +277,5 @@ public class Player extends Creature{
         }else {
             currLevelXp += xp;
         }
-    }
-
-    public void setBaseDamage(int baseDamage) {
-        this.baseDamage = baseDamage;
-    }
-
-    public void changeBaseDamage(int damage) {
-        baseDamage += damage;
     }
 }

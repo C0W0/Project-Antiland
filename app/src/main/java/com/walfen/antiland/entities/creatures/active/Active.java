@@ -1,4 +1,4 @@
-package com.walfen.antiland.entities.active;
+package com.walfen.antiland.entities.creatures.active;
 
 
 import com.walfen.antiland.entities.Entity;
@@ -10,7 +10,6 @@ public abstract class Active extends Creature {
 
     //assign values in the children class
     protected int spottingRange, giveUpRange, maxIdealRange, minIdealRange, patrolRange;
-    protected int defence;
     protected Entity target;
     //TODO: complete rework for factions.
 

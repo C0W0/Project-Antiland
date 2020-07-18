@@ -1,4 +1,4 @@
-package com.walfen.antiland.entities.active;
+package com.walfen.antiland.entities.creatures.active;
 
 
 import android.graphics.Canvas;
@@ -10,7 +10,6 @@ import com.walfen.antiland.entities.properties.attack.meleeAttacks.SlimeBash;
 import com.walfen.antiland.gfx.Animation;
 import com.walfen.antiland.gfx.Assets;
 import com.walfen.antiland.tiles.Tile;
-import com.walfen.antiland.untils.FrameTimeController;
 import com.walfen.antiland.untils.MSTimeController;
 
 public class Slime extends Active {
@@ -36,6 +35,9 @@ public class Slime extends Active {
         currentAnimation = idle;
         health = 1;
         currentAnimation = leftMove;
+        baseDamage = 1; //no effect, as slime bash is hard coded to do only 1 damage
+        defence = 0;
+        level = 1;
     }
 
     @Override
