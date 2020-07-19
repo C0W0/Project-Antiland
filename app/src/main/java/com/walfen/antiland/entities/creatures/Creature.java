@@ -2,7 +2,6 @@ package com.walfen.antiland.entities.creatures;
 
 
 import com.walfen.antiland.Constants;
-import com.walfen.antiland.Handler;
 import com.walfen.antiland.entities.Entity;
 import com.walfen.antiland.tiles.Tile;
 
@@ -10,19 +9,24 @@ public abstract class Creature extends Entity {
 
     //default values
     public static final float DEFAULT_SPEED = 12.0f;
+    public static final int DEFAULT_MP = 0;
     public static final int DEFAULT_CREATURE_WIDTH = Constants.DEFAULT_SIZE;
     public static final int DEFAULT_CREATURE_HEIGHT = Constants.DEFAULT_SIZE;
 
 
     //creature status
     protected float speed;
-    protected int baseDamage, level;
+    protected int physicalDamage, magicalDamage, level, mp, maxMp;
 
 
     protected float xMove, yMove; // movement
 
     public Creature(int width, int height, int id) {
         super(width, height, id);
+        mp = DEFAULT_MP;
+        maxMp = mp;
+        physicalDamage = 0;
+        magicalDamage = 0;
         speed = DEFAULT_SPEED;
         xMove = 0;
         yMove = 0;
@@ -94,21 +98,46 @@ public abstract class Creature extends Entity {
         return handler.getWorld().getTile(x,y).isBarrier();
     }
 
+    //changers
     public void changeHealth(int deltaHealth){
-        health = Math.min(health + deltaHealth, maxHP);
+        health = Math.min(health + deltaHealth, maxHp);
+    }
+
+    public void changeMaxHp(int deltaHealth){
+        maxHp += deltaHealth;
+    }
+
+    public void changeSpeed(int deltaSpeed){
+        speed += deltaSpeed;
+    }
+
+    public void changePhysicalDamage(int damage) {
+        physicalDamage += damage;
+    }
+
+    public void changeMagicalDamage(int damage){
+        magicalDamage += damage;
+    }
+
+    public void changeMaxMp(int deltaMp){
+        maxMp += deltaMp;
     }
 
     //getters and setters
-    public int getHealth() {
-        return health;
-    }
-
-    public void setHealth(int health) {
-        this.health = health;
-    }
-
     public float getSpeed() {
         return speed;
+    }
+
+    public int getMp() {
+        return mp;
+    }
+
+    public void setMp(int mp) {
+        this.mp = mp;
+    }
+
+    public int getMaxMp() {
+        return maxMp;
     }
 
     public void setSpeed(float speed) {
@@ -131,12 +160,12 @@ public abstract class Creature extends Entity {
         this.yMove = yMove;
     }
 
-    public void setBaseDamage(int baseDamage) {
-        this.baseDamage = baseDamage;
+    public void setPhysicalDamage(int physicalDamage) {
+        this.physicalDamage = physicalDamage;
     }
 
-    public void changeBaseDamage(int damage) {
-        baseDamage += damage;
+    public void setMagicalDamage(int magicalDamage) {
+        this.magicalDamage = magicalDamage;
     }
 
     public int getLevel() {

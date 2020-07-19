@@ -61,7 +61,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback, Ke
         }
         try {
             ArrayList<String> file = Utils.loadFileAsArrayList(new FileInputStream(Constants.DIR+"/Index.wld"));
-            if(!file.get(0).equals("A1000"))
+            if(!file.get(0).equals(Constants.GAME_VERSION))
                 updateDirectory(file.get(0));
         } catch (IOException e){
             e.printStackTrace();

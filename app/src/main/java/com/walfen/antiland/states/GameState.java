@@ -2,7 +2,6 @@ package com.walfen.antiland.states;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 
@@ -75,9 +74,9 @@ public class GameState extends State {
         uiManager.createJoystick();
         uiManager.addUIObject(new UIDecoration(16, 16, 144, 144, Assets.player_neutral));
         uiManager.addUIObject(new BarA(handler,192,32,600, Assets.hp_bar,
-                () -> handler.getPlayer().getMaxHP(), () -> handler.getPlayer().getHealth()));
+                () -> handler.getPlayer().getMaxHp(), () -> handler.getPlayer().getHealth()));
         uiManager.addUIObject(new BarA(handler, 192, 102, 512, Assets.mp_bar,
-                () -> handler.getPlayer().getMaxMP(), () -> handler.getPlayer().getMp()));
+                () -> handler.getPlayer().getMaxMp(), () -> handler.getPlayer().getMp()));
         uiManager.addUIObject(new BarA(handler, Constants.SCREEN_WIDTH/2.f-512, Constants.SCREEN_HEIGHT-50,
                 1024, 48, Assets.mp_bar, () -> handler.getPlayer().getCurrLevelMaxXp(),
                 () -> handler.getPlayer().getCurrLevelXp()));

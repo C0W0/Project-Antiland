@@ -14,12 +14,12 @@ public class SimpleSword extends Weapon {
 
     @Override
     public void onEquip(Player player) {
-        player.changeBaseDamage(1);
+        player.changePhysicalDamage(1);
     }
 
     @Override
     public void onRemove() {
-        handler.getPlayer().changeBaseDamage(-1);
+        handler.getPlayer().changePhysicalDamage(-1);
     }
 
     @Override

@@ -35,7 +35,7 @@ public class Slime extends Active {
         currentAnimation = idle;
         health = 1;
         currentAnimation = leftMove;
-        baseDamage = 1; //no effect, as slime bash is hard coded to do only 1 damage
+        physicalDamage = 1; //no effect, as slime bash is hard coded to do only 1 damage
         defence = 0;
         level = 1;
     }
