@@ -93,6 +93,15 @@ public class Player extends Creature{
                 inventory.addItem(Item.items[Utils.parseInt(line[0])].
                         addToInv(Utils.parseInt(line[1])));
             }
+            tokens = Utils.loadFileAsArrayList(new FileInputStream(playerFile));
+            String[] equips = tokens.get(4).split("\\s+");
+            for(int i = 0; i < 4; i++){
+                if(!equips[i].equals("-1")) {
+                    Equipment e = (Equipment) Item.items[Utils.parseInt(equips[i])].addToInv(1);
+                    e.onEquip(this);
+                    equip(e.getId(), i);
+                }
+            }
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -216,6 +225,14 @@ public class Player extends Creature{
     }
 
     public void saveMap(String path) throws IOException{
+        /*
+        IMPORTANT: player.wld format (update here):
+        x y
+        hp maxHp
+        mp maxMp
+        level exp
+        weaponId, auxiliaryId, armourId, bootsId
+         */
         File playerFile = new File(path+"/player/player.wld");
         File inventoryFile = new File(path+"/player/inventory.wld");
         playerFile.delete();
@@ -225,6 +242,12 @@ public class Player extends Creature{
         editor.println(health+" "+maxHP);
         editor.println(mp+" "+maxMP);
         editor.println(level+" "+currLevelXp);
+        for(Equipment e: inventory.getEquipments()) {
+            if (e != null)
+                editor.print(e.getId() + " ");
+            else
+                editor.print(-1 + " ");
+        }
         editor.close();
         editor = new PrintWriter(inventoryFile);
         for(Item i: inventory.getInventoryItems()){

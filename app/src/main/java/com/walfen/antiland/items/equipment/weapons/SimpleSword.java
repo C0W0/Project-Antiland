@@ -2,6 +2,7 @@ package com.walfen.antiland.items.equipment.weapons;
 
 import android.graphics.Bitmap;
 
+import com.walfen.antiland.entities.creatures.Player;
 import com.walfen.antiland.items.equipment.Equipment;
 
 public class SimpleSword extends Weapon {
@@ -10,9 +11,10 @@ public class SimpleSword extends Weapon {
         super(texture, name, id);
     }
 
+
     @Override
-    public void onEquip() {
-        handler.getPlayer().changeBaseDamage(1);
+    public void onEquip(Player player) {
+        player.changeBaseDamage(1);
     }
 
     @Override

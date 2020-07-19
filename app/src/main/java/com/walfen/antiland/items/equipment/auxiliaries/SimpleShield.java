@@ -2,6 +2,7 @@ package com.walfen.antiland.items.equipment.auxiliaries;
 
 import android.graphics.Bitmap;
 
+import com.walfen.antiland.entities.creatures.Player;
 import com.walfen.antiland.items.equipment.Equipment;
 
 public class SimpleShield extends Auxiliary {
@@ -9,9 +10,10 @@ public class SimpleShield extends Auxiliary {
         super(texture, name, id);
     }
 
+
     @Override
-    protected void onEquip() {
-        handler.getPlayer().changeDefence(1);
+    public void onEquip(Player player) {
+        player.changeDefence(1);
     }
 
     @Override
