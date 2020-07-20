@@ -46,7 +46,7 @@ public class Player extends Creature{
         super(Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT, 0);
 
         strength = new SimplePlayerSkill(handler, 10, () -> {physicalDamage += strength.getLevel(); maxHp += 1;});
-        endurance = new SimplePlayerSkill(handler, 10, () -> maxHp += endurance.getLevel());
+        endurance = new SimplePlayerSkill(handler, 10, () -> {maxHp += endurance.getLevel(); defence += 1;});
         agility = new SimplePlayerSkill(handler, 10, () -> speed += (int)Math.floor(agility.getLevel()/2.f+0.5));
         knowledge = new SimplePlayerSkill(handler, 10, () -> {maxMp += knowledge.getLevel(); magicalDamage += 1;});
         intelligence = new SimplePlayerSkill(handler, 10, () -> magicalDamage += (int)Math.floor(intelligence.getLevel()/2.f+0.5));
