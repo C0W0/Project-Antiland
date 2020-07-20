@@ -4,7 +4,9 @@ package com.walfen.antiland.entities;
 
 
 import android.graphics.Canvas;
+import android.graphics.Rect;
 
+import com.walfen.antiland.Constants;
 import com.walfen.antiland.GameHierarchyElement;
 import com.walfen.antiland.Handler;
 import com.walfen.antiland.entities.creatures.Player;
@@ -59,8 +61,16 @@ public class EntityManager implements GameHierarchyElement {
 
     @Override
     public void draw(Canvas canvas) {
-        for(Entity e: entities)
+        for(Entity e: entities) {
+            Rect r = e.getCollisionBounds(0 ,0);
+            int xOffset = (int) handler.getGameCamera().getxOffset();
+            int yOffset = (int) handler.getGameCamera().getyOffset();
+            if(r.right - xOffset < -128 || r.left - xOffset > Constants.SCREEN_WIDTH+128 ||
+            r.bottom - yOffset < -128 || r.top - yOffset > Constants.SCREEN_HEIGHT+128){
+                continue;
+            }
             e.draw(canvas);
+        }
     }
 
     //getters and setters

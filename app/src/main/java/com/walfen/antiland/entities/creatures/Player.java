@@ -15,7 +15,9 @@ import com.walfen.antiland.inventory.Fabricator;
 import com.walfen.antiland.inventory.Inventory;
 import com.walfen.antiland.items.Item;
 import com.walfen.antiland.items.equipment.Equipment;
+import com.walfen.antiland.mission.Mission;
 import com.walfen.antiland.mission.MissionManager;
+import com.walfen.antiland.mission.killing.KillTracker;
 import com.walfen.antiland.untils.Utils;
 
 import java.io.File;
@@ -36,8 +38,11 @@ public class Player extends Creature{
     private Inventory inventory;
     private Fabricator fabricator;
 
-    //player stats
+    //mission system
     private MissionManager missionManager;
+    private KillTracker tracker;
+
+    //player stats
     private int currLevelXp;
     private SimplePlayerSkill strength, endurance, agility, knowledge, intelligence;
 
@@ -122,12 +127,14 @@ public class Player extends Creature{
             e.printStackTrace();
         }
         missionManager = new MissionManager(handler);
+        tracker = new KillTracker(handler);
 
         //only for temp. use
 
 //        missionManager.addMission(Mission.collect10Woods.getId());
 //        missionManager.addMission(Mission.collect5Woods.getId());
 //        missionManager.addMission(Mission.collect10Apples.getId());
+//        missionManager.addMission(Mission.cutDown5Trees.getId());
     }
 
     private void checkAttacks(){
@@ -218,6 +225,7 @@ public class Player extends Creature{
 
         //missions
         missionManager.update();
+        tracker.update();
 
     }
 
@@ -322,5 +330,9 @@ public class Player extends Creature{
         }else {
             currLevelXp += xp;
         }
+    }
+
+    public KillTracker getTracker() {
+        return tracker;
     }
 }

@@ -86,7 +86,6 @@ public abstract class RangedAttacks extends Attacks {
             int left = (int)(r.left - handler.getGameCamera().getxOffset());
             int top = (int)(r.top - handler.getGameCamera().getyOffset());
             a.draw(canvas, new Rect(left, top, left+r.width(), top+r.height()));
-//            canvas.drawRect(r, new Paint());
         }
     }
 

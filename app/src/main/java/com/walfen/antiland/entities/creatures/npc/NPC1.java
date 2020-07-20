@@ -30,7 +30,7 @@ public class NPC1 extends NPC {
 
     @Override
     protected void interact() {
-        assignMission(1);
+        assignMission(3);
     }
 
     @Override

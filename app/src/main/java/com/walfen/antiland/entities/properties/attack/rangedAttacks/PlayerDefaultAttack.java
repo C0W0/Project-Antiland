@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Matrix;
 
 import com.walfen.antiland.Handler;
+import com.walfen.antiland.entities.Entity;
 import com.walfen.antiland.gfx.Animation;
 import com.walfen.antiland.gfx.Assets;
 
@@ -17,6 +18,33 @@ public class PlayerDefaultAttack extends RangedAttacks {
     public PlayerDefaultAttack(Handler handler, IntSupplier damageSupplier) {
         super(handler, 1, 1, 256, 10);
         this.damageSupplier = damageSupplier;
+    }
+
+    @Override
+    public void checkAttackCollision() {
+        for(RangedAttackCollision r: collisionQueue){
+            if(r.getDistance() >= range){
+                r.hit();
+                continue;
+            }
+            for(Entity e : handler.getWorld().getEntityManager().getEntities()){
+                if(r.intersect(e.getCollisionBounds(0,0))) {
+                    if ((carrier == null && e.equals(handler.getPlayer())) || e.equals(carrier))
+                        continue;
+                    if (carrier != null) {
+                        if (e.getFaction() != carrier.getFaction()) {
+                            e.receiveDamage(baseDamage);
+                            r.hit();
+                        }
+                    }
+                    if (carrier == null) {
+                        handler.getPlayer().getTracker().addTracking(e);
+                        e.receiveDamage(baseDamage);
+                        r.hit();
+                    }
+                }
+            }
+        }
     }
 
     @Override
