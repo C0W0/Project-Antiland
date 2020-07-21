@@ -62,7 +62,8 @@ public class MenuState extends State {
 
     private void createNewSaveDocument(){
         String tileName = "tiles.wld", entityName = "entity.wld",
-                playerName = "player.wld", inventoryName = "inventory.wld";
+                playerName = "player.wld", inventoryName = "inventory.wld",
+        missionName = "missions.wld";
         try {
             Utils.deleteDirectoryFiles(new File(Constants.DIR+"/main"));
             Utils.deleteDirectoryFiles(new File(Constants.DIR+"/auto"));
@@ -72,10 +73,12 @@ public class MenuState extends State {
             copyFileFromAssets(Constants.DIR+"/main", entityName);
             copyFileFromAssets(Constants.DIR+"/main/player", playerName);
             copyFileFromAssets(Constants.DIR+"/main/player", inventoryName);
+            copyFileFromAssets(Constants.DIR+"/main/player", missionName);
             copyFileFromAssets(Constants.DIR+"/auto", tileName);
             copyFileFromAssets(Constants.DIR+"/auto", entityName);
             copyFileFromAssets(Constants.DIR+"/auto/player", playerName);
             copyFileFromAssets(Constants.DIR+"/auto/player", inventoryName);
+            copyFileFromAssets(Constants.DIR+"/auto/player", missionName);
         }catch (IOException e){
             uiManager.popUpMessage("Game file corrupted, please re-install the game", () -> {});
             return;
@@ -106,7 +109,6 @@ public class MenuState extends State {
             file.delete();
             file.createNewFile();
         }
-//        System.out.println(b);
         PrintWriter writer = new PrintWriter(file);
         for(String str: tiles)
             writer.println(str);

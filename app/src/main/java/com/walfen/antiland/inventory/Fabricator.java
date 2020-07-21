@@ -264,7 +264,6 @@ public class Fabricator implements TouchEventListener {
         buttonJustPressed = true;
         lastSelection = -1;
         inventory.setActive(!active);
-        System.out.println("called");
     }
 
     public void setActive(boolean active) {

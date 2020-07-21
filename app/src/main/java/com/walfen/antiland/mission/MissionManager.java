@@ -13,6 +13,7 @@ import com.walfen.antiland.Constants;
 import com.walfen.antiland.Handler;
 import com.walfen.antiland.gfx.Assets;
 import com.walfen.antiland.gfx.ImageEditor;
+import com.walfen.antiland.mission.killing.KillTracker;
 import com.walfen.antiland.ui.TouchEventListener;
 import com.walfen.antiland.ui.buttons.UIImageButton;
 import com.walfen.antiland.untils.Utils;
@@ -56,15 +57,18 @@ public class MissionManager implements TouchEventListener {
     }
 
     public void addMission(int missionID){
+        addMission(Mission.missions[missionID]);
+    }
+
+    public void addMission(Mission mission){
         for(int i = 0; i < missions.size(); i++){
-            if(missions.get(i).getId() == missionID){
+            if(missions.get(i).getId() == mission.getId()){
                 return;
             }
         }
-        Mission tempMission = Mission.missions[missionID];
-        tempMission.setHandler(handler);
-        tempMission.setStatus(1);
-        missions.add(tempMission);
+        mission.setHandler(handler);
+        mission.setStatus(1);
+        missions.add(mission);
     }
 
     @Override
@@ -176,5 +180,9 @@ public class MissionManager implements TouchEventListener {
     public void setActive(boolean active) {
         buttonJustPressed = true;
         this.active = active;
+    }
+
+    public ArrayList<Mission> getMissions() {
+        return missions;
     }
 }

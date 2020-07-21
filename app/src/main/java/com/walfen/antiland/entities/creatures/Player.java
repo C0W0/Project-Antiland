@@ -58,6 +58,7 @@ public class Player extends Creature{
 
         File playerFile = new File(path+"/player/player.wld");
         File inventoryFile = new File(path+"/player/inventory.wld");
+        File missionFile = new File(path+"/player/missions.wld");
         ArrayList<String> tokens;
         physicalDamage = 1;
         magicalDamage = 0;
@@ -81,6 +82,9 @@ public class Player extends Creature{
             e.printStackTrace();
         }
 
+        for(int i = 2; i <= level; i++)
+            maxHp += Math.floor((level/10.f)+1);
+
 
         this.handler = handler;
 
@@ -100,6 +104,7 @@ public class Player extends Creature{
         rightAnim = new Animation(0.15f, Assets.player_right);
         leftAnim = new Animation(0.15f, Assets.player_left);
         neutralAnim = new Animation(0.15f, new Bitmap[]{Assets.player_neutral});
+        currentAnimation = neutralAnim;
 
 
         attack = new PlayerDefaultAttack(handler, () -> physicalDamage);
@@ -126,8 +131,26 @@ public class Player extends Creature{
         }catch (IOException e){
             e.printStackTrace();
         }
+
+
         missionManager = new MissionManager(handler);
         tracker = new KillTracker(handler);
+        try{
+            tokens = Utils.loadFileAsArrayList(new FileInputStream(missionFile));
+            for(String str: tokens){
+                String[] line = str.split("\\s+");
+                Mission tempMission = Mission.missions[Utils.parseInt(line[0])];
+                int[] progress = new int[line.length-1];
+                for(int i = 0; i < progress.length; i++){
+                    progress[i] = Utils.parseInt(line[i+1]);
+                }
+                tempMission.setProgress(progress, tracker);
+                missionManager.addMission(tempMission);
+            }
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
 
         //only for temp. use
 
@@ -206,6 +229,9 @@ public class Player extends Creature{
     @Override
     public void update() {
 
+        if(health > maxHp)
+            health = maxHp;
+
         //animation
         setCurrentAnimation();
         currentAnimation.update();
@@ -259,6 +285,7 @@ public class Player extends Creature{
          */
         File playerFile = new File(path+"/player/player.wld");
         File inventoryFile = new File(path+"/player/inventory.wld");
+        File missionFile = new File(path+"/player/missions.wld");
         playerFile.delete();
         playerFile.createNewFile();
         PrintWriter editor = new PrintWriter(playerFile);
@@ -277,9 +304,24 @@ public class Player extends Creature{
                 editor.print(-1 + " ");
         }
         editor.close();
+        /*
+        inventory.wld format
+        itemId count
+         */
         editor = new PrintWriter(inventoryFile);
-        for(Item i: inventory.getInventoryItems()){
+        for(Item i: inventory.getInventoryItems())
             editor.println(i.getId()+" "+i.getCount());
+        editor.close();
+        /*
+        missions.wld format
+        missionId progress[]
+         */
+        editor = new PrintWriter(missionFile);
+        for(Mission m: missionManager.getMissions()){
+            editor.print(m.getId());
+            for(int i: m.getProgress())
+                editor.print(" "+i);
+            editor.println();
         }
         editor.close();
     }

@@ -9,6 +9,7 @@ import com.walfen.antiland.items.Item;
 import com.walfen.antiland.mission.colloector.CollectApple;
 import com.walfen.antiland.mission.colloector.CollectWood;
 import com.walfen.antiland.mission.killing.CutTrees;
+import com.walfen.antiland.mission.killing.KillTracker;
 
 public abstract class Mission implements Cloneable{
 
@@ -103,6 +104,14 @@ public abstract class Mission implements Cloneable{
 
     public String getDesc() {
         return desc;
+    }
+
+    public void setProgress(int[] progress) {
+        this.progress = progress;
+    }
+
+    public void setProgress(int[] progress, KillTracker tracker){
+        setProgress(progress);
     }
 
     public int[] getProgress() {

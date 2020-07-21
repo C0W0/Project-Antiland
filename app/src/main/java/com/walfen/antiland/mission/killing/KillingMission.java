@@ -39,8 +39,19 @@ public abstract class KillingMission extends Mission {
     @Override
     public void setHandler(Handler handler) {
         super.setHandler(handler);
+        if(handler.getPlayer() == null)
+            return;
         for(int i = 0; i < beginningCount.length; i++){
             beginningCount[i] = handler.getPlayer().getTracker().trackKillCount(targetEntityID[i]);
+        }
+    }
+
+    @Override
+    public void setProgress(int[] progress, KillTracker tracker) {
+        super.setProgress(progress);
+        for(int i = 0; i < beginningCount.length; i++){
+            tracker.trackKillCount(targetEntityID[i]);
+            beginningCount[i] = -progress[i];
         }
     }
 }
