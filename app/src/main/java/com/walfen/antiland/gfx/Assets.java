@@ -67,7 +67,7 @@ public class Assets {
         water[2] = townTiles.crop(width*2,height*4,width,height);
         water[3] = townTiles.crop(width*3,height*4,width,height);
         houseTiles = new Bitmap[18];
-        houseTiles = loadSpriteAsArray(new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.resident_test_1)), 6, 3, 128, 128);
+        houseTiles = loadSpriteAsArray(new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.resident_test_2)), 6, 3, 128, 128);
         
         player_down = new Bitmap[2];
         player_down[0] = sheet.crop(0,0,width,height);

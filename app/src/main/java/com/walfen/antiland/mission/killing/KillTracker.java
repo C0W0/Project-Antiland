@@ -16,7 +16,7 @@ public class KillTracker implements GameHierarchyElement {
     private Entity topEntity;
     private Handler handler;
 
-    private final long TRACK_TIME = 5*1000;
+    private final long TRACK_TIME = 15*1000;
 
     public KillTracker(Handler handler){
         this.handler = handler;
