@@ -104,7 +104,7 @@ public class GameState extends State {
             player.saveMap(Constants.DIR+"/main");
         }catch (IOException e){
             e.printStackTrace();
-            uiManager.popUpMessage("Game file corrupted, please re-install the game", () -> {});
+            uiManager.popUpMessage("Game file corrupted, please re-install the game");
         }
     }
 

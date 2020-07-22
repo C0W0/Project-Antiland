@@ -1,7 +1,6 @@
 package com.walfen.antiland.ui;
 
 
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -10,10 +9,7 @@ import android.view.MotionEvent;
 
 import com.walfen.antiland.Constants;
 import com.walfen.antiland.Handler;
-import com.walfen.antiland.gfx.Assets;
 import com.walfen.antiland.ui.buttons.TextButton;
-import com.walfen.antiland.ui.buttons.UIImageButton;
-import com.walfen.antiland.ui.conversation.Conversation;
 import com.walfen.antiland.ui.conversation.ConversationBox;
 import com.walfen.antiland.ui.joystick.Joystick;
 import com.walfen.antiland.ui.keyIO.KeyIOManager;
@@ -118,26 +114,38 @@ public class UIManager implements TouchEventListener{
         popUp.activatePopup(message, effect);
     }
 
+    public void popUpMessage(String message){
+        popUp.activatePopup(message);
+    }
+
     private static class PopUp extends UIObject{
 
         private String message;
         private ClickListener effect;
-        private TextButton proceedButton, cancelButton;
+        private TextButton proceedButton, cancelButton, okButton;
+
+        private boolean hasEffect;
 
         private PopUp(int width, int height) {
             super(Constants.SCREEN_WIDTH/2.f-width/2.f, Constants.SCREEN_HEIGHT/2.f-height/2.f
                     , width, height);
             active = false;
+            hasEffect = true;
             proceedButton = new TextButton(x+64, y+height-48, 33, "Yes", this::proceed);
             cancelButton = new TextButton(x+width-64, y+height-48, 33, "No", this::removePopup);
+            okButton = new TextButton(x+width/2.f, y+height-48,33,  "Ok", this::removePopup);
         }
 
         @Override
         public void onTouchEvent(MotionEvent event) {
             if(!active)
                 return;
-            proceedButton.onTouchEvent(event);
-            cancelButton.onTouchEvent(event);
+            if(hasEffect) {
+                proceedButton.onTouchEvent(event);
+                cancelButton.onTouchEvent(event);
+            }else {
+                okButton.onTouchEvent(event);
+            }
         }
 
         @Override
@@ -158,8 +166,12 @@ public class UIManager implements TouchEventListener{
                 paint.getTextBounds(text.get(i), 0, text.get(i).length(), r);
                 canvas.drawText(text.get(i), Constants.SCREEN_WIDTH/2.f-r.width()/2.f, y+200+(h+3)*i, paint);
             }
-            proceedButton.draw(canvas);
-            cancelButton.draw(canvas);
+            if(hasEffect) {
+                proceedButton.draw(canvas);
+                cancelButton.draw(canvas);
+            }else {
+                okButton.draw(canvas);
+            }
         }
 
         private void proceed(){
@@ -173,8 +185,16 @@ public class UIManager implements TouchEventListener{
 
         private void activatePopup(String message, ClickListener effect){
             active = true;
+            hasEffect = true;
             this.message = message;
             this.effect = effect;
+        }
+
+        private void activatePopup(String message){
+            active = true;
+            hasEffect = false;
+            this.message = message;
+            effect = () -> {};
         }
     }
 

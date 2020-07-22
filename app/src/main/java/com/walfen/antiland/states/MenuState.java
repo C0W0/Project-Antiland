@@ -37,7 +37,7 @@ public class MenuState extends State {
         uiManager.addUIObject(new TextButton(Constants.SCREEN_WIDTH/2.f, Constants.SCREEN_HEIGHT/2.f-100,
                 40, "from save file", Color.BLACK, () -> startGameFromPath(Constants.DIR+"/main")));
         uiManager.addUIObject(new TextButton(Constants.SCREEN_WIDTH/2.f, Constants.SCREEN_HEIGHT/2.f+100,
-                40, "from autosave file", Color.BLACK, () -> System.out.println("loading from autosave file")));
+                40, "from autosave file", Color.BLACK, () -> uiManager.popUpMessage("auto save not implemented")));
     }
 
     @Override
@@ -80,7 +80,7 @@ public class MenuState extends State {
             copyFileFromAssets(Constants.DIR+"/auto/player", inventoryName);
             copyFileFromAssets(Constants.DIR+"/auto/player", missionName);
         }catch (IOException e){
-            uiManager.popUpMessage("Game file corrupted, please re-install the game", () -> {});
+            uiManager.popUpMessage("Game file corrupted, please re-install the game");
             return;
         }
         startGameFromPath(Constants.DIR+"/main");
@@ -92,7 +92,7 @@ public class MenuState extends State {
             State.setStateAndInit(gs, path);
         }catch (Exception e){
             e.printStackTrace();
-            uiManager.popUpMessage("Save document not found, please create a new save document", () -> {});
+            uiManager.popUpMessage("Save document not found, please create a new save document");
         }
     }
 
