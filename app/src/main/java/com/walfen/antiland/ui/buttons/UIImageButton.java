@@ -46,7 +46,8 @@ public class UIImageButton extends UIObject {
 
     @Override
     public void onTouchEvent(MotionEvent event) {
-
+        if(!active)
+            return;
         if(event.getActionMasked() == MotionEvent.ACTION_DOWN ||
                 event.getActionMasked() == MotionEvent.ACTION_POINTER_DOWN) {
             for(int i = 0; i < event.getPointerCount(); i++)
@@ -60,9 +61,6 @@ public class UIImageButton extends UIObject {
     }
 
     public void onClick() {
-        if(!active){
-            return;
-        }
         clicker.onClick();
     }
 }

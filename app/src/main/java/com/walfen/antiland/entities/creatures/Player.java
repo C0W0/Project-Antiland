@@ -4,7 +4,9 @@ package com.walfen.antiland.entities.creatures;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import android.view.MotionEvent;
 
+import com.walfen.antiland.Constants;
 import com.walfen.antiland.Handler;
 import com.walfen.antiland.entities.properties.attack.rangedAttacks.PlayerDefaultAttack;
 import com.walfen.antiland.entities.properties.attack.rangedAttacks.RangedAttacks;
@@ -18,6 +20,9 @@ import com.walfen.antiland.items.equipment.Equipment;
 import com.walfen.antiland.mission.Mission;
 import com.walfen.antiland.mission.MissionManager;
 import com.walfen.antiland.mission.killing.KillTracker;
+import com.walfen.antiland.ui.ChangeEvent;
+import com.walfen.antiland.ui.ClickListener;
+import com.walfen.antiland.ui.buttons.UIImageButton;
 import com.walfen.antiland.untils.Utils;
 
 import java.io.File;
@@ -45,6 +50,10 @@ public class Player extends Creature{
     //player stats
     private int currLevelXp;
     private SimplePlayerSkill strength, endurance, agility, knowledge, intelligence;
+
+    //environment interaction
+    private ChangeEvent event;
+    private UIImageButton interactButton;
 
 
     public Player(Handler handler, String path) {
@@ -150,6 +159,10 @@ public class Player extends Creature{
         }catch (IOException e){
             e.printStackTrace();
         }
+        interactButton = new UIImageButton(Constants.SCREEN_WIDTH-160, 576, 128, 128,
+                new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, this::onInteract);
+        event = Constants.EMPTY_EVENT;
+        interactButton.setActive(false);
 
 
         //only for temp. use
@@ -269,6 +282,7 @@ public class Player extends Creature{
     }
 
     public void postdraw(Canvas canvas){
+        interactButton.draw(canvas);
         inventory.draw(canvas);
         missionManager.draw(canvas);
         fabricator.draw(canvas);
@@ -342,6 +356,16 @@ public class Player extends Creature{
         inventory.getEquipments()[location] = null;
     }
 
+    public void onInteract(){
+        event.onChange();
+    }
+
+    public KillTracker getTracker() {
+        return tracker;
+    }
+
+    //getters and setters
+
     public Inventory getInventory() {
         return inventory;
     }
@@ -374,7 +398,19 @@ public class Player extends Creature{
         }
     }
 
-    public KillTracker getTracker() {
-        return tracker;
+    public void setInteractionEvent(ChangeEvent event) {
+        this.event = event;
+    }
+
+    public ChangeEvent getInteractionEvent() {
+        return event;
+    }
+
+    public UIImageButton getInteractButton() {
+        return interactButton;
+    }
+
+    public void setInterButtonVisibility(boolean visible){
+        interactButton.setActive(visible);
     }
 }

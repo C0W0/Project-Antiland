@@ -7,6 +7,7 @@ import android.graphics.Paint;
 
 import com.walfen.antiland.gfx.Assets;
 import com.walfen.antiland.gfx.ImageEditor;
+import com.walfen.antiland.ui.ChangeEvent;
 
 public class Constants {
     public static int SCREEN_WIDTH;
@@ -30,6 +31,7 @@ public class Constants {
 
     public static String DIR;
 
+    public static final ChangeEvent EMPTY_EVENT = () -> {};
 
     public static Paint getRenderPaint(){
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);

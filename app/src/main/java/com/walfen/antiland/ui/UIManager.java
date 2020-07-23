@@ -5,11 +5,13 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.os.SystemClock;
 import android.view.MotionEvent;
 
 import com.walfen.antiland.Constants;
 import com.walfen.antiland.Handler;
 import com.walfen.antiland.ui.buttons.TextButton;
+import com.walfen.antiland.ui.buttons.UIImageButton;
 import com.walfen.antiland.ui.conversation.ConversationBox;
 import com.walfen.antiland.ui.joystick.Joystick;
 import com.walfen.antiland.ui.keyIO.KeyIOManager;
@@ -21,8 +23,7 @@ public class UIManager implements TouchEventListener{
 
     private Handler handler;
     private ArrayList<UIObject> uiObjects;
-    private Joystick movement;
-    private Joystick attack;
+    private Joystick movement, attack;
     private boolean hide;
     private ConversationBox convBox;
     private PopUp popUp;
@@ -78,6 +79,7 @@ public class UIManager implements TouchEventListener{
             handler.getPlayer().getInventory().onTouchEvent(event);
             handler.getPlayer().getFabricator().onTouchEvent(event);
             handler.getPlayer().getMissionManager().onTouchEvent(event);
+            handler.getPlayer().getInteractButton().onTouchEvent(event);
         }catch (ClassCastException | NullPointerException ignored){}
     }
 
@@ -104,6 +106,7 @@ public class UIManager implements TouchEventListener{
 
     public void hideUI(){
         hide = true;
+        movement.onTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_UP, 0, 0, 0));
     }
 
     public void showUI(){

@@ -152,6 +152,14 @@ public class MissionManager implements TouchEventListener {
         }
     }
 
+    public boolean hasMission(int missionId){
+        for(Mission m: missions)
+            if(m.getId() == missionId)
+                return true;
+        return false;
+    }
+
+    //ui
     private int computeSelectedMission(float x, float y){
         if(x < 20.f/512*misWidth+xDispute || x > 323.f/512*misWidth+xDispute)
             return scroll;

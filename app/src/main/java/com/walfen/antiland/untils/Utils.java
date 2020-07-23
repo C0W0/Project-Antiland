@@ -171,6 +171,10 @@ public class Utils {
         return new RectF(src.left, src.top, src.right, src.bottom);
     }
 
+    public static Point getCenter(Rect src){
+        return new Point(src.left+src.width()/2, src.top+src.height()/2);
+    }
+
     public static class LinearFunction{
 
         private final float m, b;
