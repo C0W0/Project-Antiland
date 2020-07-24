@@ -24,8 +24,8 @@ public class UIImageButton extends UIObject {
         super(x, y, width, height);
         this.clicker = clicker;
         this.images = new Bitmap[2];
-        this.images[0] = ImageEditor.scaleBitmap(images[0], width, height);
-        this.images[1] = ImageEditor.scaleBitmap(images[1], width, height);
+        this.images[0] = ImageEditor.scaleBitmapForced(images[0], width, height);
+        this.images[1] = ImageEditor.scaleBitmapForced(images[1], width, height);
     }
 
     @Override
