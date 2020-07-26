@@ -45,7 +45,7 @@ public class SkillButton extends UIImageButton{
         Rect r = new Rect();
         Paint paint = new Paint();
         paint.setTextSize(45);
-        String sec = Integer.toString(skill.getCooldownSecond());
+        String sec = Integer.toString((int)(skill.getCooldownSecond()+0.5));
         paint.getTextBounds(sec, 0, sec.length(), r);
         canvas.drawText(sec, x+width/2.f-r.width()/2.f, y+height/2.f+r.height()/2.f, paint);
     }

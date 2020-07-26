@@ -38,10 +38,13 @@ public class PlayerAroundAttack extends RangedAttacks {
     public void checkAttackCollision() {
         if(collisionQueue.size() == 0)
             return;
-        for(Entity e: handler.getWorld().getEntityManager().getEntities())
-            if(e.getCollisionBounds(0, 0).intersect(collisionQueue.get(0).getBound()) &&
-            !e.equals(handler.getPlayer()))
+        for(Entity e: handler.getWorld().getEntityManager().getEntities()) {
+            if (e.getCollisionBounds(0, 0).intersect(collisionQueue.get(0).getBound()) &&
+                    !e.equals(handler.getPlayer())) {
+                handler.getPlayer().getTracker().addTracking(e);
                 e.receiveDamage(baseDamage);
+            }
+        }
 
         collisionQueue.remove(0);
     }

@@ -12,6 +12,7 @@ import com.walfen.antiland.entities.properties.attack.rangedAttacks.PlayerDefaul
 import com.walfen.antiland.entities.properties.attack.rangedAttacks.RangedAttacks;
 import com.walfen.antiland.entities.properties.skills.Skill;
 import com.walfen.antiland.entities.properties.skills.active.ActiveSkill;
+import com.walfen.antiland.entities.properties.skills.active.SharpWind;
 import com.walfen.antiland.entities.properties.skills.active.SwordStorm;
 import com.walfen.antiland.entities.properties.skills.passive.SimplePlayerSkill;
 import com.walfen.antiland.gfx.Animation;
@@ -73,7 +74,7 @@ public class Player extends Creature{
         agility = new SimplePlayerSkill(handler, 10, () -> speed += (int)Math.floor(agility.getLevel()/2.f+0.5));
         knowledge = new SimplePlayerSkill(handler, 10, () -> {maxMp += knowledge.getLevel(); magicalDamage += 1;});
         intelligence = new SimplePlayerSkill(handler, 10, () -> magicalDamage += (int)Math.floor(intelligence.getLevel()/2.f+0.5));
-        skillTest = new SwordStorm(handler);
+        skillTest = new SharpWind(handler);
         skillTest.setLevel(1);
 
         File playerFile = new File(path+"/player/player.wld");
@@ -427,6 +428,10 @@ public class Player extends Creature{
 
     public void setAttack(RangedAttacks attack) {
         this.attack = attack;
+    }
+
+    public RangedAttacks getAttack() {
+        return attack;
     }
 
     public void resetAttack(){

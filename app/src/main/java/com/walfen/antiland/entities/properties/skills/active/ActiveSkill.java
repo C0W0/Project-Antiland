@@ -40,7 +40,16 @@ public abstract class ActiveSkill extends Skill {
         return icon;
     }
 
-    public int getCooldownSecond(){
-        return Math.max((int)((activeCooldown - activeTimer)/1000), 0);
+    public float getCooldownSecond(){
+        return Math.max((activeCooldown - activeTimer)/1000.f, 0);
+    }
+
+    @Override
+    public void setLevel(int level) {
+        int d = level-this.level;
+        for(int i = 0; i < d; i++){
+            this.level ++;
+            onLevelUp();
+        }
     }
 }

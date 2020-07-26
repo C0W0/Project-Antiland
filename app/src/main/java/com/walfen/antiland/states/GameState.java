@@ -94,8 +94,7 @@ public class GameState extends State {
                 new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, () -> handler.getPlayer().getInventory().setActive()));
 //        skillButtons[0] = new SkillButton(256, 512, 128);
 //        uiManager.addUIObject(skillButtons[0]);
-//        uiManager.addUIObject(new UIImageButton(512, 640, 128, 128,
-//                new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, () -> skillButtons[0].setSkill(player.getSkillTest())));
+//        skillButtons[0].setSkill(player.getSkillTest());
 
 //        uiManager.hideUI();
 //        ArrayList<Conversation> c = new ArrayList<>();

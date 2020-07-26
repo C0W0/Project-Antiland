@@ -13,7 +13,7 @@ import java.util.function.IntSupplier;
 
 public class PlayerDefaultAttack extends RangedAttacks {
 
-    private IntSupplier damageSupplier;
+    protected IntSupplier damageSupplier;
 
     public PlayerDefaultAttack(Handler handler, IntSupplier damageSupplier) {
         super(handler, 1, 1, 256, 10);
