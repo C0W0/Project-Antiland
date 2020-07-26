@@ -8,8 +8,10 @@ import android.view.MotionEvent;
 import com.walfen.antiland.Constants;
 import com.walfen.antiland.Handler;
 import com.walfen.antiland.entities.creatures.Player;
+import com.walfen.antiland.entities.properties.skills.active.SwordStorm;
 import com.walfen.antiland.gfx.Assets;
 import com.walfen.antiland.ui.BarA;
+import com.walfen.antiland.ui.buttons.SkillButton;
 import com.walfen.antiland.ui.decorative.UIDecoration;
 import com.walfen.antiland.ui.UIManager;
 import com.walfen.antiland.ui.buttons.UIImageButton;
@@ -22,9 +24,11 @@ public class GameState extends State {
 
     private World world;
     private Player player;
+    private SkillButton[] skillButtons;
 
     public GameState(Handler handler){
         super(handler);
+        skillButtons = new SkillButton[3];
     }
 
     @Override
@@ -84,12 +88,15 @@ public class GameState extends State {
                 () -> Integer.toString(handler.getPlayer().getLevel()), 40, Constants.TEXT_COLOUR));
         uiManager.addUIObject(new UIImageButton(64, 224, 128, 128,
                 new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, this::saveGame));
-//        uiManager.addUIObject(new UIImageButton(64, 256, 128, 128,
-//                new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, () -> handler.getPlayer().getFabricator().setActive()));
         uiManager.addUIObject(new UIImageButton(32, 848, 128, 128,
                 new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, () -> handler.getPlayer().getMissionManager().setActive()));
         uiManager.addUIObject(new UIImageButton(32, 624, 128, 128,
                 new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, () -> handler.getPlayer().getInventory().setActive()));
+//        skillButtons[0] = new SkillButton(256, 512, 128);
+//        uiManager.addUIObject(skillButtons[0]);
+//        uiManager.addUIObject(new UIImageButton(512, 640, 128, 128,
+//                new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, () -> skillButtons[0].setSkill(player.getSkillTest())));
+
 //        uiManager.hideUI();
 //        ArrayList<Conversation> c = new ArrayList<>();
 //        c.add(new Conversation("test build 1 wetega reeeeeeee eeeeeeee eee eeeeee eee eeeeee rerrr rrrrrrrr rrr rrrrrrr r rrrrrr rrrrrrrrrr rrr a", Assets.player_neutral, false));
@@ -110,5 +117,9 @@ public class GameState extends State {
 
     public Player getPlayer(){
         return player;
+    }
+
+    public SkillButton[] getSkillButtons() {
+        return skillButtons;
     }
 }

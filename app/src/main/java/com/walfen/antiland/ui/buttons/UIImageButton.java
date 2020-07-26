@@ -18,7 +18,7 @@ public class UIImageButton extends UIObject {
 
     protected Bitmap[] images;
     protected ClickListener clicker;
-    private int index = 0;
+    protected int index = 0;
 
     public UIImageButton(float x, float y, int width, int height, Bitmap[] images, ClickListener clicker) {
         super(x, y, width, height);

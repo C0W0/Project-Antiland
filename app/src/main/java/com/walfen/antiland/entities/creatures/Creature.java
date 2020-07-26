@@ -160,6 +160,14 @@ public abstract class Creature extends Entity {
         this.yMove = yMove;
     }
 
+    public int getPhysicalDamage() {
+        return physicalDamage;
+    }
+
+    public int getMagicalDamage() {
+        return magicalDamage;
+    }
+
     public void setPhysicalDamage(int physicalDamage) {
         this.physicalDamage = physicalDamage;
     }

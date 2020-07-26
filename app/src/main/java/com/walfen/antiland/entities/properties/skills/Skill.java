@@ -17,6 +17,15 @@ public abstract class Skill {
         this.carrier = carrier;
     }
 
+    public void levelUp(){
+        if(level+1 > maxLevel)
+            return;
+        level += 1;
+        onLevelUp();
+    }
+
+    protected abstract void onLevelUp();
+
     public boolean isActive(){
         return level == 0;
     }

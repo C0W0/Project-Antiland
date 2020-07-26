@@ -44,8 +44,6 @@ public class Assets {
     public static Bitmap inventoryScreen, missionScreen, craftingScreen;
     public static Bitmap blueSqr, redSqr;
 
-    //TODO: private field to increase performance. FINAL
-
     public static void init(){
         final int height = Constants.DEFAULT_SIZE;
         final int width = Constants.DEFAULT_SIZE;

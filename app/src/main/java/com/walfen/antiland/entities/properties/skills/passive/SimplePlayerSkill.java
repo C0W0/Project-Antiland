@@ -17,7 +17,6 @@ public class SimplePlayerSkill extends PassiveSkill {
         event.onChange();
     }
 
-    @Override
     public void setLevel(int level) {
         int d = level-this.level;
         for(int i = 0; i < d; i++){

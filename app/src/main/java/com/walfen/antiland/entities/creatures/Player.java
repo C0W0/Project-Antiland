@@ -10,6 +10,9 @@ import com.walfen.antiland.Constants;
 import com.walfen.antiland.Handler;
 import com.walfen.antiland.entities.properties.attack.rangedAttacks.PlayerDefaultAttack;
 import com.walfen.antiland.entities.properties.attack.rangedAttacks.RangedAttacks;
+import com.walfen.antiland.entities.properties.skills.Skill;
+import com.walfen.antiland.entities.properties.skills.active.ActiveSkill;
+import com.walfen.antiland.entities.properties.skills.active.SwordStorm;
 import com.walfen.antiland.entities.properties.skills.passive.SimplePlayerSkill;
 import com.walfen.antiland.gfx.Animation;
 import com.walfen.antiland.gfx.Assets;
@@ -36,9 +39,14 @@ public class Player extends Creature{
     //animations
     private Animation downAnim, upAnim, rightAnim, leftAnim, neutralAnim;
     private Animation currentAnimation;
+
+    //attack
     private RangedAttacks attack;
+    private RangedAttacks defaultAttack;
+
     //attack speed
     private long lastAttackTime, attackCooldown, attackTimer;
+
     //inventory
     private Inventory inventory;
     private Fabricator fabricator;
@@ -50,6 +58,7 @@ public class Player extends Creature{
     //player stats
     private int currLevelXp;
     private SimplePlayerSkill strength, endurance, agility, knowledge, intelligence;
+    private ActiveSkill skillTest;
 
     //environment interaction
     private ChangeEvent event;
@@ -64,6 +73,8 @@ public class Player extends Creature{
         agility = new SimplePlayerSkill(handler, 10, () -> speed += (int)Math.floor(agility.getLevel()/2.f+0.5));
         knowledge = new SimplePlayerSkill(handler, 10, () -> {maxMp += knowledge.getLevel(); magicalDamage += 1;});
         intelligence = new SimplePlayerSkill(handler, 10, () -> magicalDamage += (int)Math.floor(intelligence.getLevel()/2.f+0.5));
+        skillTest = new SwordStorm(handler);
+        skillTest.setLevel(1);
 
         File playerFile = new File(path+"/player/player.wld");
         File inventoryFile = new File(path+"/player/inventory.wld");
@@ -115,8 +126,8 @@ public class Player extends Creature{
         neutralAnim = new Animation(0.15f, new Bitmap[]{Assets.player_neutral});
         currentAnimation = neutralAnim;
 
-
-        attack = new PlayerDefaultAttack(handler, () -> physicalDamage);
+        defaultAttack = new PlayerDefaultAttack(handler, () -> physicalDamage);
+        attack = defaultAttack;
 
 
         inventory = new Inventory(handler);
@@ -412,5 +423,17 @@ public class Player extends Creature{
 
     public void setInterButtonVisibility(boolean visible){
         interactButton.setActive(visible);
+    }
+
+    public void setAttack(RangedAttacks attack) {
+        this.attack = attack;
+    }
+
+    public void resetAttack(){
+        attack = defaultAttack;
+    }
+
+    public ActiveSkill getSkillTest() {
+        return skillTest;
     }
 }

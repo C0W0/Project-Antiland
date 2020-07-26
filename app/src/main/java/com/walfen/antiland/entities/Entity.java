@@ -40,7 +40,7 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
         this.width = width;
         this.height = height;
         active = true;
-        health = DEFAULT_HEALTH; //TODO: CHANGE THIS!!!
+        health = DEFAULT_HEALTH;
         maxHp = health;
         this.id = id;
         entityList[id] = this;
