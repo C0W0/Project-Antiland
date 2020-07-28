@@ -88,13 +88,14 @@ public class GameState extends State {
                 () -> Integer.toString(handler.getPlayer().getLevel()), 40, Constants.TEXT_COLOUR));
         uiManager.addUIObject(new UIImageButton(64, 224, 128, 128,
                 new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, this::saveGame));
-        uiManager.addUIObject(new UIImageButton(32, 848, 128, 128,
+        uiManager.addUIObject(new UIImageButton(32, Constants.SCREEN_HEIGHT-232, 128, 128,
                 new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, () -> handler.getPlayer().getMissionManager().setActive()));
-        uiManager.addUIObject(new UIImageButton(32, 624, 128, 128,
+        uiManager.addUIObject(new UIImageButton(32, Constants.SCREEN_HEIGHT-456, 128, 128,
                 new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, () -> handler.getPlayer().getInventory().setActive()));
-//        skillButtons[0] = new SkillButton(256, 512, 128);
-//        uiManager.addUIObject(skillButtons[0]);
-//        skillButtons[0].setSkill(player.getSkillTest());
+        skillButtons[0] = new SkillButton(Constants.SCREEN_WIDTH-300-64, Constants.SCREEN_HEIGHT-568, 128);
+        skillButtons[1] = new SkillButton(Constants.SCREEN_WIDTH-300-256, Constants.SCREEN_HEIGHT-440, 128);
+        skillButtons[2] = new SkillButton(Constants.SCREEN_WIDTH-300-256, Constants.SCREEN_HEIGHT-216, 128);
+        uiManager.addUIObject(skillButtons);
 
 //        uiManager.hideUI();
 //        ArrayList<Conversation> c = new ArrayList<>();

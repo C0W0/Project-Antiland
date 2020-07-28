@@ -41,7 +41,7 @@ public class Assets {
 
     //items
     public static Bitmap wood, apple, stone, potion, shield, sword;
-    public static Bitmap inventoryScreen, missionScreen, craftingScreen;
+    public static Bitmap inventoryScreen, missionScreen, craftingScreen, statsScreen, skillScreen;
     public static Bitmap blueSqr, redSqr;
 
     public static void init(){
@@ -118,6 +118,7 @@ public class Assets {
         inventoryScreen = ImageLoader.loadImage(R.drawable.inventory_screen_new);
         craftingScreen = ImageLoader.loadImage(R.drawable.craft_screen);
         missionScreen = ImageLoader.loadImage(R.drawable.mission_screen);
+        skillScreen = ImageLoader.loadImage(R.drawable.skill_selection_screen);
         blueSqr = ImageLoader.loadImage(R.drawable.selected);
         redSqr = ImageLoader.loadImage(R.drawable.red_square);
 

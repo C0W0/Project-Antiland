@@ -18,6 +18,7 @@ import com.walfen.antiland.ui.keyIO.KeyIOManager;
 import com.walfen.antiland.untils.Utils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class UIManager implements TouchEventListener{
 
@@ -64,6 +65,7 @@ public class UIManager implements TouchEventListener{
 
     @Override
     public void onTouchEvent(MotionEvent event){
+//        System.out.println(event.getX()+" "+event.getY());
         if(popUp.active){
             popUp.onTouchEvent(event);
             return;
@@ -85,6 +87,10 @@ public class UIManager implements TouchEventListener{
 
     public void addUIObject(UIObject o){
         uiObjects.add(o);
+    }
+
+    public void addUIObject(UIObject[] objects){
+        uiObjects.addAll(Arrays.asList(objects));
     }
 
     public void removeUIObject(UIObject o){
