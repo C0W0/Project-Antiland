@@ -60,6 +60,7 @@ public class Player extends Creature{
     private int currLevelXp;
     private SimplePlayerSkill strength, endurance, agility, knowledge, intelligence;
     private ActiveSkill skillTest;
+    private int wealth;
 
     //environment interaction
     private ChangeEvent event;
@@ -175,6 +176,8 @@ public class Player extends Creature{
                 new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, this::onInteract);
         event = Constants.EMPTY_EVENT;
         interactButton.setActive(false);
+
+        wealth = 0;
 
 
         //only for temp. use
@@ -440,5 +443,17 @@ public class Player extends Creature{
 
     public ActiveSkill getSkillTest() {
         return skillTest;
+    }
+
+    public int getWealth() {
+        return wealth;
+    }
+
+    public void setWealth(int wealth) {
+        this.wealth = wealth;
+    }
+
+    public void changeWealth(int income){
+        wealth += income;
     }
 }
