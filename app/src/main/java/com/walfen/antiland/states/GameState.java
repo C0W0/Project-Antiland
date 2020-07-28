@@ -76,7 +76,8 @@ public class GameState extends State {
 
     private void initDefaultUI(){
         uiManager.createJoystick();
-        uiManager.addUIObject(new UIDecoration(16, 16, 144, 144, Assets.player_neutral));
+        uiManager.addUIObject(new UIImageButton(16, 16, 144, 144,
+                new Bitmap[]{Assets.player_neutral, Assets.player_neutral}, () -> handler.getPlayer().getSkillsManager().setActive()));
         uiManager.addUIObject(new BarA(handler,192,32,600, Assets.hp_bar,
                 () -> handler.getPlayer().getMaxHp(), () -> handler.getPlayer().getHealth()));
         uiManager.addUIObject(new BarA(handler, 192, 102, 512, Assets.mp_bar,
@@ -96,6 +97,8 @@ public class GameState extends State {
         skillButtons[1] = new SkillButton(Constants.SCREEN_WIDTH-300-256, Constants.SCREEN_HEIGHT-440, 128);
         skillButtons[2] = new SkillButton(Constants.SCREEN_WIDTH-300-256, Constants.SCREEN_HEIGHT-216, 128);
         uiManager.addUIObject(skillButtons);
+        skillButtons[0].setSkill(player.getSkillTest()[0]);
+        skillButtons[1].setSkill(player.getSkillTest()[1]);
 
 //        uiManager.hideUI();
 //        ArrayList<Conversation> c = new ArrayList<>();

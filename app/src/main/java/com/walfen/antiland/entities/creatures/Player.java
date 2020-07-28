@@ -24,6 +24,7 @@ import com.walfen.antiland.items.equipment.Equipment;
 import com.walfen.antiland.mission.Mission;
 import com.walfen.antiland.mission.MissionManager;
 import com.walfen.antiland.mission.killing.KillTracker;
+import com.walfen.antiland.statswindow.PlayerSkillsManager;
 import com.walfen.antiland.ui.ChangeEvent;
 import com.walfen.antiland.ui.ClickListener;
 import com.walfen.antiland.ui.buttons.UIImageButton;
@@ -58,8 +59,9 @@ public class Player extends Creature{
 
     //player stats
     private int currLevelXp;
+    private PlayerSkillsManager skillsManager;
     private SimplePlayerSkill strength, endurance, agility, knowledge, intelligence;
-    private ActiveSkill skillTest;
+    private ActiveSkill[] skillTest;
     private int wealth;
 
     //environment interaction
@@ -75,8 +77,9 @@ public class Player extends Creature{
         agility = new SimplePlayerSkill(handler, 10, () -> speed += (int)Math.floor(agility.getLevel()/2.f+0.5));
         knowledge = new SimplePlayerSkill(handler, 10, () -> {maxMp += knowledge.getLevel(); magicalDamage += 1;});
         intelligence = new SimplePlayerSkill(handler, 10, () -> magicalDamage += (int)Math.floor(intelligence.getLevel()/2.f+0.5));
-        skillTest = new SharpWind(handler);
-        skillTest.setLevel(1);
+        skillTest = new ActiveSkill[]{new SwordStorm(handler), new SharpWind(handler)};
+        skillTest[0].setLevel(1);
+        skillTest[1].setLevel(1);
 
         File playerFile = new File(path+"/player/player.wld");
         File inventoryFile = new File(path+"/player/inventory.wld");
@@ -177,6 +180,7 @@ public class Player extends Creature{
         event = Constants.EMPTY_EVENT;
         interactButton.setActive(false);
 
+        skillsManager = new PlayerSkillsManager(handler);
         wealth = 0;
 
 
@@ -277,6 +281,9 @@ public class Player extends Creature{
         inventory.update();
         fabricator.update();
 
+        //skills
+        skillsManager.update();
+
         //missions
         missionManager.update();
         tracker.update();
@@ -301,6 +308,7 @@ public class Player extends Creature{
         inventory.draw(canvas);
         missionManager.draw(canvas);
         fabricator.draw(canvas);
+        skillsManager.draw(canvas);
     }
 
     public void saveMap(String path) throws IOException{
@@ -441,7 +449,7 @@ public class Player extends Creature{
         attack = defaultAttack;
     }
 
-    public ActiveSkill getSkillTest() {
+    public ActiveSkill[] getSkillTest() {
         return skillTest;
     }
 
@@ -455,5 +463,9 @@ public class Player extends Creature{
 
     public void changeWealth(int income){
         wealth += income;
+    }
+
+    public PlayerSkillsManager getSkillsManager() {
+        return skillsManager;
     }
 }
