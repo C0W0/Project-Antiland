@@ -44,6 +44,10 @@ public class Assets {
     public static Bitmap inventoryScreen, missionScreen, craftingScreen, statsScreen, skillScreen;
     public static Bitmap blueSqr, redSqr;
 
+    //skills
+    public static Bitmap strength, endurance, agility, knowledge, intelligence;
+    public static Bitmap unlock;
+
     public static void init(){
         final int height = Constants.DEFAULT_SIZE;
         final int width = Constants.DEFAULT_SIZE;
@@ -54,6 +58,7 @@ public class Assets {
         SpriteSheet slimeMovement = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.slime_movement));
         SpriteSheet idleSlime = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.idle_slime));
         SpriteSheet crabSheet = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.crab));
+        SpriteSheet skillSheet = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.skills_sprite));
 
         grass = townTiles.crop(0,height,width,height);
         grassStone = sheet1.crop(width*3,height,width,height);
@@ -121,6 +126,15 @@ public class Assets {
         skillScreen = ImageLoader.loadImage(R.drawable.skill_selection_screen);
         blueSqr = ImageLoader.loadImage(R.drawable.selected);
         redSqr = ImageLoader.loadImage(R.drawable.red_square);
+
+        //skills
+        strength = skillSheet.crop(0, 0, width, height);
+        endurance = skillSheet.crop(width, 0, width, height);
+        agility = skillSheet.crop(width*2, 0, width, height);
+        knowledge = skillSheet.crop(width*3, 0, width, height);
+        intelligence = skillSheet.crop(width*4, 0 ,width, height);
+
+        unlock = skillSheet.crop(width*5, 0, 250, 128);
 
     }
 

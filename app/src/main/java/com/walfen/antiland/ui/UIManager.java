@@ -82,6 +82,7 @@ public class UIManager implements TouchEventListener{
             handler.getPlayer().getFabricator().onTouchEvent(event);
             handler.getPlayer().getMissionManager().onTouchEvent(event);
             handler.getPlayer().getInteractButton().onTouchEvent(event);
+            handler.getPlayer().getSkillsManager().onTouchEvent(event);
         }catch (ClassCastException | NullPointerException ignored){}
     }
 
