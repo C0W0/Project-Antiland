@@ -26,14 +26,13 @@ public abstract class DraggableUI extends UIObject {
 
     @Override
     public void onTouchEvent(MotionEvent event) {
-        int index = event.getActionIndex();
-        int pointerIndex = event.findPointerIndex(event.getPointerId(index));
+        int pointerIndex = event.findPointerIndex(event.getPointerId(event.getActionIndex()));
         int tempX = (int)event.getX(pointerIndex);
         int tempY = (int)event.getY(pointerIndex);
         switch (event.getActionMasked()){
             case MotionEvent.ACTION_DOWN:
             case MotionEvent.ACTION_POINTER_DOWN:
-                if(bounds.contains(tempX, tempY))
+                if(new Rect(bounds).contains(tempX, tempY))
                     dragging = true;
                 break;
             case MotionEvent.ACTION_MOVE:

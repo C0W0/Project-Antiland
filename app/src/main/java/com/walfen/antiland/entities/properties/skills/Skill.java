@@ -26,6 +26,8 @@ public abstract class Skill {
 
     protected abstract void onLevelUp();
 
+    public abstract boolean levelUpReqMeet();
+
     public boolean isActive(){
         return level == 0;
     }
