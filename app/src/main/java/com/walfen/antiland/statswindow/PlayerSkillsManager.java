@@ -18,6 +18,7 @@ import com.walfen.antiland.gfx.ImageEditor;
 import com.walfen.antiland.ui.ClickListener;
 import com.walfen.antiland.ui.TouchEventListener;
 import com.walfen.antiland.ui.UIObject;
+import com.walfen.antiland.ui.buttons.SkillButton;
 import com.walfen.antiland.ui.buttons.UIImageButton;
 import com.walfen.antiland.ui.drag.DraggableUI;
 
@@ -178,9 +179,14 @@ public class PlayerSkillsManager implements TouchEventListener {
     }
 
     public void releaseDrag(Skill skill, int x, int y){
+        SkillButton[] skillButtons = handler.getUIManager().getSkillButtons();
         for(int i = 0; i < 3; i++)
-            if(new Rect(activeSkillSlot[i]).contains(x, y))
+            if(new Rect(activeSkillSlot[i]).contains(x, y)){
+                for(SkillButton sb: skillButtons)
+                    if(sb.getSkill() != null && sb.getSkill().equals(skill))
+                        sb.removeSkill();
                 handler.getUIManager().getSkillButtons()[i].setSkill((ActiveSkill)skill);
+            }
     }
 
     private class SkillIcon extends DraggableUI {
