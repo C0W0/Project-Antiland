@@ -10,6 +10,7 @@ import android.view.MotionEvent;
 
 import com.walfen.antiland.Constants;
 import com.walfen.antiland.Handler;
+import com.walfen.antiland.ui.buttons.SkillButton;
 import com.walfen.antiland.ui.buttons.TextButton;
 import com.walfen.antiland.ui.buttons.UIImageButton;
 import com.walfen.antiland.ui.conversation.ConversationBox;
@@ -29,6 +30,7 @@ public class UIManager implements TouchEventListener{
     private ConversationBox convBox;
     private PopUp popUp;
     private KeyIOManager keyIOManager;
+    private SkillButton[] skillButtons;
 
     public UIManager(Handler handler){
         this.handler = handler;
@@ -99,8 +101,8 @@ public class UIManager implements TouchEventListener{
     }
 
     public void createJoystick(){
-        movement = new Joystick(128, Constants.SCREEN_HEIGHT-300-128, 150);
-        attack = new Joystick(Constants.SCREEN_WIDTH-300-128, Constants.SCREEN_HEIGHT-300-128, 150);
+        movement = new Joystick(handler, 128, Constants.SCREEN_HEIGHT-300-128, 150);
+        attack = new Joystick(handler, Constants.SCREEN_WIDTH-300-128, Constants.SCREEN_HEIGHT-300-128, 150);
         attack.setDeadZone(0.3f);
         addUIObject(movement);
         addUIObject(attack);
@@ -109,6 +111,14 @@ public class UIManager implements TouchEventListener{
     public void removeJoystick(){
         removeUIObject(movement);
         removeUIObject(attack);
+    }
+
+    public void createSkillButtons(){
+        skillButtons = new SkillButton[3];
+        skillButtons[0] = new SkillButton(Constants.SCREEN_WIDTH-300-64, Constants.SCREEN_HEIGHT-568, 128);
+        skillButtons[1] = new SkillButton(Constants.SCREEN_WIDTH-300-256, Constants.SCREEN_HEIGHT-440, 128);
+        skillButtons[2] = new SkillButton(Constants.SCREEN_WIDTH-300-256, Constants.SCREEN_HEIGHT-216, 128);
+        addUIObject(skillButtons);
     }
 
     public void hideUI(){
@@ -235,5 +245,9 @@ public class UIManager implements TouchEventListener{
 
     public KeyIOManager getKeyIOManager() {
         return keyIOManager;
+    }
+
+    public SkillButton[] getSkillButtons() {
+        return skillButtons;
     }
 }

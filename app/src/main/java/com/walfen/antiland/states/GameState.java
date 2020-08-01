@@ -8,11 +8,9 @@ import android.view.MotionEvent;
 import com.walfen.antiland.Constants;
 import com.walfen.antiland.Handler;
 import com.walfen.antiland.entities.creatures.Player;
-import com.walfen.antiland.entities.properties.skills.active.SwordStorm;
 import com.walfen.antiland.gfx.Assets;
 import com.walfen.antiland.ui.BarA;
 import com.walfen.antiland.ui.buttons.SkillButton;
-import com.walfen.antiland.ui.decorative.UIDecoration;
 import com.walfen.antiland.ui.UIManager;
 import com.walfen.antiland.ui.buttons.UIImageButton;
 import com.walfen.antiland.ui.decorative.UITextDecoration;
@@ -24,11 +22,9 @@ public class GameState extends State {
 
     private World world;
     private Player player;
-    private SkillButton[] skillButtons;
 
     public GameState(Handler handler){
         super(handler);
-        skillButtons = new SkillButton[3];
     }
 
     @Override
@@ -76,6 +72,7 @@ public class GameState extends State {
 
     private void initDefaultUI(){
         uiManager.createJoystick();
+        uiManager.createSkillButtons();
         uiManager.addUIObject(new UIImageButton(16, 16, 144, 144,
                 new Bitmap[]{Assets.player_neutral, Assets.player_neutral}, () -> handler.getPlayer().getSkillsManager().setActive()));
         uiManager.addUIObject(new BarA(handler,192,32,600, Assets.hp_bar,
@@ -93,12 +90,6 @@ public class GameState extends State {
                 new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, () -> handler.getPlayer().getMissionManager().setActive()));
         uiManager.addUIObject(new UIImageButton(32, Constants.SCREEN_HEIGHT-456, 128, 128,
                 new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, () -> handler.getPlayer().getInventory().setActive()));
-        skillButtons[0] = new SkillButton(Constants.SCREEN_WIDTH-300-64, Constants.SCREEN_HEIGHT-568, 128);
-        skillButtons[1] = new SkillButton(Constants.SCREEN_WIDTH-300-256, Constants.SCREEN_HEIGHT-440, 128);
-        skillButtons[2] = new SkillButton(Constants.SCREEN_WIDTH-300-256, Constants.SCREEN_HEIGHT-216, 128);
-        uiManager.addUIObject(skillButtons);
-        skillButtons[0].setSkill(player.getSkillTest()[0]);
-        skillButtons[1].setSkill(player.getSkillTest()[1]);
 
 //        uiManager.hideUI();
 //        ArrayList<Conversation> c = new ArrayList<>();
@@ -120,9 +111,5 @@ public class GameState extends State {
 
     public Player getPlayer(){
         return player;
-    }
-
-    public SkillButton[] getSkillButtons() {
-        return skillButtons;
     }
 }

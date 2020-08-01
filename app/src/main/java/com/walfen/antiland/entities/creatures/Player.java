@@ -61,7 +61,7 @@ public class Player extends Creature{
     private int currLevelXp;
     private int perkPoints;
     private PlayerSkillsManager skillsManager;
-    private ActiveSkill[] skillTest;
+//    private ActiveSkill[] skillTest;
     private int wealth;
 
     //environment interaction
@@ -71,10 +71,6 @@ public class Player extends Creature{
 
     public Player(Handler handler, String path) {
         super(Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT, 0);
-
-        skillTest = new ActiveSkill[]{new SwordStorm(handler), new SharpWind(handler)};
-        skillTest[0].setLevel(1);
-        skillTest[1].setLevel(1);
 
         File playerFile = new File(path+"/player/player.wld");
         File inventoryFile = new File(path+"/player/inventory.wld");
@@ -198,7 +194,7 @@ public class Player extends Creature{
         if(attackTimer < attackCooldown) {
             return;
         }
-        if(inventory.isActive() || fabricator.isActive() || missionManager.isActive()){
+        if(inventory.isActive() || fabricator.isActive() || missionManager.isActive() || skillsManager.isActive()){
             return;
         }
         float inputX = handler.getUIManager().getAttackJoystick().getMappedInputX();
@@ -219,7 +215,7 @@ public class Player extends Creature{
         xMove = 0;
         yMove = 0;
 
-        if(inventory.isActive() || fabricator.isActive() || missionManager.isActive()){
+        if(inventory.isActive() || fabricator.isActive() || missionManager.isActive() || skillsManager.isActive()){
             return;
         }
         xMove = handler.getUIManager().getMovementJoystick().getInputX()*speed;
@@ -446,10 +442,6 @@ public class Player extends Creature{
 
     public void resetAttack(){
         attack = defaultAttack;
-    }
-
-    public ActiveSkill[] getSkillTest() {
-        return skillTest;
     }
 
     public int getWealth() {

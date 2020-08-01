@@ -47,6 +47,7 @@ public class Assets {
     //skills
     public static Bitmap strength, endurance, agility, knowledge, intelligence;
     public static Bitmap strengthR, enduranceR, agilityR, knowledgeR, intelligenceR;
+    public static Bitmap sharpWindG, sharpWind;
     public static Bitmap unlock;
 
     public static void init(){
@@ -129,6 +130,7 @@ public class Assets {
         redSqr = ImageLoader.loadImage(R.drawable.red_square);
 
         //skills
+        //icon circle: RGB: 233, 233, 233; 128*128, 4pt
         strength = skillSheet.crop(0, 0, width, height);
         strengthR = skillSheet.crop(0, height, width, height);
         endurance = skillSheet.crop(width, 0, width, height);
@@ -139,6 +141,8 @@ public class Assets {
         knowledgeR = skillSheet.crop(width*3, height, width, height);
         intelligence = skillSheet.crop(width*4, 0, width, height);
         intelligenceR = skillSheet.crop(width*4, height, width, height);
+        sharpWindG = skillSheet.crop(width*5, height, width, height);
+        sharpWind = skillSheet.crop(width*6, height, width, height);
 
         unlock = skillSheet.crop(width*5, 0, 250, 128);
 

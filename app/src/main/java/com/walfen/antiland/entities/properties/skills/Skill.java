@@ -29,7 +29,7 @@ public abstract class Skill {
     public abstract boolean levelUpReqMeet();
 
     public boolean isActive(){
-        return level == 0;
+        return level != 0;
     }
 
     public int getLevel() {

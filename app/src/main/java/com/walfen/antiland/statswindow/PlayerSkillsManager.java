@@ -10,6 +10,8 @@ import android.view.MotionEvent;
 import com.walfen.antiland.Constants;
 import com.walfen.antiland.Handler;
 import com.walfen.antiland.entities.properties.skills.Skill;
+import com.walfen.antiland.entities.properties.skills.active.ActiveSkill;
+import com.walfen.antiland.entities.properties.skills.active.SharpWind;
 import com.walfen.antiland.entities.properties.skills.passive.SimplePlayerSkill;
 import com.walfen.antiland.gfx.Assets;
 import com.walfen.antiland.gfx.ImageEditor;
@@ -38,9 +40,12 @@ public class PlayerSkillsManager implements TouchEventListener {
     private ArrayList<UIObject> skillUIObjects;
     private ArrayList<UIObject> currentSkills;
 
-    private Rect skill1, skill2, skill3;
+    private Rect[] activeSkillSlot;
 
+    //5 base:
     private SimplePlayerSkill strength, endurance, agility, knowledge, intelligence;
+    //strength skills:
+    private Skill sharpWind;
 
     public PlayerSkillsManager(Handler handler, File skillFiles){
 
@@ -57,6 +62,8 @@ public class PlayerSkillsManager implements TouchEventListener {
         agilitySkills = new ArrayList<>();
         knowledgeSkills = new ArrayList<>();
         intelligenceSkills = new ArrayList<>();
+        activeSkillSlot = new Rect[3];
+
         currentSkills = strengthSkills;
         float baseSkillBX = 42.f/512*skillWidth+xDispute;
         float baseSkillBY = 43.f/384*skillHeight+yDispute;
@@ -76,6 +83,13 @@ public class PlayerSkillsManager implements TouchEventListener {
                 Assets.intelligence, () -> currentSkills = intelligenceSkills));
         skillUIObjects.add(new UIImageButton(378.f/512*skillWidth+xDispute, 296.f/384*skillHeight+yDispute,
                 (int)(78.f/512*skillWidth+1), (int)(40.f/384*skillHeight), Assets.unlock, this::upgradeSkill));
+        for(int i = 0; i < 3; i++){
+            int d = (int)(64.f/512*skillWidth);
+            int x = (int)(38.f/512*skillWidth+xDispute+d*i);
+            int y = (int)(295.f/384*skillHeight+yDispute);
+            int sideLength = (int)(52.f/384*skillHeight);
+            activeSkillSlot[i] = new Rect(x, y, x+sideLength, y+sideLength);
+        }
 
         baseSkillIconSize *= 1.2;
         int skillL1X = (int)(128.f/512*skillWidth+xDispute-baseSkillIconSize/2);
@@ -100,6 +114,9 @@ public class PlayerSkillsManager implements TouchEventListener {
                 () -> handler.getPlayer().changeMagicalDamage((int)Math.floor(intelligence.getLevel()/2.f+0.5)));
         intelligenceSkills.add(new UIImageButton(skillL1X, skillL1Y, baseSkillIconSize, baseSkillIconSize, Assets.intelligenceR, () -> selectedSkill = intelligence));
 
+        sharpWind = new SharpWind(handler);
+        strengthSkills.add(new SkillIcon(skillL1X, skillL1Y-baseSkillIconSize-10, baseSkillIconSize, baseSkillIconSize,
+                new Bitmap[]{Assets.sharpWindG, Assets.sharpWind}, sharpWind));
     }
     @Override
     public void onTouchEvent(MotionEvent event) {
@@ -113,7 +130,10 @@ public class PlayerSkillsManager implements TouchEventListener {
 
     @Override
     public void update() {
-
+        for(UIObject o: skillUIObjects)
+            o.update();
+        for(UIObject o: currentSkills)
+            o.update();
     }
 
     @Override
@@ -157,32 +177,46 @@ public class PlayerSkillsManager implements TouchEventListener {
         this.active = active;
     }
 
-    public void releaseDrag(int x, int y){
-        System.out.println(x+" "+y);
+    public void releaseDrag(Skill skill, int x, int y){
+        for(int i = 0; i < 3; i++)
+            if(new Rect(activeSkillSlot[i]).contains(x, y))
+                handler.getUIManager().getSkillButtons()[i].setSkill((ActiveSkill)skill);
     }
 
     private class SkillIcon extends DraggableUI {
 
-        private ClickListener listener;
+        private Skill skill;
+        private Bitmap[] skillImages;
 
-        public SkillIcon(float x, float y, int width, int height, Bitmap image, ClickListener listener) {
-            super(x, y, width, height, image);
-            this.listener = listener;
+        public SkillIcon(float x, float y, int width, int height, Bitmap[] image, Skill skill) {
+            super(x, y, width, height, image[0]);
+            this.skill = skill;
+            skillImages = image;
+        }
+
+        @Override
+        public void update() {
+            if(skill.isActive())
+                image = ImageEditor.scaleBitmapForced(skillImages[1], width, height);
+            else
+                image = ImageEditor.scaleBitmapForced(skillImages[0], width, height);
         }
 
         @Override
         public void onTouchEvent(MotionEvent event) {
-            super.onTouchEvent(event);
             int pointerIndex = event.findPointerIndex(event.getPointerId(event.getActionIndex()));
             if(event.getActionMasked() == MotionEvent.ACTION_DOWN ||
                     event.getActionMasked() == MotionEvent.ACTION_POINTER_DOWN)
                 if (new Rect(bounds).contains((int) event.getX(pointerIndex), (int) event.getY(pointerIndex)))
-                    listener.onClick();
+                    selectedSkill = skill;
+            if(!skill.isActive())
+                return;
+            super.onTouchEvent(event);
         }
 
         @Override
         protected void release(int x, int y) {
-            releaseDrag(x, y);
+            releaseDrag(skill, x, y);
         }
     }
 
