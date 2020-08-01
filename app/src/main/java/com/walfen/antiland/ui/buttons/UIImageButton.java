@@ -28,6 +28,14 @@ public class UIImageButton extends UIObject {
         this.images[1] = ImageEditor.scaleBitmapForced(images[1], width, height);
     }
 
+    public UIImageButton(float x, float y, int width, int height, Bitmap image, ClickListener clicker) {
+        super(x, y, width, height);
+        this.clicker = clicker;
+        this.images = new Bitmap[2];
+        images[0] = ImageEditor.scaleBitmapForced(image, width, height);
+        images[1] = ImageEditor.scaleBitmapForced(image, width, height);
+    }
+
     @Override
     public void update() {
         if(!active){

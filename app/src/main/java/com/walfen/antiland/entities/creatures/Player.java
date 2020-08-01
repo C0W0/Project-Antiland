@@ -59,9 +59,9 @@ public class Player extends Creature{
 
     //player stats
     private int currLevelXp;
+    private int perkPoints;
     private PlayerSkillsManager skillsManager;
-    private SimplePlayerSkill strength, endurance, agility, knowledge, intelligence;
-    private ActiveSkill[] skillTest;
+//    private ActiveSkill[] skillTest;
     private int wealth;
 
     //environment interaction
@@ -71,15 +71,6 @@ public class Player extends Creature{
 
     public Player(Handler handler, String path) {
         super(Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT, 0);
-
-        strength = new SimplePlayerSkill(handler, 10, () -> {physicalDamage += strength.getLevel(); maxHp += 1;});
-        endurance = new SimplePlayerSkill(handler, 10, () -> {maxHp += endurance.getLevel(); defence += 1;});
-        agility = new SimplePlayerSkill(handler, 10, () -> speed += (int)Math.floor(agility.getLevel()/2.f+0.5));
-        knowledge = new SimplePlayerSkill(handler, 10, () -> {maxMp += knowledge.getLevel(); magicalDamage += 1;});
-        intelligence = new SimplePlayerSkill(handler, 10, () -> magicalDamage += (int)Math.floor(intelligence.getLevel()/2.f+0.5));
-        skillTest = new ActiveSkill[]{new SwordStorm(handler), new SharpWind(handler)};
-        skillTest[0].setLevel(1);
-        skillTest[1].setLevel(1);
 
         File playerFile = new File(path+"/player/player.wld");
         File inventoryFile = new File(path+"/player/inventory.wld");
@@ -91,18 +82,22 @@ public class Player extends Creature{
         maxMp = 5;
         try {
             tokens = Utils.loadFileAsArrayList(new FileInputStream(playerFile));
-            x = Utils.parseInt(tokens.get(0).split("\\s+")[0]);
-            y = Utils.parseInt(tokens.get(0).split("\\s+")[1]);
-            health = Utils.parseInt(tokens.get(1).split("\\s+")[0]);
-            mp = Utils.parseInt(tokens.get(1).split("\\s+")[1]);
-            level = Utils.parseInt(tokens.get(2).split("\\s+")[0]);
-            currLevelXp = Utils.parseInt(tokens.get(2).split("\\s+")[1]);
-            String[] line = tokens.get(3).split("\\s+");
-            strength.setLevel(Utils.parseInt(line[0]));
-            endurance.setLevel(Utils.parseInt(line[1]));
-            agility.setLevel(Utils.parseInt(line[2]));
-            knowledge.setLevel(Utils.parseInt(line[3]));
-            intelligence.setLevel(Utils.parseInt(line[4]));
+            String[] line = tokens.get(0).split("\\s+");
+            x = Utils.parseInt(line[0]);
+            y = Utils.parseInt(line[1]);
+            line = tokens.get(1).split("\\s+");
+            health = Utils.parseInt(line[0]);
+            mp = Utils.parseInt(line[1]);
+            line = tokens.get(2).split("\\s+");
+            level = Utils.parseInt(line[0]);
+            currLevelXp = Utils.parseInt(line[1]);
+            perkPoints = Utils.parseInt(line[2]);
+            line = tokens.get(3).split("\\s+");
+//            strength.setLevel(Utils.parseInt(line[0]));
+//            endurance.setLevel(Utils.parseInt(line[1]));
+//            agility.setLevel(Utils.parseInt(line[2]));
+//            knowledge.setLevel(Utils.parseInt(line[3]));
+//            intelligence.setLevel(Utils.parseInt(line[4]));
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -145,7 +140,7 @@ public class Player extends Creature{
                         addToInv(Utils.parseInt(line[1])));
             }
             tokens = Utils.loadFileAsArrayList(new FileInputStream(playerFile));
-            String[] equips = tokens.get(4).split("\\s+");
+            String[] equips = tokens.get(3).split("\\s+");
             for(int i = 0; i < 4; i++){
                 if(!equips[i].equals("-1")) {
                     Equipment e = (Equipment) Item.items[Utils.parseInt(equips[i])].addToInv(1);
@@ -180,7 +175,7 @@ public class Player extends Creature{
         event = Constants.EMPTY_EVENT;
         interactButton.setActive(false);
 
-        skillsManager = new PlayerSkillsManager(handler);
+        skillsManager = new PlayerSkillsManager(handler, null);
         wealth = 0;
 
 
@@ -199,7 +194,7 @@ public class Player extends Creature{
         if(attackTimer < attackCooldown) {
             return;
         }
-        if(inventory.isActive() || fabricator.isActive() || missionManager.isActive()){
+        if(inventory.isActive() || fabricator.isActive() || missionManager.isActive() || skillsManager.isActive()){
             return;
         }
         float inputX = handler.getUIManager().getAttackJoystick().getMappedInputX();
@@ -220,7 +215,7 @@ public class Player extends Creature{
         xMove = 0;
         yMove = 0;
 
-        if(inventory.isActive() || fabricator.isActive() || missionManager.isActive()){
+        if(inventory.isActive() || fabricator.isActive() || missionManager.isActive() || skillsManager.isActive()){
             return;
         }
         xMove = handler.getUIManager().getMovementJoystick().getInputX()*speed;
@@ -316,8 +311,7 @@ public class Player extends Creature{
         IMPORTANT: player.wld format (update here):
         x y
         hp mp
-        level exp
-        strength endurance agility knowledge intelligence
+        level exp perkPoints
         weaponId, auxiliaryId, armourId, bootsId
          */
         File playerFile = new File(path+"/player/player.wld");
@@ -328,12 +322,12 @@ public class Player extends Creature{
         PrintWriter editor = new PrintWriter(playerFile);
         editor.println((int)x+" "+(int)y);
         editor.println(health+" "+ mp);
-        editor.println(level+" "+currLevelXp);
-        editor.print(strength.getLevel()+" ");
-        editor.print(endurance.getLevel()+" ");
-        editor.print(agility.getLevel()+" ");
-        editor.print(knowledge.getLevel()+" ");
-        editor.println(intelligence.getLevel()+" ");
+        editor.println(level+" "+currLevelXp+" "+perkPoints);
+//        editor.print(strength.getLevel()+" ");
+//        editor.print(endurance.getLevel()+" ");
+//        editor.print(agility.getLevel()+" ");
+//        editor.print(knowledge.getLevel()+" ");
+//        editor.println(intelligence.getLevel()+" ");
         for(Equipment e: inventory.getEquipments()) {
             if (e != null)
                 editor.print(e.getId() + " ");
@@ -414,6 +408,7 @@ public class Player extends Creature{
         if(xp >= remainingXp) {
             level++;
             maxHp += Math.floor((level/10.f)+1);
+            perkPoints ++;
             health = maxHp;
             currLevelXp = xp-remainingXp;
         }else {
@@ -449,10 +444,6 @@ public class Player extends Creature{
         attack = defaultAttack;
     }
 
-    public ActiveSkill[] getSkillTest() {
-        return skillTest;
-    }
-
     public int getWealth() {
         return wealth;
     }
@@ -467,5 +458,17 @@ public class Player extends Creature{
 
     public PlayerSkillsManager getSkillsManager() {
         return skillsManager;
+    }
+
+    public int getPerkPoints() {
+        return perkPoints;
+    }
+
+    public void setPerkPoints(int perkPoints) {
+        this.perkPoints = perkPoints;
+    }
+
+    public void changePerkPoints(int addition){
+        perkPoints += addition;
     }
 }

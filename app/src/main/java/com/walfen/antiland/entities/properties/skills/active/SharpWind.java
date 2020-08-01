@@ -43,4 +43,9 @@ public class SharpWind extends ActiveSkill {
     protected void onLevelUp() {
         additionalDmg += level;
     }
+
+    @Override
+    public boolean levelUpReqMeet() {
+        return handler.getPlayer().getSkillsManager().getStrength().getLevel() > level+1;
+    }
 }

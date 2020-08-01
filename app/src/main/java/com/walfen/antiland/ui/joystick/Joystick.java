@@ -7,6 +7,8 @@ import android.graphics.Rect;
 import android.view.MotionEvent;
 
 import com.walfen.antiland.Constants;
+import com.walfen.antiland.Handler;
+import com.walfen.antiland.entities.creatures.Player;
 import com.walfen.antiland.gfx.Assets;
 import com.walfen.antiland.gfx.ImageEditor;
 import com.walfen.antiland.ui.UIObject;
@@ -14,6 +16,7 @@ import com.walfen.antiland.untils.Utils;
 
 public class Joystick extends UIObject {
 
+    private Handler handler;
     private final int centerX, centerY;
     private final int radius;
     private int pointerId = -1; //"legal" finger, never change
@@ -21,8 +24,9 @@ public class Joystick extends UIObject {
     private float deadZone = 0;
     private Bitmap pad, controller;
 
-    public Joystick(float x, float y, int radius) {
+    public Joystick(Handler handler, float x, float y, int radius) {
         super(x, y, radius*2, radius*2);
+        this.handler = handler;
         centerX = (int)(x+width/2);
         centerY = (int)(y+height/2);
         pad = ImageEditor.scaleBitmap(Assets.joystick_pad, width);
@@ -32,6 +36,10 @@ public class Joystick extends UIObject {
 
     @Override
     public void onTouchEvent(MotionEvent event) {
+        Player player = handler.getPlayer();
+        if(player.getInventory().isActive() || player.getFabricator().isActive()
+                || player.getMissionManager().isActive() || player.getSkillsManager().isActive())
+            return;
         int index = event.getActionIndex();
         int pointerIndex = event.findPointerIndex(event.getPointerId(index)); //increases and decreases
         float distance = Utils.getDistance(event.getX(pointerIndex), event.getY(pointerIndex), centerX, centerY);

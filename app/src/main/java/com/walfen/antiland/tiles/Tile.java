@@ -9,6 +9,7 @@ import com.walfen.antiland.Constants;
 import com.walfen.antiland.gfx.Animation;
 import com.walfen.antiland.gfx.Assets;
 import com.walfen.antiland.gfx.GraphicalTerminalElement;
+import com.walfen.antiland.gfx.ImageEditor;
 
 public class Tile implements GraphicalTerminalElement {
 
@@ -47,7 +48,7 @@ public class Tile implements GraphicalTerminalElement {
     private boolean barrier;
 
     public Tile(Bitmap texture, int id, boolean barrier){
-        this.texture = texture;
+        this.texture = ImageEditor.scaleBitmapForced(texture, TILEWIDTH, TILEHEIGHT);
         this.id = id;
         this.barrier = barrier;
 

@@ -30,6 +30,13 @@ public class SwordStorm extends ActiveSkill {
     }
 
     @Override
+    public boolean levelUpReqMeet() {
+        int strengthLv = handler.getPlayer().getSkillsManager().getStrength().getLevel();
+        int agilityLv = handler.getPlayer().getSkillsManager().getAgility().getLevel();
+        return (strengthLv > level+1 && agilityLv > level+1);
+    }
+
+    @Override
     protected void updateData() {
         attacks.update();
     }

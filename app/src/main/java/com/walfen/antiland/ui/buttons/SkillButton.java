@@ -49,4 +49,14 @@ public class SkillButton extends UIImageButton{
         paint.getTextBounds(sec, 0, sec.length(), r);
         canvas.drawText(sec, x+width/2.f-r.width()/2.f, y+height/2.f+r.height()/2.f, paint);
     }
+
+    public ActiveSkill getSkill() {
+        return skill;
+    }
+
+    public void removeSkill(){
+        skill = null;
+        images = new Bitmap[]{Assets.joystick_pad, Assets.joystick_pad};
+        clicker = () -> {};
+    }
 }

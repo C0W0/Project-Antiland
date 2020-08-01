@@ -44,6 +44,12 @@ public class Assets {
     public static Bitmap inventoryScreen, missionScreen, craftingScreen, statsScreen, skillScreen;
     public static Bitmap blueSqr, redSqr;
 
+    //skills
+    public static Bitmap strength, endurance, agility, knowledge, intelligence;
+    public static Bitmap strengthR, enduranceR, agilityR, knowledgeR, intelligenceR;
+    public static Bitmap sharpWindG, sharpWind;
+    public static Bitmap unlock;
+
     public static void init(){
         final int height = Constants.DEFAULT_SIZE;
         final int width = Constants.DEFAULT_SIZE;
@@ -54,6 +60,7 @@ public class Assets {
         SpriteSheet slimeMovement = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.slime_movement));
         SpriteSheet idleSlime = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.idle_slime));
         SpriteSheet crabSheet = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.crab));
+        SpriteSheet skillSheet = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.skills_sprite));
 
         grass = townTiles.crop(0,height,width,height);
         grassStone = sheet1.crop(width*3,height,width,height);
@@ -121,6 +128,23 @@ public class Assets {
         skillScreen = ImageLoader.loadImage(R.drawable.skill_selection_screen);
         blueSqr = ImageLoader.loadImage(R.drawable.selected);
         redSqr = ImageLoader.loadImage(R.drawable.red_square);
+
+        //skills
+        //icon circle: RGB: 233, 233, 233; 128*128, 4pt
+        strength = skillSheet.crop(0, 0, width, height);
+        strengthR = skillSheet.crop(0, height, width, height);
+        endurance = skillSheet.crop(width, 0, width, height);
+        enduranceR = skillSheet.crop(width, height, width, height);
+        agility = skillSheet.crop(width*2, 0, width, height);
+        agilityR = skillSheet.crop(width*2, height, width, height);
+        knowledge = skillSheet.crop(width*3, 0, width, height);
+        knowledgeR = skillSheet.crop(width*3, height, width, height);
+        intelligence = skillSheet.crop(width*4, 0, width, height);
+        intelligenceR = skillSheet.crop(width*4, height, width, height);
+        sharpWindG = skillSheet.crop(width*5, height, width, height);
+        sharpWind = skillSheet.crop(width*6, height, width, height);
+
+        unlock = skillSheet.crop(width*5, 0, 250, 128);
 
     }
 
