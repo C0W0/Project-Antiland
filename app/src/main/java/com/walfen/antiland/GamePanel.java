@@ -2,6 +2,9 @@ package com.walfen.antiland;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -117,6 +120,13 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback, Ke
     public void draw(Canvas canvas) {
         super.draw(canvas);
         State.getCurrentState().draw(canvas);
+        Rect r = new Rect();
+        Paint paint = new Paint();
+        paint.setColor(Color.MAGENTA);
+        paint.setTextSize(40);
+        String frames = Integer.toString(thread.getFPS());
+        paint.getTextBounds(frames, 0, frames.length(), r);
+        canvas.drawText(frames, Constants.SCREEN_WIDTH-10-r.width(), r.height()+10, paint);
     }
 
     private void initDirectory() throws IOException{
