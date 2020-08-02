@@ -15,7 +15,6 @@ import com.walfen.antiland.entities.properties.skills.active.SharpWind;
 import com.walfen.antiland.entities.properties.skills.passive.SimplePlayerSkill;
 import com.walfen.antiland.gfx.Assets;
 import com.walfen.antiland.gfx.ImageEditor;
-import com.walfen.antiland.ui.ClickListener;
 import com.walfen.antiland.ui.TouchEventListener;
 import com.walfen.antiland.ui.UIObject;
 import com.walfen.antiland.ui.buttons.SkillButton;
@@ -34,7 +33,9 @@ public class PlayerSkillsManager implements TouchEventListener {
     private int skillHeight, skillWidth;
     private int xDispute, yDispute;
     private int pointsCentreX, pointsCentreY;
+    private int selectedIconCentreX, selectedIconY;
     private final Bitmap skillScreen;
+    private Bitmap selectedSkillTexture;
 
     private Skill selectedSkill;
     private ArrayList<UIObject> strengthSkills, enduranceSkills, agilitySkills, knowledgeSkills, intelligenceSkills;
@@ -58,6 +59,8 @@ public class PlayerSkillsManager implements TouchEventListener {
         skillWidth = skillScreen.getWidth();
         xDispute = Constants.SCREEN_WIDTH/2 - skillWidth/2;
         yDispute = Constants.SCREEN_HEIGHT/2 - skillHeight/2;
+        selectedIconCentreX = (int)(383.f/512*skillWidth+xDispute);
+        selectedIconY = (int)(56.f/384*skillHeight+yDispute);
         skillUIObjects = new ArrayList<>();
         strengthSkills = new ArrayList<>();
         enduranceSkills = new ArrayList<>();
@@ -70,18 +73,18 @@ public class PlayerSkillsManager implements TouchEventListener {
         float baseSkillBX = 42.f/512*skillWidth+xDispute;
         float baseSkillBY = 43.f/384*skillHeight+yDispute;
         float baseSkillDX = 36.f/512*skillWidth;
-        int baseSkillIconSize = (int)(30.f/512*skillWidth);
+        int skillIconSize = (int)(30.f/512*skillWidth);
         pointsCentreX = (int)(331.f/512*skillWidth+xDispute);
         pointsCentreY = (int)(316.f/384*skillHeight+yDispute);
-        skillUIObjects.add(new UIImageButton(baseSkillBX, baseSkillBY, baseSkillIconSize, baseSkillIconSize,
+        skillUIObjects.add(new UIImageButton(baseSkillBX, baseSkillBY, skillIconSize, skillIconSize,
                 Assets.strength, () -> currentSkills = strengthSkills));
-        skillUIObjects.add(new UIImageButton(baseSkillBX+baseSkillDX, baseSkillBY, baseSkillIconSize, baseSkillIconSize,
+        skillUIObjects.add(new UIImageButton(baseSkillBX+baseSkillDX, baseSkillBY, skillIconSize, skillIconSize,
                 Assets.endurance, () -> currentSkills = enduranceSkills));
-        skillUIObjects.add(new UIImageButton(baseSkillBX+baseSkillDX*2, baseSkillBY, baseSkillIconSize, baseSkillIconSize,
+        skillUIObjects.add(new UIImageButton(baseSkillBX+baseSkillDX*2, baseSkillBY, skillIconSize, skillIconSize,
                 Assets.agility, () -> currentSkills = agilitySkills));
-        skillUIObjects.add(new UIImageButton(baseSkillBX+baseSkillDX*3, baseSkillBY, baseSkillIconSize, baseSkillIconSize,
+        skillUIObjects.add(new UIImageButton(baseSkillBX+baseSkillDX*3, baseSkillBY, skillIconSize, skillIconSize,
                 Assets.knowledge, () -> currentSkills = knowledgeSkills));
-        skillUIObjects.add(new UIImageButton(baseSkillBX+baseSkillDX*4, baseSkillBY, baseSkillIconSize, baseSkillIconSize,
+        skillUIObjects.add(new UIImageButton(baseSkillBX+baseSkillDX*4, baseSkillBY, skillIconSize, skillIconSize,
                 Assets.intelligence, () -> currentSkills = intelligenceSkills));
         skillUIObjects.add(new UIImageButton(378.f/512*skillWidth+xDispute, 296.f/384*skillHeight+yDispute,
                 (int)(78.f/512*skillWidth+1), (int)(40.f/384*skillHeight), Assets.unlock, this::upgradeSkill));
@@ -94,34 +97,34 @@ public class PlayerSkillsManager implements TouchEventListener {
         }
         skillUIObjects.addAll(Arrays.asList(activeSkillSlot));
 
-        baseSkillIconSize *= 1.2;
-        int skillL1X = (int)(128.f/512*skillWidth+xDispute-baseSkillIconSize/2);
-        int skillL1Y = (int) (283.f/384*skillHeight+yDispute-baseSkillIconSize);
+        skillIconSize *= 1.2;
+        int skillL1X = (int)(128.f/512*skillWidth+xDispute-skillIconSize/2);
+        int skillL1Y = (int) (283.f/384*skillHeight+yDispute-skillIconSize);
         strength = new SimplePlayerSkill(handler, 10,
                 () -> {handler.getPlayer().changePhysicalDamage(strength.getLevel()); handler.getPlayer().changeMaxHp(1);},
                 Assets.strengthR);
-        strengthSkills.add(new UIImageButton(skillL1X, skillL1Y, baseSkillIconSize, baseSkillIconSize, Assets.strengthR, () -> selectedSkill = strength));
+        strengthSkills.add(new SkillStaticIcon(skillL1X, skillL1Y, skillIconSize, skillIconSize, Assets.strengthR, strength));
 
         endurance = new SimplePlayerSkill(handler, 10,
                 () -> {handler.getPlayer().changeMaxHp(endurance.getLevel()); handler.getPlayer().changeDefence(1);},
                 Assets.enduranceR);
-        enduranceSkills.add(new UIImageButton(skillL1X, skillL1Y, baseSkillIconSize, baseSkillIconSize, Assets.enduranceR, () -> selectedSkill = endurance));
+        enduranceSkills.add(new SkillStaticIcon(skillL1X, skillL1Y, skillIconSize, skillIconSize, Assets.enduranceR, endurance));
 
         agility = new SimplePlayerSkill(handler, 10,
                 () -> handler.getPlayer().changeSpeed((int)Math.floor(agility.getLevel()/2.f+0.5)), Assets.agilityR);
-        agilitySkills.add(new UIImageButton(skillL1X, skillL1Y, baseSkillIconSize, baseSkillIconSize, Assets.agilityR, () -> selectedSkill = agility));
+        agilitySkills.add(new SkillStaticIcon(skillL1X, skillL1Y, skillIconSize, skillIconSize, Assets.agilityR, agility));
 
         knowledge = new SimplePlayerSkill(handler, 10,
                 () -> {handler.getPlayer().changeMaxMp(knowledge.getLevel()); handler.getPlayer().changeMagicalDamage(1);},
                 Assets.knowledgeR);
-        knowledgeSkills.add(new UIImageButton(skillL1X, skillL1Y, baseSkillIconSize, baseSkillIconSize, Assets.knowledgeR, () -> selectedSkill = knowledge));
+        knowledgeSkills.add(new SkillStaticIcon(skillL1X, skillL1Y, skillIconSize, skillIconSize, Assets.knowledgeR, knowledge));
 
         intelligence = new SimplePlayerSkill(handler, 10,
                 () -> handler.getPlayer().changeMagicalDamage((int)Math.floor(intelligence.getLevel()/2.f+0.5)), Assets.intelligenceR);
-        intelligenceSkills.add(new UIImageButton(skillL1X, skillL1Y, baseSkillIconSize, baseSkillIconSize, Assets.intelligenceR, () -> selectedSkill = intelligence));
+        intelligenceSkills.add(new SkillStaticIcon(skillL1X, skillL1Y, skillIconSize, skillIconSize, Assets.intelligenceR, intelligence));
 
         sharpWind = new SharpWind(handler);
-        strengthSkills.add(new SkillIcon(skillL1X, skillL1Y-baseSkillIconSize-10, baseSkillIconSize, baseSkillIconSize,
+        strengthSkills.add(new SkillIcon(skillL1X, skillL1Y-skillIconSize-10, skillIconSize, skillIconSize,
                 new Bitmap[]{Assets.sharpWindG, Assets.sharpWind}, sharpWind));
     }
     @Override
@@ -136,7 +139,6 @@ public class PlayerSkillsManager implements TouchEventListener {
 
     @Override
     public void update() {
-        System.out.println(selectedSkill);
         for(UIObject o: skillUIObjects)
             o.update();
         for(UIObject o: currentSkills)
@@ -161,6 +163,12 @@ public class PlayerSkillsManager implements TouchEventListener {
         String perkPoints = Integer.toString(handler.getPlayer().getPerkPoints());
         paint.getTextBounds(perkPoints, 0, perkPoints.length(), r);
         canvas.drawText(perkPoints, pointsCentreX-r.width()/2.f, pointsCentreY+r.height()/2.f, paint);
+        if(selectedSkill == null)
+            return;
+        int left = selectedIconCentreX-selectedSkillTexture.getWidth()/2;
+        canvas.drawBitmap(selectedSkillTexture, null,
+                new Rect(left, selectedIconY, left+selectedSkillTexture.getWidth(),
+                        selectedIconY+selectedSkillTexture.getHeight()), Constants.getRenderPaint());
     }
 
     public void upgradeSkill(){
@@ -213,10 +221,23 @@ public class PlayerSkillsManager implements TouchEventListener {
 
         @Override
         public void update() {
-            if(skill.isActive())
+            if(skill.isActive() || skill.levelUpReqMeet())
                 image = ImageEditor.scaleBitmapForced(skillImages[1], width, height);
             else
                 image = ImageEditor.scaleBitmapForced(skillImages[0], width, height);
+        }
+
+        @Override
+        public void draw(Canvas canvas) {
+            super.draw(canvas);
+            Paint paint = new Paint();
+            Rect r = new Rect();
+            paint.setTextSize(22);
+            paint.setColor(Color.BLACK);
+            paint.setFakeBoldText(true);
+            String level = "Lv. "+skill.getLevel();
+            paint.getTextBounds(level, 0, level.length(), r);
+            canvas.drawText(level, (float)(x+width-r.width()/1.5), y+height, paint);
         }
 
         @Override
@@ -224,8 +245,10 @@ public class PlayerSkillsManager implements TouchEventListener {
             int pointerIndex = event.findPointerIndex(event.getPointerId(event.getActionIndex()));
             if(event.getActionMasked() == MotionEvent.ACTION_DOWN ||
                     event.getActionMasked() == MotionEvent.ACTION_POINTER_DOWN)
-                if (new Rect(bounds).contains((int) event.getX(pointerIndex), (int) event.getY(pointerIndex)))
+                if (new Rect(bounds).contains((int) event.getX(pointerIndex), (int) event.getY(pointerIndex))){
                     selectedSkill = skill;
+                    selectedSkillTexture = ImageEditor.scaleBitmapForced(skill.getTexture(), width);
+                }
             if(!skill.isActive())
                 return;
             super.onTouchEvent(event);
@@ -260,6 +283,52 @@ public class PlayerSkillsManager implements TouchEventListener {
 
         public Rect getBounds(){
             return bounds;
+        }
+    }
+
+    private class SkillStaticIcon extends UIImageButton{
+
+        private Skill skill;
+        private Bitmap[] skillImages;
+
+        public SkillStaticIcon(float x, float y, int width, int height, Bitmap image, Skill skill) {
+            super(x, y, width, height, image, () -> {selectedSkill = skill;
+                    selectedSkillTexture = ImageEditor.scaleBitmapForced(skill.getTexture(), width);});
+            this.skill = skill;
+            skillImages = null;
+        }
+
+        public SkillStaticIcon(float x, float y, int width, int height, Bitmap[] images, Skill skill) {
+            super(x, y, width, height, images[0], () -> {selectedSkill = skill;
+                selectedSkillTexture = ImageEditor.scaleBitmapForced(skill.getTexture(), width);});
+            this.skill = skill;
+            skillImages = images;
+        }
+
+        @Override
+        public void update() {
+            if(skillImages == null)
+                return;
+            if(skill.isActive() || skill.levelUpReqMeet()){
+                images[0] = ImageEditor.scaleBitmapForced(skillImages[1], width, height);
+                images[1] = ImageEditor.scaleBitmapForced(skillImages[1], width, height);
+            }else {
+                images[0] = ImageEditor.scaleBitmapForced(skillImages[0], width, height);
+                images[1] = ImageEditor.scaleBitmapForced(skillImages[0], width, height);
+            }
+        }
+
+        @Override
+        public void draw(Canvas canvas) {
+            super.draw(canvas);
+            Paint paint = new Paint();
+            Rect r = new Rect();
+            paint.setTextSize(22);
+            paint.setColor(Color.BLACK);
+            paint.setFakeBoldText(true);
+            String level = "Lv. "+skill.getLevel();
+            paint.getTextBounds(level, 0, level.length(), r);
+            canvas.drawText(level, (float)(x+width-r.width()/1.5), y+height, paint);
         }
     }
 
