@@ -24,6 +24,7 @@ import com.walfen.antiland.ui.drag.DraggableUI;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class PlayerSkillsManager implements TouchEventListener {
 
@@ -41,7 +42,7 @@ public class PlayerSkillsManager implements TouchEventListener {
     private ArrayList<UIObject> skillUIObjects;
     private ArrayList<UIObject> currentSkills;
 
-    private Rect[] activeSkillSlot;
+    private SkillSlotIcon[] activeSkillSlot;
 
     //5 base:
     private SimplePlayerSkill strength, endurance, agility, knowledge, intelligence;
@@ -63,7 +64,7 @@ public class PlayerSkillsManager implements TouchEventListener {
         agilitySkills = new ArrayList<>();
         knowledgeSkills = new ArrayList<>();
         intelligenceSkills = new ArrayList<>();
-        activeSkillSlot = new Rect[3];
+        activeSkillSlot = new SkillSlotIcon[3];
 
         currentSkills = strengthSkills;
         float baseSkillBX = 42.f/512*skillWidth+xDispute;
@@ -87,32 +88,36 @@ public class PlayerSkillsManager implements TouchEventListener {
         for(int i = 0; i < 3; i++){
             int d = (int)(64.f/512*skillWidth);
             int x = (int)(38.f/512*skillWidth+xDispute+d*i);
-            int y = (int)(295.f/384*skillHeight+yDispute);
-            int sideLength = (int)(52.f/384*skillHeight);
-            activeSkillSlot[i] = new Rect(x, y, x+sideLength, y+sideLength);
+            int y = (int)(293.f/384*skillHeight+yDispute);
+            int sideLength = (int)(53.f/384*skillHeight);
+            activeSkillSlot[i] = new SkillSlotIcon(new Rect(x, y, x+sideLength, y+sideLength));
         }
+        skillUIObjects.addAll(Arrays.asList(activeSkillSlot));
 
         baseSkillIconSize *= 1.2;
         int skillL1X = (int)(128.f/512*skillWidth+xDispute-baseSkillIconSize/2);
         int skillL1Y = (int) (283.f/384*skillHeight+yDispute-baseSkillIconSize);
         strength = new SimplePlayerSkill(handler, 10,
-                () -> {handler.getPlayer().changePhysicalDamage(strength.getLevel()); handler.getPlayer().changeMaxHp(1);});
+                () -> {handler.getPlayer().changePhysicalDamage(strength.getLevel()); handler.getPlayer().changeMaxHp(1);},
+                Assets.strengthR);
         strengthSkills.add(new UIImageButton(skillL1X, skillL1Y, baseSkillIconSize, baseSkillIconSize, Assets.strengthR, () -> selectedSkill = strength));
 
         endurance = new SimplePlayerSkill(handler, 10,
-                () -> {handler.getPlayer().changeMaxHp(endurance.getLevel()); handler.getPlayer().changeDefence(1);});
+                () -> {handler.getPlayer().changeMaxHp(endurance.getLevel()); handler.getPlayer().changeDefence(1);},
+                Assets.enduranceR);
         enduranceSkills.add(new UIImageButton(skillL1X, skillL1Y, baseSkillIconSize, baseSkillIconSize, Assets.enduranceR, () -> selectedSkill = endurance));
 
         agility = new SimplePlayerSkill(handler, 10,
-                () -> handler.getPlayer().changeSpeed((int)Math.floor(agility.getLevel()/2.f+0.5)));
+                () -> handler.getPlayer().changeSpeed((int)Math.floor(agility.getLevel()/2.f+0.5)), Assets.agilityR);
         agilitySkills.add(new UIImageButton(skillL1X, skillL1Y, baseSkillIconSize, baseSkillIconSize, Assets.agilityR, () -> selectedSkill = agility));
 
         knowledge = new SimplePlayerSkill(handler, 10,
-                () -> {handler.getPlayer().changeMaxMp(knowledge.getLevel()); handler.getPlayer().changeMagicalDamage(1);});
+                () -> {handler.getPlayer().changeMaxMp(knowledge.getLevel()); handler.getPlayer().changeMagicalDamage(1);},
+                Assets.knowledgeR);
         knowledgeSkills.add(new UIImageButton(skillL1X, skillL1Y, baseSkillIconSize, baseSkillIconSize, Assets.knowledgeR, () -> selectedSkill = knowledge));
 
         intelligence = new SimplePlayerSkill(handler, 10,
-                () -> handler.getPlayer().changeMagicalDamage((int)Math.floor(intelligence.getLevel()/2.f+0.5)));
+                () -> handler.getPlayer().changeMagicalDamage((int)Math.floor(intelligence.getLevel()/2.f+0.5)), Assets.intelligenceR);
         intelligenceSkills.add(new UIImageButton(skillL1X, skillL1Y, baseSkillIconSize, baseSkillIconSize, Assets.intelligenceR, () -> selectedSkill = intelligence));
 
         sharpWind = new SharpWind(handler);
@@ -131,6 +136,7 @@ public class PlayerSkillsManager implements TouchEventListener {
 
     @Override
     public void update() {
+        System.out.println(selectedSkill);
         for(UIObject o: skillUIObjects)
             o.update();
         for(UIObject o: currentSkills)
@@ -181,11 +187,16 @@ public class PlayerSkillsManager implements TouchEventListener {
     public void releaseDrag(Skill skill, int x, int y){
         SkillButton[] skillButtons = handler.getUIManager().getSkillButtons();
         for(int i = 0; i < 3; i++)
-            if(new Rect(activeSkillSlot[i]).contains(x, y)){
-                for(SkillButton sb: skillButtons)
-                    if(sb.getSkill() != null && sb.getSkill().equals(skill))
+            if(new Rect(activeSkillSlot[i].getBounds()).contains(x, y)){
+                for(int j = 0; j < 3; j++){
+                    SkillButton sb = skillButtons[j];
+                    if(sb.getSkill() != null && sb.getSkill().equals(skill)){
                         sb.removeSkill();
-                handler.getUIManager().getSkillButtons()[i].setSkill((ActiveSkill)skill);
+                        activeSkillSlot[j].removeSkill();
+                    }
+                }
+                skillButtons[i].setSkill((ActiveSkill)skill);
+                activeSkillSlot[i].setSkill(skill);
             }
     }
 
@@ -223,6 +234,32 @@ public class PlayerSkillsManager implements TouchEventListener {
         @Override
         protected void release(int x, int y) {
             releaseDrag(skill, x, y);
+        }
+    }
+
+    private class SkillSlotIcon extends UIImageButton{
+
+        private Skill skill;
+
+        public SkillSlotIcon(Rect r) {
+            super(r.left, r.top, r.width(), r.height(), Assets.NULL, () -> {});
+            clicker = () -> selectedSkill = this.skill;
+        }
+
+        public void setSkill(Skill skill) {
+            this.skill = skill;
+            images[0] = ImageEditor.scaleBitmapForced(skill.getTexture(), 128);
+            images[1] = ImageEditor.scaleBitmapForced(skill.getTexture(), 128);
+        }
+
+        public void removeSkill(){
+            skill = null;
+            images[0] = ImageEditor.scaleBitmapForced(Assets.NULL, width, height);
+            images[1] = ImageEditor.scaleBitmapForced(Assets.NULL, width, height);
+        }
+
+        public Rect getBounds(){
+            return bounds;
         }
     }
 

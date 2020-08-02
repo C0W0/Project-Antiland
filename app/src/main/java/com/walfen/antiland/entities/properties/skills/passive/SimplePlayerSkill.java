@@ -1,5 +1,7 @@
 package com.walfen.antiland.entities.properties.skills.passive;
 
+import android.graphics.Bitmap;
+
 import com.walfen.antiland.Handler;
 import com.walfen.antiland.ui.ChangeEvent;
 
@@ -7,8 +9,8 @@ public class SimplePlayerSkill extends PassiveSkill {
 
     private ChangeEvent event;
 
-    public SimplePlayerSkill(Handler handler, int maxLevel, ChangeEvent event) {
-        super(handler, maxLevel, null);
+    public SimplePlayerSkill(Handler handler, int maxLevel, ChangeEvent event, Bitmap texture) {
+        super(handler, maxLevel, null, texture);
         this.event = event;
     }
 

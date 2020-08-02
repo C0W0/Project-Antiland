@@ -1,5 +1,7 @@
 package com.walfen.antiland.entities.properties.skills;
 
+import android.graphics.Bitmap;
+
 import com.walfen.antiland.Handler;
 import com.walfen.antiland.entities.creatures.Creature;
 
@@ -9,12 +11,14 @@ public abstract class Skill {
     protected int level;
     protected int maxLevel;
     protected Creature carrier;
+    protected Bitmap texture;
 
-    public Skill(Handler handler, int maxLevel, Creature carrier){
+    public Skill(Handler handler, int maxLevel, Creature carrier, Bitmap texture){
         this.handler = handler;
         this.maxLevel = maxLevel;
         level = 0;
         this.carrier = carrier;
+        this.texture = texture;
     }
 
     public void levelUp(){
@@ -42,5 +46,9 @@ public abstract class Skill {
 
     public void changeLevel(int deltaLevel){
         level += deltaLevel;
+    }
+
+    public Bitmap getTexture() {
+        return texture;
     }
 }
