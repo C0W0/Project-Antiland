@@ -48,4 +48,24 @@ public class SharpWind extends ActiveSkill {
     public boolean levelUpReqMeet() {
         return handler.getPlayer().getSkillsManager().getStrength().getLevel() > level+1;
     }
+
+    @Override
+    public String getTitle() {
+        return "Sharp Wind Strike";
+    }
+
+    @Override
+    public String getDesc() {
+        return "Concentrate the strength and sent off a lethal strike.";
+    }
+
+    @Override
+    public String getEffect() {
+        return "Cause "+(handler.getPlayer().getPhysicalDamage()+additionalDmg)+" damage to entities of a small area at the direction of attack.";
+    }
+
+    @Override
+    public String getReq() {
+        return "Strength: Lv."+(level+2);
+    }
 }

@@ -32,6 +32,14 @@ public abstract class Skill {
 
     public abstract boolean levelUpReqMeet();
 
+    public abstract String getTitle();
+
+    public abstract String getDesc();
+
+    public abstract String getEffect();
+
+    public abstract String getReq();
+
     public boolean isActive(){
         return level != 0;
     }

@@ -20,6 +20,7 @@ import com.walfen.antiland.ui.UIObject;
 import com.walfen.antiland.ui.buttons.SkillButton;
 import com.walfen.antiland.ui.buttons.UIImageButton;
 import com.walfen.antiland.ui.drag.DraggableUI;
+import com.walfen.antiland.untils.Utils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -34,6 +35,7 @@ public class PlayerSkillsManager implements TouchEventListener {
     private int xDispute, yDispute;
     private int pointsCentreX, pointsCentreY;
     private int selectedIconCentreX, selectedIconY;
+    private int selectedIconSize;
     private final Bitmap skillScreen;
     private Bitmap selectedSkillTexture;
 
@@ -102,30 +104,33 @@ public class PlayerSkillsManager implements TouchEventListener {
         int skillL1Y = (int) (283.f/384*skillHeight+yDispute-skillIconSize);
         strength = new SimplePlayerSkill(handler, 10,
                 () -> {handler.getPlayer().changePhysicalDamage(strength.getLevel()); handler.getPlayer().changeMaxHp(1);},
-                Assets.strengthR);
+                Assets.strengthR, "Strength", "Physical strength.", "Increases physical attack damage and hit points.");
         strengthSkills.add(new SkillStaticIcon(skillL1X, skillL1Y, skillIconSize, skillIconSize, Assets.strengthR, strength));
 
         endurance = new SimplePlayerSkill(handler, 10,
                 () -> {handler.getPlayer().changeMaxHp(endurance.getLevel()); handler.getPlayer().changeDefence(1);},
-                Assets.enduranceR);
+                Assets.enduranceR, "Endurance", "Resistance to damage.", "Increases hit points.");
         enduranceSkills.add(new SkillStaticIcon(skillL1X, skillL1Y, skillIconSize, skillIconSize, Assets.enduranceR, endurance));
 
         agility = new SimplePlayerSkill(handler, 10,
-                () -> handler.getPlayer().changeSpeed((int)Math.floor(agility.getLevel()/2.f+0.5)), Assets.agilityR);
+                () -> handler.getPlayer().changeSpeed((int)Math.floor(agility.getLevel()/2.f+0.5)), Assets.agilityR,
+                "Agility", "Speed and agility.", "Increases speed and dodge.");
         agilitySkills.add(new SkillStaticIcon(skillL1X, skillL1Y, skillIconSize, skillIconSize, Assets.agilityR, agility));
 
         knowledge = new SimplePlayerSkill(handler, 10,
                 () -> {handler.getPlayer().changeMaxMp(knowledge.getLevel()); handler.getPlayer().changeMagicalDamage(1);},
-                Assets.knowledgeR);
+                Assets.knowledgeR, "Knowledge", "Knowledge of the world.", "Increases magic points and magical attack damage.");
         knowledgeSkills.add(new SkillStaticIcon(skillL1X, skillL1Y, skillIconSize, skillIconSize, Assets.knowledgeR, knowledge));
 
         intelligence = new SimplePlayerSkill(handler, 10,
-                () -> handler.getPlayer().changeMagicalDamage((int)Math.floor(intelligence.getLevel()/2.f+0.5)), Assets.intelligenceR);
+                () -> handler.getPlayer().changeMagicalDamage((int)Math.floor(intelligence.getLevel()/2.f+0.5)), Assets.intelligenceR,
+                "Intelligence", "Situational awareness and ability to learn.", "Increases magical attack damage");
         intelligenceSkills.add(new SkillStaticIcon(skillL1X, skillL1Y, skillIconSize, skillIconSize, Assets.intelligenceR, intelligence));
 
         sharpWind = new SharpWind(handler);
         strengthSkills.add(new SkillIcon(skillL1X, skillL1Y-skillIconSize-10, skillIconSize, skillIconSize,
                 new Bitmap[]{Assets.sharpWindG, Assets.sharpWind}, sharpWind));
+        selectedIconSize = skillIconSize;
     }
     @Override
     public void onTouchEvent(MotionEvent event) {
@@ -160,15 +165,52 @@ public class PlayerSkillsManager implements TouchEventListener {
         paint.setTextSize(44);
         paint.setFakeBoldText(true);
         paint.setColor(Color.BLUE);
-        String perkPoints = Integer.toString(handler.getPlayer().getPerkPoints());
-        paint.getTextBounds(perkPoints, 0, perkPoints.length(), r);
-        canvas.drawText(perkPoints, pointsCentreX-r.width()/2.f, pointsCentreY+r.height()/2.f, paint);
+        String token = Integer.toString(handler.getPlayer().getPerkPoints());
+        paint.getTextBounds(token, 0, token.length(), r);
+        canvas.drawText(token, pointsCentreX-r.width()/2.f, pointsCentreY+r.height()/2.f, paint);
         if(selectedSkill == null)
             return;
         int left = selectedIconCentreX-selectedSkillTexture.getWidth()/2;
+        int top = selectedIconY;
         canvas.drawBitmap(selectedSkillTexture, null,
-                new Rect(left, selectedIconY, left+selectedSkillTexture.getWidth(),
+                new Rect(left, top, left+selectedSkillTexture.getWidth(),
                         selectedIconY+selectedSkillTexture.getHeight()), Constants.getRenderPaint());
+        paint.setTextSize(36);
+        paint.setColor(Color.BLACK);
+        token = selectedSkill.getTitle();
+        paint.getTextBounds(token, 0, token.length(), r);
+        left = selectedIconCentreX-r.width()/2;
+        top += selectedSkillTexture.getHeight()+10;
+        canvas.drawText(token, left, top+r.height(), paint);
+        paint.setTextSize(32);
+        ArrayList<String> tokens = Utils.splitString(selectedSkill.getDesc(), 20);
+        top += r.height()+20;
+        for(String str: tokens){
+            paint.getTextBounds(str, 0, str.length(), r);
+            left = selectedIconCentreX-r.width()/2;
+            canvas.drawText(str, left, top+r.height(), paint);
+            top += 5+r.height();
+        }
+        tokens = Utils.splitString(selectedSkill.getEffect(), 20);
+        top += 10;
+        paint.setColor(Color.MAGENTA);
+        for(String str: tokens){
+            paint.getTextBounds(str, 0, str.length(), r);
+            left = selectedIconCentreX-r.width()/2;
+            canvas.drawText(str, left, top+r.height(), paint);
+            top += 5+r.height();
+        }
+        if(selectedSkill.levelUpReqMeet())
+            return;
+        tokens = Utils.splitString("Requirement missing: "+selectedSkill.getReq(), 20);
+        top += 15;
+        paint.setColor(Color.RED);
+        for(String str: tokens){
+            paint.getTextBounds(str, 0, str.length(), r);
+            left = selectedIconCentreX-r.width()/2;
+            canvas.drawText(str, left, top+r.height(), paint);
+            top += 5+r.height();
+        }
     }
 
     public void upgradeSkill(){
@@ -266,7 +308,7 @@ public class PlayerSkillsManager implements TouchEventListener {
 
         public SkillSlotIcon(Rect r) {
             super(r.left, r.top, r.width(), r.height(), Assets.NULL, () -> {});
-            clicker = () -> selectedSkill = this.skill;
+            clicker = () -> {selectedSkill = this.skill; selectedSkillTexture = ImageEditor.scaleBitmapForced(skill.getTexture(), selectedIconSize);};
         }
 
         public void setSkill(Skill skill) {

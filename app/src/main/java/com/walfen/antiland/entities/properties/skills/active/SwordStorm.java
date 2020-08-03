@@ -37,6 +37,26 @@ public class SwordStorm extends ActiveSkill {
     }
 
     @Override
+    public String getTitle() {
+        return "Sword Storm";
+    }
+
+    @Override
+    public String getDesc() {
+        return "Spin the weapon quickly, causing area of effect damage to entities surrounding the player.";
+    }
+
+    @Override
+    public String getEffect() {
+        return "Cause "+(handler.getPlayer().getPhysicalDamage()+additionalDmg)+" damage to entities within 1 grid of the player.";
+    }
+
+    @Override
+    public String getReq() {
+        return "Strength: Lv."+(level+2)+"; Agility: Lv."+(level+2);
+    }
+
+    @Override
     protected void updateData() {
         attacks.update();
     }
