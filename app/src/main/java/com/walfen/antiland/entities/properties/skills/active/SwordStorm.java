@@ -14,7 +14,7 @@ public class SwordStorm extends ActiveSkill {
     private RangedAttacks attacks;
 
     public SwordStorm(Handler handler) {
-        super(handler, 10, 5000, Assets.joystick_controller);
+        super(handler, 10, 5000, Assets.joystick_controller, 2);
         additionalDmg = 1;
         attacks = new PlayerAroundAttack(handler, () -> (handler.getPlayer().getPhysicalDamage()+additionalDmg));
     }

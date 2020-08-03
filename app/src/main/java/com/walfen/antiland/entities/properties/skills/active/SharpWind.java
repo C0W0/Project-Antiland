@@ -13,7 +13,7 @@ public class SharpWind extends ActiveSkill {
     private RangedAttacks attacks;
 
     public SharpWind(Handler handler) {
-        super(handler, 10, 4000, Assets.sharpWind);
+        super(handler, 10, 4000, Assets.sharpWind, 1);
         additionalDmg = 5;
         attacks = new PlayerAbilityAttack(handler, () -> (handler.getPlayer().getPhysicalDamage()+additionalDmg));
     }

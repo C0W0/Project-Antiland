@@ -123,6 +123,10 @@ public abstract class Creature extends Entity {
         maxMp += deltaMp;
     }
 
+    public void changeMp(int deltaMp){
+        mp += deltaMp;
+    }
+
     //getters and setters
     public float getSpeed() {
         return speed;

@@ -63,7 +63,7 @@ public class MenuState extends State {
     private void createNewSaveDocument(){
         String tileName = "tiles.wld", entityName = "entity.wld",
                 playerName = "player.wld", inventoryName = "inventory.wld",
-        missionName = "missions.wld";
+        missionName = "missions.wld", skillName = "skills.wld";
         try {
             Utils.deleteDirectoryFiles(new File(Constants.DIR+"/main"));
             Utils.deleteDirectoryFiles(new File(Constants.DIR+"/auto"));
@@ -74,13 +74,16 @@ public class MenuState extends State {
             copyFileFromAssets(Constants.DIR+"/main/player", playerName);
             copyFileFromAssets(Constants.DIR+"/main/player", inventoryName);
             copyFileFromAssets(Constants.DIR+"/main/player", missionName);
+            copyFileFromAssets(Constants.DIR+"/main/player", skillName);
             copyFileFromAssets(Constants.DIR+"/auto", tileName);
             copyFileFromAssets(Constants.DIR+"/auto", entityName);
             copyFileFromAssets(Constants.DIR+"/auto/player", playerName);
             copyFileFromAssets(Constants.DIR+"/auto/player", inventoryName);
             copyFileFromAssets(Constants.DIR+"/auto/player", missionName);
+            copyFileFromAssets(Constants.DIR+"/auto/player", skillName);
         }catch (IOException e){
             uiManager.popUpMessage("Game file corrupted, please re-install the game");
+            e.printStackTrace();
             return;
         }
         startGameFromPath(Constants.DIR+"/main");
@@ -91,8 +94,8 @@ public class MenuState extends State {
             GameState gs = (GameState)handler.getGame().getGameState();
             State.setStateAndInit(gs, path);
         }catch (Exception e){
+//            uiManager.popUpMessage("Save document not found, please create a new save document");
             e.printStackTrace();
-            uiManager.popUpMessage("Save document not found, please create a new save document");
         }
     }
 

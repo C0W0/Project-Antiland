@@ -16,6 +16,7 @@ import com.walfen.antiland.entities.properties.skills.passive.SimplePlayerSkill;
 import com.walfen.antiland.gfx.Assets;
 import com.walfen.antiland.gfx.ImageEditor;
 import com.walfen.antiland.ui.TouchEventListener;
+import com.walfen.antiland.ui.UIManager;
 import com.walfen.antiland.ui.UIObject;
 import com.walfen.antiland.ui.buttons.SkillButton;
 import com.walfen.antiland.ui.buttons.UIImageButton;
@@ -23,6 +24,9 @@ import com.walfen.antiland.ui.drag.DraggableUI;
 import com.walfen.antiland.untils.Utils;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -40,7 +44,7 @@ public class PlayerSkillsManager implements TouchEventListener {
     private Bitmap selectedSkillTexture;
 
     private Skill selectedSkill;
-    private ArrayList<UIObject> strengthSkills, enduranceSkills, agilitySkills, knowledgeSkills, intelligenceSkills;
+    private ArrayList<UIObject> strengthSU, enduranceSU, agilitySU, knowledgeSU, intelligenceSU;
 
     private ArrayList<UIObject> skillUIObjects;
     private ArrayList<UIObject> currentSkills;
@@ -49,10 +53,10 @@ public class PlayerSkillsManager implements TouchEventListener {
 
     //5 base:
     private SimplePlayerSkill strength, endurance, agility, knowledge, intelligence;
-    //strength skills:
-    private Skill sharpWind;
+    //Skill lists
+    private ArrayList<Skill> strengthSL, enduranceSL, agilitySL, knowledgeSL, intelligenceSL;
 
-    public PlayerSkillsManager(Handler handler, File skillFiles){
+    public PlayerSkillsManager(Handler handler){
 
         this.handler = handler;
 
@@ -64,14 +68,14 @@ public class PlayerSkillsManager implements TouchEventListener {
         selectedIconCentreX = (int)(383.f/512*skillWidth+xDispute);
         selectedIconY = (int)(56.f/384*skillHeight+yDispute);
         skillUIObjects = new ArrayList<>();
-        strengthSkills = new ArrayList<>();
-        enduranceSkills = new ArrayList<>();
-        agilitySkills = new ArrayList<>();
-        knowledgeSkills = new ArrayList<>();
-        intelligenceSkills = new ArrayList<>();
+        strengthSU = new ArrayList<>();
+        enduranceSU = new ArrayList<>();
+        agilitySU = new ArrayList<>();
+        knowledgeSU = new ArrayList<>();
+        intelligenceSU = new ArrayList<>();
         activeSkillSlot = new SkillSlotIcon[3];
 
-        currentSkills = strengthSkills;
+        currentSkills = strengthSU;
         float baseSkillBX = 42.f/512*skillWidth+xDispute;
         float baseSkillBY = 43.f/384*skillHeight+yDispute;
         float baseSkillDX = 36.f/512*skillWidth;
@@ -79,15 +83,15 @@ public class PlayerSkillsManager implements TouchEventListener {
         pointsCentreX = (int)(331.f/512*skillWidth+xDispute);
         pointsCentreY = (int)(316.f/384*skillHeight+yDispute);
         skillUIObjects.add(new UIImageButton(baseSkillBX, baseSkillBY, skillIconSize, skillIconSize,
-                Assets.strength, () -> currentSkills = strengthSkills));
+                Assets.strength, () -> currentSkills = strengthSU));
         skillUIObjects.add(new UIImageButton(baseSkillBX+baseSkillDX, baseSkillBY, skillIconSize, skillIconSize,
-                Assets.endurance, () -> currentSkills = enduranceSkills));
+                Assets.endurance, () -> currentSkills = enduranceSU));
         skillUIObjects.add(new UIImageButton(baseSkillBX+baseSkillDX*2, baseSkillBY, skillIconSize, skillIconSize,
-                Assets.agility, () -> currentSkills = agilitySkills));
+                Assets.agility, () -> currentSkills = agilitySU));
         skillUIObjects.add(new UIImageButton(baseSkillBX+baseSkillDX*3, baseSkillBY, skillIconSize, skillIconSize,
-                Assets.knowledge, () -> currentSkills = knowledgeSkills));
+                Assets.knowledge, () -> currentSkills = knowledgeSU));
         skillUIObjects.add(new UIImageButton(baseSkillBX+baseSkillDX*4, baseSkillBY, skillIconSize, skillIconSize,
-                Assets.intelligence, () -> currentSkills = intelligenceSkills));
+                Assets.intelligence, () -> currentSkills = intelligenceSU));
         skillUIObjects.add(new UIImageButton(378.f/512*skillWidth+xDispute, 296.f/384*skillHeight+yDispute,
                 (int)(78.f/512*skillWidth+1), (int)(40.f/384*skillHeight), Assets.unlock, this::upgradeSkill));
         for(int i = 0; i < 3; i++){
@@ -102,36 +106,90 @@ public class PlayerSkillsManager implements TouchEventListener {
         skillIconSize *= 1.2;
         int skillL1X = (int)(128.f/512*skillWidth+xDispute-skillIconSize/2);
         int skillL1Y = (int) (283.f/384*skillHeight+yDispute-skillIconSize);
+        strengthSL = new ArrayList<>();
+        enduranceSL = new ArrayList<>();
+        agilitySL = new ArrayList<>();
+        knowledgeSL = new ArrayList<>();
+        intelligenceSL = new ArrayList<>();
+
         strength = new SimplePlayerSkill(handler, 10,
-                () -> {handler.getPlayer().changePhysicalDamage(strength.getLevel()); handler.getPlayer().changeMaxHp(1);},
-                Assets.strengthR, "Strength", "Physical strength.", "Increases physical attack damage and hit points.");
-        strengthSkills.add(new SkillStaticIcon(skillL1X, skillL1Y, skillIconSize, skillIconSize, Assets.strengthR, strength));
+                () -> {handler.getPlayer().changePhysicalDamage(strength.getLevel()); handler.getPlayer().changeMaxHp(1);
+                    handler.getPlayer().changeHealth(1);}, Assets.strengthR,
+                "Strength", "Physical strength.", "Increases physical attack damage and hit points.");
+        strengthSU.add(new SkillStaticIcon(skillL1X, skillL1Y, skillIconSize, skillIconSize, Assets.strengthR, strength));
+        strengthSL.add(strength);
 
         endurance = new SimplePlayerSkill(handler, 10,
-                () -> {handler.getPlayer().changeMaxHp(endurance.getLevel()); handler.getPlayer().changeDefence(1);},
-                Assets.enduranceR, "Endurance", "Resistance to damage.", "Increases hit points.");
-        enduranceSkills.add(new SkillStaticIcon(skillL1X, skillL1Y, skillIconSize, skillIconSize, Assets.enduranceR, endurance));
+                () -> {handler.getPlayer().changeMaxHp(endurance.getLevel()); handler.getPlayer().changeDefence(1);
+                handler.getPlayer().changeHealth(endurance.getLevel());}, Assets.enduranceR,
+                "Endurance", "Resistance to damage.", "Increases hit points.");
+        enduranceSU.add(new SkillStaticIcon(skillL1X, skillL1Y, skillIconSize, skillIconSize, Assets.enduranceR, endurance));
+        enduranceSL.add(endurance);
 
         agility = new SimplePlayerSkill(handler, 10,
                 () -> handler.getPlayer().changeSpeed((int)Math.floor(agility.getLevel()/2.f+0.5)), Assets.agilityR,
                 "Agility", "Speed and agility.", "Increases speed and dodge.");
-        agilitySkills.add(new SkillStaticIcon(skillL1X, skillL1Y, skillIconSize, skillIconSize, Assets.agilityR, agility));
+        agilitySU.add(new SkillStaticIcon(skillL1X, skillL1Y, skillIconSize, skillIconSize, Assets.agilityR, agility));
+        agilitySL.add(agility);
 
         knowledge = new SimplePlayerSkill(handler, 10,
-                () -> {handler.getPlayer().changeMaxMp(knowledge.getLevel()); handler.getPlayer().changeMagicalDamage(1);},
-                Assets.knowledgeR, "Knowledge", "Knowledge of the world.", "Increases magic points and magical attack damage.");
-        knowledgeSkills.add(new SkillStaticIcon(skillL1X, skillL1Y, skillIconSize, skillIconSize, Assets.knowledgeR, knowledge));
+                () -> {handler.getPlayer().changeMaxMp(knowledge.getLevel()); handler.getPlayer().changeMagicalDamage(1);
+                handler.getPlayer().changeMp(knowledge.getLevel());}, Assets.knowledgeR,
+                "Knowledge", "Knowledge of the world.", "Increases magic points and magical attack damage.");
+        knowledgeSU.add(new SkillStaticIcon(skillL1X, skillL1Y, skillIconSize, skillIconSize, Assets.knowledgeR, knowledge));
+        knowledgeSL.add(knowledge);
 
         intelligence = new SimplePlayerSkill(handler, 10,
                 () -> handler.getPlayer().changeMagicalDamage((int)Math.floor(intelligence.getLevel()/2.f+0.5)), Assets.intelligenceR,
                 "Intelligence", "Situational awareness and ability to learn.", "Increases magical attack damage");
-        intelligenceSkills.add(new SkillStaticIcon(skillL1X, skillL1Y, skillIconSize, skillIconSize, Assets.intelligenceR, intelligence));
+        intelligenceSU.add(new SkillStaticIcon(skillL1X, skillL1Y, skillIconSize, skillIconSize, Assets.intelligenceR, intelligence));
+        intelligenceSL.add(intelligence);
 
-        sharpWind = new SharpWind(handler);
-        strengthSkills.add(new SkillIcon(skillL1X, skillL1Y-skillIconSize-10, skillIconSize, skillIconSize,
+        //strength skills:
+        Skill sharpWind = new SharpWind(handler);
+        strengthSU.add(new SkillIcon(skillL1X, skillL1Y-skillIconSize-10, skillIconSize, skillIconSize,
                 new Bitmap[]{Assets.sharpWindG, Assets.sharpWind}, sharpWind));
         selectedIconSize = skillIconSize;
+        strengthSL.add(sharpWind);
     }
+
+    public void initSkills(String path, UIManager manager){
+        //FILE IO:
+        File skillFile = new File(path+"/player/skills.wld");
+        ArrayList<String> tokens;
+        try{
+            tokens = Utils.loadFileAsArrayList(new FileInputStream(skillFile));
+            String[] token = tokens.get(0).split("\\s+");
+            for(int i = 0; i < token.length; i++)
+                strengthSL.get(i).setLevel(Utils.parseInt(token[i]));
+            token = tokens.get(1).split("\\s+");
+            for(int i = 0; i < token.length; i++)
+                enduranceSL.get(i).setLevel(Utils.parseInt(token[i]));
+            token = tokens.get(2).split("\\s+");
+            for(int i = 0; i < token.length; i++)
+                agilitySL.get(i).setLevel(Utils.parseInt(token[i]));
+            token = tokens.get(3).split("\\s+");
+            for(int i = 0; i < token.length; i++)
+                knowledgeSL.get(i).setLevel(Utils.parseInt(token[i]));
+            token = tokens.get(4).split("\\s+");
+            for(int i = 0; i < token.length; i++)
+                intelligenceSL.get(i).setLevel(Utils.parseInt(token[i]));
+            token = tokens.get(5).split("\\s+");
+            SkillButton[] skillButtons = manager.getSkillButtons();
+            ArrayList<Skill>[] lists = new ArrayList[]{strengthSL, enduranceSL, agilitySL, knowledgeSL, intelligenceSL};
+            for(int i = 0; i < 3; i++){
+                int hID = Utils.parseInt(token[i]);
+                if(hID == -1)
+                    continue;
+                int arrID = (int)(hID/100);
+                int arrIndex = hID%100;
+                skillButtons[i].setSkill((ActiveSkill)lists[arrID].get(arrIndex));
+            }
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void onTouchEvent(MotionEvent event) {
         if(!active)
@@ -372,6 +430,37 @@ public class PlayerSkillsManager implements TouchEventListener {
             paint.getTextBounds(level, 0, level.length(), r);
             canvas.drawText(level, (float)(x+width-r.width()/1.5), y+height, paint);
         }
+    }
+
+    public void saveSkills(String path) throws IOException{
+        File skillFile = new File(path+"/player/skills.wld");
+        skillFile.delete();
+        skillFile.createNewFile();
+        PrintWriter editor = new PrintWriter(skillFile);
+        for(Skill s: strengthSL)
+            editor.print(s.getLevel()+" ");
+        editor.println();
+        for(Skill s: enduranceSL)
+            editor.print(s.getLevel()+" ");
+        editor.println();
+        for(Skill s: agilitySL)
+            editor.print(s.getLevel()+" ");
+        editor.println();
+        for(Skill s: knowledgeSL)
+            editor.print(s.getLevel()+" ");
+        editor.println();
+        for(Skill s: intelligenceSL)
+            editor.print(s.getLevel()+" ");
+        editor.println();
+        SkillButton[] skillButtons = handler.getUIManager().getSkillButtons();
+        for(int i = 0; i < 3; i++){
+            ActiveSkill s = skillButtons[i].getSkill();
+            if(s != null)
+                editor.print(s.getHierarchyID()+" ");
+            else
+                editor.print(-1+" ");
+        }
+        editor.close();
     }
 
     public SimplePlayerSkill getStrength() {

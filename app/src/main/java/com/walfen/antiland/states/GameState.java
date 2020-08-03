@@ -10,7 +10,6 @@ import com.walfen.antiland.Handler;
 import com.walfen.antiland.entities.creatures.Player;
 import com.walfen.antiland.gfx.Assets;
 import com.walfen.antiland.ui.BarA;
-import com.walfen.antiland.ui.buttons.SkillButton;
 import com.walfen.antiland.ui.UIManager;
 import com.walfen.antiland.ui.buttons.UIImageButton;
 import com.walfen.antiland.ui.decorative.UITextDecoration;
@@ -68,6 +67,7 @@ public class GameState extends State {
         world = new World(handler, path);
         initDefaultUI();
         handler.setWorld(world);
+        player.getSkillsManager().initSkills(path, uiManager);
     }
 
     private void initDefaultUI(){
@@ -102,7 +102,7 @@ public class GameState extends State {
     private void saveGame(){
         try{
             world.saveMap(Constants.DIR+"/main");
-            player.saveMap(Constants.DIR+"/main");
+            player.savePlayer(Constants.DIR+"/main");
         }catch (IOException e){
             e.printStackTrace();
             uiManager.popUpMessage("Game file corrupted, please re-install the game");
