@@ -30,6 +30,8 @@ public class Assets {
 
     //ui
     public static Bitmap hp_bar, mp_bar, bar_frame;
+    public static Bitmap horizontalSlideTrack, horizontalSlider, horizontalTickMark;
+    public static Bitmap adjusterUp, adjusterDown;
 
     //entities
     public static Bitmap tree;
@@ -96,6 +98,11 @@ public class Assets {
         hp_bar = ImageLoader.loadImage(R.drawable.hp_bar);
         mp_bar = ImageLoader.loadImage(R.drawable.mp_bar);
         bar_frame = ImageLoader.loadImage(R.drawable.bar_frame);
+        horizontalSlideTrack = sheet1.crop(width*4, 0, width*2, height);
+        horizontalSlider = sheet1.crop(width*4, height, width, height);
+        horizontalTickMark = sheet1.crop(width*5, height, width, height);
+        adjusterUp = sheet1.crop(width*6, 0, width, height);
+        adjusterDown = sheet1.crop(width*7, 0, width, height);
 
         //entity
         tree = townTiles.crop(width*5,height*3,width,height*2);
