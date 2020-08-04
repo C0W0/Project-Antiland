@@ -54,5 +54,7 @@ public class MainThread extends Thread {
         this.running = running;
     }
 
-
+    public int getFPS(){
+        return fpsTimer.getFPS();
+    }
 }

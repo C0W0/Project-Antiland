@@ -175,7 +175,7 @@ public class Player extends Creature{
         event = Constants.EMPTY_EVENT;
         interactButton.setActive(false);
 
-        skillsManager = new PlayerSkillsManager(handler, null);
+        skillsManager = new PlayerSkillsManager(handler);
         wealth = 0;
 
 
@@ -256,9 +256,6 @@ public class Player extends Creature{
     @Override
     public void update() {
 
-        if(health > maxHp)
-            health = maxHp;
-
         //animation
         setCurrentAnimation();
         currentAnimation.update();
@@ -306,7 +303,7 @@ public class Player extends Creature{
         skillsManager.draw(canvas);
     }
 
-    public void saveMap(String path) throws IOException{
+    public void savePlayer(String path) throws IOException{
         /*
         IMPORTANT: player.wld format (update here):
         x y
@@ -355,6 +352,7 @@ public class Player extends Creature{
             editor.println();
         }
         editor.close();
+        skillsManager.saveSkills(path);
     }
 
     public void equip(int id, int location){

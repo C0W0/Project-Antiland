@@ -9,12 +9,13 @@ import com.walfen.antiland.gfx.ImageEditor;
 
 public abstract class ActiveSkill extends Skill {
 
-    protected Bitmap icon;
     protected long lastActiveTime, activeCooldown, activeTimer;
 
-    public ActiveSkill(Handler handler, int maxLevel, long msCooldown, Bitmap icon) {
-        super(handler, maxLevel, null);
-        this.icon = ImageEditor.scaleBitmapForced(icon, 128);
+    protected int hID;
+
+    public ActiveSkill(Handler handler, int maxLevel, long msCooldown, Bitmap texture, int hID) {
+        super(handler, maxLevel, null, texture);
+        this.hID = hID;
         activeCooldown = msCooldown;
         activeTimer = activeCooldown;
     }
@@ -36,8 +37,13 @@ public abstract class ActiveSkill extends Skill {
 
     protected abstract void updateData();
 
-    public Bitmap getIcon() {
-        return icon;
+    /** get the encoded hierarchyID of the skill
+     * ArrayList id: (int)(id/100)
+     * ArrayList index: id%100
+     * @return
+     */
+    public int getHierarchyID(){
+        return hID;
     }
 
     public float getCooldownSecond(){

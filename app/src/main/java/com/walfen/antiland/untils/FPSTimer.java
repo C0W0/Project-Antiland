@@ -7,7 +7,7 @@ public class FPSTimer {
     private long now;
     private long lastTime;
     private long time;
-    private int frames;
+    private int frames, fps;
     //The code that are commented out are for FPS display
 
 
@@ -27,7 +27,7 @@ public class FPSTimer {
             frames ++;
 
             if(time >= 1e9){
-//                System.out.println("FPS: "+frames);
+                fps = frames;
                 time = 0;
                 frames = 0;
             }
@@ -38,6 +38,8 @@ public class FPSTimer {
         }
     }
 
-
+    public int getFPS(){
+        return fps;
+    }
 
 }

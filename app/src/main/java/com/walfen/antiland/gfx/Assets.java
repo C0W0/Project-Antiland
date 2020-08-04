@@ -16,6 +16,8 @@ public class Assets {
     public static Bitmap pathVertical, pathHorizontal, pathCornerUpRight, pathCornerUpLeft, pathCornerDownLeft, pathCornerDownRight;
     public static Bitmap[] houseTiles;
 
+    public static Bitmap NULL;
+
     //player
     public static Bitmap player_neutral;
     public static Bitmap [] player_down, player_up, player_left, player_right;
@@ -148,6 +150,8 @@ public class Assets {
         sharpWind = skillSheet.crop(width*6, height, width, height);
 
         unlock = skillSheet.crop(width*5, 0, 250, 128);
+
+        NULL = skillSheet.crop(width*7, 0, width, height);
 
     }
 
