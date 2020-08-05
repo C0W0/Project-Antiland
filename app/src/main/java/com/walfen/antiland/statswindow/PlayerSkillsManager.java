@@ -113,15 +113,15 @@ public class PlayerSkillsManager implements TouchEventListener {
         intelligenceSL = new ArrayList<>();
 
         strength = new SimplePlayerSkill(handler, 10,
-                () -> {handler.getPlayer().changePhysicalDamage(strength.getLevel()); handler.getPlayer().changeMaxHp(1);
-                    handler.getPlayer().changeHealth(1);}, Assets.strengthR,
+                () -> {handler.getPlayer().changePhysicalDamage(strength.getLevel());
+                handler.getPlayer().changeMaxHp(1);}, Assets.strengthR,
                 "Strength", "Physical strength.", "Increases physical attack damage and hit points.");
         strengthSU.add(new SkillStaticIcon(skillL1X, skillL1Y, skillIconSize, skillIconSize, Assets.strengthR, strength));
         strengthSL.add(strength);
 
         endurance = new SimplePlayerSkill(handler, 10,
-                () -> {handler.getPlayer().changeMaxHp(endurance.getLevel()); handler.getPlayer().changeDefence(1);
-                handler.getPlayer().changeHealth(endurance.getLevel());}, Assets.enduranceR,
+                () -> {handler.getPlayer().changeMaxHp(endurance.getLevel());
+                handler.getPlayer().changeDefence(1);}, Assets.enduranceR,
                 "Endurance", "Resistance to damage.", "Increases hit points.");
         enduranceSU.add(new SkillStaticIcon(skillL1X, skillL1Y, skillIconSize, skillIconSize, Assets.enduranceR, endurance));
         enduranceSL.add(endurance);
@@ -133,8 +133,8 @@ public class PlayerSkillsManager implements TouchEventListener {
         agilitySL.add(agility);
 
         knowledge = new SimplePlayerSkill(handler, 10,
-                () -> {handler.getPlayer().changeMaxMp(knowledge.getLevel()); handler.getPlayer().changeMagicalDamage(1);
-                handler.getPlayer().changeMp(knowledge.getLevel());}, Assets.knowledgeR,
+                () -> {handler.getPlayer().changeMaxMp(knowledge.getLevel());
+                handler.getPlayer().changeMagicalDamage(1); }, Assets.knowledgeR,
                 "Knowledge", "Knowledge of the world.", "Increases magic points and magical attack damage.");
         knowledgeSU.add(new SkillStaticIcon(skillL1X, skillL1Y, skillIconSize, skillIconSize, Assets.knowledgeR, knowledge));
         knowledgeSL.add(knowledge);
