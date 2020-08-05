@@ -66,11 +66,9 @@ public class Trade implements TouchEventListener {
 
         selectedItem = null;
 
-        confirmButton = new UIImageButton(362.f / 512 * tradeScreenWidth + xDispute, 146.f / 384 * tradeScreenHeight + yDispute,
-                (int) (32.f / 512 * tradeScreenWidth), (int) (16.f / 384 * tradeScreenHeight),
+        confirmButton = new UIImageButton(235, 297,42,14,
                 new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, this::confirmTrade);
-        revertButton = new UIImageButton(xDispute, yDispute * 2 + tradeScreenHeight - invBaseY,
-                Constants.UI_CLOSE_SIZE, Constants.UI_CLOSE_SIZE,
+        revertButton = new UIImageButton(235, 328,42,14,
                 new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, this::revertTrade);
         closeButton = new UIImageButton(xDispute * 2 + tradeScreenWidth - invBaseX, yDispute,
                 Constants.UI_CLOSE_SIZE, Constants.UI_CLOSE_SIZE,
@@ -93,7 +91,7 @@ public class Trade implements TouchEventListener {
             int pointerIndex = event.findPointerIndex(event.getPointerId(event.getActionIndex()));
             float touchX = event.getX(pointerIndex);
             float touchY = event.getY(pointerIndex);
-            Point p = computeSelectedPoint(touchX, touchY);
+            Point p = computeSlotPosition(touchX, touchY);
             selectedX = p.x;
             selectedY = p.y;
             selectedItem = inventoryItems.get(p.y* SLOTWIDTH +p.x);
@@ -105,7 +103,7 @@ public class Trade implements TouchEventListener {
             float touchX = event.getX(pointerIndex);
             float touchY = event.getY(pointerIndex);
 
-            Point p = computeSelectedPoint(touchX, touchY);
+            Point p = computeSlotPosition(touchX, touchY);
             selectedX = p.x;
             selectedY = p.y;
         }
@@ -220,14 +218,15 @@ public class Trade implements TouchEventListener {
         canvas.drawText(name, invNameX - r.width() / 2.f, invNameY + r.height() / 2.f, paint);
     }
 
-   //Well make this when we get the trade screen
-    private Point computeSelectedPoint(float oX, float oY){
+    private Point computeSlotPosition(float oX, float oY){
+
+        if (oX>196/512*tradeScreenWidth && oX<317/512*tradeScreenWidth)
+            return null;
         int x = Math.floorDiv((int)(oX- invBaseX), itemDXConstant);
         int y = Math.floorDiv((int)(oY-invBaseY), itemDYConstant);
-        if(x < 0 || x > 4 || y < 0 || y > 4){
+        if(x < 0 || x > 8 || y < 0 || y > 6)
             return null;
-        }
-        return new Point((int)x, (int)y+scroll);
+        return new Point((int)x, (int)y+scroll));
     }
 
     public void confirmTrade() {
