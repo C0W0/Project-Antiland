@@ -28,11 +28,11 @@ public class Trade implements TouchEventListener {
 
 
     private boolean active = false, buttonJustPressed = false;
-    private final int SLOTWIDTH=4, SLOTHEIGHT=6;
+    private final int SLOTWIDTH = 4, SLOTHEIGHT = 6;
     private int tradeScreenHeight, tradeScreenWidth;
     private int invBaseX, invBaseY, shopBaseX, shopBaseY, iconSize, itemDXConstant, itemDYConstant;
     private int invImageX, invImageY, invNameX, invNameY, numOffsetX, numOffsetY;
-    private int selectedX = 0, selectedY = 0, scroll = 0;
+    private int selectedX = 0, selectedY = 0, scrollP = 0, scrollS = 0;
     private int xDispute, yDispute;
     private final Bitmap trade;
 
@@ -54,20 +54,26 @@ public class Trade implements TouchEventListener {
         yDispute = Constants.SCREEN_HEIGHT / 2 - tradeScreenHeight / 2;
         iconSize = Constants.iconSize;
         blueSquare = ImageEditor.scaleBitmap(Assets.blueSqr, iconSize+4);
-        invBaseX = (int) (54.f / 512 * tradeScreenWidth + xDispute);
-        invBaseY = (int) (54.f / 384 * tradeScreenHeight + yDispute);
-        invImageX = (int) (363.f / 512 * tradeScreenWidth + xDispute);
-        invImageY = (int) (67.f / 384 * tradeScreenHeight + yDispute);
-        invNameX = (int) (378.f / 512 * tradeScreenWidth + xDispute);
-        invNameY = (int) (130.f / 384 * tradeScreenHeight + yDispute);
+        invBaseX = (int) (38.f / 512 * tradeScreenWidth + xDispute);
+        invBaseY = (int) (117.f / 384 * tradeScreenHeight + yDispute);
+        shopBaseX = (int) (322.f / 512 * tradeScreenWidth + xDispute);
+        shopBaseY = (int) (114.f / 384 * tradeScreenHeight + yDispute);
+        invImageX = (int) (242.f / 512 * tradeScreenWidth + xDispute);
+        invImageY = (int) (128.f / 384 * tradeScreenHeight + yDispute);
+        invNameX = (int) (257.f / 512 * tradeScreenWidth + xDispute);
+        invNameY = (int) (192.f / 384 * tradeScreenHeight + yDispute);
         numOffsetX = (int) (36.f / 512 * tradeScreenWidth);
         numOffsetY = (int) (36.f / 384 * tradeScreenHeight);
 
         selectedItem = null;
 
-        confirmButton = new UIImageButton(235, 297,42,14,
+        int buttonX = (int) (235.f / 512 * tradeScreenWidth + xDispute);
+        int buttonWidth = (int)(42.f/512*tradeScreenWidth);
+        int buttonHeight = (int)(14.f/384*tradeScreenHeight);
+
+        confirmButton = new UIImageButton(buttonX, 297.f/384*tradeScreenHeight+yDispute, buttonWidth,buttonHeight,
                 new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, this::confirmTrade);
-        revertButton = new UIImageButton(235, 328,42,14,
+        revertButton = new UIImageButton(buttonX, 328.f/384*tradeScreenHeight+yDispute, buttonWidth,buttonHeight,
                 new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, this::revertTrade);
         closeButton = new UIImageButton(xDispute * 2 + tradeScreenWidth - invBaseX, yDispute,
                 Constants.UI_CLOSE_SIZE, Constants.UI_CLOSE_SIZE,
@@ -93,19 +99,18 @@ public class Trade implements TouchEventListener {
             Point p = computeSlotPosition(touchX, touchY);
             selectedX = p.x;
             selectedY = p.y;
-            selectedItem = inventoryItems.get(p.y* SLOTWIDTH +p.x);
         }
 
-        if (event.getActionMasked() == MotionEvent.ACTION_UP ||
-                event.getActionMasked() == MotionEvent.ACTION_POINTER_UP) {
-            int pointerIndex = event.findPointerIndex(event.getPointerId(event.getActionIndex()));
-            float touchX = event.getX(pointerIndex);
-            float touchY = event.getY(pointerIndex);
-
-            Point p = computeSlotPosition(touchX, touchY);
-            selectedX = p.x;
-            selectedY = p.y;
-        }
+//        if (event.getActionMasked() == MotionEvent.ACTION_UP ||
+//                event.getActionMasked() == MotionEvent.ACTION_POINTER_UP) {
+//            int pointerIndex = event.findPointerIndex(event.getPointerId(event.getActionIndex()));
+//            float touchX = event.getX(pointerIndex);
+//            float touchY = event.getY(pointerIndex);
+//
+//            Point p = computeSlotPosition(touchX, touchY);
+//            selectedX = p.x;
+//            selectedY = p.y;
+//        }
     }
 
     @Override
@@ -113,10 +118,20 @@ public class Trade implements TouchEventListener {
         if (!active) {
             return;
         }
-        if(tempInventoryItems.size() > selectedY* SLOTWIDTH +selectedX) {
-            selectedItem = tempInventoryItems.get(selectedY * SLOTWIDTH + selectedX);
+        if(selectedY >= 6){
+            int selectionIndex = (selectedY-6)* SLOTWIDTH +selectedX;
+            if(tempShopKeeperItems.size() > selectionIndex) {
+                selectedItem = tempInventoryItems.get(selectionIndex);
+            }else {
+                selectedItem = null;
+            }
         }else {
-            selectedItem = null;
+            int selectionIndex = selectedY* SLOTWIDTH +selectedX;
+            if(tempInventoryItems.size() > selectionIndex) {
+                selectedItem = tempInventoryItems.get(selectionIndex);
+            }else {
+                selectedItem = null;
+            }
         }
 
         for(int i = 0; i < tempInventoryItems.size(); i++) {
@@ -144,7 +159,7 @@ public class Trade implements TouchEventListener {
                 if (tempInventoryItems.size() <= y * SLOTWIDTH + x)
                     break;
                 int left = x * itemDXConstant + invBaseX;
-                int top = y * itemDYConstant + invBaseY;
+                int top = (y+scrollP) * itemDYConstant + invBaseY;
                 if (x == selectedX && y == selectedY)
                     canvas.drawBitmap(blueSquare, null,
                             new Rect(left - 2, top - 2, left + iconSize + 4, top + iconSize + 4),
@@ -168,18 +183,18 @@ public class Trade implements TouchEventListener {
                 if (tempShopKeeperItems.size() <= y * SLOTWIDTH + x)
                     break;
                 int left = x * itemDXConstant + shopBaseX;
-                int top = (y) * itemDYConstant + shopBaseY;
-                if (x == selectedX && y == selectedY)
+                int top = (y+scrollS) * itemDYConstant + shopBaseY;
+                if (x == selectedX && y+6 == selectedY)
                     canvas.drawBitmap(blueSquare, null,
                             new Rect(left - 2, top - 2, left + iconSize + 4, top + iconSize + 4),
                             Constants.getRenderPaint());
-                canvas.drawBitmap(tempShopKeeperItems.get(y * 5 + x).getInvTexture(), null,
+                canvas.drawBitmap(tempShopKeeperItems.get(y * SLOTWIDTH + x).getInvTexture(), null,
                         new Rect(left, top, left + iconSize, top + iconSize),
                         Constants.getRenderPaint());
                 Paint paint = new Paint();
                 paint.setTextSize(26);
                 Rect r = new Rect();
-                String count = Integer.toString(tempShopKeeperItems.get(y * 5 + x).getCount());
+                String count = Integer.toString(tempShopKeeperItems.get(y * SLOTWIDTH + x).getCount());
                 paint.getTextBounds(count, 0, count.length(), r);
                 paint.setColor(Color.BLACK);
                 canvas.drawText(count, left + numOffsetX - r.width() - 2, top + numOffsetY - 2, paint);
@@ -214,18 +229,22 @@ public class Trade implements TouchEventListener {
         String name = selectedItem.getName();
         paint.getTextBounds(name.toUpperCase(), 0, name.length(), r);
         paint.setColor(Color.BLACK);
+        paint.setFakeBoldText(true);
         canvas.drawText(name, invNameX - r.width() / 2.f, invNameY + r.height() / 2.f, paint);
     }
 
     private Point computeSlotPosition(float oX, float oY){
-
-        if (oX>196/512*tradeScreenWidth && oX<317/512*tradeScreenWidth)
-            return null;
-        int x = Math.floorDiv((int)(oX- invBaseX), itemDXConstant);
+        int x = Math.floorDiv((int)(oX-invBaseX), itemDXConstant);
         int y = Math.floorDiv((int)(oY-invBaseY), itemDYConstant);
-        if(x < 0 || x > 8 || y < 0 || y > 6)
-            return null;
-        return new Point((int)x, (int)y+scroll);
+        if(x < 0 || y < 0 || y >= 6)
+            return new Point(0, 0);
+        if(x > 3){
+            x = Math.floorDiv((int)(oX-shopBaseX), itemDXConstant);
+            if(x < 0 || x > 3)
+                return new Point(0, 0);
+            y += 6;
+        }
+        return new Point(x, y+(y>5?scrollS:scrollP));
     }
 
     public void confirmTrade() {

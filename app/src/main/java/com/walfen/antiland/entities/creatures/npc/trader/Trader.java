@@ -19,7 +19,8 @@ public abstract class Trader extends NPC {
 
     @Override
     protected void interact() {
-        handler.getPlayer().getTrade().openShop(traderInventory);
+        if(!handler.getPlayer().getTrade().isActive())
+            handler.getPlayer().getTrade().openShop(traderInventory);
     }
 
     public static class TraderInvManager{
