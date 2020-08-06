@@ -7,6 +7,7 @@ import com.walfen.antiland.GameHierarchyElement;
 import com.walfen.antiland.Handler;
 import com.walfen.antiland.entities.creatures.active.Slime;
 import com.walfen.antiland.entities.creatures.npc.NPC1;
+import com.walfen.antiland.entities.creatures.npc.trader.WandererCrab;
 import com.walfen.antiland.entities.properties.attack.Attacks;
 import com.walfen.antiland.entities.statics.AirWall;
 import com.walfen.antiland.entities.statics.Tree;
@@ -17,8 +18,9 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
     public static Entity[] entityList = new Entity[256];
     public static AirWall airWall = new AirWall();
     public static Tree tree = new Tree();
-    public static Slime slime = new Slime();
     public static NPC1 crab = new NPC1();
+    public static Slime slime = new Slime();
+    public static WandererCrab traderCrab = new WandererCrab();
 
     //Entities
     public static final int DEFAULT_HEALTH = 10;

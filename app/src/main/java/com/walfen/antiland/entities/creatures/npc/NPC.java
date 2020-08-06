@@ -17,6 +17,7 @@ public abstract class NPC extends Creature {
 
     public NPC(int width, int height, int id) {
         super(width, height, id);
+        interRange = 2; //default
     }
 
     public boolean interactionCheck(int innerDeduction){
@@ -28,8 +29,6 @@ public abstract class NPC extends Creature {
     }
 
     protected abstract void interact();
-
-    protected abstract void assignMission(int missionID);
 
     @Override
     public void initialize(Handler handler, float x, float y, int oX, int oY) {

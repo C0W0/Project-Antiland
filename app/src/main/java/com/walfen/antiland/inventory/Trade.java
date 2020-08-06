@@ -42,11 +42,10 @@ public class Trade implements TouchEventListener {
 
     private Item selectedItem;
 
-    public Trade(Handler handler) {
+    public Trade(Handler handler, Inventory inventory) {
         this.handler = handler;
-        inventoryItems= handler.getPlayer().getInventory().getInventoryItems();
-        trade = null;
-        ImageEditor.scaleBitmap(Assets.tradeScreen, Constants.UI_SCREEN_WIDTH, Constants.UI_SCREEN_HEIGHT);
+        inventoryItems = inventory.getInventoryItems();
+        trade = ImageEditor.scaleBitmap(Assets.tradeScreen, Constants.UI_SCREEN_WIDTH, Constants.UI_SCREEN_HEIGHT);
         tradeScreenWidth = trade.getWidth();
         tradeScreenHeight = trade.getHeight();
         itemDXConstant = (int) (41.f / 512 * tradeScreenWidth);
@@ -79,13 +78,13 @@ public class Trade implements TouchEventListener {
     public void onTouchEvent(MotionEvent event) {
         if (!active)
             return;
+        closeButton.onTouchEvent(event);
         if (buttonJustPressed) {
             buttonJustPressed = false;
             return;
         }
         confirmButton.onTouchEvent(event);
         revertButton.onTouchEvent(event);
-        closeButton.onTouchEvent(event);
         if (event.getActionMasked() == MotionEvent.ACTION_DOWN ||
                 event.getActionMasked() == MotionEvent.ACTION_POINTER_DOWN) {
             int pointerIndex = event.findPointerIndex(event.getPointerId(event.getActionIndex()));
@@ -226,7 +225,7 @@ public class Trade implements TouchEventListener {
         int y = Math.floorDiv((int)(oY-invBaseY), itemDYConstant);
         if(x < 0 || x > 8 || y < 0 || y > 6)
             return null;
-        return new Point((int)x, (int)y+scroll));
+        return new Point((int)x, (int)y+scroll);
     }
 
     public void confirmTrade() {
@@ -251,6 +250,11 @@ public class Trade implements TouchEventListener {
     }
 
     public void closeShop() {
-        active=false;
+        buttonJustPressed = true;
+        active = false;
+    }
+
+    public boolean isActive() {
+        return active;
     }
 }
