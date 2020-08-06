@@ -19,6 +19,7 @@ import com.walfen.antiland.gfx.Animation;
 import com.walfen.antiland.gfx.Assets;
 import com.walfen.antiland.inventory.Fabricator;
 import com.walfen.antiland.inventory.Inventory;
+import com.walfen.antiland.inventory.Trade;
 import com.walfen.antiland.items.Item;
 import com.walfen.antiland.items.equipment.Equipment;
 import com.walfen.antiland.mission.Mission;
@@ -27,6 +28,7 @@ import com.walfen.antiland.mission.killing.KillTracker;
 import com.walfen.antiland.statswindow.PlayerSkillsManager;
 import com.walfen.antiland.ui.ChangeEvent;
 import com.walfen.antiland.ui.ClickListener;
+import com.walfen.antiland.ui.TouchEventListener;
 import com.walfen.antiland.ui.buttons.UIImageButton;
 import com.walfen.antiland.untils.Utils;
 
@@ -36,7 +38,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
-public class Player extends Creature{
+public class Player extends Creature implements TouchEventListener {
 
     //animations
     private Animation downAnim, upAnim, rightAnim, leftAnim, neutralAnim;
@@ -52,6 +54,7 @@ public class Player extends Creature{
     //inventory
     private Inventory inventory;
     private Fabricator fabricator;
+    private Trade trade;
 
     //mission system
     private MissionManager missionManager;
@@ -61,7 +64,6 @@ public class Player extends Creature{
     private int currLevelXp;
     private int perkPoints;
     private PlayerSkillsManager skillsManager;
-//    private ActiveSkill[] skillTest;
     private int wealth;
 
     //environment interaction
@@ -132,6 +134,7 @@ public class Player extends Creature{
 
         inventory = new Inventory(handler);
         fabricator = new Fabricator(handler, inventory, "res/worlds/worldSDK");
+        trade = new Trade(handler, inventory);
         try {
             tokens = Utils.loadFileAsArrayList(new FileInputStream(inventoryFile));
             for(String str: tokens){
@@ -194,7 +197,8 @@ public class Player extends Creature{
         if(attackTimer < attackCooldown) {
             return;
         }
-        if(inventory.isActive() || fabricator.isActive() || missionManager.isActive() || skillsManager.isActive()){
+        if(inventory.isActive() || fabricator.isActive() || missionManager.isActive() ||
+                skillsManager.isActive() || trade.isActive()){
             return;
         }
         float inputX = handler.getUIManager().getAttackJoystick().getMappedInputX();
@@ -215,7 +219,8 @@ public class Player extends Creature{
         xMove = 0;
         yMove = 0;
 
-        if(inventory.isActive() || fabricator.isActive() || missionManager.isActive() || skillsManager.isActive()){
+        if(inventory.isActive() || fabricator.isActive() || missionManager.isActive() ||
+                skillsManager.isActive() || trade.isActive()){
             return;
         }
         xMove = handler.getUIManager().getMovementJoystick().getInputX()*speed;
@@ -255,7 +260,6 @@ public class Player extends Creature{
 
     @Override
     public void update() {
-        System.out.println(getDefence());
 
         //animation
         setCurrentAnimation();
@@ -273,6 +277,7 @@ public class Player extends Creature{
         //inventory
         inventory.update();
         fabricator.update();
+        trade.update();
 
         //skills
         skillsManager.update();
@@ -291,6 +296,16 @@ public class Player extends Creature{
         currentAnimation.draw(canvas, new Rect(left, top, left+Assets.player_neutral.getWidth(), top+Assets.player_neutral.getHeight()));
     }
 
+    public void onTouchEvent(MotionEvent event){
+        inventory.onTouchEvent(event);
+        fabricator.onTouchEvent(event);
+        missionManager.onTouchEvent(event);
+        skillsManager.onTouchEvent(event);
+        trade.onTouchEvent(event);
+
+        interactButton.onTouchEvent(event);
+    }
+
     @Override
     public void die() {
         System.out.println("You lose");
@@ -302,6 +317,7 @@ public class Player extends Creature{
         missionManager.draw(canvas);
         fabricator.draw(canvas);
         skillsManager.draw(canvas);
+        trade.draw(canvas);
     }
 
     public void savePlayer(String path) throws IOException{
@@ -469,5 +485,9 @@ public class Player extends Creature{
 
     public void changePerkPoints(int addition){
         perkPoints += addition;
+    }
+
+    public Trade getTrade(){
+        return trade;
     }
 }
