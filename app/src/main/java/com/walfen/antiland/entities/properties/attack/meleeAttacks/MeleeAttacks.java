@@ -23,6 +23,6 @@ public abstract class MeleeAttacks extends Attacks {
     @Override
     public void checkAttackCollision() {
         if(target != null)
-            target.receiveDamage(baseDamage);
+            target.receiveDamage(baseDamage, type);
     }
 }

@@ -255,6 +255,7 @@ public class Player extends Creature{
 
     @Override
     public void update() {
+        System.out.println(getDefence());
 
         //animation
         setCurrentAnimation();

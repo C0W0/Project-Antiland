@@ -7,6 +7,7 @@ import android.graphics.Rect;
 
 import com.walfen.antiland.Constants;
 import com.walfen.antiland.Handler;
+import com.walfen.antiland.entities.properties.attack.Attacks;
 import com.walfen.antiland.gfx.Assets;
 import com.walfen.antiland.items.Item;
 import com.walfen.antiland.tiles.Tile;
@@ -21,13 +22,14 @@ public class Tree extends StaticEntity {
         bounds.right = bounds.left + width - 100;
         bounds.bottom = bounds.top + height - 100;
         health = 2;
-        defence = 1;
+        setDefence(1);
+        dmgPercentMod[Attacks.Type.MAGICAL_FIRE] = 400;
         id = 2;
     }
 
     @Override
-    public void receiveDamage(int num) {
-        super.receiveDamage(num);
+    public void receiveDamage(int num, int type) {
+        super.receiveDamage(num, type);
         handler.getWorld().getItemManager().addItem(Item.appleItem.createNew((int)(x + width/2 - Item.ITEMWIDTH/2 + Math.random()*64-32),
                 (int)(y + height - Item.ITEMHEIGHT + 64), (int)(Math.random()*2)+1));
     }

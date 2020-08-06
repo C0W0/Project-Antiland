@@ -16,7 +16,7 @@ public class PlayerDefaultAttack extends RangedAttacks {
     protected IntSupplier damageSupplier;
 
     public PlayerDefaultAttack(Handler handler, IntSupplier damageSupplier) {
-        super(handler, 1, 1, 256, 10);
+        super(handler, 1, Type.PHYSICAL, 256, 10);
         this.damageSupplier = damageSupplier;
     }
 
@@ -33,13 +33,13 @@ public class PlayerDefaultAttack extends RangedAttacks {
                         continue;
                     if (carrier != null) {
                         if (e.getFaction() != carrier.getFaction()) {
-                            e.receiveDamage(baseDamage);
+                            e.receiveDamage(baseDamage, type);
                             r.hit();
                         }
                     }
                     if (carrier == null) {
                         handler.getPlayer().getTracker().addTracking(e);
-                        e.receiveDamage(baseDamage);
+                        e.receiveDamage(baseDamage, type);
                         r.hit();
                     }
                 }

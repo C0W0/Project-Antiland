@@ -31,7 +31,7 @@ public class NPC1 extends NPC {
     }
 
     @Override
-    public void receiveDamage(int num) {}
+    public void receiveDamage(int num, int type) {}
 
     @Override
     protected void interact() {

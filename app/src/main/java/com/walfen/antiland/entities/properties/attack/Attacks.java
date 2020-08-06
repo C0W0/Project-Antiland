@@ -56,4 +56,16 @@ public abstract class Attacks implements GameHierarchyElement {
     public ArrayList<Animation> getOverridingAnimations(){
         return carrierAnimations;
     }
+
+
+    public static class Type{
+        public static final int SPECIAL_IGNORE_DEFENCE = 0;
+        public static final int PHYSICAL = 1;
+        public static final int MAGICAL_LIGHT = 2;
+        public static final int MAGICAL_DARK = 3;
+        public static final int MAGICAL_PURE = 4;
+        public static final int MAGICAL_NATURE = 5;
+        public static final int MAGICAL_WATER = 6;
+        public static final int MAGICAL_FIRE = 7;
+    }
 }

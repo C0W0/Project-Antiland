@@ -32,5 +32,5 @@ public class AirWall extends StaticEntity{
     public void die() {}
 
     @Override
-    public void receiveDamage(int num) {}
+    public void receiveDamage(int num, int type) {}
 }

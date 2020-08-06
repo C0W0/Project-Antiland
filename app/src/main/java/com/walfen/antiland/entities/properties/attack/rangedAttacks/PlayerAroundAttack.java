@@ -13,7 +13,7 @@ public class PlayerAroundAttack extends RangedAttacks {
     private IntSupplier damageSupplier;
 
     public PlayerAroundAttack(Handler handler, IntSupplier damageSupplier) {
-        super(handler, 1, 1, 0, 0);
+        super(handler, 1, Type.PHYSICAL, 0, 0);
         this.damageSupplier = damageSupplier;
     }
 
@@ -42,7 +42,7 @@ public class PlayerAroundAttack extends RangedAttacks {
             if (e.getCollisionBounds(0, 0).intersect(collisionQueue.get(0).getBound()) &&
                     !e.equals(handler.getPlayer())) {
                 handler.getPlayer().getTracker().addTracking(e);
-                e.receiveDamage(baseDamage);
+                e.receiveDamage(baseDamage, type);
             }
         }
 

@@ -122,7 +122,7 @@ public class PlayerSkillsManager implements TouchEventListener {
         endurance = new SimplePlayerSkill(handler, 10,
                 () -> {handler.getPlayer().changeMaxHp(endurance.getLevel());
                 handler.getPlayer().changeDefence(1);}, Assets.enduranceR,
-                "Endurance", "Resistance to damage.", "Increases hit points.");
+                "Endurance", "Resistance to damage.", "Increases hit points and physical defence.");
         enduranceSU.add(new SkillStaticIcon(skillL1X, skillL1Y, skillIconSize, skillIconSize, Assets.enduranceR, endurance));
         enduranceSL.add(endurance);
 

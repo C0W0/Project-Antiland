@@ -65,12 +65,12 @@ public abstract class RangedAttacks extends Attacks {
                         continue;
                     if (carrier != null) {
                         if (e.getFaction() != carrier.getFaction()) {
-                            e.receiveDamage(baseDamage);
+                            e.receiveDamage(baseDamage, type);
                             r.hit();
                         }
                     }
                     if (carrier == null) {
-                        e.receiveDamage(baseDamage);
+                        e.receiveDamage(baseDamage, type);
                         r.hit();
                     }
                 }

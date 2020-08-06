@@ -7,6 +7,7 @@ import com.walfen.antiland.GameHierarchyElement;
 import com.walfen.antiland.Handler;
 import com.walfen.antiland.entities.creatures.active.Slime;
 import com.walfen.antiland.entities.creatures.npc.NPC1;
+import com.walfen.antiland.entities.properties.attack.Attacks;
 import com.walfen.antiland.entities.statics.AirWall;
 import com.walfen.antiland.entities.statics.Tree;
 import com.walfen.antiland.untils.Utils;
@@ -24,7 +25,8 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
     protected int health, maxHp;
     protected boolean active;
     protected int faction;
-    protected int defence;
+    protected int[] resistance;
+    protected int[] dmgPercentMod;
 
     protected float x,y;
     protected int oX, oY; // o stands for offset
@@ -44,7 +46,12 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
         maxHp = health;
         this.id = id;
         entityList[id] = this;
-        defence = 0;
+        resistance = new int[10];
+        dmgPercentMod = new int[10];
+        for(int i = 0; i < 10; i++){
+            resistance[i] = 0;
+            dmgPercentMod[i] = 100;
+        }
 
         bounds = new Rect(0, 0, width, height);//default
     }
@@ -52,13 +59,21 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
     public abstract void die();
 
 
-    public void receiveDamage(int num){
-        int delta = (int) (num-4*Math.sqrt(defence)+0.5);
-        health -= Math.max(delta, 1);
+    public void receiveDamage(int num, int type){
+        num *= dmgPercentMod[type]/100.f;
+        if(type == Attacks.Type.SPECIAL_IGNORE_DEFENCE)
+            health -= num;
+        else
+            applyDefaultDamageFormula(num, resistance[type]);
         if(health <= 0){
             active = false;
             die();
         }
+    }
+
+    private void applyDefaultDamageFormula(int num, int resistance){
+        int delta = (int) (num-4*Math.sqrt(resistance)+0.5);
+        health -= Math.max(delta, 1);
     }
 
     public Rect getCollisionBounds(float xOffset, float yOffset){
@@ -180,11 +195,15 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
         return oY;
     }
 
+    public int getDefence(){
+        return resistance[Attacks.Type.PHYSICAL];
+    }
+
     public void setDefence(int defence) {
-        this.defence = defence;
+        resistance[Attacks.Type.PHYSICAL] = defence;
     }
 
     public void changeDefence(int defenceValue) {
-        defence += defenceValue;
+        resistance[Attacks.Type.PHYSICAL] += defenceValue;
     }
 }
