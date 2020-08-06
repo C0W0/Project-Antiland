@@ -45,7 +45,7 @@ public class Assets {
 
     //items
     public static Bitmap wood, apple, stone, potion, shield, sword;
-    public static Bitmap inventoryScreen, missionScreen, craftingScreen, statsScreen, skillScreen;
+    public static Bitmap inventoryScreen, missionScreen, craftingScreen, statsScreen, skillScreen, tradeScreen;
     public static Bitmap blueSqr, redSqr;
 
     //skills
@@ -131,12 +131,15 @@ public class Assets {
         potion = ImageLoader.loadImage(R.drawable.potion);
         sword = ImageLoader.loadImage(R.drawable.sword);
         shield = ImageLoader.loadImage(R.drawable.shield);
+        blueSqr = ImageLoader.loadImage(R.drawable.selected);
+        redSqr = ImageLoader.loadImage(R.drawable.red_square);
+
+        //UI
         inventoryScreen = ImageLoader.loadImage(R.drawable.inventory_screen_new);
         craftingScreen = ImageLoader.loadImage(R.drawable.craft_screen);
         missionScreen = ImageLoader.loadImage(R.drawable.mission_screen);
         skillScreen = ImageLoader.loadImage(R.drawable.skill_selection_screen);
-        blueSqr = ImageLoader.loadImage(R.drawable.selected);
-        redSqr = ImageLoader.loadImage(R.drawable.red_square);
+        tradeScreen = ImageLoader.loadImage(R.drawable.trade_screen);
 
         //skills
         //icon circle: RGB: 233, 233, 233; 128*128, 4pt

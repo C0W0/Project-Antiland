@@ -270,4 +270,7 @@ public class Inventory implements TouchEventListener {
     public Equipment[] getEquipments() {
         return equipments;
     }
+    public void setInventoryItems(ArrayList<Item> inventoryItems) {
+        this.inventoryItems=inventoryItems;
+    }
 }
