@@ -10,11 +10,11 @@ public class UsableItem extends Item {
     private Usable onUseEvent;
     private String desc, effect;
 
-    public UsableItem(Bitmap texture, String name, int id, Usable onUseEvent,
-                      String desc, String effect) {
+    public UsableItem(Bitmap texture, String name, int id, int value, String desc, String effect, Usable onUseEvent) {
         super(texture, name, id);
         this.onUseEvent = onUseEvent;
         this.desc = desc;
+        this.value = value;
         this.effect = effect;
     }
     
@@ -26,7 +26,7 @@ public class UsableItem extends Item {
 
     @Override
     public UsableItem createNew(int x, int y, int count){
-        UsableItem i = new UsableItem(texture, name, id, onUseEvent, desc, effect);
+        UsableItem i = new UsableItem(texture, name, id, value, desc, effect, onUseEvent);
         i.count = count;
         i.setPosition(x, y);
         return i;
@@ -44,7 +44,7 @@ public class UsableItem extends Item {
 
     @Override
     public Item addToInv(int count) {
-        UsableItem i = new UsableItem(texture, name, id, onUseEvent, desc, effect);
+        UsableItem i = new UsableItem(texture, name, id, value, desc, effect, onUseEvent);
         i.setPickedUP(true);
         i.count = count;
         return i;

@@ -10,9 +10,10 @@ public class NeutralItem extends Item {
     private String desc, effect;
 
     public NeutralItem(Bitmap texture, String name, int id,
-                       String desc, String effect) {
+                       int value, String effect, String desc) {
         super(texture, name, id);
         this.desc = desc;
+        this.value = value;
         this.effect = effect;
     }
 
@@ -21,7 +22,7 @@ public class NeutralItem extends Item {
 
     @Override
     public Item addToInv(int count) {
-        NeutralItem i = new NeutralItem(texture, name, id, desc, effect);
+        NeutralItem i = new NeutralItem(texture, name, id, value, effect, desc);
         i.setPickedUP(true);
         i.count = count;
         return i;
@@ -29,7 +30,7 @@ public class NeutralItem extends Item {
 
     @Override
     public NeutralItem createNew(int x, int y, int count){
-        NeutralItem i = new NeutralItem(texture, name, id, desc, effect);
+        NeutralItem i = new NeutralItem(texture, name, id, value, effect, desc);
         i.count = count;
         i.setPosition(x, y);
         return i;
