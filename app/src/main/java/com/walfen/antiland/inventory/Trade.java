@@ -27,12 +27,13 @@ public class Trade implements TouchEventListener {
     private ArrayList<Item> tempInventoryItems, tempShopKeeperItems;
 
 
-    private boolean active = false, buttonJustPressed = false;
+    private boolean active = false, buttonJustPressed = false, dragging = false;
     private final int SLOTWIDTH = 4, SLOTHEIGHT = 6;
     private int tradeScreenHeight, tradeScreenWidth;
     private int invBaseX, invBaseY, shopBaseX, shopBaseY, iconSize, itemDXConstant, itemDYConstant;
     private int invImageX, invImageY, invNameX, invNameY, numOffsetX, numOffsetY;
     private int selectedX = 0, selectedY = 0, scrollP = 0, scrollS = 0;
+    private int fingerX, fingerY;
     private int xDispute, yDispute;
     private final Bitmap trade;
 
@@ -91,6 +92,9 @@ public class Trade implements TouchEventListener {
         }
         confirmButton.onTouchEvent(event);
         revertButton.onTouchEvent(event);
+
+
+
         if (event.getActionMasked() == MotionEvent.ACTION_DOWN ||
                 event.getActionMasked() == MotionEvent.ACTION_POINTER_DOWN) {
             int pointerIndex = event.findPointerIndex(event.getPointerId(event.getActionIndex()));
@@ -99,18 +103,19 @@ public class Trade implements TouchEventListener {
             Point p = computeSlotPosition(touchX, touchY);
             selectedX = p.x;
             selectedY = p.y;
+            dragging = true;
         }
 
-//        if (event.getActionMasked() == MotionEvent.ACTION_UP ||
-//                event.getActionMasked() == MotionEvent.ACTION_POINTER_UP) {
-//            int pointerIndex = event.findPointerIndex(event.getPointerId(event.getActionIndex()));
-//            float touchX = event.getX(pointerIndex);
-//            float touchY = event.getY(pointerIndex);
-//
-//            Point p = computeSlotPosition(touchX, touchY);
-//            selectedX = p.x;
-//            selectedY = p.y;
-//        }
+        if (event.getActionMasked() == MotionEvent.ACTION_MOVE) {
+            int pointerIndex = event.findPointerIndex(event.getPointerId(event.getActionIndex()));
+            float fingerX = event.getX(pointerIndex);
+            float fingerY = event.getY(pointerIndex);
+        }
+
+        if (event.getActionMasked() == MotionEvent.ACTION_UP ||
+                event.getActionMasked() == MotionEvent.ACTION_POINTER_UP) {
+            dragging = false;
+        }
     }
 
     @Override
@@ -118,6 +123,7 @@ public class Trade implements TouchEventListener {
         if (!active) {
             return;
         }
+
         if(selectedY >= 6){
             int selectionIndex = (selectedY-6)* SLOTWIDTH +selectedX;
             if(tempShopKeeperItems.size() > selectionIndex) {
@@ -209,9 +215,9 @@ public class Trade implements TouchEventListener {
         //Draw selected item while selected
         if (selectedItem == null)
             return;
-        /*if(dragging){
+        if(dragging){
             canvas.drawBitmap(selectedItem.getInvTexture(), null, new Rect(
-                    selectedX, selectedY, selectedX + iconSize, selectedY + iconSize), Constants.getRenderPaint());
+                    fingerX, fingerY, fingerX + iconSize, fingerY + iconSize), Constants.getRenderPaint());
             Paint paint = new Paint();
             paint.setTextSize(34);
             Rect r = new Rect();
@@ -220,27 +226,27 @@ public class Trade implements TouchEventListener {
             paint.setColor(Color.BLACK);
             canvas.drawText(name, selectedX - r.width() / 2.f, selectedY + r.height() / 2.f, paint);
         }
-        else*/
-        canvas.drawBitmap(selectedItem.getInvTexture(), null, new Rect(
-                invImageX, invImageY, invImageX + iconSize, invImageY + iconSize), Constants.getRenderPaint());
 
-        //draw name, effect
-        Paint paint = new Paint();
-        paint.setTextSize(36);
-        Rect r = new Rect();
-        String token = selectedItem.getName();
-        paint.getTextBounds(token, 0, token.length(), r);
-        paint.setColor(Color.BLACK);
-        paint.setFakeBoldText(true);
-        int bottomLine = (int)(invNameY + r.height()/2.f);
-        canvas.drawText(token, invNameX - r.width() / 2.f, bottomLine, paint);
-        bottomLine += 20;
-        paint.setFakeBoldText(false);
-        paint.setTextSize(32);
-        paint.setColor(Color.MAGENTA);
-        token = selectedItem.getEffect();
-        paint.getTextBounds(token, 0, token.length(), r);
-        canvas.drawText(token, invNameX - r.width() / 2.f, bottomLine + r.height(), paint);
+            canvas.drawBitmap(selectedItem.getInvTexture(), null, new Rect(
+                    invImageX, invImageY, invImageX + iconSize, invImageY + iconSize), Constants.getRenderPaint());
+
+            //draw name, effect
+            Paint paint = new Paint();
+            paint.setTextSize(36);
+            Rect r = new Rect();
+            String token = selectedItem.getName();
+            paint.getTextBounds(token, 0, token.length(), r);
+            paint.setColor(Color.BLACK);
+            paint.setFakeBoldText(true);
+            int bottomLine = (int) (invNameY + r.height() / 2.f);
+            canvas.drawText(token, invNameX - r.width() / 2.f, bottomLine, paint);
+            bottomLine += 20;
+            paint.setFakeBoldText(false);
+            paint.setTextSize(32);
+            paint.setColor(Color.MAGENTA);
+            token = selectedItem.getEffect();
+            paint.getTextBounds(token, 0, token.length(), r);
+            canvas.drawText(token, invNameX - r.width() / 2.f, bottomLine + r.height(), paint);
     }
 
     private Point computeSlotPosition(float oX, float oY){
