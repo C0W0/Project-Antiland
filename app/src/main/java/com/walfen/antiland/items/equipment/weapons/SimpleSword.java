@@ -37,4 +37,14 @@ public class SimpleSword extends Weapon {
         i.setPosition(x, y);
         return i;
     }
+
+    @Override
+    public String getDesc() {
+        return "The door handle of the shield.";
+    }
+
+    @Override
+    public String getEffect() {
+        return "dmg +1";
+    }
 }

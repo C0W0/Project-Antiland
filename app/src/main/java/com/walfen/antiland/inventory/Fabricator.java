@@ -3,6 +3,8 @@ package com.walfen.antiland.inventory;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.view.MotionEvent;
@@ -12,8 +14,6 @@ import com.walfen.antiland.Handler;
 import com.walfen.antiland.gfx.Assets;
 import com.walfen.antiland.gfx.ImageEditor;
 import com.walfen.antiland.items.Item;
-import com.walfen.antiland.states.State;
-import com.walfen.antiland.ui.ClickListener;
 import com.walfen.antiland.ui.TouchEventListener;
 import com.walfen.antiland.ui.buttons.UIImageButton;
 import com.walfen.antiland.untils.Utils;
@@ -21,7 +21,6 @@ import com.walfen.antiland.untils.Utils;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.BooleanSupplier;
 
 public class Fabricator implements TouchEventListener {
     private boolean active = false, buttonJustPressed = false;
@@ -31,7 +30,7 @@ public class Fabricator implements TouchEventListener {
     private HashMap<Integer,Integer> missingItems;
     private int selectedX = 0, selectedY = 0, scroll;
     private int recipeBaseX, recipeBaseY, iconSize, recipeDXConstant, recipeDYConstant;
-    private int craftingWindowBaseX, craftingWindowBaseY;
+    private int craftingWindowBaseX, craftingWindowBaseY, itemDescCX, itemDescY;
     private int[][] recipeLocations;
     private int lastSelection; // efficiency mechanic
     private UIImageButton craftButton, invSwitchButton, closeButton;
@@ -53,6 +52,8 @@ public class Fabricator implements TouchEventListener {
         recipeDYConstant = inventory.itemDYConstant;
         craftingWindowBaseX = (int)(321.f/512*inventory.invWidth+inventory.xDispute);
         craftingWindowBaseY = (int)(50.f/384*inventory.invHeight+inventory.yDispute);
+        itemDescCX = (int)(380.f/512*inventory.invWidth+inventory.xDispute);
+        itemDescY = (int)(200.f/384*inventory.invHeight+inventory.yDispute);
         scroll = 0; // WIP
         lastSelection = -1;
         recipeLocations = new int[35][5];
@@ -176,27 +177,51 @@ public class Fabricator implements TouchEventListener {
         craftButton.draw(canvas);
         invSwitchButton.draw(canvas);
         closeButton.draw(canvas);
-        Recipe r = recipes.get(recipeLocations[selectedY][selectedX]);
-        if(r == null)
+        Recipe re = recipes.get(recipeLocations[selectedY][selectedX]);
+        if(re == null)
             return;
         HashMap<Integer, Integer> tempItems = (HashMap<Integer, Integer>)missingItems.clone();
         for(int y = 0; y < 3; y++) {
             for (int x = 0; x < 3; x++) {
-                if(r.requiredItems[y][x] != -1){
+                if(re.requiredItems[y][x] != -1){
                     int left = x*recipeDXConstant + craftingWindowBaseX;
                     int top = y * recipeDYConstant + craftingWindowBaseY;
-                    if (tempItems.get(r.requiredItems[y][x]) != null &&
-                            tempItems.get(r.requiredItems[y][x]) != 0) {
+                    if (tempItems.get(re.requiredItems[y][x]) != null &&
+                            tempItems.get(re.requiredItems[y][x]) != 0) {
                         canvas.drawBitmap(redSquare, null,
                             new Rect(left-2, top-2, left+iconSize+2, top+iconSize+2),
                             Constants.getRenderPaint());
-                        tempItems.put(r.requiredItems[y][x], tempItems.get(r.requiredItems[y][x]) - 1);
+                        tempItems.put(re.requiredItems[y][x], tempItems.get(re.requiredItems[y][x]) - 1);
                     }
-                    canvas.drawBitmap(Item.items[r.requiredItems[y][x]].getInvTexture(), null,
+                    canvas.drawBitmap(Item.items[re.requiredItems[y][x]].getInvTexture(), null,
                             new Rect(left, top, left+iconSize, top+iconSize),
                             Constants.getRenderPaint());
                 }
             }
+        }
+
+        Paint paint = new Paint();
+        paint.setColor(Color.BLACK);
+        Rect r = new Rect();
+        int top = itemDescY;
+        int left;
+        paint.setTextSize(32);
+        Item selectedItem = Item.items[recipeLocations[selectedY][selectedX]];
+        ArrayList<String> tokens = Utils.splitString(selectedItem.getDesc(), 30);
+        for(String str: tokens){
+            paint.getTextBounds(str, 0, str.length(), r);
+            left = itemDescCX-r.width()/2;
+            canvas.drawText(str, left, top+r.height(), paint);
+            top += 5+r.height();
+        }
+        tokens = Utils.splitString(selectedItem.getEffect(), 30);
+        top += 20;
+        paint.setColor(Color.MAGENTA);
+        for(String str: tokens){
+            paint.getTextBounds(str, 0, str.length(), r);
+            left = itemDescCX-r.width()/2;
+            canvas.drawText(str, left, top+r.height(), paint);
+            top += 5+r.height();
         }
     }
 

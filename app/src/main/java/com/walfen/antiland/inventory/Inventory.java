@@ -17,6 +17,7 @@ import com.walfen.antiland.items.Item;
 import com.walfen.antiland.items.equipment.Equipment;
 import com.walfen.antiland.ui.TouchEventListener;
 import com.walfen.antiland.ui.buttons.UIImageButton;
+import com.walfen.antiland.untils.Utils;
 
 import java.util.ArrayList;
 
@@ -33,6 +34,7 @@ public class Inventory implements TouchEventListener {
     private int selectedX = 0, selectedY = 0, scroll;
     int itemBaseX, itemBaseY, iconSize, itemDXConstant, itemDYConstant;
     private int invImageX, invImageY, invNameX, invNameY, numOffsetX, numOffsetY;
+    private int itemDescCX, itemDescY;
     private int equipBaseX, equipBaseY, equipDYConstant;
     private final Bitmap inventoryScreen;
     final Bitmap blueSquare;
@@ -56,6 +58,8 @@ public class Inventory implements TouchEventListener {
         blueSquare = ImageEditor.scaleBitmap(Assets.blueSqr, iconSize+4);
         itemBaseX = (int)(54.f/512*invWidth+xDispute);
         itemBaseY = (int)(54.f/384*invHeight+yDispute);
+        itemDescCX = (int)(415.f/512*invWidth+xDispute);
+        itemDescY = (int)(197.f/384*invHeight+yDispute);
         invImageX = (int)(363.f/512*invWidth+xDispute);
         invImageY = (int)(67.f/384*invHeight+yDispute);
         invNameX = (int)(378.f/512*invWidth+xDispute);
@@ -139,12 +143,14 @@ public class Inventory implements TouchEventListener {
         canvas.drawBitmap(inventoryScreen,null, new Rect
                 (xDispute, yDispute, xDispute+invWidth, yDispute+invHeight), Constants.getRenderPaint());
 
+        int left;
+        int top;
         for(int y = scroll; y < scroll+7; y++){
             for(int x = 0; x < 5; x++){
                 if(inventoryItems.size() <= y*5+x)
                     break;
-                int left = x*itemDXConstant + itemBaseX;
-                int top = (y-scroll)*itemDYConstant + itemBaseY;
+                left = x*itemDXConstant + itemBaseX;
+                top = (y-scroll)*itemDYConstant + itemBaseY;
                 if(x == selectedX && y == selectedY)
                     canvas.drawBitmap(blueSquare, null,
                             new Rect(left-2, top-2, left+iconSize+4, top+iconSize+4),
@@ -168,7 +174,7 @@ public class Inventory implements TouchEventListener {
             Equipment e = equipments[i];
             if(e == null)
                 continue;
-            int top = equipBaseY+equipDYConstant*i;
+            top = equipBaseY+equipDYConstant*i;
             canvas.drawBitmap(e.getInvTexture(), null, new Rect(
                     equipBaseX, top, equipBaseX+iconSize, top+iconSize),
                     Constants.getRenderPaint());
@@ -184,6 +190,26 @@ public class Inventory implements TouchEventListener {
         paint.getTextBounds(name.toUpperCase(), 0, name.length(), r);
         paint.setColor(Color.BLACK);
         canvas.drawText(name, invNameX-r.width()/2.f, invNameY+r.height()/2.f, paint);
+
+        paint.setColor(Color.BLACK);
+        top = itemDescY;
+        paint.setTextSize(32);
+        ArrayList<String> tokens = Utils.splitString(selectedItem.getDesc(), 17);
+        for(String str: tokens){
+            paint.getTextBounds(str, 0, str.length(), r);
+            left = itemDescCX-r.width()/2;
+            canvas.drawText(str, left, top+r.height(), paint);
+            top += 5+r.height();
+        }
+        tokens = Utils.splitString(selectedItem.getEffect(), 17);
+        top += 20;
+        paint.setColor(Color.MAGENTA);
+        for(String str: tokens){
+            paint.getTextBounds(str, 0, str.length(), r);
+            left = itemDescCX-r.width()/2;
+            canvas.drawText(str, left, top+r.height(), paint);
+            top += 5+r.height();
+        }
     }
 
     private int computeSelectedEquipment(float x, float y){

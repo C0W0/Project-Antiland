@@ -36,4 +36,14 @@ public class SimpleShield extends Auxiliary {
         i.setPosition(x, y);
         return i;
     }
+
+    @Override
+    public String getDesc() {
+        return "Just an old wooden door.";
+    }
+
+    @Override
+    public String getEffect() {
+        return "defence +1";
+    }
 }

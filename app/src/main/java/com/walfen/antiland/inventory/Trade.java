@@ -121,7 +121,7 @@ public class Trade implements TouchEventListener {
         if(selectedY >= 6){
             int selectionIndex = (selectedY-6)* SLOTWIDTH +selectedX;
             if(tempShopKeeperItems.size() > selectionIndex) {
-                selectedItem = tempInventoryItems.get(selectionIndex);
+                selectedItem = tempShopKeeperItems.get(selectionIndex);
             }else {
                 selectedItem = null;
             }
@@ -223,14 +223,24 @@ public class Trade implements TouchEventListener {
         else*/
         canvas.drawBitmap(selectedItem.getInvTexture(), null, new Rect(
                 invImageX, invImageY, invImageX + iconSize, invImageY + iconSize), Constants.getRenderPaint());
+
+        //draw name, effect
         Paint paint = new Paint();
-        paint.setTextSize(34);
+        paint.setTextSize(36);
         Rect r = new Rect();
-        String name = selectedItem.getName();
-        paint.getTextBounds(name.toUpperCase(), 0, name.length(), r);
+        String token = selectedItem.getName();
+        paint.getTextBounds(token, 0, token.length(), r);
         paint.setColor(Color.BLACK);
         paint.setFakeBoldText(true);
-        canvas.drawText(name, invNameX - r.width() / 2.f, invNameY + r.height() / 2.f, paint);
+        int bottomLine = (int)(invNameY + r.height()/2.f);
+        canvas.drawText(token, invNameX - r.width() / 2.f, bottomLine, paint);
+        bottomLine += 20;
+        paint.setFakeBoldText(false);
+        paint.setTextSize(32);
+        paint.setColor(Color.MAGENTA);
+        token = selectedItem.getEffect();
+        paint.getTextBounds(token, 0, token.length(), r);
+        canvas.drawText(token, invNameX - r.width() / 2.f, bottomLine + r.height(), paint);
     }
 
     private Point computeSlotPosition(float oX, float oY){
