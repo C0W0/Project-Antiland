@@ -6,7 +6,7 @@ import com.walfen.antiland.entities.creatures.Player;
 import com.walfen.antiland.items.equipment.Equipment;
 
 public class SimpleShield extends Auxiliary {
-    public SimpleShield(Bitmap texture, String name, int id) {
+    public SimpleShield(Bitmap texture, String name, int id, int value) {
         super(texture, name, id);
     }
 
@@ -23,7 +23,7 @@ public class SimpleShield extends Auxiliary {
 
     @Override
     public Equipment addToInv(int count) {
-        SimpleShield i = new SimpleShield(texture, name, id);
+        SimpleShield i = new SimpleShield(texture, name, id, value);
         i.setPickedUP(true);
         i.count = count;
         return i;
@@ -31,7 +31,7 @@ public class SimpleShield extends Auxiliary {
 
     @Override
     public Equipment createNew(int x, int y, int count) {
-        SimpleShield i = new SimpleShield(texture, name, id);
+        SimpleShield i = new SimpleShield(texture, name, id, value);
         i.count = count;
         i.setPosition(x, y);
         return i;

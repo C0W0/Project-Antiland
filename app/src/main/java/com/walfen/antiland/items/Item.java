@@ -31,16 +31,16 @@ public abstract class Item implements GameHierarchyElement {
 
     public static void initItems(Handler handler){
         woodItem = new NeutralItem(Assets.wood, "wood", 0,
-                "A piece of ordinary wood.", "crafting material");
+                1, "crafting material", "A piece of ordinary wood.");
         appleItem = new UsableItem(Assets.apple, "apple", 1,
-                () -> handler.getPlayer().changeHealth(1),
-                "A commonly seen fruit.", "heal: 1");
+                5, "A commonly seen fruit.", "heal: 1", () -> handler.getPlayer().changeHealth(1)
+        );
         potionItem = new UsableItem(Assets.potion, "potion", 2,
-                () -> handler.getPlayer().changeHealth(10),
-                "Also know as apple juice.", "heal: 10");
+                20, "Also know as apple juice.", "heal: 10", () -> handler.getPlayer().changeHealth(10)
+        );
 //        stoneItem = new NeutralItems(Assets.stone, "stone", 3);
-        shieldItem = new SimpleShield(Assets.shield, "shield", 4);
-        swordItem = new SimpleSword(Assets.sword, "sword", 5);
+        shieldItem = new SimpleShield(Assets.shield, "shield", 4, 100);
+        swordItem = new SimpleSword(Assets.sword, "sword", 5, 100);
     }
 
     //class
@@ -51,6 +51,7 @@ public abstract class Item implements GameHierarchyElement {
     protected Bitmap texture, invTexture;
     protected String name;
     protected final int id;
+    protected int value;
 
     protected Rect bounds;
 

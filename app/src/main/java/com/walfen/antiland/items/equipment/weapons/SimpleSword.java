@@ -7,7 +7,7 @@ import com.walfen.antiland.items.equipment.Equipment;
 
 public class SimpleSword extends Weapon {
 
-    public SimpleSword(Bitmap texture, String name, int id) {
+    public SimpleSword(Bitmap texture, String name, int id, int value) {
         super(texture, name, id);
     }
 
@@ -24,7 +24,7 @@ public class SimpleSword extends Weapon {
 
     @Override
     public Equipment addToInv(int count) {
-        SimpleSword i = new SimpleSword(texture, name, id);
+        SimpleSword i = new SimpleSword(texture, name, id, value);
         i.setPickedUP(true);
         i.count = count;
         return i;
@@ -32,7 +32,7 @@ public class SimpleSword extends Weapon {
 
     @Override
     public Equipment createNew(int x, int y, int count) {
-        SimpleSword i = new SimpleSword(texture, name, id);
+        SimpleSword i = new SimpleSword(texture, name, id, value);
         i.count = count;
         i.setPosition(x, y);
         return i;
