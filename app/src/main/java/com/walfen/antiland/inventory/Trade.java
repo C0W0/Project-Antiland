@@ -93,8 +93,6 @@ public class Trade implements TouchEventListener {
         confirmButton.onTouchEvent(event);
         revertButton.onTouchEvent(event);
 
-
-
         if (event.getActionMasked() == MotionEvent.ACTION_DOWN ||
                 event.getActionMasked() == MotionEvent.ACTION_POINTER_DOWN) {
             int pointerIndex = event.findPointerIndex(event.getPointerId(event.getActionIndex()));
@@ -108,13 +106,15 @@ public class Trade implements TouchEventListener {
 
         if (event.getActionMasked() == MotionEvent.ACTION_MOVE) {
             int pointerIndex = event.findPointerIndex(event.getPointerId(event.getActionIndex()));
-            float fingerX = event.getX(pointerIndex);
-            float fingerY = event.getY(pointerIndex);
+            fingerX = (int) event.getX(pointerIndex);
+            fingerY = (int) event.getY(pointerIndex);
         }
 
         if (event.getActionMasked() == MotionEvent.ACTION_UP ||
                 event.getActionMasked() == MotionEvent.ACTION_POINTER_UP) {
             dragging = false;
+            fingerX = 0;
+            fingerY = 0;
         }
     }
 
@@ -166,13 +166,20 @@ public class Trade implements TouchEventListener {
                     break;
                 int left = x * itemDXConstant + invBaseX;
                 int top = (y+scrollP) * itemDYConstant + invBaseY;
-                if (x == selectedX && y == selectedY)
-                    canvas.drawBitmap(blueSquare, null,
-                            new Rect(left - 2, top - 2, left + iconSize + 4, top + iconSize + 4),
-                            Constants.getRenderPaint());
+                int fingerOffsetX = 0, fingerOffsetY = 0;
+                if (x == selectedX && y == selectedY){
+                    if(dragging){
+                        fingerOffsetX = fingerX-left;
+                        fingerOffsetY = fingerY-top;
+                    }else {
+                        canvas.drawBitmap(blueSquare, null,
+                                new Rect(left - 2, top - 2, left + iconSize + 4, top + iconSize + 4),
+                                Constants.getRenderPaint());
+                    }
+                }
                 canvas.drawBitmap(tempInventoryItems.get(y * SLOTWIDTH + x).getInvTexture(), null,
-                        new Rect(left, top, left + iconSize, top + iconSize),
-                        Constants.getRenderPaint());
+                        new Rect(left+fingerOffsetX, top+fingerOffsetY, left+iconSize+fingerOffsetX,
+                                top+iconSize+fingerOffsetY), Constants.getRenderPaint());
                 Paint paint = new Paint();
                 paint.setTextSize(26);
                 Rect r = new Rect();
@@ -190,13 +197,20 @@ public class Trade implements TouchEventListener {
                     break;
                 int left = x * itemDXConstant + shopBaseX;
                 int top = (y+scrollS) * itemDYConstant + shopBaseY;
-                if (x == selectedX && y+6 == selectedY)
-                    canvas.drawBitmap(blueSquare, null,
-                            new Rect(left - 2, top - 2, left + iconSize + 4, top + iconSize + 4),
-                            Constants.getRenderPaint());
+                int fingerOffsetX = 0, fingerOffsetY = 0;
+                if (x == selectedX && y+6 == selectedY){
+                    if(dragging){
+                        fingerOffsetX = fingerX-left;
+                        fingerOffsetY = fingerY-top;
+                    }else {
+                        canvas.drawBitmap(blueSquare, null,
+                                new Rect(left - 2, top - 2, left + iconSize + 4, top + iconSize + 4),
+                                Constants.getRenderPaint());
+                    }
+                }
                 canvas.drawBitmap(tempShopKeeperItems.get(y * SLOTWIDTH + x).getInvTexture(), null,
-                        new Rect(left, top, left + iconSize, top + iconSize),
-                        Constants.getRenderPaint());
+                        new Rect(left+fingerOffsetX, top+fingerOffsetY, left+iconSize+fingerOffsetX,
+                                top+iconSize+fingerOffsetY), Constants.getRenderPaint());
                 Paint paint = new Paint();
                 paint.setTextSize(26);
                 Rect r = new Rect();
@@ -215,20 +229,20 @@ public class Trade implements TouchEventListener {
         //Draw selected item while selected
         if (selectedItem == null)
             return;
-        if(dragging){
-            canvas.drawBitmap(selectedItem.getInvTexture(), null, new Rect(
-                    fingerX, fingerY, fingerX + iconSize, fingerY + iconSize), Constants.getRenderPaint());
-            Paint paint = new Paint();
-            paint.setTextSize(34);
-            Rect r = new Rect();
-            String name = selectedItem.getName();
-            paint.getTextBounds(name.toUpperCase(), 0, name.length(), r);
-            paint.setColor(Color.BLACK);
-            canvas.drawText(name, selectedX - r.width() / 2.f, selectedY + r.height() / 2.f, paint);
-        }
+//        if(dragging){
+//            canvas.drawBitmap(selectedItem.getInvTexture(), null, new Rect(
+//                    fingerX, fingerY, fingerX + iconSize, fingerY + iconSize), Constants.getRenderPaint());
+//            Paint paint = new Paint();
+//            paint.setTextSize(34);
+//            Rect r = new Rect();
+//            String name = selectedItem.getName();
+//            paint.getTextBounds(name.toUpperCase(), 0, name.length(), r);
+//            paint.setColor(Color.BLACK);
+//            canvas.drawText(name, selectedX - r.width() / 2.f, selectedY + r.height() / 2.f, paint);
+//        }
 
-            canvas.drawBitmap(selectedItem.getInvTexture(), null, new Rect(
-                    invImageX, invImageY, invImageX + iconSize, invImageY + iconSize), Constants.getRenderPaint());
+        canvas.drawBitmap(selectedItem.getInvTexture(), null, new Rect(
+                invImageX, invImageY, invImageX + iconSize, invImageY + iconSize), Constants.getRenderPaint());
 
             //draw name, effect
             Paint paint = new Paint();
