@@ -76,11 +76,13 @@ public class Slider extends UIObject {
                 new Rect((int)x, (int)y, (int)x+slideTrack.getWidth(), (int)y+slideTrack.getHeight()),
                 Constants.getRenderPaint());
         int left;
-        for(int i = 1; i <= max/tickSpacing-1; i++){
-            left = (int)((float)i*tickSpacing/max*width+x);
-            canvas.drawBitmap(tickMark, null,
-                    new Rect(left,(int)y, left+tickMark.getWidth(), (int)(y+tickMark.getHeight())),
-                    Constants.getRenderPaint());
+        if(tickSpacing > 0){
+            for(int i = 1; i <= max/tickSpacing-1; i++){
+                left = (int)((float)i*tickSpacing/max*width+x);
+                canvas.drawBitmap(tickMark, null,
+                        new Rect(left,(int)y, left+tickMark.getWidth(), (int)(y+tickMark.getHeight())),
+                        Constants.getRenderPaint());
+            }
         }
         left = (int)((float)(value-min)/(max-min)*width+x);
         canvas.drawBitmap(slider, null,
@@ -110,5 +112,13 @@ public class Slider extends UIObject {
 
     public int getMin() {
         return min;
+    }
+
+    public void setMax(int max) {
+        this.max = max;
+    }
+
+    public void setTickSpacing(int tickSpacing) {
+        this.tickSpacing = tickSpacing;
     }
 }

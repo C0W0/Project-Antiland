@@ -22,7 +22,7 @@ public class WandererCrab extends Trader {
 
     @Override
     protected ArrayList<Item> initInvItems() {
-        return getFootTraderInv(handler);
+        return TraderInvManager.getFootTraderInv(handler);
     }
 
     @Override

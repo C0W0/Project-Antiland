@@ -73,4 +73,8 @@ public abstract class UIObject implements TouchEventListener{
     public boolean isActive() {
         return active;
     }
+
+    public Rect getBounds() {
+        return bounds;
+    }
 }

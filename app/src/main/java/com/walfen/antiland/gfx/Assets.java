@@ -31,6 +31,7 @@ public class Assets {
     public static Bitmap hp_bar, mp_bar, bar_frame;
     public static Bitmap horizontalSlideTrack, horizontalSlider, horizontalTickMark;
     public static Bitmap adjusterUp, adjusterDown;
+    public static Bitmap popup1, popup2;
 
     //entities
     public static Bitmap tree;
@@ -165,6 +166,8 @@ public class Assets {
         missionScreen = ImageLoader.loadImage(R.drawable.mission_screen);
         skillScreen = ImageLoader.loadImage(R.drawable.skill_selection_screen);
         tradeScreen = ImageLoader.loadImage(R.drawable.trade_screen);
+        popup1 = ImageLoader.loadImage(R.drawable.popup_1);
+        popup2 = ImageLoader.loadImage(R.drawable.popup_2);
 
         //skills
         //icon circle: RGB: 233, 233, 233; 128*128, 4pt
