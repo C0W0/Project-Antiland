@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 
 import com.walfen.antiland.entities.creatures.Player;
 import com.walfen.antiland.items.Item;
-import com.walfen.antiland.items.equipment.weapons.SimpleSword;
 
 public abstract class Equipment extends Item {
 
@@ -16,8 +15,8 @@ public abstract class Equipment extends Item {
 
     protected boolean equippedOn = false;
 
-    public Equipment(Bitmap texture, String name, int id) {
-        super(texture, name, id);
+    public Equipment(Bitmap texture, String name, int id, int value) {
+        super(texture, name, id, value);
     }
 
 
