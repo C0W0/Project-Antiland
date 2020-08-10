@@ -1,20 +1,19 @@
 package com.walfen.antiland.gfx;
 
 import android.graphics.Bitmap;
-import android.graphics.Matrix;
-import android.media.Image;
-import android.provider.ContactsContract;
 
 import com.walfen.antiland.Constants;
 import com.walfen.antiland.R;
-
-import java.util.Arrays;
 
 public class Assets {
 
     public static Bitmap grass, grassStone, dirt, dirtStone;
     public static Bitmap pathVertical, pathHorizontal, pathCornerUpRight, pathCornerUpLeft, pathCornerDownLeft, pathCornerDownRight;
-    public static Bitmap[] houseTiles;
+    public static Bitmap[] simpleHouseTiles;
+    public static Bitmap[][] walls;
+    public static Bitmap interior1T, interior1B, stair1T, window1, window1T, window1B, window2T, window2B;
+    public static Bitmap[][] roofs;
+    public static Bitmap roofBroken1, roofBroken2;
 
     public static Bitmap NULL;
 
@@ -65,6 +64,7 @@ public class Assets {
         SpriteSheet idleSlime = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.idle_slime));
         SpriteSheet crabSheet = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.crab));
         SpriteSheet skillSheet = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.skills_sprite));
+        SpriteSheet rockHouseSheet = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.house_tiles));
 
         grass = townTiles.crop(0,height,width,height);
         grassStone = sheet1.crop(width*3,height,width,height);
@@ -75,9 +75,34 @@ public class Assets {
         water[1] = townTiles.crop(width,height*4,width,height);
         water[2] = townTiles.crop(width*2,height*4,width,height);
         water[3] = townTiles.crop(width*3,height*4,width,height);
-        houseTiles = new Bitmap[18];
-        houseTiles = loadSpriteAsArray(new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.resident_test_2)), 6, 3, 128, 128);
-        
+        simpleHouseTiles = new Bitmap[18];
+        simpleHouseTiles = loadSpriteAsArray(new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.resident_test_2)), 6, 3, 128, 128);
+
+        walls = new Bitmap[3][3];
+        for(int y = 0; y < 3; y++){
+            for(int x = 0; x < 3; x++){
+                walls[y][x] = rockHouseSheet.crop(x*width, y*height, width, height);
+            }
+        }
+        roofs = new Bitmap[3][3];
+        for(int y = 0; y < 3; y++){
+            for(int x = 0; x < 3; x++){
+                roofs[y][x] = rockHouseSheet.crop((x+5)*width, y*height, width, height);
+            }
+        }
+        interior1T = rockHouseSheet.crop(width*3, height, width, height);
+        interior1B = rockHouseSheet.crop(width*3, height*2, width, height);
+        stair1T = rockHouseSheet.crop(width*4, height, width, height);
+        window1 = rockHouseSheet.crop(width*4, height*2, width, height);
+        roofBroken1 = rockHouseSheet.crop(width*3, 0, width, height);
+        roofBroken2 = rockHouseSheet.crop(width*4, 0, width, height);
+        window1T = rockHouseSheet.crop(width*4, height*3, width, height);
+        window1B = rockHouseSheet.crop(width*4, height*4, width, height);
+        window2T = rockHouseSheet.crop(width*3, height*3, width, height);
+        window2B = rockHouseSheet.crop(width*3, height*4, width, height);
+
+
+
         player_down = new Bitmap[2];
         player_down[0] = sheet.crop(0,0,width,height);
         player_down[1] = sheet.crop(width,0,width,height);

@@ -29,9 +29,35 @@ public class Tile implements GraphicalTerminalElement {
     public static Tile waterTile = new Tile(new Animation(0.4f, Assets.water), 10, true);
 
     public static void initTiles(){
-        for(int i =  0; i < Assets.houseTiles.length; i++){
-            new Tile(Assets.houseTiles[i], 11+i, true);
+//        for(int i = 0; i < Assets.simpleHouseTiles.length; i++){
+//            new Tile(Assets.simpleHouseTiles[i], 11+i, true);
+//        }
+        for(int y = 0; y < 3; y++){
+            for(int x = 0; x < 3; x++){
+                new Tile(Assets.walls[y][x], 11+y*3+x, true);
+            }
         }
+        for(int y = 0; y < 3; y++){
+            for(int x = 0; x < 3; x++){
+                new Tile(Assets.roofs[y][x], 20+y*3+x, true);
+            }
+        }
+        new Tile(Assets.roofBroken1, 29, true);
+        new Tile(Assets.roofBroken2, 30, true);
+        new Tile(Assets.stair1T, 31, false);
+        new Tile(Assets.interior1T, 32, true);
+        new Tile(Assets.interior1B, 33, true);
+        new ComponentTile(Assets.walls[0][1], 34, true, new TileAddonComponent(Assets.window1));
+        new ComponentTile(Assets.walls[0][1], 35, true, new TileAddonComponent(Assets.window1T));
+        new ComponentTile(Assets.walls[0][1], 36, true, new TileAddonComponent(Assets.window2T));
+        new ComponentTile(Assets.walls[1][1], 37, true, new TileAddonComponent(Assets.window1));
+        new ComponentTile(Assets.walls[1][1], 38, true, new TileAddonComponent(Assets.window1T));
+        new ComponentTile(Assets.walls[1][1], 39, true, new TileAddonComponent(Assets.window1B));
+        new ComponentTile(Assets.walls[1][1], 40, true, new TileAddonComponent(Assets.window2T));
+        new ComponentTile(Assets.walls[1][1], 41, true, new TileAddonComponent(Assets.window2B));
+        new ComponentTile(Assets.walls[2][1], 42, true, new TileAddonComponent(Assets.window1));
+        new ComponentTile(Assets.walls[2][1], 43, true, new TileAddonComponent(Assets.window1B));
+        new ComponentTile(Assets.walls[2][1], 44, true, new TileAddonComponent(Assets.window2B));
     }
 
 
