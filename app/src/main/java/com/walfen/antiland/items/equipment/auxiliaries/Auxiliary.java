@@ -5,8 +5,8 @@ import android.graphics.Bitmap;
 import com.walfen.antiland.items.equipment.Equipment;
 
 public abstract class Auxiliary extends Equipment {
-    public Auxiliary(Bitmap texture, String name, int id) {
-        super(texture, name, id);
+    public Auxiliary(Bitmap texture, String name, int id, int value) {
+        super(texture, name, id, value);
     }
 
     @Override

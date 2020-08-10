@@ -39,8 +39,8 @@ public abstract class Item implements GameHierarchyElement {
                 20, "Also know as apple juice.", "heal: 10", () -> handler.getPlayer().changeHealth(10)
         );
 //        stoneItem = new NeutralItems(Assets.stone, "stone", 3);
-        shieldItem = new SimpleShield(Assets.shield, "shield", 4, 100);
-        swordItem = new SimpleSword(Assets.sword, "sword", 5, 100);
+        shieldItem = new SimpleShield(Assets.shield, "shield", 4);
+        swordItem = new SimpleSword(Assets.sword, "sword", 5);
     }
 
     //class
