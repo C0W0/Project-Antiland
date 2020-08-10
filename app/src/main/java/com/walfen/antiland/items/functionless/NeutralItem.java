@@ -11,7 +11,7 @@ public class NeutralItem extends Item {
 
     public NeutralItem(Bitmap texture, String name, int id,
                        int value, String effect, String desc) {
-        super(texture, name, id);
+        super(texture, name, id, value);
         this.desc = desc;
         this.value = value;
         this.effect = effect;

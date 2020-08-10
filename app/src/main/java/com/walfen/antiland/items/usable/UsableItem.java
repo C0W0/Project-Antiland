@@ -11,7 +11,7 @@ public class UsableItem extends Item {
     private String desc, effect;
 
     public UsableItem(Bitmap texture, String name, int id, int value, String desc, String effect, Usable onUseEvent) {
-        super(texture, name, id);
+        super(texture, name, id, value);
         this.onUseEvent = onUseEvent;
         this.desc = desc;
         this.value = value;

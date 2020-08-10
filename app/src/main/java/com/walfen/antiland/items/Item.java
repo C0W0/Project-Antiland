@@ -59,10 +59,11 @@ public abstract class Item implements GameHierarchyElement {
     protected int count;
     protected boolean pickedUP;
 
-    public Item(Bitmap texture, String name, int id){
+    public Item(Bitmap texture, String name, int id, int value){
         this.texture = texture;
         this.name = name;
         this.id = id;
+        this.value = value;
 
         bounds = new Rect(x, y, x+ITEMWIDTH, y+ITEMHEIGHT);
         invTexture = ImageEditor.scaleBitmap(texture, Constants.iconSize);
