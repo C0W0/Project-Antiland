@@ -90,16 +90,12 @@ public class Player extends Creature implements TouchEventListener {
             line = tokens.get(1).split("\\s+");
             health = Utils.parseInt(line[0]);
             mp = Utils.parseInt(line[1]);
+            wealth = Utils.parseInt(line[2]);
             line = tokens.get(2).split("\\s+");
             level = Utils.parseInt(line[0]);
             currLevelXp = Utils.parseInt(line[1]);
             perkPoints = Utils.parseInt(line[2]);
             line = tokens.get(3).split("\\s+");
-//            strength.setLevel(Utils.parseInt(line[0]));
-//            endurance.setLevel(Utils.parseInt(line[1]));
-//            agility.setLevel(Utils.parseInt(line[2]));
-//            knowledge.setLevel(Utils.parseInt(line[3]));
-//            intelligence.setLevel(Utils.parseInt(line[4]));
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -179,7 +175,6 @@ public class Player extends Creature implements TouchEventListener {
         interactButton.setActive(false);
 
         skillsManager = new PlayerSkillsManager(handler);
-        wealth = 0;
 
 
         //only for temp. use
@@ -324,7 +319,7 @@ public class Player extends Creature implements TouchEventListener {
         /*
         IMPORTANT: player.wld format (update here):
         x y
-        hp mp
+        hp mp wealth
         level exp perkPoints
         weaponId, auxiliaryId, armourId, bootsId
          */
@@ -335,13 +330,8 @@ public class Player extends Creature implements TouchEventListener {
         playerFile.createNewFile();
         PrintWriter editor = new PrintWriter(playerFile);
         editor.println((int)x+" "+(int)y);
-        editor.println(health+" "+ mp);
+        editor.println(health+" "+mp+" "+wealth);
         editor.println(level+" "+currLevelXp+" "+perkPoints);
-//        editor.print(strength.getLevel()+" ");
-//        editor.print(endurance.getLevel()+" ");
-//        editor.print(agility.getLevel()+" ");
-//        editor.print(knowledge.getLevel()+" ");
-//        editor.println(intelligence.getLevel()+" ");
         for(Equipment e: inventory.getEquipments()) {
             if (e != null)
                 editor.print(e.getId() + " ");
@@ -353,6 +343,8 @@ public class Player extends Creature implements TouchEventListener {
         inventory.wld format
         itemId count
          */
+        inventoryFile.delete();
+        inventoryFile.createNewFile();
         editor = new PrintWriter(inventoryFile);
         for(Item i: inventory.getInventoryItems())
             editor.println(i.getId()+" "+i.getCount());
@@ -361,6 +353,8 @@ public class Player extends Creature implements TouchEventListener {
         missions.wld format
         missionId progress[]
          */
+        missionFile.delete();
+        missionFile.createNewFile();
         editor = new PrintWriter(missionFile);
         for(Mission m: missionManager.getMissions()){
             editor.print(m.getId());
