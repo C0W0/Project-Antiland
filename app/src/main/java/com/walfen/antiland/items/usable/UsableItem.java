@@ -8,9 +8,10 @@ import com.walfen.antiland.items.Item;
 public class UsableItem extends Item {
 
     private Usable onUseEvent;
-    private String desc, effect;
+    private String desc;
+    private String[] effect;
 
-    public UsableItem(Bitmap texture, String name, int id, int value, String desc, String effect, Usable onUseEvent) {
+    public UsableItem(Bitmap texture, String name, int id, int value, String desc, String[] effect, Usable onUseEvent) {
         super(texture, name, id, value);
         this.onUseEvent = onUseEvent;
         this.desc = desc;
@@ -38,7 +39,7 @@ public class UsableItem extends Item {
     }
 
     @Override
-    public String getEffect() {
+    public String[] getEffect() {
         return effect;
     }
 

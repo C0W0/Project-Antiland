@@ -43,7 +43,7 @@ public class SimpleShield extends Auxiliary {
     }
 
     @Override
-    public String getEffect() {
-        return "defence +1";
+    public String[] getEffect() {
+        return new String[]{"defence +1"};
     }
 }

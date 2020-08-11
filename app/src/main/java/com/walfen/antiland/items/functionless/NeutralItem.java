@@ -7,10 +7,11 @@ import com.walfen.antiland.items.Item;
 
 public class NeutralItem extends Item {
 
-    private String desc, effect;
+    private String desc;
+    private String[] effect;
 
     public NeutralItem(Bitmap texture, String name, int id,
-                       int value, String effect, String desc) {
+                       int value, String[] effect, String desc) {
         super(texture, name, id, value);
         this.desc = desc;
         this.value = value;
@@ -42,7 +43,7 @@ public class NeutralItem extends Item {
     }
 
     @Override
-    public String getEffect() {
+    public String[] getEffect() {
         return effect;
     }
 }

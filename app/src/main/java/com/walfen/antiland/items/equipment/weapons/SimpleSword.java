@@ -44,7 +44,7 @@ public class SimpleSword extends Weapon {
     }
 
     @Override
-    public String getEffect() {
-        return "dmg +1";
+    public String[] getEffect() {
+        return new String[]{"dmg +1"};
     }
 }

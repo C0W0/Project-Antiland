@@ -19,6 +19,7 @@ import com.walfen.antiland.ui.buttons.UIImageButton;
 import com.walfen.antiland.untils.Utils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -214,7 +215,7 @@ public class Fabricator implements TouchEventListener {
             canvas.drawText(str, left, top+r.height(), paint);
             top += 5+r.height();
         }
-        tokens = Utils.splitString(selectedItem.getEffect(), 30);
+        tokens = new ArrayList<>(Arrays.asList(selectedItem.getEffect()));
         top += 20;
         paint.setColor(Color.MAGENTA);
         for(String str: tokens){

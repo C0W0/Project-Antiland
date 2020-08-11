@@ -31,13 +31,13 @@ public abstract class Item implements GameHierarchyElement {
 
     public static void initItems(Handler handler){
         woodItem = new NeutralItem(Assets.wood, "wood", 0,
-                1, "crafting material", "A piece of ordinary wood.");
+                1, new String[]{"crafting", "material"}, "A piece of ordinary wood.");
         appleItem = new UsableItem(Assets.apple, "apple", 1,
-                5, "A commonly seen fruit.", "heal: 1", () -> handler.getPlayer().changeHealth(1)
-        );
+                5, "A commonly seen fruit.", new String[]{"heal: 1"},
+                () -> handler.getPlayer().changeHealth(1));
         potionItem = new UsableItem(Assets.potion, "potion", 2,
-                20, "Also know as apple juice.", "heal: 10", () -> handler.getPlayer().changeHealth(10)
-        );
+                20, "Also know as apple juice.", new String[]{"heal: 10"},
+                () -> handler.getPlayer().changeHealth(10));
 //        stoneItem = new NeutralItems(Assets.stone, "stone", 3);
         shieldItem = new SimpleShield(Assets.shield, "shield", 4);
         swordItem = new SimpleSword(Assets.sword, "sword", 5);
@@ -119,7 +119,7 @@ public abstract class Item implements GameHierarchyElement {
 
     public abstract String getDesc();
 
-    public abstract String getEffect();
+    public abstract String[] getEffect();
 
     //getters and setters
     public Handler getHandler() {

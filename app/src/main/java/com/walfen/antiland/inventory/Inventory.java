@@ -19,7 +19,9 @@ import com.walfen.antiland.ui.TouchEventListener;
 import com.walfen.antiland.ui.buttons.UIImageButton;
 import com.walfen.antiland.untils.Utils;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Inventory implements TouchEventListener {
 
@@ -201,7 +203,7 @@ public class Inventory implements TouchEventListener {
             canvas.drawText(str, left, top+r.height(), paint);
             top += 5+r.height();
         }
-        tokens = Utils.splitString(selectedItem.getEffect(), 17);
+        tokens = new ArrayList<>(Arrays.asList(selectedItem.getEffect()));
         top += 20;
         paint.setColor(Color.MAGENTA);
         for(String str: tokens){

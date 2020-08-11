@@ -84,7 +84,7 @@ public class Slider extends UIObject {
                         Constants.getRenderPaint());
             }
         }
-        left = (int)((float)(value-min)/(max-min)*width+x);
+        left = (int)(max-min==0?x:((float)(value-min)/(max-min)*width+x));
         canvas.drawBitmap(slider, null,
                 new Rect(left, (int)y, left+slider.getWidth(), (int)(y+slider.getHeight())),
                 Constants.getRenderPaint());
