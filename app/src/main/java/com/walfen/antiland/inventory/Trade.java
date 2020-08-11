@@ -31,6 +31,7 @@ public class Trade implements TouchEventListener {
     private Trader currentTrader;
     //ACTUAL ARRAY DATA STUFF
     private ArrayList<Item> tempInventoryItems, tempShopKeeperItems;
+    private int tempWealth;
 
 
     private boolean active = false, buttonJustPressed = false,
@@ -150,6 +151,7 @@ public class Trade implements TouchEventListener {
 
     @Override
     public void update() {
+        System.out.println("Wealth: " +tempWealth);
         if (!active) {
             return;
         }
@@ -313,12 +315,14 @@ public class Trade implements TouchEventListener {
         selectedItem = null;
         handler.getPlayer().getInventory().setInventoryItems(cloneItemArrayList(tempInventoryItems));
         currentTrader.setTraderInventory(cloneItemArrayList(tempShopKeeperItems));
+        handler.getPlayer().setWealth(tempWealth);
     }
 
     public void revertTrade() {
         selectedItem = null;
         tempInventoryItems = cloneItemArrayList(inventoryItems);
         tempShopKeeperItems = cloneItemArrayList(shopKeeperItems);
+        tempWealth=handler.getPlayer().getWealth();
     }
 
     public void openShop(Trader trader) {
@@ -328,6 +332,7 @@ public class Trade implements TouchEventListener {
         inventoryItems = handler.getPlayer().getInventory().getInventoryItems();
         tempInventoryItems = cloneItemArrayList(inventoryItems);
         tempShopKeeperItems = cloneItemArrayList(shopKeeperItems);
+        tempWealth = handler.getPlayer().getWealth();
         active = true;
 
     }
@@ -396,7 +401,7 @@ public class Trade implements TouchEventListener {
         public void openPanel(Item item){
             tradingItem = item;
             active = true;
-            int count = item.getCount();
+            int count= selling?item.getCount():Math.min(tempWealth/item.getValue(), item.getCount());
             slider.setMax(count);
             slider.setValue(0);
             if(count > 20)
@@ -417,8 +422,10 @@ public class Trade implements TouchEventListener {
                 closePanel();
             if(selling){
                 transferItem(tempInventoryItems, tempShopKeeperItems, tradingItem.getId(), slider.getValue());
+                tempWealth+=tradingItem.getValue()*slider.getValue();
             }else {
                 transferItem(tempShopKeeperItems, tempInventoryItems, tradingItem.getId(), slider.getValue());
+                tempWealth-=tradingItem.getValue()*slider.getValue();
             }
             closePanel();
         }

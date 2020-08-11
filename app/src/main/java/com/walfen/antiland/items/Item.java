@@ -186,4 +186,5 @@ public abstract class Item implements GameHierarchyElement {
         this.pickedUP = pickedUP;
     }
 
+    public int getValue() {return value;}
 }
