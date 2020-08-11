@@ -41,8 +41,9 @@ public class Trade implements TouchEventListener {
     private int invBaseX, invBaseY, shopBaseX, shopBaseY, iconSize, itemDXConstant, itemDYConstant;
     private int invImageX, invImageY, invNameX, invNameY, numOffsetX, numOffsetY;
     private int selectedX = 0, selectedY = 0, scrollP = 0, scrollS = 0;
-    private int fingerX, fingerY;
     private int xDispute, yDispute;
+    private int moneyX, moneyY;
+    private int fingerX, fingerY;
     private final Bitmap trade;
     private Rect playerInvRect, shopRect;
 
@@ -78,6 +79,8 @@ public class Trade implements TouchEventListener {
         invNameY = (int) (192.f / 384 * tradeScreenHeight + yDispute);
         numOffsetX = (int) (36.f / 512 * tradeScreenWidth);
         numOffsetY = (int) (36.f / 384 * tradeScreenHeight);
+        moneyX = (int)(52.f/512*tradeScreenWidth+xDispute);
+        moneyY = (int)(378.f/384*tradeScreenHeight+yDispute);
         playerInvRect = new Rect((int)(33.f/512*tradeScreenWidth+xDispute),
                 (int)(112.f/384*tradeScreenHeight+yDispute),
                 (int)(196.f/512*tradeScreenWidth+xDispute),
@@ -151,7 +154,6 @@ public class Trade implements TouchEventListener {
 
     @Override
     public void update() {
-        System.out.println("Wealth: " +tempWealth);
         if (!active) {
             return;
         }
@@ -193,7 +195,24 @@ public class Trade implements TouchEventListener {
         canvas.drawBitmap(trade, null, new Rect
                 (xDispute, yDispute, xDispute + tradeScreenWidth, yDispute + tradeScreenHeight), Constants.getRenderPaint());
 
-        //Draw items and item count
+        //Draw money
+        Paint paint = new Paint();
+        paint.setTextSize(26);
+        paint.setFakeBoldText(true);
+        Rect r = new Rect();
+        int m = handler.getPlayer().getWealth();
+        String money = m+" ";
+        paint.getTextBounds(money, 0, money.length(), r);
+        paint.setColor(Color.WHITE);
+        canvas.drawText(money, moneyX, moneyY, paint);
+        if(tempWealth != m){
+            int difference = tempWealth-m;
+            if(difference > 0)
+                money = "  ( +"+difference+" )";
+            else
+                money = "  ( "+difference+" )";
+            canvas.drawText(money, moneyX+r.width(), moneyY, paint);
+        }
 
         //Draw Inventory
         for (int y = 0; y < SLOTHEIGHT; y++) {
@@ -216,9 +235,9 @@ public class Trade implements TouchEventListener {
                 canvas.drawBitmap(tempInventoryItems.get(y * SLOTWIDTH + x).getInvTexture(), null,
                         new Rect(left+fingerOffsetX, top+fingerOffsetY, left+iconSize+fingerOffsetX,
                                 top+iconSize+fingerOffsetY), Constants.getRenderPaint());
-                Paint paint = new Paint();
+                paint = new Paint();
                 paint.setTextSize(26);
-                Rect r = new Rect();
+                r = new Rect();
                 String count = Integer.toString(tempInventoryItems.get(y * SLOTWIDTH + x).getCount());
                 paint.getTextBounds(count, 0, count.length(), r);
                 paint.setColor(Color.BLACK);
@@ -247,9 +266,9 @@ public class Trade implements TouchEventListener {
                 canvas.drawBitmap(tempShopKeeperItems.get(y * SLOTWIDTH + x).getInvTexture(), null,
                         new Rect(left+fingerOffsetX, top+fingerOffsetY, left+iconSize+fingerOffsetX,
                                 top+iconSize+fingerOffsetY), Constants.getRenderPaint());
-                Paint paint = new Paint();
+                paint = new Paint();
                 paint.setTextSize(26);
-                Rect r = new Rect();
+                r = new Rect();
                 String count = Integer.toString(tempShopKeeperItems.get(y * SLOTWIDTH + x).getCount());
                 paint.getTextBounds(count, 0, count.length(), r);
                 paint.setColor(Color.BLACK);
@@ -268,22 +287,25 @@ public class Trade implements TouchEventListener {
                     invImageX, invImageY, invImageX + iconSize, invImageY + iconSize), Constants.getRenderPaint());
 
             //draw name, effect
-            Paint paint = new Paint();
+            paint = new Paint();
             paint.setTextSize(36);
-            Rect r = new Rect();
+            r = new Rect();
             String token = selectedItem.getName();
             paint.getTextBounds(token, 0, token.length(), r);
             paint.setColor(Color.BLACK);
             paint.setFakeBoldText(true);
             int bottomLine = (int) (invNameY + r.height() / 2.f);
             canvas.drawText(token, invNameX - r.width() / 2.f, bottomLine, paint);
-            bottomLine += 20;
+            bottomLine += 15;
             paint.setFakeBoldText(false);
             paint.setTextSize(32);
             paint.setColor(Color.MAGENTA);
-            token = selectedItem.getEffect();
-            paint.getTextBounds(token, 0, token.length(), r);
-            canvas.drawText(token, invNameX - r.width() / 2.f, bottomLine + r.height(), paint);
+            for(String str: selectedItem.getEffect()){
+                bottomLine += 5+r.height();
+                token = str;
+                paint.getTextBounds(token, 0, token.length(), r);
+                canvas.drawText(token, invNameX - r.width() / 2.f, bottomLine, paint);
+            }
         }
 
         if(panel.isActive())
