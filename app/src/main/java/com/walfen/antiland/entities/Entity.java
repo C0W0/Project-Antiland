@@ -48,10 +48,9 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
         maxHp = health;
         this.id = id;
         entityList[id] = this;
-        resistance = new int[10];
+        resistance = new int[3];
         dmgPercentMod = new int[10];
         for(int i = 0; i < 10; i++){
-            resistance[i] = 0;
             dmgPercentMod[i] = 100;
         }
 
@@ -65,8 +64,10 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
         num *= dmgPercentMod[type]/100.f;
         if(type == Attacks.Type.SPECIAL_IGNORE_DEFENCE)
             health -= num;
+        else if(type == Attacks.Type.PHYSICAL)
+            applyDefaultDamageFormula(num, resistance[1]);
         else
-            applyDefaultDamageFormula(num, resistance[type]);
+            applyDefaultDamageFormula(num, resistance[2]);
         if(health <= 0){
             active = false;
             die();
@@ -205,7 +206,23 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
         resistance[Attacks.Type.PHYSICAL] = defence;
     }
 
+    public int getMagicalDefence(){
+        return resistance[2];
+    }
+
+    public void setMagicalDefence(int defence){
+        resistance[2] = defence;
+    }
+
     public void changeDefence(int defenceValue) {
         resistance[Attacks.Type.PHYSICAL] += defenceValue;
+    }
+
+    public int getDmgModPercent(int type){
+        return dmgPercentMod[type];
+    }
+
+    public void setDmgPercentMod(int percent, int type){
+        dmgPercentMod[type] = percent;
     }
 }
