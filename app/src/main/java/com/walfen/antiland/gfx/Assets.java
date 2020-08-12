@@ -32,6 +32,7 @@ public class Assets {
     public static Bitmap horizontalSlideTrack, horizontalSlider, horizontalTickMark;
     public static Bitmap adjusterUp, adjusterDown;
     public static Bitmap popup1, popup2;
+    public static Bitmap greyDisk;
 
     //entities
     public static Bitmap tree;
@@ -168,6 +169,7 @@ public class Assets {
         tradeScreen = ImageLoader.loadImage(R.drawable.trade_screen);
         popup1 = ImageLoader.loadImage(R.drawable.popup_1);
         popup2 = ImageLoader.loadImage(R.drawable.popup_2);
+        greyDisk = sheet1.crop(width*3, height*2, width, height);
 
         //skills
         //icon circle: RGB: 233, 233, 233; 128*128, 4pt

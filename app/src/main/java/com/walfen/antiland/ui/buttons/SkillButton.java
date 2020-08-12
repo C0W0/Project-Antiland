@@ -17,7 +17,7 @@ public class SkillButton extends UIImageButton{
 
     public SkillButton(float x, float y, int sideLength) {
         super(x, y, sideLength, sideLength, new Bitmap[]{Assets.joystick_pad, Assets.joystick_pad}, () -> {});
-        cover = ImageEditor.scaleBitmapForced(Assets.joystick_pad, sideLength); //TODO: something different
+        cover = ImageEditor.scaleBitmapForced(Assets.greyDisk, sideLength);
     }
 
     public void setSkill(ActiveSkill skill){
