@@ -12,6 +12,7 @@ import com.walfen.antiland.Handler;
 import com.walfen.antiland.entities.properties.skills.Skill;
 import com.walfen.antiland.entities.properties.skills.active.ActiveSkill;
 import com.walfen.antiland.entities.properties.skills.active.SharpWind;
+import com.walfen.antiland.entities.properties.skills.active.TestShield;
 import com.walfen.antiland.entities.properties.skills.passive.SimplePlayerSkill;
 import com.walfen.antiland.gfx.Assets;
 import com.walfen.antiland.gfx.ImageEditor;
@@ -145,12 +146,15 @@ public class PlayerSkillsManager implements TouchEventListener {
         intelligenceSU.add(new SkillStaticIcon(skillL1X, skillL1Y, skillIconSize, skillIconSize, Assets.intelligenceR, intelligence));
         intelligenceSL.add(intelligence);
 
+        selectedIconSize = skillIconSize;
+
         //strength skills:
         Skill sharpWind = new SharpWind(handler);
         strengthSU.add(new SkillIcon(skillL1X, skillL1Y-skillIconSize-10, skillIconSize, skillIconSize,
                 new Bitmap[]{Assets.sharpWindG, Assets.sharpWind}, sharpWind));
-        selectedIconSize = skillIconSize;
         strengthSL.add(sharpWind);
+
+        //endurance skills:
     }
 
     public void initSkills(String path, UIManager manager){

@@ -10,6 +10,7 @@ import com.walfen.antiland.Constants;
 import com.walfen.antiland.Handler;
 import com.walfen.antiland.entities.properties.attack.rangedAttacks.PlayerDefaultAttack;
 import com.walfen.antiland.entities.properties.attack.rangedAttacks.RangedAttacks;
+import com.walfen.antiland.entities.properties.effect.Shield;
 import com.walfen.antiland.entities.properties.skills.Skill;
 import com.walfen.antiland.entities.properties.skills.active.ActiveSkill;
 import com.walfen.antiland.entities.properties.skills.active.SharpWind;
@@ -65,6 +66,7 @@ public class Player extends Creature implements TouchEventListener {
     private int perkPoints;
     private PlayerSkillsManager skillsManager;
     private int wealth;
+    private Shield shield;
 
     //environment interaction
     private ChangeEvent event;
@@ -302,6 +304,13 @@ public class Player extends Creature implements TouchEventListener {
     }
 
     @Override
+    public void receiveDamage(int num, int type) {
+        if(shield != null)
+            num = shield.receiveDamage(num, type);
+        super.receiveDamage(num, type);
+    }
+
+    @Override
     public void die() {
         System.out.println("You lose");
     }
@@ -483,5 +492,9 @@ public class Player extends Creature implements TouchEventListener {
 
     public Trade getTrade(){
         return trade;
+    }
+
+    public void setShield(Shield shield) {
+        this.shield = shield;
     }
 }

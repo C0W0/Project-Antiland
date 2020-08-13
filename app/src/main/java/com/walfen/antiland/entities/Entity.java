@@ -76,7 +76,7 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
 
     private void applyDefaultDamageFormula(int num, int resistance){
         int delta = (int) (num-4*Math.sqrt(resistance)+0.5);
-        health -= Math.max(delta, 1);
+        health -= num==0?0:Math.max(delta, 1);
     }
 
     public Rect getCollisionBounds(float xOffset, float yOffset){
