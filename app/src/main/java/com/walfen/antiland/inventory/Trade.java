@@ -98,7 +98,7 @@ public class Trade implements TouchEventListener {
                 "Confirm", Color.BLACK, this::confirmTrade);
         revertButton = new TextButton(buttonCentreX-1, 335.f/384*tradeScreenHeight+yDispute, 35,
                 "Revert", Color.BLACK, this::revertTrade);
-        closeButton = new UIImageButton(xDispute * 2 + tradeScreenWidth - invBaseX, yDispute,
+        closeButton = new UIImageButton(xDispute + tradeScreenWidth - Constants.UI_CLOSE_SIZE, yDispute,
                 Constants.UI_CLOSE_SIZE, Constants.UI_CLOSE_SIZE,
                 new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, this::closeShop);
     }
