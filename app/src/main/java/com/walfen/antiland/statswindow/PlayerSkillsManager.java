@@ -52,6 +52,8 @@ public class PlayerSkillsManager implements TouchEventListener {
 
     private SkillSlotIcon[] activeSkillSlot;
 
+    private UIImageButton switchButton, closeButton;
+
     //5 base:
     private SimplePlayerSkill strength, endurance, agility, knowledge, intelligence;
     //Skill lists
@@ -104,6 +106,13 @@ public class PlayerSkillsManager implements TouchEventListener {
         }
         skillUIObjects.addAll(Arrays.asList(activeSkillSlot));
 
+        closeButton = new UIImageButton(xDispute + skillWidth - Constants.UI_CLOSE_SIZE, yDispute,
+                Constants.UI_CLOSE_SIZE, Constants.UI_CLOSE_SIZE,
+                Assets.close, () -> setActive(false));
+        switchButton = new UIImageButton(xDispute, yDispute + skillHeight - Constants.UI_CLOSE_SIZE,
+                Constants.UI_CLOSE_SIZE, Constants.UI_CLOSE_SIZE,
+                Assets.switchFlip, this::setActive);
+
         skillIconSize *= 1.2;
         int skillL1X = (int)(128.f/512*skillWidth+xDispute-skillIconSize/2);
         int skillL1Y = (int) (283.f/384*skillHeight+yDispute-skillIconSize);
@@ -155,6 +164,7 @@ public class PlayerSkillsManager implements TouchEventListener {
         strengthSL.add(sharpWind);
 
         //endurance skills:
+
     }
 
     public void initSkills(String path, UIManager manager){
@@ -198,14 +208,21 @@ public class PlayerSkillsManager implements TouchEventListener {
     public void onTouchEvent(MotionEvent event) {
         if(!active)
             return;
+        if(buttonJustPressed){
+            buttonJustPressed = false;
+            return;
+        }
         for(UIObject o: skillUIObjects)
             o.onTouchEvent(event);
         for(UIObject o: currentSkills)
             o.onTouchEvent(event);
+        closeButton.onTouchEvent(event);
+        switchButton.onTouchEvent(event);
     }
 
     @Override
     public void update() {
+        System.out.println(active);
         for(UIObject o: skillUIObjects)
             o.update();
         for(UIObject o: currentSkills)
@@ -230,6 +247,10 @@ public class PlayerSkillsManager implements TouchEventListener {
         String token = Integer.toString(handler.getPlayer().getPerkPoints());
         paint.getTextBounds(token, 0, token.length(), r);
         canvas.drawText(token, pointsCentreX-r.width()/2.f, pointsCentreY+r.height()/2.f, paint);
+
+        closeButton.draw(canvas);
+        switchButton.draw(canvas);
+
         if(selectedSkill == null)
             return;
         int left = selectedIconCentreX-selectedSkillTexture.getWidth()/2;
@@ -280,20 +301,6 @@ public class PlayerSkillsManager implements TouchEventListener {
             return;
         selectedSkill.levelUp();
         handler.getPlayer().changePerkPoints(-1);
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(){
-        buttonJustPressed = true;
-        active = !active;
-    }
-
-    public void setActive(boolean active) {
-        buttonJustPressed = true;
-        this.active = active;
     }
 
     public void releaseDrag(Skill skill, int x, int y){
@@ -485,5 +492,20 @@ public class PlayerSkillsManager implements TouchEventListener {
 
     public SimplePlayerSkill getIntelligence() {
         return intelligence;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(){
+        active = !active;
+        buttonJustPressed = true;
+        handler.getPlayer().getStatsWindow().setActive(!active);
+    }
+
+    public void setActive(boolean active) {
+        buttonJustPressed = true;
+        this.active = active;
     }
 }

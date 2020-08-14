@@ -38,7 +38,8 @@ public class Joystick extends UIObject {
     public void onTouchEvent(MotionEvent event) {
         Player player = handler.getPlayer();
         if(player.getInventory().isActive() || player.getFabricator().isActive()
-                || player.getMissionManager().isActive() || player.getSkillsManager().isActive())
+                || player.getMissionManager().isActive() || player.getSkillsManager().isActive()
+        || player.getStatsWindow().isActive() || player.getTrade().isActive())
             return;
         int index = event.getActionIndex();
         int pointerIndex = event.findPointerIndex(event.getPointerId(index)); //increases and decreases

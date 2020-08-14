@@ -100,7 +100,7 @@ public class Trade implements TouchEventListener {
                 "Revert", Color.BLACK, this::revertTrade);
         closeButton = new UIImageButton(xDispute + tradeScreenWidth - Constants.UI_CLOSE_SIZE, yDispute,
                 Constants.UI_CLOSE_SIZE, Constants.UI_CLOSE_SIZE,
-                new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, this::closeShop);
+                Assets.close, this::closeShop);
     }
 
     @Override

@@ -12,6 +12,7 @@ import com.walfen.antiland.gfx.Assets;
 import com.walfen.antiland.gfx.ImageEditor;
 import com.walfen.antiland.ui.BarB;
 import com.walfen.antiland.ui.TouchEventListener;
+import com.walfen.antiland.ui.buttons.UIImageButton;
 
 public class PlayerStatsWindow implements TouchEventListener {
 
@@ -24,6 +25,8 @@ public class PlayerStatsWindow implements TouchEventListener {
     private int attackTextX, attackTextY, defenceTextX, defenceTextY;
     private int physTextX, physNumX, magTextX, magNumX, attackY, defenceY;
     private BarB xpBar, hpBar, mpBar;
+
+    private UIImageButton switchButton, closeButton;
 
     private final Bitmap statsScreen;
 
@@ -71,18 +74,34 @@ public class PlayerStatsWindow implements TouchEventListener {
                 () -> handler.getPlayer().getMaxHp(), () -> handler.getPlayer().getHealth());
         mpBar = new BarB(handler, mpBarX, mpBarY, mpBarWidth, barHeight, Assets.mp_bar,
                 () -> handler.getPlayer().getMaxMp(), () -> handler.getPlayer().getMp());
+        closeButton = new UIImageButton(xDispute + statsWidth - Constants.UI_CLOSE_SIZE, yDispute,
+                Constants.UI_CLOSE_SIZE, Constants.UI_CLOSE_SIZE,
+                Assets.close, () -> setActive(false));
+        switchButton = new UIImageButton(xDispute, yDispute + statsHeight - Constants.UI_CLOSE_SIZE,
+                Constants.UI_CLOSE_SIZE, Constants.UI_CLOSE_SIZE,
+                Assets.switchFlip, () -> handler.getPlayer().getSkillsManager().setActive());
     }
 
 
     @Override
     public void onTouchEvent(MotionEvent event) {
+        if(!active)
+            return;
+        if(buttonJustPressed){
+            buttonJustPressed = false;
+            return;
+        }
         xpBar.onTouchEvent(event);
         hpBar.onTouchEvent(event);
         mpBar.onTouchEvent(event);
+        closeButton.onTouchEvent(event);
+        switchButton.onTouchEvent(event);
     }
 
     @Override
     public void update() {
+        if(!active)
+            return;
         xpBar.update();
         hpBar.update();
         mpBar.update();
@@ -147,13 +166,17 @@ public class PlayerStatsWindow implements TouchEventListener {
         xpBar.draw(canvas);
         hpBar.draw(canvas);
         mpBar.draw(canvas);
+        closeButton.draw(canvas);
+        switchButton.draw(canvas);
     }
 
     public void setActive(){
+        buttonJustPressed = true;
         active = !active;
     }
 
     public void setActive(boolean active) {
+        buttonJustPressed = true;
         this.active = active;
     }
 

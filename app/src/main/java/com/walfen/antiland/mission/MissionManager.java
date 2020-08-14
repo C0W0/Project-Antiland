@@ -53,7 +53,7 @@ public class MissionManager implements TouchEventListener {
         scroll = 0;
         closeButton = new UIImageButton(xDispute+misWidth-Constants.UI_CLOSE_SIZE, yDispute,
                 Constants.UI_CLOSE_SIZE, Constants.UI_CLOSE_SIZE,
-                new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, () -> setActive(false));
+                Assets.close, () -> setActive(false));
     }
 
     public void addMission(int missionID){

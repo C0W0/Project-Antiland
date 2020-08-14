@@ -33,6 +33,7 @@ public class Assets {
     public static Bitmap adjusterUp, adjusterDown;
     public static Bitmap popup1, popup2;
     public static Bitmap greyDisk;
+    public static Bitmap switchFlip, close;
 
     //entities
     public static Bitmap tree;
@@ -120,18 +121,6 @@ public class Assets {
         player_neutral = sheet.crop(0,height*2,width,height);;
         player_Attack = sheet.crop(width*3, height*2, width, height);
 
-        joystick_pad = sheet1.crop(0, 0, width*3, height*3);
-        joystick_controller = sheet1.crop(width*3, 0, width, height);
-        hp_bar = ImageLoader.loadImage(R.drawable.hp_bar);
-        mp_bar = ImageLoader.loadImage(R.drawable.mp_bar);
-        dark_blue_bar = ImageLoader.loadImage(R.drawable.dark_blue_bar);
-        bar_frame = ImageLoader.loadImage(R.drawable.bar_frame);
-        horizontalSlideTrack = sheet1.crop(width*4, 0, width*2, height);
-        horizontalSlider = sheet1.crop(width*4, height, width, height);
-        horizontalTickMark = sheet1.crop(width*5, height, width, height);
-        adjusterUp = sheet1.crop(width*6, 0, width, height);
-        adjusterDown = sheet1.crop(width*7, 0, width, height);
-
         //entity
         tree = townTiles.crop(width*5,height*3,width,height*2);
         npcSlime = loadSpriteAsArray(idleSlime, 2, 1, 64, 64);
@@ -172,6 +161,20 @@ public class Assets {
         popup1 = ImageLoader.loadImage(R.drawable.popup_1);
         popup2 = ImageLoader.loadImage(R.drawable.popup_2);
         greyDisk = sheet1.crop(width*3, height*2, width, height);
+        switchFlip = sheet1.crop(width*3, height, width, height);
+        close = sheet1.crop(width*6, height, width, height);
+
+        joystick_pad = sheet1.crop(0, 0, width*3, height*3);
+        joystick_controller = sheet1.crop(width*3, 0, width, height);
+        hp_bar = ImageLoader.loadImage(R.drawable.hp_bar);
+        mp_bar = ImageLoader.loadImage(R.drawable.mp_bar);
+        dark_blue_bar = ImageLoader.loadImage(R.drawable.dark_blue_bar);
+        bar_frame = ImageLoader.loadImage(R.drawable.bar_frame);
+        horizontalSlideTrack = sheet1.crop(width*4, 0, width*2, height);
+        horizontalSlider = sheet1.crop(width*4, height, width, height);
+        horizontalTickMark = sheet1.crop(width*5, height, width, height);
+        adjusterUp = sheet1.crop(width*6, 0, width, height);
+        adjusterDown = sheet1.crop(width*7, 0, width, height);
 
         //skills
         //icon circle: RGB: 233, 233, 233; 128*128, 4pt
