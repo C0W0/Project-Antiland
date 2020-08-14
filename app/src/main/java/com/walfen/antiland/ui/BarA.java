@@ -17,11 +17,11 @@ import java.util.function.IntSupplier;
 
 public class BarA extends UIObject {
 
-    private float totalValue, currentValue;
-    private Handler handler;
-    private final Bitmap barImage, barFrame;
-    private float scaleRatio;
-    private IntSupplier maxValue, currValue;
+    protected float totalValue, currentValue;
+    protected Handler handler;
+    protected final Bitmap barImage, barFrame;
+    protected float scaleRatio;
+    protected IntSupplier maxValue, currValue;
 
     public BarA(Handler handler, float x, float y, int width, Bitmap barImage, IntSupplier maxValue, IntSupplier currValue) {
         super(x, y, width, width/10);

@@ -2,9 +2,15 @@ package com.walfen.antiland.statswindow;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Rect;
 import android.view.MotionEvent;
 
+import com.walfen.antiland.Constants;
 import com.walfen.antiland.Handler;
+import com.walfen.antiland.gfx.Assets;
+import com.walfen.antiland.gfx.ImageEditor;
+import com.walfen.antiland.ui.BarB;
 import com.walfen.antiland.ui.TouchEventListener;
 
 public class PlayerStatsWindow implements TouchEventListener {
@@ -14,26 +20,144 @@ public class PlayerStatsWindow implements TouchEventListener {
     private boolean active = false, buttonJustPressed = false;
     private int statsHeight, statsWidth;
     private int xDispute, yDispute;
+    private int levelTextX, levelNumX, levelY, hpTextX, hpTextY, mpTextX, mpTextY;
+    private int attackTextX, attackTextY, defenceTextX, defenceTextY;
+    private int physTextX, physNumX, magTextX, magNumX, attackY, defenceY;
+    private BarB xpBar, hpBar, mpBar;
+
     private final Bitmap statsScreen;
 
     public PlayerStatsWindow(Handler handler){
         this.handler = handler;
-        statsScreen = null;
+        statsScreen = ImageEditor.scaleBitmap(Assets.statsScreen, Constants.UI_SCREEN_WIDTH, Constants.UI_SCREEN_HEIGHT);
+        statsWidth = statsScreen.getWidth();
+        statsHeight = statsScreen.getHeight();
+        float xRatio = statsWidth/512.f;
+        float yRatio = statsHeight/384.f;
+        xDispute = Constants.SCREEN_WIDTH/2 - statsWidth/2;
+        yDispute = Constants.SCREEN_HEIGHT/2 - statsHeight/2;
+        levelTextX = (int)(50*xRatio+xDispute);
+        levelY = (int)(115*yRatio+yDispute);
+        levelNumX = (int)(87*xRatio+xDispute);
+        hpTextX = (int)(68*xRatio+xDispute);
+        hpTextY = (int)(159*yRatio+yDispute);
+        mpTextX = (int)(64*xRatio+xDispute);
+        mpTextY = (int)(203*yRatio+yDispute);
+        attackTextX = (int)(71*xRatio+xDispute);
+        attackTextY = (int)(245*yRatio+yDispute);
+        defenceTextX = (int)(76*xRatio+xDispute);
+        defenceTextY = (int)(309*yRatio+yDispute);
+        physTextX = (int)(49*xRatio+xDispute);
+        magTextX = (int)(141*xRatio+xDispute);
+        attackY = (int)(268*yRatio+yDispute);
+        defenceY = (int)(330*yRatio+yDispute);
+        physNumX = (int)(92*xRatio+xDispute);
+        magNumX = (int)(184*xRatio+xDispute);
+        int xpBarX, xpBarY, hpBarX, hpBarY, mpBarX, mpBarY;
+        int xpBarWidth, hpBarWidth, mpBarWidth, barHeight;
+        xpBarX = (int)(113*xRatio+xDispute);
+        xpBarY = (int)(108*yRatio+yDispute);
+        xpBarWidth = (int)(110*xRatio);
+        hpBarX = (int)(113*xRatio+xDispute);
+        hpBarY = (int)(152*yRatio+yDispute);
+        hpBarWidth = (int)(73*xRatio);
+        mpBarX = (int)(104*xRatio+xDispute);
+        mpBarY = (int)(196*yRatio+yDispute);
+        mpBarWidth = (int)(73*xRatio);
+        barHeight = (int)(16*yRatio);
+        xpBar = new BarB(handler, xpBarX, xpBarY, xpBarWidth, barHeight, Assets.dark_blue_bar,
+                () -> handler.getPlayer().getCurrLevelMaxXp(), () -> handler.getPlayer().getCurrLevelXp());
+        hpBar = new BarB(handler, hpBarX, hpBarY, hpBarWidth, barHeight, Assets.hp_bar,
+                () -> handler.getPlayer().getMaxHp(), () -> handler.getPlayer().getHealth());
+        mpBar = new BarB(handler, mpBarX, mpBarY, mpBarWidth, barHeight, Assets.mp_bar,
+                () -> handler.getPlayer().getMaxMp(), () -> handler.getPlayer().getMp());
     }
 
 
     @Override
     public void onTouchEvent(MotionEvent event) {
-
+        xpBar.onTouchEvent(event);
+        hpBar.onTouchEvent(event);
+        mpBar.onTouchEvent(event);
     }
 
     @Override
     public void update() {
-
+        xpBar.update();
+        hpBar.update();
+        mpBar.update();
     }
 
     @Override
     public void draw(Canvas canvas) {
+        if(!active)
+            return;
+        canvas.drawBitmap(statsScreen, null, new Rect(xDispute, yDispute, xDispute+statsWidth, yDispute+statsHeight),
+                Constants.getRenderPaint());
 
+        //subtitles
+        Paint paint = new Paint();
+        paint.setFakeBoldText(true);
+        paint.setTextSize(40);
+        Rect r = new Rect();
+        String text = "Lv.";
+        paint.getTextBounds(text, 0, text.length(), r);
+        canvas.drawText(text, levelTextX-r.width()/2.f, levelY+r.height()/2.f, paint);
+        text = "Health";
+        paint.getTextBounds(text, 0, text.length(), r);
+        canvas.drawText(text, hpTextX-r.width()/2.f, hpTextY+r.height()/2.f, paint);
+        text = "Mana";
+        paint.getTextBounds(text, 0, text.length(), r);
+        canvas.drawText(text, mpTextX-r.width()/2.f, mpTextY+r.height()/2.f, paint);
+        text = "Attacks";
+        paint.getTextBounds(text, 0, text.length(), r);
+        canvas.drawText(text, attackTextX-r.width()/2.f, attackTextY+r.height()/2.f, paint);
+        text = "Defences";
+        paint.getTextBounds(text, 0, text.length(), r);
+        canvas.drawText(text, defenceTextX-r.width()/2.f, defenceTextY+r.height()/2.f, paint);
+
+        //numbers and desc
+        paint.setTextSize(34);
+        paint.setFakeBoldText(false);
+        text = "Phys.";
+        paint.getTextBounds(text, 0, text.length(), r);
+        canvas.drawText(text, physTextX-r.width()/2.f, attackY+r.height()/2.f, paint);
+        canvas.drawText(text, physTextX-r.width()/2.f, defenceY+r.height()/2.f, paint);
+        text = "Mag.";
+        paint.getTextBounds(text, 0, text.length(), r);
+        canvas.drawText(text, magTextX-r.width()/2.f, attackY+r.height()/2.f, paint);
+        canvas.drawText(text, magTextX-r.width()/2.f, defenceY+r.height()/2.f, paint);
+
+        text = Integer.toString(handler.getPlayer().getLevel());
+        paint.getTextBounds(text, 0, text.length(), r);
+        canvas.drawText(text, levelNumX-r.width()/2.f, levelY+2+r.height()/2.f, paint);
+        text = Integer.toString(handler.getPlayer().getPhysicalDamage());
+        paint.getTextBounds(text, 0, text.length(), r);
+        canvas.drawText(text, physNumX-r.width()/2.f, attackY+2+r.height()/2.f, paint);
+        text = Integer.toString(handler.getPlayer().getMagicalDamage());
+        paint.getTextBounds(text, 0, text.length(), r);
+        canvas.drawText(text, magNumX-r.width()/2.f, attackY+2+r.height()/2.f, paint);
+        text = Integer.toString(handler.getPlayer().getDefence());
+        paint.getTextBounds(text, 0, text.length(), r);
+        canvas.drawText(text, physNumX-r.width()/2.f, defenceY+2+r.height()/2.f, paint);
+        text = Integer.toString(handler.getPlayer().getMagicalDefence());
+        paint.getTextBounds(text, 0, text.length(), r);
+        canvas.drawText(text, magNumX-r.width()/2.f, defenceY+2+r.height()/2.f, paint);
+
+        xpBar.draw(canvas);
+        hpBar.draw(canvas);
+        mpBar.draw(canvas);
+    }
+
+    public void setActive(){
+        active = !active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public boolean isActive() {
+        return active;
     }
 }

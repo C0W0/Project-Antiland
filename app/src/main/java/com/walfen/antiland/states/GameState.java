@@ -74,13 +74,13 @@ public class GameState extends State {
         uiManager.createJoystick();
         uiManager.createSkillButtons();
         uiManager.addUIObject(new UIImageButton(16, 16, 144, 144,
-                new Bitmap[]{Assets.player_neutral, Assets.player_neutral}, () -> handler.getPlayer().getSkillsManager().setActive()));
+                new Bitmap[]{Assets.player_neutral, Assets.player_neutral}, () -> handler.getPlayer().getStatsWindow().setActive()));
         uiManager.addUIObject(new BarA(handler,192,32,600, Assets.hp_bar,
                 () -> handler.getPlayer().getMaxHp(), () -> handler.getPlayer().getHealth()));
         uiManager.addUIObject(new BarA(handler, 192, 102, 512, Assets.mp_bar,
                 () -> handler.getPlayer().getMaxMp(), () -> handler.getPlayer().getMp()));
-        uiManager.addUIObject(new BarA(handler, Constants.SCREEN_WIDTH/2.f-512, Constants.SCREEN_HEIGHT-50,
-                1024, 48, Assets.mp_bar, () -> handler.getPlayer().getCurrLevelMaxXp(),
+        uiManager.addUIObject(new BarA(handler, Constants.SCREEN_WIDTH/2.f-512, Constants.SCREEN_HEIGHT-35,
+                1024, 32, Assets.dark_blue_bar, () -> handler.getPlayer().getCurrLevelMaxXp(),
                 () -> handler.getPlayer().getCurrLevelXp()));
         uiManager.addUIObject(new UITextDecoration(Constants.SCREEN_WIDTH/2.f-512-64, Constants.SCREEN_HEIGHT-25,
                 () -> Integer.toString(handler.getPlayer().getLevel()), 40, Constants.TEXT_COLOUR));

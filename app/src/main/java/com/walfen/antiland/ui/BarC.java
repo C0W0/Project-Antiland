@@ -1,4 +1,4 @@
-package com.walfen.antiland.ui.slider;
+package com.walfen.antiland.ui;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;

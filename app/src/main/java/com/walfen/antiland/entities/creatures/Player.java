@@ -27,6 +27,7 @@ import com.walfen.antiland.mission.Mission;
 import com.walfen.antiland.mission.MissionManager;
 import com.walfen.antiland.mission.killing.KillTracker;
 import com.walfen.antiland.statswindow.PlayerSkillsManager;
+import com.walfen.antiland.statswindow.PlayerStatsWindow;
 import com.walfen.antiland.ui.ChangeEvent;
 import com.walfen.antiland.ui.ClickListener;
 import com.walfen.antiland.ui.TouchEventListener;
@@ -65,6 +66,7 @@ public class Player extends Creature implements TouchEventListener {
     private int currLevelXp;
     private int perkPoints;
     private PlayerSkillsManager skillsManager;
+    private PlayerStatsWindow statsWindow;
     private int wealth;
     private Shield shield;
 
@@ -177,6 +179,7 @@ public class Player extends Creature implements TouchEventListener {
         interactButton.setActive(false);
 
         skillsManager = new PlayerSkillsManager(handler);
+        statsWindow = new PlayerStatsWindow(handler);
 
 
         //only for temp. use
@@ -195,7 +198,7 @@ public class Player extends Creature implements TouchEventListener {
             return;
         }
         if(inventory.isActive() || fabricator.isActive() || missionManager.isActive() ||
-                skillsManager.isActive() || trade.isActive()){
+                skillsManager.isActive() || statsWindow.isActive() || trade.isActive()){
             return;
         }
         float inputX = handler.getUIManager().getAttackJoystick().getMappedInputX();
@@ -279,6 +282,10 @@ public class Player extends Creature implements TouchEventListener {
         //skills
         skillsManager.update();
 
+        //stats screen
+        if(statsWindow.isActive())
+            statsWindow.update();
+
         //missions
         missionManager.update();
         tracker.update();
@@ -298,6 +305,7 @@ public class Player extends Creature implements TouchEventListener {
         fabricator.onTouchEvent(event);
         missionManager.onTouchEvent(event);
         skillsManager.onTouchEvent(event);
+        statsWindow.onTouchEvent(event);
         trade.onTouchEvent(event);
 
         interactButton.onTouchEvent(event);
@@ -321,6 +329,7 @@ public class Player extends Creature implements TouchEventListener {
         missionManager.draw(canvas);
         fabricator.draw(canvas);
         skillsManager.draw(canvas);
+        statsWindow.draw(canvas);
         trade.draw(canvas);
     }
 
@@ -476,6 +485,10 @@ public class Player extends Creature implements TouchEventListener {
 
     public PlayerSkillsManager getSkillsManager() {
         return skillsManager;
+    }
+
+    public PlayerStatsWindow getStatsWindow() {
+        return statsWindow;
     }
 
     public int getPerkPoints() {

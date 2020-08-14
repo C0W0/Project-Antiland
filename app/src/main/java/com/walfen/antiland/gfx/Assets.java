@@ -28,7 +28,7 @@ public class Assets {
     public static Bitmap joystick_pad, joystick_controller;
 
     //ui
-    public static Bitmap hp_bar, mp_bar, bar_frame;
+    public static Bitmap hp_bar, mp_bar, dark_blue_bar, bar_frame;
     public static Bitmap horizontalSlideTrack, horizontalSlider, horizontalTickMark;
     public static Bitmap adjusterUp, adjusterDown;
     public static Bitmap popup1, popup2;
@@ -124,6 +124,7 @@ public class Assets {
         joystick_controller = sheet1.crop(width*3, 0, width, height);
         hp_bar = ImageLoader.loadImage(R.drawable.hp_bar);
         mp_bar = ImageLoader.loadImage(R.drawable.mp_bar);
+        dark_blue_bar = ImageLoader.loadImage(R.drawable.dark_blue_bar);
         bar_frame = ImageLoader.loadImage(R.drawable.bar_frame);
         horizontalSlideTrack = sheet1.crop(width*4, 0, width*2, height);
         horizontalSlider = sheet1.crop(width*4, height, width, height);
@@ -166,6 +167,7 @@ public class Assets {
         craftingScreen = ImageLoader.loadImage(R.drawable.craft_screen);
         missionScreen = ImageLoader.loadImage(R.drawable.mission_screen);
         skillScreen = ImageLoader.loadImage(R.drawable.skill_selection_screen);
+        statsScreen = ImageLoader.loadImage(R.drawable.status_screen);
         tradeScreen = ImageLoader.loadImage(R.drawable.trade_screen);
         popup1 = ImageLoader.loadImage(R.drawable.popup_1);
         popup2 = ImageLoader.loadImage(R.drawable.popup_2);
