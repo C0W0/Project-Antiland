@@ -143,7 +143,14 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback, Ke
     }
 
     private void updateDirectory(String oVersion) throws IOException{
-        System.out.println("You shouldn't see this");
+        File index = new File(Constants.DIR+"/Index.wld");
+        if(index.exists())
+            index.delete();
+        index.createNewFile();
+        PrintWriter writer = new PrintWriter(index);
+        writer.println(Constants.GAME_VERSION);
+        writer.println(Constants.GAME_VERSION_DISPLAY);
+        writer.close();
     }
 
     //getters and setters
