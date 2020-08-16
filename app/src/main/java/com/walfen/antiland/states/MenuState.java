@@ -56,7 +56,7 @@ public class MenuState extends State {
         Rect r = new Rect();
         paint.setTextSize(30);
         paint.getTextBounds(Constants.GAME_VERSION_DISPLAY, 0, Constants.GAME_VERSION_DISPLAY.length(), r);
-        canvas.drawText(Constants.GAME_VERSION_DISPLAY, Constants.SCREEN_WIDTH-r.width()-10, Constants.SCREEN_HEIGHT-10, paint);
+        canvas.drawText(Constants.GAME_VERSION_DISPLAY, Constants.SCREEN_WIDTH-r.width()-100, Constants.SCREEN_HEIGHT-10, paint);
         uiManager.draw(canvas);
     }
 

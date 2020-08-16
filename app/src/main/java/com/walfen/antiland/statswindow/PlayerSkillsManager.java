@@ -222,7 +222,6 @@ public class PlayerSkillsManager implements TouchEventListener {
 
     @Override
     public void update() {
-        System.out.println(active);
         for(UIObject o: skillUIObjects)
             o.update();
         for(UIObject o: currentSkills)

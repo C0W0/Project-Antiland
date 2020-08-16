@@ -126,7 +126,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback, Ke
         paint.setTextSize(40);
         String frames = Integer.toString(thread.getFPS());
         paint.getTextBounds(frames, 0, frames.length(), r);
-        canvas.drawText(frames, Constants.SCREEN_WIDTH-10-r.width(), r.height()+10, paint);
+        canvas.drawText(frames, Constants.SCREEN_WIDTH-100-r.width(), r.height()+10, paint);
     }
 
     private void initDirectory() throws IOException{
