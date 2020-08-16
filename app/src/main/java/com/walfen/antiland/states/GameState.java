@@ -109,6 +109,16 @@ public class GameState extends State {
         }
     }
 
+    public void autoSave(){
+        try{
+            world.saveMap(Constants.DIR+"/auto");
+            player.savePlayer(Constants.DIR+"/auto");
+        }catch (IOException e){
+            e.printStackTrace();
+            uiManager.popUpMessage("Game file corrupted, please re-install the game");
+        }
+    }
+
     public Player getPlayer(){
         return player;
     }

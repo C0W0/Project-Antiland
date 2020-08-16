@@ -31,6 +31,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback, Ke
     private Handler handler;
     private GameCamera gameCamera;
     private State gameState, menuState;
+    private boolean allowExit;
+    private long lastAutoSaveTime;
 
     public GamePanel(Context context) {
         super(context);
@@ -48,6 +50,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback, Ke
     }
 
     private void init(){
+        allowExit = false;
+        lastAutoSaveTime = System.currentTimeMillis();
         Assets.init();
         Constants.init();
         handler = new Handler(this);
@@ -113,6 +117,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback, Ke
     }
 
     public void update(){
+        if(System.currentTimeMillis() - lastAutoSaveTime > 10000)
+            allowExit = false;
         State.getCurrentState().update();
     }
 
@@ -153,6 +159,15 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback, Ke
         writer.close();
     }
 
+    public void autoSave(){
+        if(State.getCurrentState() == gameState){
+            GameState gs = (GameState)gameState;
+            gs.autoSave();
+        }
+        lastAutoSaveTime = System.currentTimeMillis();
+        allowExit = true;
+    }
+
     //getters and setters
 
     public GameCamera getGameCamera() {
@@ -161,5 +176,9 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback, Ke
 
     public State getGameState() {
         return gameState;
+    }
+
+    public boolean allowsExit() {
+        return allowExit;
     }
 }

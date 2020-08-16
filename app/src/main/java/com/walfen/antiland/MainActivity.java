@@ -10,8 +10,11 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
+
+    private GamePanel gamePanel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +36,17 @@ public class MainActivity extends Activity {
         Constants.RES = getResources();
         Constants.WORLD_FILES = getAssets();
         Constants.DIR = getFilesDir().toString();
-        setContentView(new GamePanel(this));
+        gamePanel = new GamePanel(this);
+        setContentView(gamePanel);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Toast.makeText(this, "Press again to exit", Toast.LENGTH_SHORT).show();
+        if(gamePanel.allowsExit())
+            super.onBackPressed();
+        else {
+            gamePanel.autoSave();
+        }
     }
 }

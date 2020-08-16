@@ -37,7 +37,7 @@ public class MenuState extends State {
         uiManager.addUIObject(new TextButton(Constants.SCREEN_WIDTH/2.f, Constants.SCREEN_HEIGHT/2.f-100,
                 40, "from save file", Color.BLACK, () -> startGameFromPath(Constants.DIR+"/main")));
         uiManager.addUIObject(new TextButton(Constants.SCREEN_WIDTH/2.f, Constants.SCREEN_HEIGHT/2.f+100,
-                40, "from autosave file", Color.BLACK, () -> uiManager.popUpMessage("auto save not implemented")));
+                40, "from autosave file", Color.BLACK, () -> startGameFromPath(Constants.DIR+"/auto")));
     }
 
     @Override
