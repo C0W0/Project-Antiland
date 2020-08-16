@@ -2,11 +2,9 @@ package com.walfen.antiland.entities.statics;
 
 
 import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.graphics.Rect;
 
 import com.walfen.antiland.Constants;
-import com.walfen.antiland.Handler;
 import com.walfen.antiland.entities.properties.attack.Attacks;
 import com.walfen.antiland.gfx.Assets;
 import com.walfen.antiland.items.Item;
@@ -30,7 +28,7 @@ public class Tree extends StaticEntity {
     @Override
     public void receiveDamage(int num, int type) {
         super.receiveDamage(num, type);
-        handler.getWorld().getItemManager().addItem(Item.appleItem.createNew((int)(x + width/2 - Item.ITEMWIDTH/2 + Math.random()*64-32),
+        handler.getWorld().getItemManager().addItem(Item.apple.createNew((int)(x + width/2 - Item.ITEMWIDTH/2 + Math.random()*64-32),
                 (int)(y + height - Item.ITEMHEIGHT + 64), (int)(Math.random()*2)+1));
     }
 
@@ -47,7 +45,7 @@ public class Tree extends StaticEntity {
     }
 
     @Override
-    public void die() {
+    protected void onDeath() {
         handler.getWorld().getItemManager().addItem(Item.woodItem.createNew((int)(x + width/2 - Item.ITEMWIDTH/2), (int)(y + height - Item.ITEMHEIGHT), (int)(Math.random()*5)+1));
         handler.getPlayer().increaseXp(1);
     }

@@ -22,25 +22,29 @@ public abstract class Item implements GameHierarchyElement {
 
     public static Item[] items = new Item[256];
 
-    public static NeutralItem woodItem;
-    public static UsableItem appleItem;
-    public static UsableItem potionItem;
-    public static NeutralItem stoneItem;
-    public static Equipment shieldItem;
-    public static Equipment swordItem;
+    public static NeutralItem woodItem, stoneItem, bottle, slimeGel;
+    public static UsableItem apple, lvOneHpPotion, lvOneGreenPotion;
+    public static Equipment basicShield, basicSword;
 
     public static void initItems(Handler handler){
         woodItem = new NeutralItem(Assets.wood, "wood", 0,
                 1, new String[]{"crafting", "material"}, "A piece of ordinary wood.");
-        appleItem = new UsableItem(Assets.apple, "apple", 1,
-                5, "A commonly seen fruit.", new String[]{"heal: 1"},
+        apple = new UsableItem(Assets.apple, "apple", 1,
+                5, "A commonly seen fruit.", new String[]{"hp regen: 1"},
                 () -> handler.getPlayer().changeHealth(1));
-        potionItem = new UsableItem(Assets.potion, "potion", 2,
-                20, "Also know as apple juice.", new String[]{"heal: 10"},
-                () -> handler.getPlayer().changeHealth(10));
 //        stoneItem = new NeutralItems(Assets.stone, "stone", 3);
-        shieldItem = new SimpleShield(Assets.shield, "shield", 4);
-        swordItem = new SimpleSword(Assets.sword, "sword", 5);
+        basicShield = new SimpleShield(Assets.shield, "shield", 3);
+        basicSword = new SimpleSword(Assets.sword, "sword", 4);
+        bottle = new NeutralItem(Assets.bottle, "bottle", 5,
+                5, new String[]{"Liquid", "Container"}, "A bottle for liquids");
+        slimeGel = new NeutralItem(Assets.slimeGel, "Slime Gel", 6,
+                5, new String[]{"crafting", "material"}, "Green-ish jelly stuff");
+        lvOneGreenPotion = new UsableItem(Assets.greenPotion1, "potion", 7,
+                20, "Tastes bitter", new String[]{"mp regen: 10", "poison: 1"},
+                () -> {handler.getPlayer().changeHealth(-1); handler.getPlayer().changeMp(10);});
+        lvOneHpPotion = new UsableItem(Assets.redPotion1, "potion", 8,
+                20, "Also know as apple juice.", new String[]{"hp regen: 10"},
+                () -> handler.getPlayer().changeHealth(10));
     }
 
     //class

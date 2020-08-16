@@ -55,7 +55,7 @@ public class PlayerDefaultAttack extends RangedAttacks {
         Matrix matrix = new Matrix();
         matrix.setRotate(dX>=0?angle:180+angle, 0, 0);
         matrix.postScale(1f, 1f);
-        Animation a = new Animation(0.15f, new Bitmap[]{Assets.player_Attack});
+        Animation a = new Animation(10, new Bitmap[]{Assets.player_Attack});
         a.setMatrix(matrix);
         animations.add(a);
     }

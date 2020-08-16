@@ -20,15 +20,16 @@ public class Assets {
     public static Bitmap tt1_window, tt1_smokestack, tt1_balcony, tt1_doorTop, tt1_doorBottom,
             tt1_wallLeftTop, tt1_wallLeftMid, tt1_wallLeftBottom, tt1_wallMidTop, tt1_wallCommon1, tt1_wallMidBottom,
             tt1_wallRightTop, tt1_wallRightMid, tt1_wallRightBottom;
+    public static Bitmap [] water;
 
     public static Bitmap NULL;
 
     //player
     public static Bitmap player_neutral;
-    public static Bitmap [] player_down, player_up, player_left, player_right;
+    public static Bitmap[] player_down, player_up, player_left, player_right;
     public static Bitmap player_Attack;
+    public static Bitmap[] player_SharpWind;
 
-    public static Bitmap [] water;
 
     //joystick
     public static Bitmap joystick_pad, joystick_controller;
@@ -44,15 +45,13 @@ public class Assets {
     //entities
     public static Bitmap tree;
 
-    public static Bitmap[] npcSlime;
-    public static Bitmap[] slimeAttackLeft;
-    public static Bitmap[] slimeAttackRight;
-    public static Bitmap[] slimeMovementLeft;
-    public static Bitmap[] slimeMovementRight;
-    public static Bitmap[] npcCrab;
+    public static Bitmap[] npcSlime, slimeAttackLeft, slimeAttackRight, slimeMovementLeft, slimeMovementRight;
+    public static Bitmap[] npcCrab, npcMushroom;
 
     //items
-    public static Bitmap wood, apple, stone, potion, shield, sword;
+    public static Bitmap wood, stone, bottle, slimeGel;
+    public static Bitmap apple, redPotion1, greenPotion1;
+    public static Bitmap shield, sword;
     public static Bitmap inventoryScreen, missionScreen, craftingScreen, statsScreen, skillScreen, tradeScreen;
     public static Bitmap blueSqr, redSqr;
 
@@ -65,16 +64,19 @@ public class Assets {
     public static void init(){
         final int height = Constants.DEFAULT_SIZE;
         final int width = Constants.DEFAULT_SIZE;
+        final int iHeight = height/2;
+        final int iWidth = width/2;
         SpriteSheet sheet = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.spritesheet));
         SpriteSheet sheet1 = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.spritesheet1));
         SpriteSheet townTiles = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.remix_town_tiles));
         SpriteSheet slimeAttack = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.slime_attack));
         SpriteSheet slimeMovement = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.slime_movement));
         SpriteSheet idleSlime = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.idle_slime));
-        SpriteSheet crabSheet = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.crab));
         SpriteSheet skillSheet = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.skills_sprite));
         SpriteSheet rockHouseSheet = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.house_tiles));
         SpriteSheet newTownTiles = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.town_tiles));
+        SpriteSheet potions = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.potions));
+        SpriteSheet items = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.items));
 
         grass = newTownTiles.crop(width*11,0,width,height);
         grassStone = sheet1.crop(width*3,height,width,height);
@@ -162,11 +164,13 @@ public class Assets {
         player_left[1] = sheet.crop(width*3,height,width,height);
         player_neutral = sheet.crop(0,height*2,width,height);;
         player_Attack = sheet.crop(width*3, height*2, width, height);
+        player_SharpWind = loadSpriteAsArray(new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.magic_firelion_big)), 4, 4, width, height);
 
         //entity
         tree = townTiles.crop(width*5,height*3,width,height*2);
         npcSlime = loadSpriteAsArray(idleSlime, 2, 1, 64, 64);
-        npcCrab = loadSpriteAsArray(crabSheet, 6, 4, 64, 64);
+        npcCrab = loadSpriteAsArray(new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.crab)), 6, 4, 64, 64);
+        npcMushroom = loadSpriteAsArray(new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.mushroom_trader)), 1, 5, 192, 232);
         slimeAttackLeft = new Bitmap[3];
         slimeAttackLeft[0] = slimeAttack.crop(0,0,width,height);
         slimeAttackLeft[1] = slimeAttack.crop(width,0,width,height);
@@ -186,10 +190,16 @@ public class Assets {
 
         //items
         wood = sheet1.crop(width*7,height,width,height);
+        bottle = items.crop(iWidth, 0, iWidth, iHeight);
+        slimeGel = items.crop(0, 0, iWidth, iHeight);
+
         apple = ImageLoader.loadImage(R.drawable.apple);
-        potion = ImageLoader.loadImage(R.drawable.potion);
+        redPotion1 = potions.crop(0, iHeight, iWidth, iHeight);
+        greenPotion1 = potions.crop(0, 0, iWidth, iHeight);
+
         sword = ImageLoader.loadImage(R.drawable.sword);
         shield = ImageLoader.loadImage(R.drawable.shield);
+
         blueSqr = ImageLoader.loadImage(R.drawable.selected);
         redSqr = ImageLoader.loadImage(R.drawable.red_square);
 
@@ -246,7 +256,7 @@ public class Assets {
      * @param width the width of a sub image, in pixels
      * @return the array of sub images in order
      */
-    public static Bitmap[] loadSpriteAsArray(SpriteSheet spriteSheet, int xBlocks, int yBlocks, int height, int width){
+    public static Bitmap[] loadSpriteAsArray(SpriteSheet spriteSheet, int xBlocks, int yBlocks, int width, int height){
         Bitmap[] images = new Bitmap[xBlocks*yBlocks];
         for(int y = 0; y < yBlocks; y++){
             for(int x = 1; x <= xBlocks; x++){

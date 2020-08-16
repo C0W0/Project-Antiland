@@ -1,6 +1,7 @@
 package com.walfen.antiland.entities.properties.skills.active;
 
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 
 import com.walfen.antiland.Handler;
 import com.walfen.antiland.entities.properties.effect.Shield;
@@ -33,6 +34,11 @@ public class TestShield extends ActiveSkill {
                 isShieldOn = false;
             }
         }
+    }
+
+    @Override
+    public void draw(Canvas canvas) {
+
     }
 
     @Override

@@ -40,8 +40,10 @@ public abstract class Trader extends NPC {
 
         public static ArrayList<Item> getFootTraderInv(Handler handler){
             ArrayList<Item> items = new ArrayList<>();
-            TraderInvManager.addItem(handler, Item.appleItem.addToInv(50), items);
-            TraderInvManager.addItem(handler, Item.potionItem.addToInv(10), items);
+            addItem(handler, Item.apple.addToInv(50), items);
+            addItem(handler, Item.lvOneHpPotion.addToInv(10), items);
+            addItem(handler, Item.lvOneGreenPotion.addToInv(10), items);
+            addItem(handler, Item.bottle.addToInv(20), items);
             return items;
         }
 

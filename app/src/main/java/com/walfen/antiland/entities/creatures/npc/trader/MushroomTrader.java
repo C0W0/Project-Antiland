@@ -3,21 +3,17 @@ package com.walfen.antiland.entities.creatures.npc.trader;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 
-import com.walfen.antiland.entities.creatures.Creature;
+import com.walfen.antiland.Constants;
 import com.walfen.antiland.gfx.Animation;
 import com.walfen.antiland.gfx.Assets;
 import com.walfen.antiland.items.Item;
 
 import java.util.ArrayList;
 
-public class WandererCrab extends Trader {
+public class MushroomTrader extends Trader {
 
-    private Animation dynamicTexture;
-
-    public WandererCrab() {
-        super(Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT, 5);
-        dynamicTexture = new Animation(3, Assets.npcCrab);
-        dynamicTexture.scale(width, height);
+    public MushroomTrader() {
+        super(192, 232, 6);
     }
 
     @Override
@@ -26,21 +22,19 @@ public class WandererCrab extends Trader {
     }
 
     @Override
+    protected void onDeath() {
+
+    }
+
+    @Override
     public void update() {
         super.update();
-        dynamicTexture.update();
     }
 
     @Override
     public void draw(Canvas canvas) {
         int left = (int)(x - handler.getGameCamera().getxOffset());
         int top = (int)(y - handler.getGameCamera().getyOffset());
-        dynamicTexture.draw(canvas, new Rect(left, top, left+width, top+height));
+        canvas.drawBitmap(Assets.npcMushroom[0], null, new Rect(left, top, left+width, top+height), Constants.getRenderPaint());
     }
-
-    @Override
-    protected void onDeath() {}
-
-    @Override
-    public void receiveDamage(int num, int type) {}
 }

@@ -48,7 +48,7 @@ public class Tile implements GraphicalTerminalElement {
         new Tile(Assets.pathCornerUpLeft, 7, false);
         new Tile(Assets.pathCornerDownRight, 8, false);
         new Tile(Assets.pathCornerDownLeft, 9, false);
-        new Tile(new Animation(100, Assets.water), 10, true);
+        new Tile(new Animation(0.1f, Assets.water), 10, true);
         new Tile(Assets.roofBroken1, 29, true);
         new Tile(Assets.roofBroken2, 30, true);
         new Tile(Assets.stair1T, 31, false);

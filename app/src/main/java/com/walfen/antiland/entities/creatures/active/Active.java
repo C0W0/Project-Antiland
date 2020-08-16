@@ -13,16 +13,18 @@ public abstract class Active extends Creature {
     protected Entity target;
     //TODO: complete rework for factions.
 
+    private int deathXP;
 
     //attack system
     protected Attacks attack;
     protected long lastAttackTime, attackCooldown, attackTimer;
 
-    public Active(int width, int height, long attackCooldown, int id) {
+    public Active(int width, int height, long attackCooldown, int id, int deathXP) {
         super(width, height, id);
         xMove = 0;
         yMove = 0;
         this.attackCooldown = attackCooldown;
+        this.deathXP = deathXP;
         attackTimer = attackCooldown;
     }
 
@@ -95,7 +97,8 @@ public abstract class Active extends Creature {
 
     @Override
     public void die() {
-
+        handler.getPlayer().increaseXp(deathXP);
+        super.die();
     }
 
     public Entity getTarget() {

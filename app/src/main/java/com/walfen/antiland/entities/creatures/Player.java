@@ -121,11 +121,11 @@ public class Player extends Creature implements TouchEventListener {
         attackTimer = attackCooldown;
 
         //animation
-        downAnim = new Animation(0.15f, Assets.player_down);
-        upAnim = new Animation(0.15f, Assets.player_up);
-        rightAnim = new Animation(0.15f, Assets.player_right);
-        leftAnim = new Animation(0.15f, Assets.player_left);
-        neutralAnim = new Animation(0.15f, new Bitmap[]{Assets.player_neutral});
+        downAnim = new Animation(0.5f, Assets.player_down);
+        upAnim = new Animation(0.5f, Assets.player_up);
+        rightAnim = new Animation(0.5f, Assets.player_right);
+        leftAnim = new Animation(0.5f, Assets.player_left);
+        neutralAnim = new Animation(0.5f, new Bitmap[]{Assets.player_neutral});
         currentAnimation = neutralAnim;
 
         defaultAttack = new PlayerDefaultAttack(handler, () -> physicalDamage);
@@ -322,6 +322,9 @@ public class Player extends Creature implements TouchEventListener {
     public void die() {
         System.out.println("You lose");
     }
+
+    @Override
+    protected void onDeath() { }
 
     public void postdraw(Canvas canvas){
         interactButton.draw(canvas);

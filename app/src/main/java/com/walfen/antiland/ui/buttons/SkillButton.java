@@ -6,6 +6,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 
 import com.walfen.antiland.Constants;
+import com.walfen.antiland.entities.properties.skills.Skill;
 import com.walfen.antiland.entities.properties.skills.active.ActiveSkill;
 import com.walfen.antiland.gfx.Assets;
 import com.walfen.antiland.gfx.ImageEditor;
@@ -40,7 +41,10 @@ public class SkillButton extends UIImageButton{
             return;
         }
         canvas.drawBitmap(images[index], null, new Rect((int)x, (int)y, (int)x+width, (int)y+height), Constants.getRenderPaint());
-        if(skill == null || skill.getCooldownSecond() == 0)
+        if(skill == null)
+            return;
+        skill.draw(canvas);
+        if(skill.getCooldownSecond() == 0)
             return;
         canvas.drawBitmap(cover, null, new Rect((int)x, (int)y, (int)x+width, (int)y+height), Constants.getRenderPaint());
         Rect r = new Rect();

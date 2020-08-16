@@ -9,6 +9,7 @@ import com.walfen.antiland.entities.creatures.Creature;
 import com.walfen.antiland.entities.properties.attack.meleeAttacks.SlimeBash;
 import com.walfen.antiland.gfx.Animation;
 import com.walfen.antiland.gfx.Assets;
+import com.walfen.antiland.items.Item;
 import com.walfen.antiland.tiles.Tile;
 import com.walfen.antiland.untils.MSTimeController;
 
@@ -18,7 +19,7 @@ public class Slime extends Active {
     private MSTimeController animationCtrlTimer = new MSTimeController();
 
     public Slime() {
-        super(Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT, 1000, 4);
+        super(Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT, 1000, 4, 1);
         spottingRange = 512;
         maxIdealRange = 128;
         minIdealRange = 0; // melee
@@ -61,6 +62,12 @@ public class Slime extends Active {
         int left = (int)(x - handler.getGameCamera().getxOffset());
         int top = (int)(y - handler.getGameCamera().getyOffset());
         currentAnimation.draw(canvas, new Rect(left, top, left+width, top+height));
+    }
+
+    @Override
+    protected void onDeath() {
+        if(Math.random() <= 0.2)
+            handler.getWorld().getItemManager().addItem(Item.slimeGel.createNew((int)(x + width/2 - Item.ITEMWIDTH/2), (int)(y + height - Item.ITEMHEIGHT), (int)(Math.random()*5)+1));
     }
 
     @Override

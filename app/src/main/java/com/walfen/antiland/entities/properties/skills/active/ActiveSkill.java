@@ -2,12 +2,13 @@ package com.walfen.antiland.entities.properties.skills.active;
 
 import android.graphics.Bitmap;
 
+import com.walfen.antiland.GameHierarchyElement;
 import com.walfen.antiland.Handler;
 import com.walfen.antiland.entities.creatures.Creature;
 import com.walfen.antiland.entities.properties.skills.Skill;
 import com.walfen.antiland.gfx.ImageEditor;
 
-public abstract class ActiveSkill extends Skill {
+public abstract class ActiveSkill extends Skill implements GameHierarchyElement {
 
     protected long lastActiveTime, activeCooldown, activeTimer;
 
@@ -29,6 +30,7 @@ public abstract class ActiveSkill extends Skill {
 
     protected abstract void onTrigger();
 
+    @Override
     public void update(){
         updateData();
         activeTimer += System.currentTimeMillis() - lastActiveTime;

@@ -22,7 +22,7 @@ public class NPC1 extends NPC {
     public NPC1() {
         super(Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT, 3);
         interRange = 2;
-        dynamicTexture = new Animation(0.05f, Assets.npcCrab);
+        dynamicTexture = new Animation(6, Assets.npcCrab);
         dynamicTexture.scale(width, height);
     }
 
@@ -65,7 +65,7 @@ public class NPC1 extends NPC {
 
 
     @Override
-    public void die() {
+    public void onDeath() {
 
     }
 }

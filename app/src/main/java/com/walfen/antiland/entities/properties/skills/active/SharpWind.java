@@ -1,6 +1,7 @@
 package com.walfen.antiland.entities.properties.skills.active;
 
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 
 import com.walfen.antiland.Handler;
 import com.walfen.antiland.entities.properties.attack.rangedAttacks.PlayerAbilityAttack;
@@ -37,6 +38,12 @@ public class SharpWind extends ActiveSkill {
     protected void updateData() {
         if(!handler.getPlayer().getAttack().equals(attacks))
             attacks.update();
+    }
+
+    @Override
+    public void draw(Canvas canvas) {
+        if(!handler.getPlayer().getAttack().equals(attacks))
+            attacks.draw(canvas);
     }
 
     @Override
