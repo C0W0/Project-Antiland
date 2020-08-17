@@ -9,7 +9,7 @@ public class Assets {
 
     public static Bitmap grass, grassStone, dirt, dirtStone;
     public static Bitmap pathVerticalLeft, pathVerticalRight, pathHorizontalTop, pathHorizontalBottom,
-            pathCornerUpRight, pathCornerUpLeft, pathCornerDownLeft, pathCornerDownRight;
+            pathCornerUpRight, pathCornerUpLeft, pathCornerDownLeft, pathCornerDownRight, pathCross;
     public static Bitmap[] simpleHouseTiles;
     public static Bitmap[][] walls;
     public static Bitmap interior1T, interior1B, stair1T, window1, window1T, window1B, window2T, window2B;
@@ -20,7 +20,7 @@ public class Assets {
     public static Bitmap tt1_window, tt1_smokestack, tt1_balcony, tt1_doorTop, tt1_doorBottom,
             tt1_wallLeftTop, tt1_wallLeftMid, tt1_wallLeftBottom, tt1_wallMidTop, tt1_wallCommon1, tt1_wallMidBottom,
             tt1_wallRightTop, tt1_wallRightMid, tt1_wallRightBottom;
-    public static Bitmap [] water;
+//    public static Bitmap [] water;
 
     public static Bitmap NULL;
 
@@ -82,11 +82,11 @@ public class Assets {
         grassStone = sheet1.crop(width*3,height,width,height);
         dirt = townTiles.crop(width,height,width,height);
         dirtStone = sheet1.crop(width*6,height,width,height);
-        water = new Bitmap[4];
-        water[0] = townTiles.crop(0,height*4,width,height);
-        water[1] = townTiles.crop(width,height*4,width,height);
-        water[2] = townTiles.crop(width*2,height*4,width,height);
-        water[3] = townTiles.crop(width*3,height*4,width,height);
+//        water = new Bitmap[4];
+//        water[0] = townTiles.crop(0,height*4,width,height);
+//        water[1] = townTiles.crop(width,height*4,width,height);
+//        water[2] = townTiles.crop(width*2,height*4,width,height);
+//        water[3] = townTiles.crop(width*3,height*4,width,height);
         simpleHouseTiles = new Bitmap[18];
         simpleHouseTiles = loadSpriteAsArray(new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.resident_test_2)), 6, 3, 128, 128);
 
@@ -121,6 +121,7 @@ public class Assets {
         pathCornerUpLeft = newTownTiles.crop(width*8,0,width,height);
         pathCornerDownLeft = newTownTiles.crop(width*6,height*2,width,height);
         pathCornerDownRight = newTownTiles.crop(width*8,height*2,width,height);
+        pathCross = newTownTiles.crop(width*11,height,width,height);
 
 
         tt1_roofTop = newTownTiles.crop(0, 0, width, height);
@@ -167,7 +168,7 @@ public class Assets {
         player_SharpWind = loadSpriteAsArray(new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.magic_firelion_big)), 4, 4, width, height);
 
         //entity
-        tree = townTiles.crop(width*5,height*3,width,height*2);
+        tree = newTownTiles.crop(0, height*3, width, height*4);
         npcSlime = loadSpriteAsArray(idleSlime, 2, 1, 64, 64);
         npcCrab = loadSpriteAsArray(new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.crab)), 6, 4, 64, 64);
         npcMushroom = loadSpriteAsArray(new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.mushroom_trader)), 1, 5, 192, 232);

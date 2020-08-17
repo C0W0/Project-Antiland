@@ -11,8 +11,8 @@ public abstract class CollectorMission extends Mission {
 
     protected int[] targetItemID;
 
-    public CollectorMission(String title, String desc, int id, int subMissions) {
-        super(title, desc, id);
+    public CollectorMission(String title, String desc, int id, int subMissions, int xpGain) {
+        super(title, desc, id, xpGain);
         targetItemID = new int[subMissions];
         finalProgress = new int[subMissions];
         progress = new int[subMissions];
@@ -38,5 +38,10 @@ public abstract class CollectorMission extends Mission {
     @Override
     public void complete() {
 
+    }
+
+    @Override
+    public void receiveReward() {
+        handler.getPlayer().increaseXp(xpGain);
     }
 }

@@ -12,8 +12,8 @@ public abstract class KillingMission extends Mission {
     protected int[] targetEntityID;
     protected int[] beginningCount;
 
-    public KillingMission(String title, String desc, int id, int subMissions) {
-        super(title, desc, id);
+    public KillingMission(String title, String desc, int id, int subMissions, int xpGain) {
+        super(title, desc, id, xpGain);
         targetEntityID = new int[subMissions];
         finalProgress = new int[subMissions];
         progress = new int[subMissions];

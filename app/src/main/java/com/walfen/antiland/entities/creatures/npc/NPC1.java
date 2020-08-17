@@ -8,6 +8,8 @@ import android.graphics.Rect;
 import com.walfen.antiland.entities.creatures.Creature;
 import com.walfen.antiland.gfx.Animation;
 import com.walfen.antiland.gfx.Assets;
+import com.walfen.antiland.items.Item;
+import com.walfen.antiland.mission.Mission;
 import com.walfen.antiland.tiles.Tile;
 import com.walfen.antiland.ui.UIManager;
 import com.walfen.antiland.ui.conversation.Conversation;
@@ -33,15 +35,38 @@ public class NPC1 extends NPC {
     protected void interact() {
         if(convBoxOn)
             return;
-        if(handler.getPlayer().getMissionManager().hasMission(3))
+        if(handler.getPlayer().getMissionManager().hasMission(4)){
+            if(Mission.missions[4].isCompleted()){
+                handler.getPlayer().getMissionManager().getMissions().remove(Mission.missions[4]);
+                convBoxOn = true;
+                UIManager uiManager = handler.getUIManager();
+                uiManager.hideUI();
+                ArrayList<Conversation> c = new ArrayList<>();
+                c.add(new Conversation("Thanks for your help.", Assets.npcCrab[0], false));
+                c.add(new Conversation("My duty.", Assets.player_neutral, true));
+                c.add(new Conversation("(You have received 10 potions)", Assets.NULL, false));
+                uiManager.getConvBox().setConversationList(c, () -> {Mission.missions[4].receiveReward(); convBoxOn = false;});
+                uiManager.getConvBox().setActive();
+            }else {
+                convBoxOn = true;
+                UIManager uiManager = handler.getUIManager();
+                uiManager.hideUI();
+                ArrayList<Conversation> c = new ArrayList<>();
+                c.add(new Conversation("You haven't complete the mission yet. Come back to me later.", Assets.npcCrab[0], false));
+                uiManager.getConvBox().setConversationList(c, () -> convBoxOn = false);
+                uiManager.getConvBox().setActive();
+            }
             return;
+        }
         convBoxOn = true;
         UIManager uiManager = handler.getUIManager();
         uiManager.hideUI();
         ArrayList<Conversation> c = new ArrayList<>();
-        c.add(new Conversation("We need to more spaces for our village. Do you want to help us to clear a field?", Assets.npcCrab[0], false));
-        c.add(new Conversation("Absolutely!", Assets.player_neutral, true));
-        uiManager.getConvBox().setConversationList(c, () -> assignMission(3));
+        c.add(new Conversation("We are suffering from increasing number of slime attacks.", Assets.npcCrab[0], false));
+        c.add(new Conversation("What?! How can I help?", Assets.player_neutral, true));
+        c.add(new Conversation("Go down to the forests and kills 5 of them to decrease their number. " +
+                "Once you finish with them come back to me. I have some rewards for you.", Assets.npcCrab[0], false));
+        uiManager.getConvBox().setConversationList(c, () -> {assignMission(4); convBoxOn = false;});
         uiManager.getConvBox().setActive();
     }
 

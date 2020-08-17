@@ -20,13 +20,7 @@ public class Tile implements GraphicalTerminalElement {
     public static Tile grassRockTile = new Tile(Assets.grassStone, 1, true);
     public static Tile dirtTile = new Tile(Assets.dirt, 2, false);
     public static Tile dirtRockTile = new Tile(Assets.dirtStone, 3, true);
-//    public static Tile horizontalPath = new HorizontalPath(4);
-//    public static Tile verticalPath = new VerticalPath(5);
-//    public static Tile pathUpRight = new PathUpRight(6);
-//    public static Tile pathUpLeft = new PathUpLeft(7);
-//    public static Tile pathDownRight = new PathDownRight(8);
-//    public static Tile pathDownLeft = new PathDownLeft(9);
-    public static Tile waterTile = new Tile(new Animation(0.4f, Assets.water), 10, true);
+//    public static Tile waterTile = new Tile(new Animation(0.4f, Assets.water), 10, true);
 
     public static void initTiles(){
 //        for(int i = 0; i < Assets.simpleHouseTiles.length; i++){
@@ -48,7 +42,7 @@ public class Tile implements GraphicalTerminalElement {
         new Tile(Assets.pathCornerUpLeft, 7, false);
         new Tile(Assets.pathCornerDownRight, 8, false);
         new Tile(Assets.pathCornerDownLeft, 9, false);
-        new Tile(new Animation(0.1f, Assets.water), 10, true);
+        new Tile(Assets.pathCross, 10, false);
         new Tile(Assets.roofBroken1, 29, true);
         new Tile(Assets.roofBroken2, 30, true);
         new Tile(Assets.stair1T, 31, false);
