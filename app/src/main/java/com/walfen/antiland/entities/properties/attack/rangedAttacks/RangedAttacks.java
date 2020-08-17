@@ -81,7 +81,6 @@ public abstract class RangedAttacks extends Attacks {
     @Override
     public void draw(Canvas canvas) {
         for(int i = 0; i < animations.size(); i++){
-            System.out.println(i);
             Animation a = animations.get(i);
             Rect r = collisionQueue.get(i).getBound();
             int left = (int)(r.left - handler.getGameCamera().getxOffset());

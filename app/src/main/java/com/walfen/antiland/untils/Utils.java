@@ -152,6 +152,10 @@ public class Utils {
         return nums[(int)(Math.random()*nums.length)];
     }
 
+    public static int pickNumberBetween(int min, int max){
+        return min+ (int)(Math.random()*(max-min+1));
+    }
+
     public static int vecDir(float f){
         return (int)f/(int)Math.abs(f);
     }

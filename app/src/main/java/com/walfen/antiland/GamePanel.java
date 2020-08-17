@@ -10,6 +10,7 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import com.walfen.antiland.entities.Entity;
 import com.walfen.antiland.gfx.Assets;
 import com.walfen.antiland.gfx.GameCamera;
 import com.walfen.antiland.items.Item;
@@ -76,6 +77,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback, Ke
         State.setState(menuState);
 //        gameState.init();
         Item.initItems(handler);
+        Entity.initEntities(handler);
         Tile.initTiles();
     }
 

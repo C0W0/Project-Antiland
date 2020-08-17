@@ -10,6 +10,7 @@ import com.walfen.antiland.entities.creatures.npc.NPC1;
 import com.walfen.antiland.entities.creatures.npc.trader.MushroomTrader;
 import com.walfen.antiland.entities.creatures.npc.trader.WandererCrab;
 import com.walfen.antiland.entities.properties.attack.Attacks;
+import com.walfen.antiland.entities.special.EntityGenerator;
 import com.walfen.antiland.entities.statics.AirWall;
 import com.walfen.antiland.entities.statics.Tree;
 import com.walfen.antiland.untils.Utils;
@@ -23,6 +24,11 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
     public static Slime slime = new Slime();
     public static WandererCrab traderCrab = new WandererCrab();
     public static MushroomTrader mushroomTrader = new MushroomTrader();
+    public static EntityGenerator slimeSpawner;
+
+    public static void initEntities(Handler handler){
+         slimeSpawner = new EntityGenerator(handler, slime.getId(), 256, 5, EntityGenerator.GenerationSpeed.FAST_GENERATION, 7);
+    }
 
     //Entities
     public static final int DEFAULT_HEALTH = 10;
@@ -33,7 +39,7 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
     protected int[] dmgPercentMod;
 
     protected float x,y;
-    protected int oX, oY; // o stands for offset
+    protected int oX, oY; // o stands for original
     protected Handler handler;
     protected int width, height; //the size of the entity
     protected Rect bounds; //collision detection

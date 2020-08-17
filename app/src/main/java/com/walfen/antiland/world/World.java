@@ -121,10 +121,10 @@ public class World implements GameHierarchyElement {
     /**
      *
      * @param id the id of the entity
-     * @param x the initial x position of the entity
-     * @param y the initial y position of the entity
-     * @param ox the current x position (offset x) of the entity, pass in 0 if not applicable
-     * @param oy the current y position (offset y) of the entity, pass in 0 if not applicable
+     * @param x the x position of the entity
+     * @param y the y position of the entity
+     * @param ox the original x position of the entity, pass in 0 if not applicable
+     * @param oy the original y position of the entity, pass in 0 if not applicable
      * @param status the status of the entity, pass in 0 if not applicable
      */
     private Entity getEntityWithID(int id, int x, int y, int ox, int oy, int status){
