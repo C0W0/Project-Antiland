@@ -124,7 +124,7 @@ public abstract class Creature extends Entity {
     }
 
     public void changeMp(int deltaMp){
-        mp +=  Math.min(mp + deltaMp, maxHp);
+        mp +=  Math.min(mp + deltaMp, maxMp);
     }
 
     //getters and setters
