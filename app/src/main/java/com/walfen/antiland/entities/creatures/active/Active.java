@@ -19,6 +19,9 @@ public abstract class Active extends Creature {
     protected Attacks attack;
     protected long lastAttackTime, attackCooldown, attackTimer;
 
+    private int pathErrorCounter;
+    private float lastX, lastY;
+
     public Active(int width, int height, long attackCooldown, int id, int deathXP) {
         super(width, height, id);
         xMove = 0;
@@ -26,6 +29,7 @@ public abstract class Active extends Creature {
         this.attackCooldown = attackCooldown;
         this.deathXP = deathXP;
         attackTimer = attackCooldown;
+        pathErrorCounter = 0;
     }
 
     protected abstract void attack();
@@ -35,6 +39,16 @@ public abstract class Active extends Creature {
         if(xMove == 0 && yMove == 0){
             randomizePath();
         }
+        if(x == lastX || y == lastY)
+            pathErrorCounter ++;
+
+        if(pathErrorCounter > 30){
+            randomizePath();
+            return;
+        }
+        
+        lastX = x;
+        lastY = y;
         if(x < oX-patrolRange || x > oX+patrolRange ||
                 y < oY-patrolRange || y > oY+patrolRange){
             xMove = speed*((oX - x)/
@@ -91,6 +105,7 @@ public abstract class Active extends Creature {
     }
 
     private void randomizePath(){
+        pathErrorCounter = 0;
         xMove = (float)(speed*Math.random())*Utils.pickNumber(-1, 1);
         yMove = Utils.Py.getB(xMove, speed)*Utils.pickNumber(-1, 1);
     }
