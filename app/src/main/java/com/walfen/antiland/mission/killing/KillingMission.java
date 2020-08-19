@@ -24,6 +24,11 @@ public abstract class KillingMission extends Mission {
     }
 
     @Override
+    public void update() {
+
+    }
+
+    @Override
     public boolean isCompleted() {
         for(int i = 0; i < targetEntityID.length; i++)
             progress[i] = Math.min(handler.getPlayer().getTracker().getTrackingCount(targetEntityID[i]) -
@@ -32,14 +37,9 @@ public abstract class KillingMission extends Mission {
     }
 
     @Override
-    public void complete() {
-
-    }
-
-    @Override
     public void setHandler(Handler handler) {
         super.setHandler(handler);
-        if(handler.getPlayer() == null)
+        if(handler == null || handler.getPlayer() == null)
             return;
         for(int i = 0; i < beginningCount.length; i++){
             beginningCount[i] = handler.getPlayer().getTracker().trackKillCount(targetEntityID[i]);

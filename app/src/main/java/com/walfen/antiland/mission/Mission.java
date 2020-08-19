@@ -31,8 +31,6 @@ public abstract class Mission implements Cloneable{
     /** 0 - not active
      *  1 - in progress
      *  2 - completed
-     *  any mission that cannot be completed multiple times
-     *  will receive a status of 2 after completion
      */
 
     protected int stage;
@@ -56,12 +54,7 @@ public abstract class Mission implements Cloneable{
         missions[id] = this;
     }
 
-    public void update(){
-        if(isCompleted()){
-            complete();
-        }
-    }
-
+    public abstract void update();
 
     public abstract boolean isCompleted();
 
