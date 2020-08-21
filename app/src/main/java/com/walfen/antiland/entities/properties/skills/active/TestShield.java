@@ -9,7 +9,7 @@ import com.walfen.antiland.gfx.Assets;
 
 public class TestShield extends ActiveSkill {
 
-    private long shieldActiveTime, shieldActiveDuration;
+    private long shieldActiveDuration;
     private boolean isShieldOn;
 
     public TestShield(Handler handler) {
@@ -21,15 +21,14 @@ public class TestShield extends ActiveSkill {
 
     @Override
     protected void onTrigger() {
-        handler.getPlayer().setShield(new Shield(2));
-        shieldActiveTime = System.currentTimeMillis();
+        handler.getPlayer().setShield(new Shield(2, shieldActiveDuration));
         isShieldOn = true;
     }
 
     @Override
     protected void updateData() {
         if(isShieldOn){
-            if(System.currentTimeMillis() - shieldActiveTime > shieldActiveDuration){
+            if(!handler.getPlayer().getShield().isValid()){
                 handler.getPlayer().setShield(null);
                 isShieldOn = false;
             }

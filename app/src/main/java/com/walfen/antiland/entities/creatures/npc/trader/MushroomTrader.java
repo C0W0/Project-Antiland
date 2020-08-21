@@ -27,11 +27,6 @@ public class MushroomTrader extends Trader {
     }
 
     @Override
-    public void update() {
-        super.update();
-    }
-
-    @Override
     public void draw(Canvas canvas) {
         int left = (int)(x - handler.getGameCamera().getxOffset());
         int top = (int)(y - handler.getGameCamera().getyOffset());

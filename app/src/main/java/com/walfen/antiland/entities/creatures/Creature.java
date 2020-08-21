@@ -2,8 +2,12 @@ package com.walfen.antiland.entities.creatures;
 
 
 import com.walfen.antiland.Constants;
+import com.walfen.antiland.Handler;
 import com.walfen.antiland.entities.Entity;
+import com.walfen.antiland.entities.properties.effect.StatusEffect;
 import com.walfen.antiland.tiles.Tile;
+
+import java.util.ArrayList;
 
 public abstract class Creature extends Entity {
 
@@ -17,6 +21,7 @@ public abstract class Creature extends Entity {
     //creature status
     protected float speed;
     protected int physicalDamage, magicalDamage, level, mp, maxMp;
+    protected ArrayList<StatusEffect> effects;
 
 
     protected float xMove, yMove; // movement
@@ -30,6 +35,7 @@ public abstract class Creature extends Entity {
         speed = DEFAULT_SPEED;
         xMove = 0;
         yMove = 0;
+        effects = new ArrayList<>();
     }
 
     //methods
@@ -92,6 +98,26 @@ public abstract class Creature extends Entity {
                 y = ty*Tile.TILEHEIGHT + Tile.TILEHEIGHT - bounds.top;
             }
         }
+    }
+
+    @Override
+    public void update() {
+        if(effects != null){
+            for(int i = 0; i < effects.size(); i++){
+                StatusEffect e = effects.get(i);
+                if(!e.isValid()){
+                    e.onEffectRemoved();
+                    effects.remove(i);
+                    i --;
+                }
+            }
+        }
+    }
+
+    @Override
+    public void initialize(Handler handler, float x, float y, int oX, int oY) {
+        super.initialize(handler, x, y, oX, oY);
+        effects = new ArrayList<>();
     }
 
     protected boolean collisionWithTile(int x, int y){
@@ -182,5 +208,13 @@ public abstract class Creature extends Entity {
 
     public int getLevel() {
         return level;
+    }
+
+    public void addEffect(StatusEffect effect){
+        effects.add(effect);
+    }
+
+    public ArrayList<StatusEffect> getEffects() {
+        return effects;
     }
 }

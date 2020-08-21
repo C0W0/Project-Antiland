@@ -260,6 +260,7 @@ public class Player extends Creature implements TouchEventListener {
 
     @Override
     public void update() {
+        super.update();
 
         //animation
         setCurrentAnimation();
@@ -512,5 +513,9 @@ public class Player extends Creature implements TouchEventListener {
 
     public void setShield(Shield shield) {
         this.shield = shield;
+    }
+
+    public Shield getShield() {
+        return shield;
     }
 }

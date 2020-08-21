@@ -7,8 +7,9 @@ public class Shield {
     protected int[] dmgPercentMod;
     protected int maxDurability;
     protected int durability;
+    protected long shieldActiveTime, shieldActiveDuration;
 
-    public Shield(int durability, int... dmgPercentMod){
+    public Shield(int durability, long shieldActiveDuration, int... dmgPercentMod){
         this.durability = maxDurability = durability;
         this.dmgPercentMod = new int[10];
         for(int i = 0; i < 10; i++){
@@ -17,6 +18,8 @@ public class Shield {
             else
                 this.dmgPercentMod[i] = 100;
         }
+        this.shieldActiveDuration = shieldActiveDuration;
+        shieldActiveTime = System.currentTimeMillis();
     }
 
     public int receiveDamage(int dmg, int type){
@@ -24,6 +27,10 @@ public class Shield {
         int remainingDmg = Math.max(dmg-durability, 0);
         durability = Math.max(durability-dmg, 0);
         return remainingDmg;
+    }
+
+    public boolean isValid(){
+        return System.currentTimeMillis() - shieldActiveTime < shieldActiveDuration;
     }
 
     public boolean isShieldStillUp(){

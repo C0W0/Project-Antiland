@@ -38,6 +38,7 @@ public abstract class NPC extends Creature {
 
     @Override
     public void update() {
+        super.update();
         if(interactionCheck(0)){
             if(interactionCheck(1)) {
                 if(handler.getPlayer().getInteractionEvent().equals(playerInteractEvent))
