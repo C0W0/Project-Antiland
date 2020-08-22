@@ -19,9 +19,11 @@ import com.walfen.antiland.ui.keyIO.SimpleInputField;
 import com.walfen.antiland.untils.Utils;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class MenuState extends State {
 
@@ -57,6 +59,18 @@ public class MenuState extends State {
         paint.setTextSize(30);
         paint.getTextBounds(Constants.GAME_VERSION_DISPLAY, 0, Constants.GAME_VERSION_DISPLAY.length(), r);
         canvas.drawText(Constants.GAME_VERSION_DISPLAY, Constants.SCREEN_WIDTH-r.width()-100, Constants.SCREEN_HEIGHT-10, paint);
+        paint.setColor(Color.BLACK);
+        try{
+            String date = Utils.loadFileAsString(new FileInputStream(new File(Constants.DIR+"/main/save.wld")));
+            paint.setTextSize(25);
+            paint.getTextBounds(date, 0, date.length(), r);
+            canvas.drawText(date, Constants.SCREEN_WIDTH/2.f-r.width()/2.f, Constants.SCREEN_HEIGHT/2.f-80+r.height(), paint);
+        }catch (IOException ignored){ }
+        try {
+            String date = Utils.loadFileAsString(new FileInputStream(new File(Constants.DIR+"/auto/save.wld")));
+            paint.getTextBounds(date, 0, date.length(), r);
+            canvas.drawText(date, Constants.SCREEN_WIDTH/2.f-r.width()/2.f, Constants.SCREEN_HEIGHT/2.f+120+r.height(), paint);
+        }catch (IOException ignored){ }
         uiManager.draw(canvas);
     }
 
@@ -67,8 +81,24 @@ public class MenuState extends State {
         try {
             Utils.deleteDirectoryFiles(new File(Constants.DIR+"/main"));
             Utils.deleteDirectoryFiles(new File(Constants.DIR+"/auto"));
-            new File(Constants.DIR+"/main/player").mkdirs();
             new File(Constants.DIR+"/auto/player").mkdirs();
+            new File(Constants.DIR+"/main/player").mkdirs();
+            String date = Calendar.getInstance().getTime().toString();
+            File saveFile = new File(Constants.DIR+"/main/save.wld");
+            if(saveFile.exists())
+                saveFile.delete();
+            saveFile.createNewFile();
+            PrintWriter dateWriter = new PrintWriter(saveFile);
+            dateWriter.println(date);
+            dateWriter.close();
+            saveFile = new File(Constants.DIR+"/auto/save.wld");
+            if(saveFile.exists())
+                saveFile.delete();
+            saveFile.createNewFile();
+            dateWriter = new PrintWriter(saveFile);
+            dateWriter.println(date);
+            dateWriter.close();
+            new File(Constants.DIR+"/auto/save.wld").createNewFile();
             copyFileFromAssets(Constants.DIR+"/main", tileName);
             copyFileFromAssets(Constants.DIR+"/main", entityName);
             copyFileFromAssets(Constants.DIR+"/main/player", playerName);

@@ -15,7 +15,10 @@ import com.walfen.antiland.ui.buttons.UIImageButton;
 import com.walfen.antiland.ui.decorative.UITextDecoration;
 import com.walfen.antiland.world.World;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Calendar;
 
 public class GameState extends State {
 
@@ -101,6 +104,14 @@ public class GameState extends State {
 
     private void saveGame(){
         try{
+            String date = Calendar.getInstance().getTime().toString();
+            File saveFile = new File(Constants.DIR+"/main/save.wld");
+            if(saveFile.exists())
+                saveFile.delete();
+            saveFile.createNewFile();
+            PrintWriter dateWriter = new PrintWriter(saveFile);
+            dateWriter.println(date);
+            dateWriter.close();
             world.saveMap(Constants.DIR+"/main");
             player.savePlayer(Constants.DIR+"/main");
         }catch (IOException e){
@@ -111,6 +122,14 @@ public class GameState extends State {
 
     public void autoSave(){
         try{
+            String date = Calendar.getInstance().getTime().toString();
+            File saveFile = new File(Constants.DIR+"/auto/save.wld");
+            if(saveFile.exists())
+                saveFile.delete();
+            saveFile.createNewFile();
+            PrintWriter dateWriter = new PrintWriter(saveFile);
+            dateWriter.println(date);
+            dateWriter.close();
             world.saveMap(Constants.DIR+"/auto");
             player.savePlayer(Constants.DIR+"/auto");
         }catch (IOException e){
