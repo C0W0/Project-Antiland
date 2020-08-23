@@ -30,6 +30,7 @@ public class TextButton extends UIObject {
         this.clicker = clicker;
         this.text = text;
         this.textSize = textSize;
+        colour = Constants.TEXT_COLOUR;
     }
 
     public TextButton(float centreX, float centreY, int textSize, String text, int colour, ClickListener clicker) {
@@ -70,7 +71,7 @@ public class TextButton extends UIObject {
         if(!active)
             return;
         Paint paint = new Paint();
-        paint.setColor(colour ==0?Constants.TEXT_COLOUR: colour);
+        paint.setColor(colour);
         paint.setTextSize(textSize);
         canvas.drawText(text, x, y+height, paint);
     }

@@ -1,6 +1,7 @@
 package com.walfen.antiland.ui;
 
 
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -10,8 +11,12 @@ import android.view.MotionEvent;
 
 import com.walfen.antiland.Constants;
 import com.walfen.antiland.Handler;
+import com.walfen.antiland.gfx.Assets;
+import com.walfen.antiland.gfx.ImageEditor;
+import com.walfen.antiland.ui.buttons.OptionButtonA;
 import com.walfen.antiland.ui.buttons.SkillButton;
 import com.walfen.antiland.ui.buttons.TextButton;
+import com.walfen.antiland.ui.buttons.TextImageButton;
 import com.walfen.antiland.ui.buttons.UIImageButton;
 import com.walfen.antiland.ui.conversation.ConversationBox;
 import com.walfen.antiland.ui.joystick.Joystick;
@@ -29,6 +34,7 @@ public class UIManager implements TouchEventListener{
     private boolean hide;
     private ConversationBox convBox;
     private PopUp popUp;
+    private OptionPopUp optionPopUp;
     private KeyIOManager keyIOManager;
     private SkillButton[] skillButtons;
 
@@ -37,7 +43,8 @@ public class UIManager implements TouchEventListener{
         uiObjects = new ArrayList<>();
         hide = false;
         convBox = new ConversationBox(this);
-        popUp = new PopUp(800, 400);
+        popUp = new PopUp(800, 600);
+        optionPopUp = new OptionPopUp(800, 800);
         keyIOManager = new KeyIOManager(handler);
     }
 
@@ -63,6 +70,8 @@ public class UIManager implements TouchEventListener{
             o.draw(canvas);
         if(popUp.active)
             popUp.draw(canvas);
+        if(optionPopUp.active)
+            optionPopUp.draw(canvas);
     }
 
     @Override
@@ -70,6 +79,10 @@ public class UIManager implements TouchEventListener{
 //        System.out.println(event.getX()+" "+event.getY());
         if(popUp.active){
             popUp.onTouchEvent(event);
+            return;
+        }
+        if(optionPopUp.active){
+            optionPopUp.onTouchEvent(event);
             return;
         }
         if(convBox.active)
@@ -134,11 +147,16 @@ public class UIManager implements TouchEventListener{
         popUp.activatePopup(message);
     }
 
+    public void popUpOptions(String message, String[] options, ClickListener[] effects, boolean raw){
+        optionPopUp.activatePopup(message, options, effects, raw);
+    }
+
     private static class PopUp extends UIObject{
 
         private String message;
         private ClickListener effect;
-        private TextButton proceedButton, cancelButton, okButton;
+        private TextImageButton proceedButton, cancelButton, okButton;
+        private Bitmap image;
 
         private boolean hasEffect;
 
@@ -147,9 +165,10 @@ public class UIManager implements TouchEventListener{
                     , width, height);
             active = false;
             hasEffect = true;
-            proceedButton = new TextButton(x+64, y+height-48, 33, "Yes", this::proceed);
-            cancelButton = new TextButton(x+width-64, y+height-48, 33, "No", this::removePopup);
-            okButton = new TextButton(x+width/2.f, y+height-48,33,  "Ok", this::removePopup);
+            cancelButton = new TextImageButton(x+128, y+height-96, 33, "No", Color.BLACK, Assets.popupButton2,  this::removePopup);
+            proceedButton = new TextImageButton(x+width-136, y+height-96, 33, "Yes", Color.BLACK, Assets.popupButton2, this::proceed);
+            okButton = new TextImageButton(x+width/2.f, y+height-96,33,  "Ok", Color.BLACK, Assets.popupButton2,  this::removePopup);
+            image = ImageEditor.scaleBitmapForced(Assets.popup2, width, height);
         }
 
         @Override
@@ -169,10 +188,9 @@ public class UIManager implements TouchEventListener{
 
         @Override
         public void draw(Canvas canvas) {
+            canvas.drawBitmap(image, null, new Rect(bounds), Constants.getRenderPaint());
             Paint paint = new Paint();
-            paint.setColor(Color.MAGENTA);
-            canvas.drawRect(new Rect(bounds), paint); //TODO: make this an image
-            paint.setColor(Color.WHITE);
+            paint.setColor(Color.BLACK);
             Rect r = new Rect();
             paint.setTextSize(40);
             ArrayList<String> text = Utils.splitString(message, 30);
@@ -212,6 +230,77 @@ public class UIManager implements TouchEventListener{
             this.message = message;
             effect = () -> {};
         }
+    }
+
+    private static class OptionPopUp extends UIObject{
+
+        private String message;
+        private Bitmap image;
+        private ArrayList<TextImageButton> buttons;
+        private int yLocation;
+
+        private OptionPopUp(int width, int height) {
+            super(Constants.SCREEN_WIDTH/2.f-width/2.f, Constants.SCREEN_HEIGHT/2.f-height/2.f
+                    , width, height);
+            active = false;
+            image = ImageEditor.scaleBitmapForced(Assets.popup1, width, height);
+            buttons = new ArrayList<>();
+            yLocation = 64;
+        }
+
+        @Override
+        public void onTouchEvent(MotionEvent event) {
+            if(!active)
+                return;
+            for(TextImageButton button: buttons)
+                button.onTouchEvent(event);
+        }
+
+        @Override
+        public void update() {}
+
+        @Override
+        public void draw(Canvas canvas) {
+            canvas.drawBitmap(image, null, new Rect(bounds), Constants.getRenderPaint());
+            Paint paint = new Paint();
+            paint.setColor(Color.BLACK);
+            Rect r = new Rect();
+            paint.setTextSize(40);
+            ArrayList<String> text = Utils.splitString(message, 30);
+            paint.getTextBounds(text.get(0), 0, text.get(0).length(), r);
+            int h = r.height();
+            for(int i = 0; i < text.size(); i++){
+                paint.getTextBounds(text.get(i), 0, text.get(i).length(), r);
+                canvas.drawText(text.get(i), Constants.SCREEN_WIDTH/2.f-r.width()/2.f, y+130+(h+3)*i, paint);
+            }
+            for(TextImageButton button: buttons)
+                button.draw(canvas);
+        }
+
+        private void removePopup(){
+            active = false;
+            buttons = new ArrayList<>();
+            yLocation = 64;
+        }
+
+        private void activatePopup(String message, String[] options, ClickListener[] effects, boolean raw){
+            active = true;
+            this.message = message;
+            if(raw){
+                OptionButtonA oba = new OptionButtonA(x+width/2, y+height-yLocation, 33,
+                        "Back", Color.BLACK, Assets.popupButton1, this::removePopup, 750);
+                buttons.add(oba);
+                yLocation += oba.getBounds().height()+10;
+            }
+            for(int i = 0; i < options.length; i++){
+                int finalI = i;
+                OptionButtonA oba = new OptionButtonA(x+width/2, y+height-yLocation, 33,
+                        options[i], Color.BLACK, Assets.popupButton1, () -> {effects[finalI].onClick(); removePopup();}, 750);
+                buttons.add(oba);
+                yLocation += oba.getBounds().height()+10;
+            }
+        }
+
     }
 
     //getters and setters

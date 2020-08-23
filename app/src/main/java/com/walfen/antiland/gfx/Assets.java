@@ -38,7 +38,7 @@ public class Assets {
     public static Bitmap hp_bar, mp_bar, dark_blue_bar, bar_frame;
     public static Bitmap horizontalSlideTrack, horizontalSlider, horizontalTickMark;
     public static Bitmap adjusterUp, adjusterDown;
-    public static Bitmap popup1, popup2;
+    public static Bitmap popup1, popup2, popupButton1, popupButton2;
     public static Bitmap greyDisk;
     public static Bitmap switchFlip, close;
 
@@ -213,6 +213,8 @@ public class Assets {
         tradeScreen = ImageLoader.loadImage(R.drawable.trade_screen);
         popup1 = ImageLoader.loadImage(R.drawable.popup_1);
         popup2 = ImageLoader.loadImage(R.drawable.popup_2);
+        popupButton1 = sheet1.crop(width*4, height*2, width*2, height);
+        popupButton2 = sheet1.crop(width*6, height*2, width*2, height);
         greyDisk = sheet1.crop(width*3, height*2, width, height);
         switchFlip = sheet1.crop(width*3, height, width, height);
         close = sheet1.crop(width*6, height, width, height);
