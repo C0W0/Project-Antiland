@@ -23,8 +23,8 @@ public class SkillButton extends UIImageButton{
 
     public void setSkill(ActiveSkill skill){
         this.skill = skill;
-        images = new Bitmap[]{ImageEditor.scaleBitmapForced(skill.getTexture(), 128),
-                ImageEditor.scaleBitmapForced(skill.getTexture(), 128)};
+        images = new Bitmap[]{skill.getTexture(128),
+                skill.getTexture(128)};
         clicker = skill::triggerTest;
     }
 

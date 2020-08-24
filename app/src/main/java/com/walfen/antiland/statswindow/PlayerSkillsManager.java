@@ -357,7 +357,7 @@ public class PlayerSkillsManager implements TouchEventListener {
                     event.getActionMasked() == MotionEvent.ACTION_POINTER_DOWN)
                 if (new Rect(bounds).contains((int) event.getX(pointerIndex), (int) event.getY(pointerIndex))){
                     selectedSkill = skill;
-                    selectedSkillTexture = ImageEditor.scaleBitmapForced(skill.getTexture(), width);
+                    selectedSkillTexture = skill.getTexture(width);
                 }
             if(!skill.isActive())
                 return;
@@ -376,13 +376,13 @@ public class PlayerSkillsManager implements TouchEventListener {
 
         public SkillSlotIcon(Rect r) {
             super(r.left, r.top, r.width(), r.height(), Assets.NULL, () -> {});
-            clicker = () -> {selectedSkill = this.skill; selectedSkillTexture = ImageEditor.scaleBitmapForced(skill.getTexture(), selectedIconSize);};
+            clicker = () -> {selectedSkill = this.skill; selectedSkillTexture = skill.getTexture(selectedIconSize);};
         }
 
         public void setSkill(Skill skill) {
             this.skill = skill;
-            images[0] = ImageEditor.scaleBitmapForced(skill.getTexture(), 128);
-            images[1] = ImageEditor.scaleBitmapForced(skill.getTexture(), 128);
+            images[0] = skill.getTexture(128);
+            images[1] = skill.getTexture(128);
         }
 
         public void removeSkill(){
@@ -403,14 +403,14 @@ public class PlayerSkillsManager implements TouchEventListener {
 
         public SkillStaticIcon(float x, float y, int width, int height, Bitmap image, Skill skill) {
             super(x, y, width, height, image, () -> {selectedSkill = skill;
-                    selectedSkillTexture = ImageEditor.scaleBitmapForced(skill.getTexture(), width);});
+                    selectedSkillTexture = skill.getTexture(width);});
             this.skill = skill;
             skillImages = null;
         }
 
         public SkillStaticIcon(float x, float y, int width, int height, Bitmap[] images, Skill skill) {
             super(x, y, width, height, images[0], () -> {selectedSkill = skill;
-                selectedSkillTexture = ImageEditor.scaleBitmapForced(skill.getTexture(), width);});
+                selectedSkillTexture = skill.getTexture(width);});
             this.skill = skill;
             skillImages = images;
         }

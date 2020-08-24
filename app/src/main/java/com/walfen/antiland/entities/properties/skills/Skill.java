@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 
 import com.walfen.antiland.Handler;
 import com.walfen.antiland.entities.creatures.Creature;
+import com.walfen.antiland.gfx.ImageEditor;
 
 public abstract class Skill {
 
@@ -56,7 +57,11 @@ public abstract class Skill {
         level += deltaLevel;
     }
 
-    public Bitmap getTexture() {
-        return texture;
+    public Bitmap getTexture(int size) {
+        return ImageEditor.scaleBitmapForced(texture, size);
+    }
+
+    public Bitmap getTexture(int xSize, int ySize) {
+        return ImageEditor.scaleBitmapForced(texture, xSize, ySize);
     }
 }
