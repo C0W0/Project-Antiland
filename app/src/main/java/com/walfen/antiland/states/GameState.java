@@ -9,9 +9,10 @@ import com.walfen.antiland.Constants;
 import com.walfen.antiland.Handler;
 import com.walfen.antiland.entities.creatures.Player;
 import com.walfen.antiland.gfx.Assets;
-import com.walfen.antiland.ui.BarA;
+import com.walfen.antiland.ui.bars.BarA;
 import com.walfen.antiland.ui.UIManager;
 import com.walfen.antiland.ui.buttons.UIImageButton;
+import com.walfen.antiland.ui.decorative.EnemyInfoPanel;
 import com.walfen.antiland.ui.decorative.UITextDecoration;
 import com.walfen.antiland.world.World;
 
@@ -78,11 +79,11 @@ public class GameState extends State {
         uiManager.createSkillButtons();
         uiManager.addUIObject(new UIImageButton(16, 16, 144, 144,
                 new Bitmap[]{Assets.player_neutral, Assets.player_neutral}, () -> handler.getPlayer().getStatsWindow().setActive()));
-        uiManager.addUIObject(new BarA(handler,192,32,600, Assets.hp_bar,
+        uiManager.addUIObject(new BarA(192,32,600, Assets.hp_bar,
                 () -> handler.getPlayer().getMaxHp(), () -> handler.getPlayer().getHealth()));
-        uiManager.addUIObject(new BarA(handler, 192, 102, 512, Assets.mp_bar,
+        uiManager.addUIObject(new BarA(192, 102, 512, Assets.mp_bar,
                 () -> handler.getPlayer().getMaxMp(), () -> handler.getPlayer().getMp()));
-        uiManager.addUIObject(new BarA(handler, Constants.SCREEN_WIDTH/2.f-512, Constants.SCREEN_HEIGHT-35,
+        uiManager.addUIObject(new BarA(Constants.SCREEN_WIDTH/2.f-512, Constants.SCREEN_HEIGHT-35,
                 1024, 32, Assets.dark_blue_bar, () -> handler.getPlayer().getCurrLevelMaxXp(),
                 () -> handler.getPlayer().getCurrLevelXp()));
         uiManager.addUIObject(new UITextDecoration(Constants.SCREEN_WIDTH/2.f-512-64, Constants.SCREEN_HEIGHT-25,
@@ -93,13 +94,7 @@ public class GameState extends State {
                 new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, () -> handler.getPlayer().getMissionManager().setActive()));
         uiManager.addUIObject(new UIImageButton(32, Constants.SCREEN_HEIGHT-456, 128, 128,
                 new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, () -> handler.getPlayer().getInventory().setActive()));
-
-//        uiManager.hideUI();
-//        ArrayList<Conversation> c = new ArrayList<>();
-//        c.add(new Conversation("test build 1 wetega reeeeeeee eeeeeeee eee eeeeee eee eeeeee rerrr rrrrrrrr rrr rrrrrrr r rrrrrr rrrrrrrrrr rrr a", Assets.player_neutral, false));
-//        c.add(new Conversation("test build 2 ftr saf grwww wwwww wwww wwwwww wwww wwwwww wewet agrwg wr ggggg ggg gggggg gggg gg gggggggg ggggg ggg", Assets.npcCrab[0], true));
-//        uiManager.getConvBox().setConversationList(c, () -> System.out.println("complete"));
-//        uiManager.getConvBox().setActive();
+        uiManager.addUIObject(new EnemyInfoPanel(player.getTracker()));
     }
 
     private void saveGame(){

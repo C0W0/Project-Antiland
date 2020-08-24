@@ -1,12 +1,14 @@
 package com.walfen.antiland.entities.creatures.npc.secondary;
 
 
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 
 import com.walfen.antiland.entities.creatures.Creature;
 import com.walfen.antiland.gfx.Animation;
 import com.walfen.antiland.gfx.Assets;
+import com.walfen.antiland.gfx.ImageEditor;
 import com.walfen.antiland.ui.conversation.Conversation;
 
 import java.util.ArrayList;
@@ -66,5 +68,15 @@ public class NPC1 extends RepeatedMissionNPC {
     @Override
     public void onDeath() {
 
+    }
+
+    @Override
+    public Bitmap getTexture(int xSize, int ySize) {
+        return ImageEditor.scaleBitmap(Assets.npcCrab[0], xSize, ySize);
+    }
+
+    @Override
+    public String getName() {
+        return "Crab";
     }
 }

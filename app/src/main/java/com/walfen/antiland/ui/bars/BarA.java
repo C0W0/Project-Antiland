@@ -1,4 +1,4 @@
-package com.walfen.antiland.ui;
+package com.walfen.antiland.ui.bars;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -8,9 +8,9 @@ import android.graphics.Rect;
 import android.view.MotionEvent;
 
 import com.walfen.antiland.Constants;
-import com.walfen.antiland.Handler;
 import com.walfen.antiland.gfx.Assets;
 import com.walfen.antiland.gfx.ImageEditor;
+import com.walfen.antiland.ui.UIObject;
 
 import java.util.function.IntSupplier;
 
@@ -18,14 +18,13 @@ import java.util.function.IntSupplier;
 public class BarA extends UIObject {
 
     protected float totalValue, currentValue;
-    protected Handler handler;
+//    protected Handler handler;
     protected final Bitmap barImage, barFrame;
     protected float scaleRatio;
     protected IntSupplier maxValue, currValue;
 
-    public BarA(Handler handler, float x, float y, int width, Bitmap barImage, IntSupplier maxValue, IntSupplier currValue) {
+    public BarA(float x, float y, int width, Bitmap barImage, IntSupplier maxValue, IntSupplier currValue) {
         super(x, y, width, width/10);
-        this.handler = handler;
         totalValue = currentValue = 0;
         scaleRatio = (float)height/64.f;
         barFrame = ImageEditor.scaleBitmap(Assets.bar_frame, width, height);
@@ -34,9 +33,8 @@ public class BarA extends UIObject {
         this.currValue = currValue;
     }
 
-    public BarA(Handler handler, float x, float y, int width, int height, Bitmap barImage, IntSupplier maxValue, IntSupplier currValue) {
+    public BarA(float x, float y, int width, int height, Bitmap barImage, IntSupplier maxValue, IntSupplier currValue) {
         super(x, y, width, height);
-        this.handler = handler;
         totalValue = currentValue = 0;
         scaleRatio = (float)height/64.f;
         barFrame = ImageEditor.scaleBitmapForced(Assets.bar_frame, width, height);
@@ -72,5 +70,21 @@ public class BarA extends UIObject {
         paint.getTextBounds(text, 0, text.length(), r);
         canvas.drawText(text, x+barFrame.getWidth()/2.f-r.width()/2.f,
                 y+barFrame.getHeight()/2.f+r.height()/2.f, paint);
+    }
+
+    public void setCurrValue(IntSupplier currValue) {
+        this.currValue = currValue;
+    }
+
+    public void setMaxValue(IntSupplier maxValue) {
+        this.maxValue = maxValue;
+    }
+
+    public void setCurrentValue(float currentValue) {
+        this.currentValue = currentValue;
+    }
+
+    public void setTotalValue(float totalValue) {
+        this.totalValue = totalValue;
     }
 }

@@ -1,11 +1,13 @@
 package com.walfen.antiland.entities.creatures.npc.trader;
 
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 
 import com.walfen.antiland.entities.creatures.Creature;
 import com.walfen.antiland.gfx.Animation;
 import com.walfen.antiland.gfx.Assets;
+import com.walfen.antiland.gfx.ImageEditor;
 import com.walfen.antiland.items.Item;
 
 import java.util.ArrayList;
@@ -43,4 +45,14 @@ public class WandererCrab extends Trader {
 
     @Override
     public void receiveDamage(int num, int type) {}
+
+    @Override
+    public Bitmap getTexture(int xSize, int ySize) {
+        return ImageEditor.scaleBitmap(Assets.npcCrab[0], xSize, ySize);
+    }
+
+    @Override
+    public String getName() {
+        return "Crab Trader";
+    }
 }

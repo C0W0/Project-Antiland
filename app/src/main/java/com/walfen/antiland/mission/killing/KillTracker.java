@@ -8,7 +8,7 @@ import com.walfen.antiland.entities.Entity;
 
 import java.util.ArrayList;
 
-public class KillTracker implements GameHierarchyElement {
+public class KillTracker {
 
     private ArrayList<Entity> trackingEntities;
     private ArrayList<Long> trackingTime;
@@ -26,7 +26,6 @@ public class KillTracker implements GameHierarchyElement {
         trackingTargetCount = new ArrayList<>();
     }
 
-    @Override
     public void update() {
         if(trackingEntities.size() > 0)
             topEntity = trackingEntities.get(trackingEntities.size()-1);
@@ -53,12 +52,6 @@ public class KillTracker implements GameHierarchyElement {
                 i--;
             }
         }
-    }
-
-    @Override
-    public void draw(Canvas canvas) {
-        if(topEntity == null)
-            return;
     }
 
     public void addTracking(Entity e){
@@ -89,5 +82,9 @@ public class KillTracker implements GameHierarchyElement {
     public void resetKillTracking(){
         trackingTargetId = new ArrayList<>();
         trackingTargetCount = new ArrayList<>();
+    }
+
+    public Entity getTopEntity() {
+        return topEntity;
     }
 }

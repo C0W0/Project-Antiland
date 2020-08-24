@@ -10,7 +10,7 @@ import com.walfen.antiland.Constants;
 import com.walfen.antiland.Handler;
 import com.walfen.antiland.gfx.Assets;
 import com.walfen.antiland.gfx.ImageEditor;
-import com.walfen.antiland.ui.BarB;
+import com.walfen.antiland.ui.bars.BarB;
 import com.walfen.antiland.ui.TouchEventListener;
 import com.walfen.antiland.ui.buttons.UIImageButton;
 
@@ -68,11 +68,11 @@ public class PlayerStatsWindow implements TouchEventListener {
         mpBarY = (int)(196*yRatio+yDispute);
         mpBarWidth = (int)(73*xRatio);
         barHeight = (int)(16*yRatio);
-        xpBar = new BarB(handler, xpBarX, xpBarY, xpBarWidth, barHeight, Assets.dark_blue_bar,
+        xpBar = new BarB(xpBarX, xpBarY, xpBarWidth, barHeight, Assets.dark_blue_bar,
                 () -> handler.getPlayer().getCurrLevelMaxXp(), () -> handler.getPlayer().getCurrLevelXp());
-        hpBar = new BarB(handler, hpBarX, hpBarY, hpBarWidth, barHeight, Assets.hp_bar,
+        hpBar = new BarB(hpBarX, hpBarY, hpBarWidth, barHeight, Assets.hp_bar,
                 () -> handler.getPlayer().getMaxHp(), () -> handler.getPlayer().getHealth());
-        mpBar = new BarB(handler, mpBarX, mpBarY, mpBarWidth, barHeight, Assets.mp_bar,
+        mpBar = new BarB(mpBarX, mpBarY, mpBarWidth, barHeight, Assets.mp_bar,
                 () -> handler.getPlayer().getMaxMp(), () -> handler.getPlayer().getMp());
         closeButton = new UIImageButton(xDispute + statsWidth - Constants.UI_CLOSE_SIZE, yDispute,
                 Constants.UI_CLOSE_SIZE, Constants.UI_CLOSE_SIZE,

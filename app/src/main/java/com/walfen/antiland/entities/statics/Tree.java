@@ -1,12 +1,14 @@
 package com.walfen.antiland.entities.statics;
 
 
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 
 import com.walfen.antiland.Constants;
 import com.walfen.antiland.entities.properties.attack.Attacks;
 import com.walfen.antiland.gfx.Assets;
+import com.walfen.antiland.gfx.ImageEditor;
 import com.walfen.antiland.items.Item;
 import com.walfen.antiland.tiles.Tile;
 
@@ -19,7 +21,7 @@ public class Tree extends StaticEntity {
         bounds.top = 100;
         bounds.right = bounds.left + width - 100;
         bounds.bottom = bounds.top + height - 100;
-        health = 2;
+        setEntityHealth(2);
         setDefence(1);
         dmgPercentMod[Attacks.Type.MAGICAL_FIRE] = 400;
         id = 2;
@@ -48,5 +50,15 @@ public class Tree extends StaticEntity {
     protected void onDeath() {
         handler.getWorld().getItemManager().addItem(Item.woodItem.createNew((int)(x + width/2 - Item.ITEMWIDTH/2), (int)(y + height - Item.ITEMHEIGHT), (int)(Math.random()*5)+1));
         handler.getPlayer().increaseXp(1);
+    }
+
+    @Override
+    public Bitmap getTexture(int xSize, int ySize) {
+        return ImageEditor.scaleBitmap(Assets.tree, xSize, ySize);
+    }
+
+    @Override
+    public String getName() {
+        return "Tree";
     }
 }

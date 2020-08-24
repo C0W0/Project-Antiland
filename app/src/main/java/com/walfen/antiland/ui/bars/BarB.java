@@ -1,4 +1,4 @@
-package com.walfen.antiland.ui;
+package com.walfen.antiland.ui.bars;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -13,12 +13,12 @@ import java.util.function.IntSupplier;
 
 public class BarB extends BarA {
 
-    public BarB(Handler handler, float x, float y, int width, Bitmap barImage, IntSupplier maxValue, IntSupplier currValue) {
-        super(handler, x, y, width, barImage, maxValue, currValue);
+    public BarB(float x, float y, int width, Bitmap barImage, IntSupplier maxValue, IntSupplier currValue) {
+        super(x, y, width, barImage, maxValue, currValue);
     }
 
-    public BarB(Handler handler, float x, float y, int width, int height, Bitmap barImage, IntSupplier maxValue, IntSupplier currValue){
-        super(handler, x, y, width, height, barImage, maxValue, currValue);
+    public BarB(float x, float y, int width, int height, Bitmap barImage, IntSupplier maxValue, IntSupplier currValue){
+        super(x, y, width, height, barImage, maxValue, currValue);
     }
 
     @Override

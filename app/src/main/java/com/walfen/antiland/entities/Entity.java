@@ -1,6 +1,7 @@
 package com.walfen.antiland.entities;
 
 
+import android.graphics.Bitmap;
 import android.graphics.Rect;
 
 import com.walfen.antiland.GameHierarchyElement;
@@ -134,6 +135,15 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
         this.y = y;
         this.oX = oX;
         this.oY = oY;
+    }
+
+    public abstract Bitmap getTexture(int xSize, int ySize);
+
+    public abstract String getName();
+
+    protected void setEntityHealth(int health){
+        maxHp = health;
+        this.health = health;
     }
 
     //Getters and Setters

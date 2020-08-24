@@ -1,6 +1,7 @@
 package com.walfen.antiland.entities.statics;
 
 
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
 import com.walfen.antiland.Handler;
@@ -33,4 +34,14 @@ public class AirWall extends StaticEntity{
 
     @Override
     public void receiveDamage(int num, int type) {}
+
+    @Override
+    public Bitmap getTexture(int xSize, int ySize) {
+        return null;
+    }
+
+    @Override
+    public String getName() {
+        return null;
+    }
 }

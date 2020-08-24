@@ -1,6 +1,7 @@
 package com.walfen.antiland.entities.creatures.active;
 
 
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 
@@ -9,6 +10,7 @@ import com.walfen.antiland.entities.creatures.Creature;
 import com.walfen.antiland.entities.properties.attack.meleeAttacks.SlimeBash;
 import com.walfen.antiland.gfx.Animation;
 import com.walfen.antiland.gfx.Assets;
+import com.walfen.antiland.gfx.ImageEditor;
 import com.walfen.antiland.items.Item;
 import com.walfen.antiland.tiles.Tile;
 import com.walfen.antiland.untils.MSTimeController;
@@ -34,7 +36,7 @@ public class Slime extends Active {
         rightMove = new Animation(0.3f, Assets.slimeMovementRight);
         idle = new Animation(0.3f, Assets.npcSlime);
         currentAnimation = idle;
-        health = 1;
+        setEntityHealth(1);
         currentAnimation = leftMove;
         physicalDamage = 1; //no effect, as slime bash is hard coded to do only 1 damage
         setDefence(0);
@@ -74,5 +76,15 @@ public class Slime extends Active {
     public void initialize(Handler handler, float x, float y, int oX, int oY) {
         super.initialize(handler, x, y, oX, oY);
         attack = new SlimeBash(handler, this);
+    }
+
+    @Override
+    public Bitmap getTexture(int xSize, int ySize) {
+        return ImageEditor.scaleBitmap(Assets.npcSlime[0], xSize, ySize);
+    }
+
+    @Override
+    public String getName() {
+        return "Slime";
     }
 }

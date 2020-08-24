@@ -1,5 +1,6 @@
 package com.walfen.antiland.entities.special;
 
+import android.graphics.Bitmap;
 import android.graphics.Rect;
 
 import com.walfen.antiland.Handler;
@@ -28,6 +29,16 @@ public abstract class CommandEntity extends Entity {
     public void update() {
         if(isActionAllowed())
             commandAction();
+    }
+
+    @Override
+    public Bitmap getTexture(int xSize, int ySize) {
+        return null;
+    }
+
+    @Override
+    public String getName() {
+        return null;
     }
 
     protected abstract void commandAction();

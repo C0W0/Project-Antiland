@@ -18,6 +18,7 @@ import com.walfen.antiland.entities.properties.skills.active.SwordStorm;
 import com.walfen.antiland.entities.properties.skills.passive.SimplePlayerSkill;
 import com.walfen.antiland.gfx.Animation;
 import com.walfen.antiland.gfx.Assets;
+import com.walfen.antiland.gfx.ImageEditor;
 import com.walfen.antiland.inventory.Fabricator;
 import com.walfen.antiland.inventory.Inventory;
 import com.walfen.antiland.inventory.Trade;
@@ -404,15 +405,25 @@ public class Player extends Creature implements TouchEventListener {
         inventory.getEquipments()[location] = null;
     }
 
+    @Override
+    public Bitmap getTexture(int xSize, int ySize) {
+        return ImageEditor.scaleBitmap(Assets.player_neutral, xSize, ySize);
+    }
+
+    @Override
+    public String getName() {
+        return "Player";
+    }
+
     public void onInteract(){
         event.onChange();
     }
 
+    //getters and setters
+
     public KillTracker getTracker() {
         return tracker;
     }
-
-    //getters and setters
 
     public Inventory getInventory() {
         return inventory;

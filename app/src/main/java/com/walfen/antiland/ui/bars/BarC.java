@@ -1,15 +1,12 @@
-package com.walfen.antiland.ui;
+package com.walfen.antiland.ui.bars;
 
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
-import com.walfen.antiland.Constants;
 import com.walfen.antiland.Handler;
 import com.walfen.antiland.gfx.Assets;
-import com.walfen.antiland.ui.BarA;
 
 import java.util.function.IntSupplier;
 
@@ -17,13 +14,13 @@ public class BarC extends BarA {
 
     private int colour;
 
-    public BarC(Handler handler, float x, float y, int width, int colour, IntSupplier maxValue, IntSupplier currValue) {
-        super(handler, x, y, width, Assets.NULL, maxValue, currValue);
+    public BarC(float x, float y, int width, int colour, IntSupplier maxValue, IntSupplier currValue) {
+        super(x, y, width, Assets.NULL, maxValue, currValue);
         this.colour = colour;
     }
 
-    public BarC(Handler handler, float x, float y, int width, int height, int colour, IntSupplier maxValue, IntSupplier currValue){
-        super(handler, x, y, width, height, Assets.NULL, maxValue, currValue);
+    public BarC(float x, float y, int width, int height, int colour, IntSupplier maxValue, IntSupplier currValue){
+        super(x, y, width, height, Assets.NULL, maxValue, currValue);
         this.colour = colour;
     }
 
