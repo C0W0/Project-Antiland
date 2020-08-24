@@ -41,6 +41,7 @@ public class Assets {
     public static Bitmap popup1, popup2, popupButton1, popupButton2;
     public static Bitmap greyDisk;
     public static Bitmap switchFlip, close;
+    public static Bitmap save;
 
     //entities
     public static Bitmap tree;
@@ -218,6 +219,7 @@ public class Assets {
         greyDisk = sheet1.crop(width*3, height*2, width, height);
         switchFlip = sheet1.crop(width*3, height, width, height);
         close = sheet1.crop(width*6, height, width, height);
+        save = sheet1.crop(0, height*3, width, height);
 
         joystick_pad = sheet1.crop(0, 0, width*3, height*3);
         joystick_controller = sheet1.crop(width*3, 0, width, height);

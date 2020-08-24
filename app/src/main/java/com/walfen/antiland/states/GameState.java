@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
+import android.widget.Toast;
 
 import com.walfen.antiland.Constants;
 import com.walfen.antiland.Handler;
@@ -89,7 +90,7 @@ public class GameState extends State {
         uiManager.addUIObject(new UITextDecoration(Constants.SCREEN_WIDTH/2.f-512-64, Constants.SCREEN_HEIGHT-25,
                 () -> Integer.toString(handler.getPlayer().getLevel()), 40, Constants.TEXT_COLOUR));
         uiManager.addUIObject(new UIImageButton(64, 224, 128, 128,
-                new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, this::saveGame));
+                Assets.save, this::saveGame));
         uiManager.addUIObject(new UIImageButton(32, Constants.SCREEN_HEIGHT-232, 128, 128,
                 new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, () -> handler.getPlayer().getMissionManager().setActive()));
         uiManager.addUIObject(new UIImageButton(32, Constants.SCREEN_HEIGHT-456, 128, 128,
@@ -109,6 +110,7 @@ public class GameState extends State {
             dateWriter.close();
             world.saveMap(Constants.DIR+"/main");
             player.savePlayer(Constants.DIR+"/main");
+            Toast.makeText(handler.getGame().getContext(), "Save Successful", Toast.LENGTH_SHORT).show();
         }catch (IOException e){
             e.printStackTrace();
             uiManager.popUpMessage("Game file corrupted, please re-install the game");

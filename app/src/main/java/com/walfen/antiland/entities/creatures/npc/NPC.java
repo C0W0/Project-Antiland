@@ -43,15 +43,24 @@ public abstract class NPC extends Creature {
             if(interactionCheck(1)) {
                 if(handler.getPlayer().getInteractionEvent().equals(playerInteractEvent))
                     return;
-                handler.getPlayer().setInteractionEvent(playerInteractEvent);
+                handler.getPlayer().setInteractionEvent(playerInteractEvent, InteractionType.TALK_TO_NPC);
                 if(!handler.getPlayer().getInteractButton().isActive())
                     handler.getPlayer().setInterButtonVisibility(true);
                 return;
             }
             if(handler.getPlayer().getInteractionEvent().equals(playerInteractEvent)){
-                handler.getPlayer().setInteractionEvent(Constants.EMPTY_EVENT);
+                handler.getPlayer().setInteractionEvent(Constants.EMPTY_EVENT, -1);
                 handler.getPlayer().setInterButtonVisibility(false);
             }
         }
+    }
+    
+    public static class InteractionType{
+        
+        public static final int TALK_TO_NPC = 1;
+        public static final int TRADE = 2;
+        public static final int TRIGGER_ENTITY = 3;
+        public static final int USE_TELEPORTATION = 4;
+        
     }
 }

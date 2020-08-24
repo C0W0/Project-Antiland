@@ -11,11 +11,6 @@ import com.walfen.antiland.Handler;
 import com.walfen.antiland.entities.properties.attack.rangedAttacks.PlayerDefaultAttack;
 import com.walfen.antiland.entities.properties.attack.rangedAttacks.RangedAttacks;
 import com.walfen.antiland.entities.properties.effect.Shield;
-import com.walfen.antiland.entities.properties.skills.Skill;
-import com.walfen.antiland.entities.properties.skills.active.ActiveSkill;
-import com.walfen.antiland.entities.properties.skills.active.SharpWind;
-import com.walfen.antiland.entities.properties.skills.active.SwordStorm;
-import com.walfen.antiland.entities.properties.skills.passive.SimplePlayerSkill;
 import com.walfen.antiland.gfx.Animation;
 import com.walfen.antiland.gfx.Assets;
 import com.walfen.antiland.gfx.ImageEditor;
@@ -30,9 +25,9 @@ import com.walfen.antiland.mission.killing.KillTracker;
 import com.walfen.antiland.statswindow.PlayerSkillsManager;
 import com.walfen.antiland.statswindow.PlayerStatsWindow;
 import com.walfen.antiland.ui.ChangeEvent;
-import com.walfen.antiland.ui.ClickListener;
 import com.walfen.antiland.ui.TouchEventListener;
 import com.walfen.antiland.ui.buttons.UIImageButton;
+import com.walfen.antiland.entities.creatures.npc.NPC.InteractionType;
 import com.walfen.antiland.untils.Utils;
 
 import java.io.File;
@@ -174,7 +169,7 @@ public class Player extends Creature implements TouchEventListener {
         }catch (IOException e){
             e.printStackTrace();
         }
-        interactButton = new UIImageButton(Constants.SCREEN_WIDTH-160, 576, 128, 128,
+        interactButton = new UIImageButton(Constants.SCREEN_WIDTH-160, Constants.SCREEN_HEIGHT-504, 128, 128,
                 new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, this::onInteract);
         event = Constants.EMPTY_EVENT;
         interactButton.setActive(false);
@@ -458,8 +453,19 @@ public class Player extends Creature implements TouchEventListener {
         }
     }
 
-    public void setInteractionEvent(ChangeEvent event) {
+    public void setInteractionEvent(ChangeEvent event, int type) {
         this.event = event;
+        switch (type){
+            case InteractionType.TALK_TO_NPC:
+                break;
+            case InteractionType.TRADE:
+                break;
+            case InteractionType.TRIGGER_ENTITY:
+                break;
+            case InteractionType.USE_TELEPORTATION:
+                break;
+            default:
+        }
     }
 
     public ChangeEvent getInteractionEvent() {

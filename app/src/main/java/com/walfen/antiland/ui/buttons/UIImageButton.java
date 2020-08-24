@@ -71,4 +71,14 @@ public class UIImageButton extends UIObject {
     public void onClick() {
         clicker.onClick();
     }
+
+    public void setTexture(Bitmap[] images) {
+        this.images[0] = ImageEditor.scaleBitmapForced(images[0], width, height);
+        this.images[1] = ImageEditor.scaleBitmapForced(images[1], width, height);
+    }
+
+    public void setTexture(Bitmap image) {
+        this.images[0] = ImageEditor.scaleBitmapForced(image, width, height);
+        this.images[1] = ImageEditor.scaleBitmapForced(image, width, height);
+    }
 }
