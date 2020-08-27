@@ -19,13 +19,15 @@ public class TextButton extends UIObject {
     public TextButton(float centreX, float centreY, int textSize, String text, ClickListener clicker) {
         super(0, 0, 128, 128); // data are placeholder
         Paint paint = new Paint();
-        Rect r = new Rect();
+        Rect xr = new Rect();
         paint.setTextSize(textSize);
-        paint.getTextBounds(text, 0, text.length(), r);
-        x = centreX-r.width()/2.f;
-        y = centreY-r.height()/2.f;
-        width = r.width();
-        height = r.height();
+        paint.getTextBounds(text, 0, text.length(), xr);
+        x = centreX-xr.width()/2.f;
+        width = xr.width();
+        Rect yr = new Rect();
+        paint.getTextBounds("l"+text+"l", 0, text.length()+2, yr);
+        y = centreY-yr.height()/2.f;
+        height = yr.height();
         bounds = new Rect((int)x-16, (int)y-16, (int) (x+width+16), (int) (y+height+16));
         this.clicker = clicker;
         this.text = text;
@@ -36,13 +38,15 @@ public class TextButton extends UIObject {
     public TextButton(float centreX, float centreY, int textSize, String text, int colour, ClickListener clicker) {
         super(0, 0, 128, 128); // data are placeholder
         Paint paint = new Paint();
-        Rect r = new Rect();
+        Rect xr = new Rect();
         paint.setTextSize(textSize);
-        paint.getTextBounds(text, 0, text.length(), r);
-        x = centreX-r.width()/2.f;
-        y = centreY-r.height()/2.f;
-        width = r.width();
-        height = r.height();
+        paint.getTextBounds(text, 0, text.length(), xr);
+        x = centreX-xr.width()/2.f;
+        width = xr.width();
+        Rect yr = new Rect();
+        paint.getTextBounds("l"+text+"l", 0, text.length()+2, yr);
+        y = centreY-yr.height()/2.f;
+        height = yr.height();
         bounds = new Rect((int)x-16, (int)y-16, (int) (x+width+16), (int) (y+height+16));
         this.clicker = clicker;
         this.text = text;

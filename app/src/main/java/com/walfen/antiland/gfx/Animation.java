@@ -73,6 +73,15 @@ public class Animation implements GraphicalTerminalElement{
         frames = temp;
     }
 
+    public void scaleForced(int xSize, int ySize){
+        Bitmap[] temp = new Bitmap[frames.length];
+        for(int i = 0; i < frames.length; i++) {
+            Bitmap b = frames[i];
+            temp[i] = ImageEditor.scaleBitmapForced(b, xSize, ySize);
+        }
+        frames = temp;
+    }
+
     public int getFrameIndex() {
         return frameIndex;
     }

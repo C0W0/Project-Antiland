@@ -35,6 +35,7 @@ public class UIManager implements TouchEventListener{
     private ConversationBox convBox;
     private PopUp popUp;
     private OptionPopUp optionPopUp;
+    private Tutorial tutorial;
     private KeyIOManager keyIOManager;
     private SkillButton[] skillButtons;
 
@@ -46,6 +47,7 @@ public class UIManager implements TouchEventListener{
         popUp = new PopUp(800, 600);
         optionPopUp = new OptionPopUp(800, 800);
         keyIOManager = new KeyIOManager(handler);
+        tutorial = new Tutorial();
     }
 
     @Override
@@ -54,6 +56,8 @@ public class UIManager implements TouchEventListener{
             convBox.update();
         if(hide)
             return;
+        if(tutorial.isActive())
+            tutorial.update();
         keyIOManager.update();
         for(UIObject o: uiObjects)
             o.update();
@@ -72,6 +76,8 @@ public class UIManager implements TouchEventListener{
             popUp.draw(canvas);
         if(optionPopUp.active)
             optionPopUp.draw(canvas);
+        if(tutorial.isActive())
+            tutorial.draw(canvas);
     }
 
     @Override
@@ -87,6 +93,9 @@ public class UIManager implements TouchEventListener{
         }
         if(convBox.active)
             convBox.onTouchEvent(event);
+        if(tutorial.isActive())
+            if(!tutorial.onTouchEvent(event))
+                return;
         if(hide)
             return;
         keyIOManager.onTouchEvent(event);
@@ -151,12 +160,21 @@ public class UIManager implements TouchEventListener{
         optionPopUp.activatePopup(message, options, effects, raw);
     }
 
+    public void popUpAction(String message, String buttonText, ClickListener action){
+        optionPopUp.activatePopup(message, new String[]{buttonText}, new ClickListener[]{action}, false);
+    }
+
+    public void activeTutorial(String message, Rect target){
+        popUpAction(message, "OK", () -> {tutorial.setTarget(target); tutorial.setActive(true);});
+    }
+
     private static class PopUp extends UIObject{
 
         private String message;
         private ClickListener effect;
         private TextImageButton proceedButton, cancelButton, okButton;
         private Bitmap image;
+        private boolean buttonJustPressed = false;
 
         private boolean hasEffect;
 
@@ -175,6 +193,10 @@ public class UIManager implements TouchEventListener{
         public void onTouchEvent(MotionEvent event) {
             if(!active)
                 return;
+            if(buttonJustPressed){
+                buttonJustPressed = false;
+                return;
+            }
             if(hasEffect) {
                 proceedButton.onTouchEvent(event);
                 cancelButton.onTouchEvent(event);
@@ -215,6 +237,7 @@ public class UIManager implements TouchEventListener{
 
         private void removePopup(){
             active = false;
+            buttonJustPressed = true;
         }
 
         private void activatePopup(String message, ClickListener effect){
@@ -238,6 +261,7 @@ public class UIManager implements TouchEventListener{
         private Bitmap image;
         private ArrayList<TextImageButton> buttons;
         private int yLocation;
+        private boolean buttonJustPressed = false;
 
         private OptionPopUp(int width, int height) {
             super(Constants.SCREEN_WIDTH/2.f-width/2.f, Constants.SCREEN_HEIGHT/2.f-height/2.f
@@ -252,6 +276,10 @@ public class UIManager implements TouchEventListener{
         public void onTouchEvent(MotionEvent event) {
             if(!active)
                 return;
+            if(buttonJustPressed){
+                buttonJustPressed = false;
+                return;
+            }
             for(TextImageButton button: buttons)
                 button.onTouchEvent(event);
         }
@@ -281,9 +309,12 @@ public class UIManager implements TouchEventListener{
             active = false;
             buttons = new ArrayList<>();
             yLocation = 64;
+            buttonJustPressed = true;
+            System.out.println("closed");
         }
 
         private void activatePopup(String message, String[] options, ClickListener[] effects, boolean raw){
+            System.out.println("opened");
             active = true;
             this.message = message;
             if(raw){
@@ -294,8 +325,8 @@ public class UIManager implements TouchEventListener{
             }
             for(int i = 0; i < options.length; i++){
                 int finalI = i;
-                OptionButtonA oba = new OptionButtonA(x+width/2, y+height-yLocation, 33,
-                        options[i], Color.BLACK, Assets.popupButton1, () -> {effects[finalI].onClick(); removePopup();}, 750);
+                OptionButtonA oba = new OptionButtonA(x+width/2.f, y+height-yLocation, 33,
+                        options[i], Color.BLACK, Assets.popupButton1, () -> {removePopup(); effects[finalI].onClick();}, 750);
                 buttons.add(oba);
                 yLocation += oba.getBounds().height()+10;
             }

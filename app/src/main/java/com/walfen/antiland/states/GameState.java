@@ -138,4 +138,10 @@ public class GameState extends State {
     public Player getPlayer(){
         return player;
     }
+
+    //for debugging purpose
+    private void test(){
+//        uiManager.popUpAction("\"Can you still move?\" A weird and spooky voices wakes you up from inside.", "...",
+//                () -> uiManager.activeTutorial("Tutorial: Use the left joystick to move around", uiManager.getMovementJoystick().getBounds()));
+    }
 }

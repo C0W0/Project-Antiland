@@ -42,6 +42,11 @@ public class MenuState extends State {
                 40, "from autosave file", Color.BLACK, () -> startGameFromPath(Constants.DIR+"/auto")));
     }
 
+    //for debugging purpose
+    private void test(){
+
+    }
+
     @Override
     public void update(){
         uiManager.update();
