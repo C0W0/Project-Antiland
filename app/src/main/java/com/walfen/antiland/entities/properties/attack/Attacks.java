@@ -5,6 +5,8 @@ import android.graphics.Canvas;
 
 import com.walfen.antiland.GameHierarchyElement;
 import com.walfen.antiland.Handler;
+import com.walfen.antiland.entities.Entity;
+import com.walfen.antiland.entities.creatures.Creature;
 import com.walfen.antiland.entities.creatures.active.Active;
 import com.walfen.antiland.gfx.Animation;
 

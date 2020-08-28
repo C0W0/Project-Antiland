@@ -257,6 +257,10 @@ public class Player extends Creature implements TouchEventListener {
     @Override
     public void update() {
         super.update();
+        if(disable){
+            handler.getGameCamera().centerOnEntity(this);
+            return;
+        }
 
         //animation
         setCurrentAnimation();
@@ -457,10 +461,13 @@ public class Player extends Creature implements TouchEventListener {
         this.event = event;
         switch (type){
             case InteractionType.TALK_TO_NPC:
+                interactButton.setTexture(Assets.chat);
                 break;
             case InteractionType.TRADE:
+                interactButton.setTexture(Assets.tradeInteract);
                 break;
             case InteractionType.TRIGGER_ENTITY:
+                interactButton.setTexture(Assets.operate);
                 break;
             case InteractionType.USE_TELEPORTATION:
                 break;

@@ -13,6 +13,7 @@ public abstract class Trader extends NPC {
     public Trader(int width, int height, int id) {
         super(width, height, id);
         traderInventory = initInvItems();
+        setInteractType(InteractionType.TRADE);
     }
 
     protected abstract ArrayList<Item> initInvItems();

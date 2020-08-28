@@ -22,6 +22,7 @@ public abstract class Creature extends Entity {
     protected float speed;
     protected int physicalDamage, magicalDamage, level, mp, maxMp;
     protected ArrayList<StatusEffect> effects;
+    protected boolean disable;
 
 
     protected float xMove, yMove; // movement
@@ -36,6 +37,7 @@ public abstract class Creature extends Entity {
         xMove = 0;
         yMove = 0;
         effects = new ArrayList<>();
+        disable = false;
     }
 
     //methods
@@ -216,5 +218,13 @@ public abstract class Creature extends Entity {
 
     public ArrayList<StatusEffect> getEffects() {
         return effects;
+    }
+
+    public void disable(){
+        disable = true;
+    }
+
+    public void enable(){
+        disable = false;
     }
 }

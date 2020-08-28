@@ -67,6 +67,8 @@ public abstract class Active extends Creature {
     @Override
     public void update() {
         super.update();
+        if(disable)
+            return;
         attack.update();
         if(target == null)
             target = handler.getPlayer();

@@ -14,10 +14,12 @@ public abstract class NPC extends Creature {
 
     protected int interRange;
     protected ChangeEvent playerInteractEvent;
+    protected int interactType;
 
     public NPC(int width, int height, int id) {
         super(width, height, id);
         interRange = 2; //default
+        setInteractType(InteractionType.TALK_TO_NPC); //default
     }
 
     public boolean interactionCheck(int innerDeduction){
@@ -43,7 +45,7 @@ public abstract class NPC extends Creature {
             if(interactionCheck(1)) {
                 if(handler.getPlayer().getInteractionEvent().equals(playerInteractEvent))
                     return;
-                handler.getPlayer().setInteractionEvent(playerInteractEvent, InteractionType.TALK_TO_NPC);
+                handler.getPlayer().setInteractionEvent(playerInteractEvent, interactType);
                 if(!handler.getPlayer().getInteractButton().isActive())
                     handler.getPlayer().setInterButtonVisibility(true);
                 return;
@@ -53,6 +55,10 @@ public abstract class NPC extends Creature {
                 handler.getPlayer().setInterButtonVisibility(false);
             }
         }
+    }
+
+    protected void setInteractType(int type){
+        interactType = type;
     }
     
     public static class InteractionType{

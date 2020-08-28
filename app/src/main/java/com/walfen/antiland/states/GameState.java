@@ -2,6 +2,7 @@ package com.walfen.antiland.states;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.widget.Toast;
@@ -9,9 +10,11 @@ import android.widget.Toast;
 import com.walfen.antiland.Constants;
 import com.walfen.antiland.Handler;
 import com.walfen.antiland.entities.creatures.Player;
+import com.walfen.antiland.entities.properties.effect.special.Stung;
 import com.walfen.antiland.gfx.Assets;
 import com.walfen.antiland.ui.bars.BarA;
 import com.walfen.antiland.ui.UIManager;
+import com.walfen.antiland.ui.buttons.TextButton;
 import com.walfen.antiland.ui.buttons.UIImageButton;
 import com.walfen.antiland.ui.decorative.EnemyInfoPanel;
 import com.walfen.antiland.ui.decorative.UITextDecoration;
@@ -95,6 +98,7 @@ public class GameState extends State {
                 new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, () -> handler.getPlayer().getMissionManager().setActive()));
         uiManager.addUIObject(new UIImageButton(32, Constants.SCREEN_HEIGHT-456, 128, 128,
                 new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, () -> handler.getPlayer().getInventory().setActive()));
+        uiManager.addUIObject(new TextButton(128, 416, 40, "Debug", Color.BLUE, this::test));
         uiManager.addUIObject(new EnemyInfoPanel(player.getTracker()));
     }
 
