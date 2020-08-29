@@ -11,12 +11,12 @@ import com.walfen.antiland.gfx.Assets;
 
 import java.util.function.IntSupplier;
 
-public class PlayerDefaultAttack extends RangedAttacks {
+public class PlayerDefaultAttack extends RangedAttack {
 
     protected IntSupplier damageSupplier;
 
-    public PlayerDefaultAttack(Handler handler, IntSupplier damageSupplier) {
-        super(handler, 1, Type.PHYSICAL, 256, 10);
+    public PlayerDefaultAttack(Handler handler, int type, int range, int travelSpeed, IntSupplier damageSupplier) {
+        super(handler, 1, type, range, travelSpeed);
         this.damageSupplier = damageSupplier;
     }
 
@@ -29,19 +29,11 @@ public class PlayerDefaultAttack extends RangedAttacks {
             }
             for(Entity e : handler.getWorld().getEntityManager().getEntities()){
                 if(r.intersect(e.getCollisionBounds(0,0))) {
-                    if ((carrier == null && e.equals(handler.getPlayer())) || e.equals(carrier))
+                    if (e.equals(handler.getPlayer()))
                         continue;
-                    if (carrier != null) {
-                        if (e.getFaction() != carrier.getFaction()) {
-                            e.receiveDamage(baseDamage, type);
-                            r.hit();
-                        }
-                    }
-                    if (carrier == null) {
-                        handler.getPlayer().getTracker().addTracking(e);
-                        e.receiveDamage(baseDamage, type);
-                        r.hit();
-                    }
+                    handler.getPlayer().getTracker().addTracking(e);
+                    e.receiveDamage(baseDamage, type);
+                    r.hit();
                 }
             }
         }

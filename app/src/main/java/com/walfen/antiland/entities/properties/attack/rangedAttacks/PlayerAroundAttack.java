@@ -1,14 +1,11 @@
 package com.walfen.antiland.entities.properties.attack.rangedAttacks;
 
-import android.graphics.Rect;
-
 import com.walfen.antiland.Handler;
 import com.walfen.antiland.entities.Entity;
-import com.walfen.antiland.entities.creatures.active.Active;
 
 import java.util.function.IntSupplier;
 
-public class PlayerAroundAttack extends RangedAttacks {
+public class PlayerAroundAttack extends RangedAttack {
 
     private IntSupplier damageSupplier;
 

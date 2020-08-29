@@ -13,7 +13,7 @@ public class TestShield extends ActiveSkill {
     private boolean isShieldOn;
 
     public TestShield(Handler handler) {
-        super(handler, 1, 10000, Assets.sharpWind, -1);
+        super(handler, 1, 10000, Assets.strengthSkills[0], -1);
         level = 1;
         shieldActiveDuration = 5000;
         isShieldOn = false;

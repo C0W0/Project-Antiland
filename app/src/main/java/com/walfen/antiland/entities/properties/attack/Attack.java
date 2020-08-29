@@ -12,7 +12,7 @@ import com.walfen.antiland.gfx.Animation;
 
 import java.util.ArrayList;
 
-public abstract class Attacks implements GameHierarchyElement {
+public abstract class Attack implements GameHierarchyElement {
 
     protected float x, y;
     protected Handler handler;
@@ -21,7 +21,7 @@ public abstract class Attacks implements GameHierarchyElement {
     protected final Active carrier;
     protected ArrayList<Animation> carrierAnimations;
 
-    public Attacks(Handler handler, int baseDamage, int type, Active carrier){
+    public Attack(Handler handler, int baseDamage, int type, Active carrier){
         carrierAnimations = new ArrayList<>();
         this.handler = handler;
         this.baseDamage = baseDamage;
@@ -29,7 +29,7 @@ public abstract class Attacks implements GameHierarchyElement {
         this.carrier = carrier;
     }
 
-    public Attacks(Handler handler, int baseDamage, int type){
+    public Attack(Handler handler, int baseDamage, int type){
         this.handler = handler;
         this.baseDamage = baseDamage;
         this.type = type;

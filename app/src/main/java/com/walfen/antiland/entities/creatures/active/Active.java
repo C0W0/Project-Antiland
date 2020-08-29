@@ -3,7 +3,7 @@ package com.walfen.antiland.entities.creatures.active;
 
 import com.walfen.antiland.entities.Entity;
 import com.walfen.antiland.entities.creatures.Creature;
-import com.walfen.antiland.entities.properties.attack.Attacks;
+import com.walfen.antiland.entities.properties.attack.Attack;
 import com.walfen.antiland.untils.Utils;
 
 public abstract class Active extends Creature {
@@ -16,7 +16,7 @@ public abstract class Active extends Creature {
     private int deathXP;
 
     //attack system
-    protected Attacks attack;
+    protected Attack attack;
     protected long lastAttackTime, attackCooldown, attackTimer;
 
     private int pathErrorCounter;

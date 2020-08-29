@@ -8,12 +8,12 @@ import android.graphics.Rect;
 import com.walfen.antiland.Handler;
 import com.walfen.antiland.entities.Entity;
 import com.walfen.antiland.entities.creatures.active.Active;
-import com.walfen.antiland.entities.properties.attack.Attacks;
+import com.walfen.antiland.entities.properties.attack.Attack;
 import com.walfen.antiland.gfx.Animation;
 
 import java.util.ArrayList;
 
-public abstract class RangedAttacks extends Attacks {
+public abstract class RangedAttack extends Attack {
 
 
     protected float travelSpeed;
@@ -22,15 +22,15 @@ public abstract class RangedAttacks extends Attacks {
     protected ArrayList<Point> attackLocation = new ArrayList<>();
     protected int range;
 
-    public RangedAttacks(Handler handler, int baseDamage, int type, int range,
-                         int travelSpeed, Active carrier) {
+    public RangedAttack(Handler handler, int baseDamage, int type, int range,
+                        int travelSpeed, Active carrier) {
         super(handler, baseDamage, type, carrier);
         this.range = range;
         this.travelSpeed = travelSpeed;
     }
 
-    public RangedAttacks(Handler handler, int baseDamage, int type, int range,
-                          int travelSpeed){
+    public RangedAttack(Handler handler, int baseDamage, int type, int range,
+                        int travelSpeed){
         super(handler, baseDamage, type);
         this.range = range;
         this.travelSpeed = travelSpeed;

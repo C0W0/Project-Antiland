@@ -10,7 +10,7 @@ import com.walfen.antiland.entities.creatures.active.Slime;
 import com.walfen.antiland.entities.creatures.npc.secondary.NPC1;
 import com.walfen.antiland.entities.creatures.npc.trader.MushroomTrader;
 import com.walfen.antiland.entities.creatures.npc.trader.WandererCrab;
-import com.walfen.antiland.entities.properties.attack.Attacks;
+import com.walfen.antiland.entities.properties.attack.Attack;
 import com.walfen.antiland.entities.special.EntityGenerator;
 import com.walfen.antiland.entities.statics.AirWall;
 import com.walfen.antiland.entities.statics.Tree;
@@ -75,9 +75,9 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
 
     public void receiveDamage(int num, int type){
         num *= dmgPercentMod[type]/100.f;
-        if(type == Attacks.Type.SPECIAL_IGNORE_DEFENCE)
+        if(type == Attack.Type.SPECIAL_IGNORE_DEFENCE)
             health -= num;
-        else if(type == Attacks.Type.PHYSICAL)
+        else if(type == Attack.Type.PHYSICAL)
             applyDefaultDamageFormula(num, resistance[1]);
         else
             applyDefaultDamageFormula(num, resistance[2]);
@@ -221,11 +221,11 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
     }
 
     public int getDefence(){
-        return resistance[Attacks.Type.PHYSICAL];
+        return resistance[Attack.Type.PHYSICAL];
     }
 
     public void setDefence(int defence) {
-        resistance[Attacks.Type.PHYSICAL] = defence;
+        resistance[Attack.Type.PHYSICAL] = defence;
     }
 
     public int getMagicalDefence(){
@@ -237,7 +237,7 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
     }
 
     public void changeDefence(int defenceValue) {
-        resistance[Attacks.Type.PHYSICAL] += defenceValue;
+        resistance[Attack.Type.PHYSICAL] += defenceValue;
     }
 
     public int getDmgModPercent(int type){

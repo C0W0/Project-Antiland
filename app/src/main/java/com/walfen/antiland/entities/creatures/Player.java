@@ -8,8 +8,9 @@ import android.view.MotionEvent;
 
 import com.walfen.antiland.Constants;
 import com.walfen.antiland.Handler;
+import com.walfen.antiland.entities.properties.attack.Attack;
 import com.walfen.antiland.entities.properties.attack.rangedAttacks.PlayerDefaultAttack;
-import com.walfen.antiland.entities.properties.attack.rangedAttacks.RangedAttacks;
+import com.walfen.antiland.entities.properties.attack.rangedAttacks.RangedAttack;
 import com.walfen.antiland.entities.properties.effect.Shield;
 import com.walfen.antiland.gfx.Animation;
 import com.walfen.antiland.gfx.Assets;
@@ -43,8 +44,8 @@ public class Player extends Creature implements TouchEventListener {
     private Animation currentAnimation;
 
     //attack
-    private RangedAttacks attack;
-    private RangedAttacks defaultAttack;
+    private RangedAttack attack;
+    private RangedAttack defaultAttack;
 
     //attack speed
     private long lastAttackTime, attackCooldown, attackTimer;
@@ -124,7 +125,7 @@ public class Player extends Creature implements TouchEventListener {
         neutralAnim = new Animation(0.5f, new Bitmap[]{Assets.player_neutral});
         currentAnimation = neutralAnim;
 
-        defaultAttack = new PlayerDefaultAttack(handler, () -> physicalDamage);
+        defaultAttack = new PlayerDefaultAttack(handler, Attack.Type.PHYSICAL, 256, 10, () -> physicalDamage);
         attack = defaultAttack;
 
 
@@ -487,11 +488,11 @@ public class Player extends Creature implements TouchEventListener {
         interactButton.setActive(visible);
     }
 
-    public void setAttack(RangedAttacks attack) {
+    public void setAttack(RangedAttack attack) {
         this.attack = attack;
     }
 
-    public RangedAttacks getAttack() {
+    public RangedAttack getAttack() {
         return attack;
     }
 

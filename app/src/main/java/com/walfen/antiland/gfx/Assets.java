@@ -59,7 +59,8 @@ public class Assets {
     //skills
     public static Bitmap strength, endurance, agility, knowledge, intelligence;
     public static Bitmap strengthR, enduranceR, agilityR, knowledgeR, intelligenceR;
-    public static Bitmap sharpWindG, sharpWind;
+    public static Bitmap[] strengthSkillsG, strengthSkills;
+//    public static Bitmap sharpWindG, sharpWind;
     public static Bitmap unlock;
 
     public static void init(){
@@ -248,8 +249,15 @@ public class Assets {
         knowledgeR = skillSheet.crop(width*3, height, width, height);
         intelligence = skillSheet.crop(width*4, 0, width, height);
         intelligenceR = skillSheet.crop(width*4, height, width, height);
-        sharpWindG = skillSheet.crop(width*5, height, width, height);
-        sharpWind = skillSheet.crop(width*6, height, width, height);
+
+        strengthSkills = new Bitmap[6];
+        strengthSkillsG = new Bitmap[6];
+        strengthSkillsG[0] = skillSheet.crop(width*5, height, width, height);
+        strengthSkills[0] = skillSheet.crop(width*6, height, width, height);
+        for(int i = 0; i < 4; i++){
+            strengthSkillsG[i+1] = skillSheet.crop(width*2*i, height*2, width, height);
+            strengthSkills[i+1] = skillSheet.crop(width*(2*i+1), height*2, width, height);
+        }
 
         unlock = skillSheet.crop(width*5, 0, 250, 128);
 

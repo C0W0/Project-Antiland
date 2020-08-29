@@ -160,7 +160,7 @@ public class PlayerSkillsManager implements TouchEventListener {
         //strength skills:
         Skill sharpWind = new SharpWind(handler);
         strengthSU.add(new SkillIcon(skillL1X, skillL1Y-skillIconSize-10, skillIconSize, skillIconSize,
-                new Bitmap[]{Assets.sharpWindG, Assets.sharpWind}, sharpWind));
+                new Bitmap[]{Assets.strengthSkillsG[0], Assets.strengthSkills[0]}, sharpWind));
         strengthSL.add(sharpWind);
 
         //endurance skills:

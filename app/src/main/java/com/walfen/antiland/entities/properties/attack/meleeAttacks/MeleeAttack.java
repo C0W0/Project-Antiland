@@ -4,12 +4,12 @@ package com.walfen.antiland.entities.properties.attack.meleeAttacks;
 import com.walfen.antiland.Handler;
 import com.walfen.antiland.entities.Entity;
 import com.walfen.antiland.entities.creatures.active.Active;
-import com.walfen.antiland.entities.properties.attack.Attacks;
+import com.walfen.antiland.entities.properties.attack.Attack;
 
-public abstract class MeleeAttacks extends Attacks {
+public abstract class MeleeAttack extends Attack {
     protected Entity target;
 
-    public MeleeAttacks(Handler handler, int baseDamage, int type, Active carrier) {
+    public MeleeAttack(Handler handler, int baseDamage, int type, Active carrier) {
         super(handler, baseDamage, type, carrier);
     }
 

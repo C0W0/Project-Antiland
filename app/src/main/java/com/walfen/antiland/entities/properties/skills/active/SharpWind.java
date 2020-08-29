@@ -1,33 +1,36 @@
 package com.walfen.antiland.entities.properties.skills.active;
 
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
 import com.walfen.antiland.Handler;
+import com.walfen.antiland.entities.properties.attack.Attack;
 import com.walfen.antiland.entities.properties.attack.rangedAttacks.PlayerAbilityAttack;
-import com.walfen.antiland.entities.properties.attack.rangedAttacks.RangedAttacks;
+import com.walfen.antiland.entities.properties.attack.rangedAttacks.PlayerMeleeAttack;
+import com.walfen.antiland.entities.properties.attack.rangedAttacks.RangedAttack;
+import com.walfen.antiland.gfx.Animation;
 import com.walfen.antiland.gfx.Assets;
 
 public class SharpWind extends ActiveSkill {
 
     private int additionalDmg;
-    private RangedAttacks attacks;
+    private RangedAttack attack;
 
     public SharpWind(Handler handler) {
-        super(handler, 10, 4000, Assets.sharpWind, 1);
+        super(handler, 10, 4000, Assets.strengthSkills[0], 1);
         additionalDmg = 5;
-        attacks = new PlayerAbilityAttack(handler, () -> (handler.getPlayer().getPhysicalDamage()+additionalDmg));
+        attack = new PlayerAbilityAttack(handler, Attack.Type.PHYSICAL, 256, 10,
+                () -> (handler.getPlayer().getPhysicalDamage()+additionalDmg), () -> new Animation(2, Assets.player_SharpWind));
     }
 
     @Override
     protected void onTrigger() {
-        handler.getPlayer().setAttack(attacks);
+        handler.getPlayer().setAttack(attack);
     }
 
     @Override
     public void update() {
         updateData();
-        if(handler.getPlayer().getAttack().equals(attacks))
+        if(handler.getPlayer().getAttack().equals(attack))
             activeTimer = 0;
         else
             activeTimer += System.currentTimeMillis() - lastActiveTime;
@@ -36,14 +39,14 @@ public class SharpWind extends ActiveSkill {
 
     @Override
     protected void updateData() {
-        if(!handler.getPlayer().getAttack().equals(attacks))
-            attacks.update();
+        if(!handler.getPlayer().getAttack().equals(attack))
+            attack.update();
     }
 
     @Override
     public void draw(Canvas canvas) {
-        if(!handler.getPlayer().getAttack().equals(attacks))
-            attacks.draw(canvas);
+        if(!handler.getPlayer().getAttack().equals(attack))
+            attack.draw(canvas);
     }
 
     @Override

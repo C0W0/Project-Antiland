@@ -1,18 +1,16 @@
 package com.walfen.antiland.entities.properties.skills.active;
 
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
 import com.walfen.antiland.Handler;
-import com.walfen.antiland.entities.creatures.Creature;
 import com.walfen.antiland.entities.properties.attack.rangedAttacks.PlayerAroundAttack;
-import com.walfen.antiland.entities.properties.attack.rangedAttacks.RangedAttacks;
+import com.walfen.antiland.entities.properties.attack.rangedAttacks.RangedAttack;
 import com.walfen.antiland.gfx.Assets;
 
 public class SwordStorm extends ActiveSkill {
 
     private int additionalDmg;
-    private RangedAttacks attacks;
+    private RangedAttack attacks;
 
     public SwordStorm(Handler handler) {
         super(handler, 10, 5000, Assets.joystick_controller, 2);

@@ -6,7 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 
 import com.walfen.antiland.Constants;
-import com.walfen.antiland.entities.properties.attack.Attacks;
+import com.walfen.antiland.entities.properties.attack.Attack;
 import com.walfen.antiland.gfx.Assets;
 import com.walfen.antiland.gfx.ImageEditor;
 import com.walfen.antiland.items.Item;
@@ -23,7 +23,7 @@ public class Tree extends StaticEntity {
         bounds.bottom = bounds.top + height - 100;
         setEntityHealth(2);
         setDefence(1);
-        dmgPercentMod[Attacks.Type.MAGICAL_FIRE] = 400;
+        dmgPercentMod[Attack.Type.MAGICAL_FIRE] = 400;
         id = 2;
     }
 
