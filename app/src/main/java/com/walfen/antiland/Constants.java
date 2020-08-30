@@ -21,7 +21,7 @@ public class Constants {
     public static Resources RES;
 
     public static final String GAME_VERSION = "A1080";
-    public static final String GAME_VERSION_DISPLAY = "Alpha - build 1080 (2020.08.17)";
+    public static final String GAME_VERSION_DISPLAY = "Alpha - build 1080 (2020.08.30)";
 
     public static final int DEFAULT_SIZE = 128;
 
