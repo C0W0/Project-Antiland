@@ -48,10 +48,6 @@ public abstract class Attack implements GameHierarchyElement {
     }
 
     //leave empty until the attack animation is fixed
-    @Override
-    public void draw(Canvas canvas){
-
-    }
 
     public abstract void checkAttackCollision();
 

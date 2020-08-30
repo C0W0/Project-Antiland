@@ -85,4 +85,8 @@ public class Animation implements GraphicalTerminalElement{
     public int getFrameIndex() {
         return frameIndex;
     }
+
+    public long getCycleDuration(){
+        return (long)(frameTime*frames.length*1000);
+    }
 }

@@ -1,34 +1,45 @@
 package com.walfen.antiland.entities.properties.attack.rangedAttacks;
 
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Rect;
+
 import com.walfen.antiland.Handler;
 import com.walfen.antiland.entities.Entity;
+import com.walfen.antiland.gfx.Animation;
+import com.walfen.antiland.untils.AnimationSupplier;
 
 import java.util.function.IntSupplier;
 
 public class PlayerAroundAttack extends RangedAttack {
 
-    private IntSupplier damageSupplier;
+    protected IntSupplier damageSupplier, rangeSupplier;
+    protected AnimationSupplier animSupplier;
+    protected long lastAttack;
+    protected int animXSize, animYSize;
 
-    public PlayerAroundAttack(Handler handler, IntSupplier damageSupplier) {
+    public PlayerAroundAttack(Handler handler, IntSupplier damageSupplier, IntSupplier rangeSupplier, AnimationSupplier animSupplier) {
         super(handler, 1, Type.PHYSICAL, 0, 0);
         this.damageSupplier = damageSupplier;
+        this.rangeSupplier = rangeSupplier;
+        this.animSupplier = animSupplier;
+        animXSize = 2*rangeSupplier.getAsInt()+128;
+        animYSize = 2*rangeSupplier.getAsInt()+128;
     }
 
-    //TODO: add animation so can just call super
     @Override
     public void update() {
-        x = handler.getPlayer().getX();
-        y = handler.getPlayer().getY();
-        for(int i = 0; i < collisionQueue.size(); i++) {
-            if(collisionQueue.get(i).isHit()){
-                collisionQueue.remove(i);
-                i --;
-                continue;
-            }
-            collisionQueue.get(i).update();
+        super.update();
+        if(animations.size() > collisionQueue.size())
+            for(int i = collisionQueue.size(); i < animations.size(); i++)
+                animations.get(i).update();
+        if(animations.size() > 0){
+            Animation a = animations.get(0);
+            if(System.currentTimeMillis() > lastAttack+a.getCycleDuration())
+                animations.remove(0);
         }
         baseDamage = damageSupplier.getAsInt();
-        checkAttackCollision();
+        range = rangeSupplier.getAsInt();
     }
 
     @Override
@@ -40,16 +51,33 @@ public class PlayerAroundAttack extends RangedAttack {
                     !e.equals(handler.getPlayer())) {
                 handler.getPlayer().getTracker().addTracking(e);
                 e.receiveDamage(baseDamage, type);
+                if(e.getHealth() > 0)
+                    handler.getPlayer().getTracker().addTracking(e);
             }
         }
-
         collisionQueue.remove(0);
     }
 
     @Override
     public void generateAttack(float dX, float dY) {
-        RangedAttackCollision rc = new RangedAttackCollision((int)(x-128), (int)(y-128), (int)(x+256), (int)(y+256), 0, 0, 0);
+        int range = rangeSupplier.getAsInt();
+        RangedAttackCollision rc = new RangedAttackCollision((int)(x-range), (int)(y-range), (int)(x+128+range), (int)(y+128+range), 0, 0, 0);
         collisionQueue.add(rc);
-        //TODO: add animation here
+        Animation a = animSupplier.getAnimation();
+        a.scaleForced(animXSize, animYSize);
+        animations.add(a);
+        lastAttack = System.currentTimeMillis();
+    }
+
+    @Override
+    public void draw(Canvas canvas) {
+        for(int i = 0; i < animations.size(); i++){
+            Animation a = animations.get(i);
+            System.out.println(range);
+            Rect r = new Rect((int)(x-range), (int)(y-range), (int)(x+128+range), (int)(y+128+range));
+            int left = (int)(r.left - handler.getGameCamera().getxOffset());
+            int top = (int)(r.top - handler.getGameCamera().getyOffset());
+            a.draw(canvas, new Rect(left, top, left+r.width(), top+r.height()));
+        }
     }
 }

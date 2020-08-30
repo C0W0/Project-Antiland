@@ -1,23 +1,28 @@
 package com.walfen.antiland.entities.properties.skills.active;
 
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
 import com.walfen.antiland.Handler;
+import com.walfen.antiland.entities.properties.attack.Attack;
+import com.walfen.antiland.entities.properties.attack.rangedAttacks.PlayerHeadBash;
 import com.walfen.antiland.entities.properties.attack.rangedAttacks.RangedAttack;
+import com.walfen.antiland.gfx.Assets;
 
 public class HeadBash extends ActiveSkill {
 
 
     private RangedAttack attack;
+    private float chance;
 
-    public HeadBash(Handler handler, int maxLevel, long msCooldown, Bitmap texture, int hID) {
-        super(handler, maxLevel, msCooldown, texture, hID);
+    public HeadBash(Handler handler) {
+        super(handler, 5, 2000, Assets.strengthSkills[1], 2);
+        chance = 0.3f;
+        attack = new PlayerHeadBash(handler, () -> handler.getPlayer().getPhysicalDamage(), () -> (int)(chance*100));
     }
 
     @Override
     protected void onTrigger() {
-
+        handler.getPlayer().setAttack(attack);
     }
 
     @Override
@@ -32,41 +37,44 @@ public class HeadBash extends ActiveSkill {
 
     @Override
     protected void updateData() {
-
+        if(!handler.getPlayer().getAttack().equals(attack))
+            attack.update();
     }
 
     @Override
     public void draw(Canvas canvas) {
-
+        if(!handler.getPlayer().getAttack().equals(attack))
+            attack.draw(canvas);
     }
 
     @Override
     protected void onLevelUp() {
-
+        chance += 0.05;
     }
 
     @Override
     public boolean levelUpReqMeet() {
-        return false;
+        return handler.getPlayer().getSkillsManager().getStrength().getLevel() > 2*level-1;
     }
 
     @Override
     public String getTitle() {
-        return null;
+        return "Head Bash";
     }
 
     @Override
     public String getDesc() {
-        return null;
+        return "Hit the enemy hard with the helmet.";
     }
 
     @Override
     public String getEffect() {
-        return null;
+        return "Cause "+handler.getPlayer().getPhysicalDamage()+" damage to entities of a small area at the direction of attack. " +
+                (float)((int)(chance*100))+"% chance of causing a Stung";
     }
 
     @Override
     public String getReq() {
-        return null;
+        return "Strength: Lv."+(level*2);
     }
 }

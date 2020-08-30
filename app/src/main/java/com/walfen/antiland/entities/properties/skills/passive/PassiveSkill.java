@@ -11,4 +11,13 @@ public abstract class PassiveSkill extends Skill {
     public PassiveSkill(Handler handler, int maxLevel, Creature carrier, Bitmap texture) {
         super(handler, maxLevel, carrier, texture);
     }
+
+    @Override
+    public void setLevel(int level) {
+        int d = level-this.level;
+        for(int i = 0; i < d; i++){
+            this.level ++;
+            onLevelUp();
+        }
+    }
 }

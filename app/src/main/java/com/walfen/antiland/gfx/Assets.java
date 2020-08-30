@@ -29,6 +29,7 @@ public class Assets {
     public static Bitmap[] player_down, player_up, player_left, player_right;
     public static Bitmap player_Attack;
     public static Bitmap[] player_SharpWind;
+    public static Bitmap[] explosion;
 
 
     //joystick
@@ -73,7 +74,6 @@ public class Assets {
         SpriteSheet townTiles = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.remix_town_tiles));
         SpriteSheet slimeAttack = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.slime_attack));
         SpriteSheet slimeMovement = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.slime_movement));
-        SpriteSheet idleSlime = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.idle_slime));
         SpriteSheet skillSheet = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.skills_sprite));
         SpriteSheet rockHouseSheet = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.house_tiles));
         SpriteSheet newTownTiles = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.town_tiles));
@@ -168,11 +168,12 @@ public class Assets {
         player_neutral = sheet.crop(0,height*2,width,height);;
         player_Attack = sheet.crop(width*3, height*2, width, height);
         player_SharpWind = loadSpriteAsArray(new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.magic_firelion_big)), 4, 4, width, height);
+        explosion = loadSpriteAsArray(new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.explosion_1)), 6, 1, width, height*2);
 
         //entity
         tree = newTownTiles.crop(0, height*3, width, height*4);
-        npcSlime = loadSpriteAsArray(idleSlime, 2, 1, 64, 64);
-        npcCrab = loadSpriteAsArray(new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.crab)), 6, 4, 64, 64);
+        npcSlime = loadSpriteAsArray(new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.idle_slime)), 2, 1, 128, 128);
+        npcCrab = loadSpriteAsArray(new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.crab)), 6, 4, 128, 128);
         npcMushroom = loadSpriteAsArray(new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.mushroom_trader)), 1, 5, 192, 232);
         slimeAttackLeft = new Bitmap[3];
         slimeAttackLeft[0] = slimeAttack.crop(0,0,width,height);

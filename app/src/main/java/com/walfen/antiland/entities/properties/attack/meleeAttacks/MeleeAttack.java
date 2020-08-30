@@ -1,6 +1,8 @@
 package com.walfen.antiland.entities.properties.attack.meleeAttacks;
 
 
+import android.graphics.Canvas;
+
 import com.walfen.antiland.Handler;
 import com.walfen.antiland.entities.Entity;
 import com.walfen.antiland.entities.creatures.active.Active;
@@ -24,5 +26,10 @@ public abstract class MeleeAttack extends Attack {
     public void checkAttackCollision() {
         if(target != null)
             target.receiveDamage(baseDamage, type);
+    }
+
+    @Override
+    public void draw(Canvas canvas) {
+
     }
 }

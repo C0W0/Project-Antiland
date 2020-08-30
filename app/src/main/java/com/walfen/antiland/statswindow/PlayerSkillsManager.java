@@ -11,8 +11,11 @@ import com.walfen.antiland.Constants;
 import com.walfen.antiland.Handler;
 import com.walfen.antiland.entities.properties.skills.Skill;
 import com.walfen.antiland.entities.properties.skills.active.ActiveSkill;
+import com.walfen.antiland.entities.properties.skills.active.HeadBash;
+import com.walfen.antiland.entities.properties.skills.active.RedStamp;
 import com.walfen.antiland.entities.properties.skills.active.SharpWind;
 import com.walfen.antiland.entities.properties.skills.active.TestShield;
+import com.walfen.antiland.entities.properties.skills.passive.BigLeague;
 import com.walfen.antiland.entities.properties.skills.passive.SimplePlayerSkill;
 import com.walfen.antiland.gfx.Assets;
 import com.walfen.antiland.gfx.ImageEditor;
@@ -159,9 +162,21 @@ public class PlayerSkillsManager implements TouchEventListener {
 
         //strength skills:
         Skill sharpWind = new SharpWind(handler);
-        strengthSU.add(new SkillIcon(skillL1X, skillL1Y-skillIconSize-10, skillIconSize, skillIconSize,
+        strengthSU.add(new SkillIcon(skillL1X+20+skillIconSize, skillL1Y-skillIconSize-10, skillIconSize, skillIconSize,
                 new Bitmap[]{Assets.strengthSkillsG[0], Assets.strengthSkills[0]}, sharpWind));
         strengthSL.add(sharpWind);
+        Skill headBash = new HeadBash(handler);
+        strengthSU.add(new SkillIcon(skillL1X-20-skillIconSize, skillL1Y-skillIconSize-10, skillIconSize, skillIconSize,
+                new Bitmap[]{Assets.strengthSkillsG[1], Assets.strengthSkills[1]}, headBash));
+        strengthSL.add(headBash);
+        Skill bigLeague = new BigLeague(handler);
+        strengthSU.add(new SkillIcon(skillL1X, skillL1Y-skillIconSize-10, skillIconSize, skillIconSize,
+                new Bitmap[]{Assets.strengthSkillsG[2], Assets.strengthSkills[2]}, bigLeague));
+        strengthSL.add(bigLeague);
+        Skill redStamp = new RedStamp(handler);
+        strengthSU.add(new SkillIcon(skillL1X-10-skillIconSize/2.f, skillL1Y-skillIconSize*2-20, skillIconSize, skillIconSize,
+                new Bitmap[]{Assets.strengthSkillsG[3], Assets.strengthSkills[3]}, redStamp));
+        strengthSL.add(redStamp);
 
         //endurance skills:
 
@@ -491,6 +506,26 @@ public class PlayerSkillsManager implements TouchEventListener {
 
     public SimplePlayerSkill getIntelligence() {
         return intelligence;
+    }
+
+    public ArrayList<Skill> getStrengthSL() {
+        return strengthSL;
+    }
+
+    public ArrayList<Skill> getEnduranceSL() {
+        return enduranceSL;
+    }
+
+    public ArrayList<Skill> getAgilitySL() {
+        return agilitySL;
+    }
+
+    public ArrayList<Skill> getKnowledgeSL() {
+        return knowledgeSL;
+    }
+
+    public ArrayList<Skill> getIntelligenceSL() {
+        return intelligenceSL;
     }
 
     public boolean isActive() {

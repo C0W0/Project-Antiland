@@ -11,6 +11,7 @@ import java.util.function.IntSupplier;
 
 public class PlayerMeleeAttack extends PlayerDefaultAttack {
 
+    //TODO: overriding player animation
     public PlayerMeleeAttack(Handler handler, int type, IntSupplier damageSupplier) {
         super(handler, type, 1024, 0, damageSupplier); // ranged cannot be reached, set to 1024 to be safe
     }
@@ -39,9 +40,10 @@ public class PlayerMeleeAttack extends PlayerDefaultAttack {
                     if (e.equals(handler.getPlayer()))
                         continue;
                     e.receiveDamage(baseDamage, type);
+                    handler.getPlayer().getTracker().addTracking(e);
                 }
             }
-//            r.hit();
+            r.hit();
         }
     }
 
