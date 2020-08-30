@@ -6,12 +6,12 @@ import com.walfen.antiland.gfx.Assets;
 public class BigLeague extends PassiveSkill {
 
     public BigLeague(Handler handler) {
-        super(handler, 10, handler.getPlayer(), Assets.NULL); //TODO: icon
+        super(handler, 10, null, Assets.NULL); //TODO: icon
     }
 
     @Override
     protected void onLevelUp() {
-        carrier.changePhysicalDamage(2*level);
+        handler.getPlayer().changePhysicalDamage(2*level);
     }
 
     @Override

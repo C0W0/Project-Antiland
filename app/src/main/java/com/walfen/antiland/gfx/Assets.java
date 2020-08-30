@@ -49,6 +49,8 @@ public class Assets {
 
     public static Bitmap[] npcSlime, slimeAttackLeft, slimeAttackRight, slimeMovementLeft, slimeMovementRight;
     public static Bitmap[] npcCrab, npcMushroom;
+    public static Bitmap[] iceSlimeAttackLeft, iceSlimeAttackRight, iceSlimeMovementLeft, iceSlimeMovementRight;
+    public static Bitmap[] ice_spike;
 
     //items
     public static Bitmap wood, stone, bottle, slimeGel;
@@ -79,6 +81,8 @@ public class Assets {
         SpriteSheet newTownTiles = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.town_tiles));
         SpriteSheet potions = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.potions));
         SpriteSheet items = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.items));
+        SpriteSheet iceSlimeMovement = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.ice_slime_movement));
+        SpriteSheet iceSlimeAttack = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.ice_slime_attack));
 
         grass = newTownTiles.crop(width*11,0,width,height);
         grassStone = sheet1.crop(width*3,height,width,height);
@@ -191,6 +195,24 @@ public class Assets {
         slimeMovementRight[0] = slimeMovement.crop(0,height,width,height);
         slimeMovementRight[1] = slimeMovement.crop(width,height,width,height);
         slimeMovementRight[2] = slimeMovement.crop(width*2,height,width,height);
+        iceSlimeAttackLeft = new Bitmap[3];
+        iceSlimeAttackLeft[0] = iceSlimeAttack.crop(0,height,width,height);
+        iceSlimeAttackLeft[1] = iceSlimeAttack.crop(width,height,width,height);
+        iceSlimeAttackLeft[2] = iceSlimeAttack.crop(width*2,height,width,height);
+        iceSlimeAttackRight = new Bitmap[3];
+        iceSlimeAttackRight[0] = iceSlimeAttack.crop(0,0,width,height);
+        iceSlimeAttackRight[1] = iceSlimeAttack.crop(width,0,width,height);
+        iceSlimeAttackRight[2] = iceSlimeAttack.crop(width*2,0,width,height);
+        iceSlimeMovementLeft = new Bitmap[3];
+        iceSlimeMovementLeft[0] = iceSlimeMovement.crop(0,height,width,height);
+        iceSlimeMovementLeft[1] = iceSlimeMovement.crop(width,height,width,height);
+        iceSlimeMovementLeft[2] = iceSlimeMovement.crop(width*2,height,width,height);
+        iceSlimeMovementRight = new Bitmap[3];
+        iceSlimeMovementRight[0] = iceSlimeMovement.crop(0,0,width,height);
+        iceSlimeMovementRight[1] = iceSlimeMovement.crop(width,0,width,height);
+        iceSlimeMovementRight[2] = iceSlimeMovement.crop(width*2,0,width,height);
+
+        ice_spike = loadSpriteAsArray(new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.ice_spike)), 7, 1, 128, 128);
 
         //items
         wood = sheet1.crop(width*7,height,width,height);

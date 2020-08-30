@@ -14,6 +14,8 @@ https://opengameart.org/content/lpc-farming-tilesets-magic-animations-and-ui-ele
 "2d lost Garden tileset transition to Jetrel's Wood tileset" by Jetrel, Daniel Cook, Bertram and Zabin licensed 
 CC-BY-SA 3.0: https://opengameart.org/content/2d-lost-garden-tileset-transition-to-jetrels-wood-tileset
 
+"Extended LPC Magic pack" by Daniel Eddeland licensed CC-BY-NC-SA 3.0 or GPL 3.0: https://opengameart.org/content/extended-lpc-magic-pack
+
 "[LPC] Trees Mega-Pack" by bluecarrot16, Jetrel, Zabin, Hyptosis, Surt, Buch, Johann Charlot, Stephen Challener and the Open Surge team (http://opensnc.sourceforge.net), Gaurav Munjal, Ivan Voirol (Silver IV)
 Guido Bos, Yar, Paulina Riva (PauR), William.Thompsonj, Casper Nilsson, Hyptosis, ansimuz, qubodup, Bart K., Blarumyrran, Lanea Zimmerman (Sharm), Leonard Pabin, Chris Phillips, Barbara Rivera, and Talosaurus. 
 CC-BY-SA 3.0

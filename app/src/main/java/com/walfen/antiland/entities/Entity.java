@@ -6,12 +6,14 @@ import android.graphics.Rect;
 
 import com.walfen.antiland.GameHierarchyElement;
 import com.walfen.antiland.Handler;
+import com.walfen.antiland.entities.creatures.active.IceSlime;
 import com.walfen.antiland.entities.creatures.active.Slime;
 import com.walfen.antiland.entities.creatures.npc.secondary.NPC1;
 import com.walfen.antiland.entities.creatures.npc.trader.MushroomTrader;
 import com.walfen.antiland.entities.creatures.npc.trader.WandererCrab;
 import com.walfen.antiland.entities.properties.attack.Attack;
 import com.walfen.antiland.entities.special.EntityGenerator;
+import com.walfen.antiland.entities.special.SlimeGenerator;
 import com.walfen.antiland.entities.statics.AirWall;
 import com.walfen.antiland.entities.statics.Tree;
 import com.walfen.antiland.untils.Utils;
@@ -26,9 +28,10 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
     public static WandererCrab traderCrab = new WandererCrab();
     public static MushroomTrader mushroomTrader = new MushroomTrader();
     public static EntityGenerator slimeSpawner;
+    public static IceSlime iceSlime = new IceSlime();
 
     public static void initEntities(Handler handler){
-         slimeSpawner = new EntityGenerator(handler, slime.getId(), 256, 5, EntityGenerator.GenerationSpeed.FAST_GENERATION, 7);
+         slimeSpawner = new SlimeGenerator(handler);
     }
 
     //Entities

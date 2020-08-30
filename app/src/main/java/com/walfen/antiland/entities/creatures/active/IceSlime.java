@@ -1,6 +1,5 @@
 package com.walfen.antiland.entities.creatures.active;
 
-
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
@@ -17,16 +16,16 @@ import com.walfen.antiland.items.Item;
 import com.walfen.antiland.tiles.Tile;
 import com.walfen.antiland.untils.MSTimeController;
 
-public class Slime extends Active {
+public class IceSlime extends Active {
 
-    private Animation leftMove, rightMove, idle, currentAnimation;
+    private Animation leftMove, rightMove, attackLeft, attackRight, idle, currentAnimation;
     private MSTimeController animationCtrlTimer = new MSTimeController();
 
-    public Slime() {
-        super(Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT, 1000, 4, 1);
+    public IceSlime() {
+        super(Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT, 5000, 8, 5);
         spottingRange = 512;
-        maxIdealRange = 128;
-        minIdealRange = 0; // melee
+        maxIdealRange = 384;
+        minIdealRange = 128;
         patrolRange = 512;
         giveUpRange = 1300;
         bounds.left = 0;
@@ -34,22 +33,26 @@ public class Slime extends Active {
         bounds.right = Tile.TILEWIDTH;
         bounds.bottom = Tile.TILEHEIGHT;
         faction = 1;
-        leftMove = new Animation(0.3f, Assets.slimeMovementLeft);
-        rightMove = new Animation(0.3f, Assets.slimeMovementRight);
-        idle = new Animation(0.3f, Assets.npcSlime);
+        leftMove = new Animation(0.6f, Assets.iceSlimeMovementLeft);
+        rightMove = new Animation(0.6f, Assets.iceSlimeMovementRight);
+        attackLeft = new Animation(0.3f, Assets.iceSlimeAttackLeft);
+        attackRight = new Animation(0.3f, Assets.iceSlimeAttackRight);
+        idle = new Animation(0.3f, Assets.ice_spike);
         currentAnimation = idle;
-        setEntityHealth(1);
+        setEntityHealth(5);
         currentAnimation = leftMove;
-        physicalDamage = 1; //no effect, as slime bash is hard coded to do only 1 damage
-        setDefence(0);
-        level = 1;
+        magicalDamage = 2; //no effect, as slime bash is hard coded to do only 1 damage
+        setDefence(1);
+        level = 3;
     }
+
 
     @Override
     protected void attack() {
-        attack.checkAttackCollision();
-        animationCtrlTimer.start(300);
-        currentAnimation = target.getX()-x < 0?attack.getOverridingAnimations().get(0):attack.getOverridingAnimations().get(1);
+        RangedAttack ra = (RangedAttack)attack;
+        ra.generateAttack(100, 100);
+        animationCtrlTimer.start(1000);
+        currentAnimation = target.getX()-x < 0?attackLeft:attackRight;
     }
 
     @Override
@@ -66,6 +69,7 @@ public class Slime extends Active {
         int left = (int)(x - handler.getGameCamera().getxOffset());
         int top = (int)(y - handler.getGameCamera().getyOffset());
         currentAnimation.draw(canvas, new Rect(left, top, left+width, top+height));
+        attack.draw(canvas);
     }
 
     @Override
@@ -77,16 +81,16 @@ public class Slime extends Active {
     @Override
     public void initialize(Handler handler, float x, float y, int oX, int oY) {
         super.initialize(handler, x, y, oX, oY);
-        attack = new SlimeBash(handler, this);
+        attack = new IceSpike(handler, () -> magicalDamage, this);
     }
 
     @Override
     public Bitmap getTexture(int xSize, int ySize) {
-        return ImageEditor.scaleBitmap(Assets.npcSlime[0], xSize, ySize);
+        return ImageEditor.scaleBitmap(Assets.iceSlimeMovementLeft[1], xSize, ySize);
     }
 
     @Override
     public String getName() {
-        return "Slime";
+        return "Slime (Ice)";
     }
 }

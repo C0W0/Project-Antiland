@@ -11,8 +11,8 @@ import com.walfen.antiland.untils.Utils;
 
 public class EntityGenerator extends CommandEntity {
 
-    private long lastGeneration, generationCooldown;
-    private int generatedEntity, spawnRange, criticalDensity;
+    protected long lastGeneration, generationCooldown;
+    protected int generatedEntity, spawnRange, criticalDensity;
 
     public EntityGenerator(Handler handler, int generatedEntity, int spawnRange, int criticalDensity, int generationSpeed, int id) {
         super(handler, id);
@@ -34,7 +34,7 @@ public class EntityGenerator extends CommandEntity {
         this.criticalDensity = criticalDensity;
     }
 
-    private void spawnEntity(){
+    protected void spawnEntity(){
         int locationX, locationY;
 
         while (true){
