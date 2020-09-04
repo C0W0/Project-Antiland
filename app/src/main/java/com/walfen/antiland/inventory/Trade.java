@@ -56,7 +56,7 @@ public class Trade implements TouchEventListener {
 
     private Item selectedItem;
 
-    public Trade(Handler handler, Inventory inventory) { //TODO: fix dragging empty item; put in item value
+    public Trade(Handler handler, Inventory inventory) { //TODO: put in item value
         this.handler = handler;
         inventoryItems = inventory.getInventoryItems();
         trade = ImageEditor.scaleBitmap(Assets.tradeScreen, Constants.UI_SCREEN_WIDTH, Constants.UI_SCREEN_HEIGHT);
@@ -145,10 +145,12 @@ public class Trade implements TouchEventListener {
         if (event.getActionMasked() == MotionEvent.ACTION_UP ||
                 event.getActionMasked() == MotionEvent.ACTION_POINTER_UP) {
             int pointerIndex = event.findPointerIndex(event.getPointerId(event.getActionIndex()));
-            dragging = false;
             fingerX = 0;
             fingerY = 0;
-            onRelease((int)event.getX(pointerIndex), (int)event.getY(pointerIndex));
+            if(dragging){
+                onRelease((int)event.getX(pointerIndex), (int)event.getY(pointerIndex));
+                dragging = false;
+            }
         }
     }
 
@@ -313,8 +315,8 @@ public class Trade implements TouchEventListener {
     }
 
     private void onRelease(int x, int y){
-        if((selling && shopRect.contains(x, y)) ||
-                (!selling && playerInvRect.contains(x, y))){
+        if(selectedItem != null && ((selling && shopRect.contains(x, y)) ||
+                (!selling && playerInvRect.contains(x, y)))){
             panel.openPanel(selectedItem);
         }
     }
@@ -384,14 +386,14 @@ public class Trade implements TouchEventListener {
             height = panel.getHeight();
             bounds = new Rect((int)x, (int)y, (int) (x+width), (int) (y+height));
 
-            slider = new Slider(Constants.SCREEN_WIDTH/2-192, Constants.SCREEN_HEIGHT/2-64,
+            slider = new Slider(Constants.SCREEN_WIDTH/2-192, Constants.SCREEN_HEIGHT/2-128,
                     384, 96, 100, 0, 10, "Count: ");
-            adjusterUp = new SliderAdjuster(Constants.SCREEN_WIDTH/2.f+200, Constants.SCREEN_HEIGHT/2.f-64,
+            adjusterUp = new SliderAdjuster(Constants.SCREEN_WIDTH/2.f+200, Constants.SCREEN_HEIGHT/2.f-128,
                     48, 48, 1, Assets.adjusterUp, slider);
-            adjusterDown = new SliderAdjuster(Constants.SCREEN_WIDTH/2.f+200, Constants.SCREEN_HEIGHT/2.f,
+            adjusterDown = new SliderAdjuster(Constants.SCREEN_WIDTH/2.f+200, Constants.SCREEN_HEIGHT/2.f-64,
                     48, 48, -1, Assets.adjusterDown, slider);
-            proceedButton = new TextButton(120.f/512*width+x, 296.f/384*height+y, 40, "Proceed", this::proceed);
-            cancelButton = new TextButton(386.f/512*width+x, 298.f/384*height+y, 40, "Cancel", this::closePanel);
+            proceedButton = new TextButton(120.f/512*width+x, 296.f/384*height+y, 40, "Proceed", Color.BLACK, this::proceed);
+            cancelButton = new TextButton(386.f/512*width+x, 298.f/384*height+y, 40, "Cancel", Color.BLACK, this::closePanel);
         }
 
         @Override
@@ -413,6 +415,13 @@ public class Trade implements TouchEventListener {
         @Override
         public void draw(Canvas canvas) {
             canvas.drawBitmap(panel, null, new Rect((int)x, (int)y, (int)(x+width), (int)(y+height)), Constants.getRenderPaint());
+            Paint paint = new Paint();
+            String cost = "Value: $"+(slider.getValue()*tradingItem.getValue());
+            paint.setTextSize(32);
+            paint.setFakeBoldText(true);
+            Rect r = new Rect();
+            paint.getTextBounds(cost, 0, cost.length(), r);
+            canvas.drawText(cost, x+width/2.f-r.width()/2.f, y+height/2.f+70, paint);
             slider.draw(canvas);
             adjusterUp.draw(canvas);
             adjusterDown.draw(canvas);
