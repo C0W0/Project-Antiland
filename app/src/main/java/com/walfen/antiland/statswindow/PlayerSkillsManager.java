@@ -213,6 +213,7 @@ public class PlayerSkillsManager implements TouchEventListener {
                 int arrID = (int)(hID/100);
                 int arrIndex = hID%100;
                 skillButtons[i].setSkill((ActiveSkill)lists[arrID].get(arrIndex));
+                activeSkillSlot[i].setSkill(lists[arrID].get(arrIndex));
             }
         }catch (IOException e){
             e.printStackTrace();
