@@ -33,7 +33,7 @@ public class KillTracker {
             topEntity = null;
         for(int i = 0; i < trackingTime.size(); i++){
             Entity e = trackingEntities.get(i);
-            if(e.getHealth() == 0){
+            if(e.getHealth() <= 0){
                 for(int j = 0; j < trackingTargetId.size(); j++){
                     if(e.getId() == trackingTargetId.get(j)){
                         int c = trackingTargetCount.get(j);
@@ -76,7 +76,7 @@ public class KillTracker {
 
     public int getTrackingCount(int id){
         int i = trackingTargetId.indexOf(id);
-        return trackingTargetCount.get(i);
+        return i>=0?trackingTargetCount.get(i):0;
     }
 
     public void resetKillTracking(){
