@@ -1,6 +1,7 @@
 package com.walfen.antiland.entities.creatures.npc;
 
 
+import android.graphics.Canvas;
 import android.graphics.Rect;
 
 import com.walfen.antiland.Constants;
@@ -56,6 +57,16 @@ public abstract class NPC extends Creature {
             }
         }
     }
+
+    @Override
+    public void draw(Canvas canvas) {
+        drawHeadSign(canvas);
+        drawEntity(canvas);
+    }
+
+    protected abstract void drawHeadSign(Canvas canvas);
+
+    protected abstract void drawEntity(Canvas canvas);
 
     protected void setInteractType(int type){
         interactType = type;

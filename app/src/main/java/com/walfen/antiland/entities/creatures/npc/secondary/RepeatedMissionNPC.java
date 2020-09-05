@@ -1,7 +1,9 @@
 package com.walfen.antiland.entities.creatures.npc.secondary;
 
 import android.graphics.Canvas;
+import android.graphics.Rect;
 
+import com.walfen.antiland.Constants;
 import com.walfen.antiland.entities.creatures.npc.NPC;
 import com.walfen.antiland.gfx.Assets;
 import com.walfen.antiland.mission.Mission;
@@ -48,6 +50,26 @@ public abstract class RepeatedMissionNPC extends NPC {
         ArrayList<Conversation> c = getAssigningConversation();
         uiManager.getConvBox().setConversationList(c, () -> {assignMission(); convBoxOn = false;});
         uiManager.getConvBox().setActive();
+    }
+
+    @Override
+    protected void drawHeadSign(Canvas canvas) {
+        int iX = (int)(x+width/2-32-handler.getGameCamera().getxOffset());
+        int iY = (int)(y-68-handler.getGameCamera().getyOffset());
+        Rect destRect = new Rect(iX, iY, iX+64, iY+64);
+        if(handler.getPlayer().getMissionManager().hasMission(missionID)){
+            if(Mission.missions[missionID].isCompleted()){
+                canvas.drawBitmap(Assets.headSignOrange, null, destRect, Constants.getRenderPaint());
+                canvas.drawBitmap(Assets.hsoMissionComplete, null, destRect, Constants.getRenderPaint());
+            }else {
+                canvas.drawBitmap(Assets.headSignGray, null, destRect, Constants.getRenderPaint());
+                canvas.drawBitmap(Assets.hsgMissionComplete, null, destRect, Constants.getRenderPaint());
+            }
+        }else {
+            canvas.drawBitmap(Assets.headSignOrange, null, destRect, Constants.getRenderPaint());
+            canvas.drawBitmap(Assets.hsoGetMission, null, destRect, Constants.getRenderPaint());
+            //TODO: check if mission requirement meet and display orange or gray sign accordingly
+        }
     }
 
     private void assignMission() {

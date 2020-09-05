@@ -43,6 +43,8 @@ public class Assets {
     public static Bitmap greyDisk;
     public static Bitmap switchFlip, close;
     public static Bitmap save, chat, operate, tradeInteract;
+    public static Bitmap headSignOrange, headSignGray, hsoMissionComplete, hsgMissionComplete;
+    public static Bitmap hsoGetMission, hsgGetMission, hsoTrade, hsgTrade;
 
     //entities
     public static Bitmap tree;
@@ -83,6 +85,7 @@ public class Assets {
         SpriteSheet items = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.items));
         SpriteSheet iceSlimeMovement = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.ice_slime_movement));
         SpriteSheet iceSlimeAttack = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.ice_slime_attack));
+        SpriteSheet headSignSheet = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.head_sign));
 
         grass = newTownTiles.crop(width*11,0,width,height);
         grassStone = sheet1.crop(width*3,height,width,height);
@@ -259,6 +262,16 @@ public class Assets {
         horizontalTickMark = sheet1.crop(width*5, height, width, height);
         adjusterUp = sheet1.crop(width*6, 0, width, height);
         adjusterDown = sheet1.crop(width*7, 0, width, height);
+
+        //headSign
+        headSignOrange = headSignSheet.crop(0, 0, 64, 64);
+        headSignGray = headSignSheet.crop(0, 64, 64, 64);
+        hsoGetMission = headSignSheet.crop(64, 0, 64, 64);
+        hsgGetMission = headSignSheet.crop(64, 64, 64, 64);
+        hsoMissionComplete = headSignSheet.crop(64*2, 0, 64, 64);
+        hsgMissionComplete = headSignSheet.crop(64*2, 64, 64, 64);
+        hsoTrade = headSignSheet.crop(64*3, 0, 64, 64);
+        hsgTrade = headSignSheet.crop(64*3, 64, 64, 64);
 
         //skills
         //icon circle: RGB: 233, 233, 233; 128*128, 4pt

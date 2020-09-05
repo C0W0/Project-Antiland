@@ -59,7 +59,7 @@ public class NPC1 extends RepeatedMissionNPC {
     }
 
     @Override
-    public void draw(Canvas canvas) {
+    protected void drawEntity(Canvas canvas) {
         int left = (int)(x - handler.getGameCamera().getxOffset());
         int top = (int)(y - handler.getGameCamera().getyOffset());
         dynamicTexture.draw(canvas, new Rect(left, top, left+width, top+height));

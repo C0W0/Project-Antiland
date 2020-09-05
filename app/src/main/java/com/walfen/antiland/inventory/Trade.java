@@ -56,7 +56,7 @@ public class Trade implements TouchEventListener {
 
     private Item selectedItem;
 
-    public Trade(Handler handler, Inventory inventory) { //TODO: put in item value
+    public Trade(Handler handler, Inventory inventory) {
         this.handler = handler;
         inventoryItems = inventory.getInventoryItems();
         trade = ImageEditor.scaleBitmap(Assets.tradeScreen, Constants.UI_SCREEN_WIDTH, Constants.UI_SCREEN_HEIGHT);

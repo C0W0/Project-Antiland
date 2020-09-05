@@ -1,7 +1,12 @@
 package com.walfen.antiland.entities.creatures.npc.trader;
 
+import android.graphics.Canvas;
+import android.graphics.Rect;
+
+import com.walfen.antiland.Constants;
 import com.walfen.antiland.Handler;
 import com.walfen.antiland.entities.creatures.npc.NPC;
+import com.walfen.antiland.gfx.Assets;
 import com.walfen.antiland.items.Item;
 
 import java.util.ArrayList;
@@ -22,6 +27,16 @@ public abstract class Trader extends NPC {
     protected void interact() {
         if(!handler.getPlayer().getTrade().isActive())
             handler.getPlayer().getTrade().openShop(this);
+    }
+
+    @Override
+    protected void drawHeadSign(Canvas canvas) {
+        int iX = (int)(x+width/2-32-handler.getGameCamera().getxOffset());
+        int iY = (int)(y-68-handler.getGameCamera().getyOffset());
+        Rect destRect = new Rect(iX, iY, iX+64, iY+64);
+        canvas.drawBitmap(Assets.headSignOrange, null, destRect, Constants.getRenderPaint());
+        canvas.drawBitmap(Assets.hsoTrade, null, destRect, Constants.getRenderPaint());
+        //TODO: check if store requirement meet and display orange or gray sign accordingly
     }
 
     public static class TraderInvManager{

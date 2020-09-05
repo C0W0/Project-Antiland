@@ -29,7 +29,7 @@ public class MushroomTrader extends Trader {
     }
 
     @Override
-    public void draw(Canvas canvas) {
+    protected void drawEntity(Canvas canvas) {
         int left = (int)(x - handler.getGameCamera().getxOffset());
         int top = (int)(y - handler.getGameCamera().getyOffset());
         canvas.drawBitmap(Assets.npcMushroom[0], null, new Rect(left, top, left+width, top+height), Constants.getRenderPaint());
