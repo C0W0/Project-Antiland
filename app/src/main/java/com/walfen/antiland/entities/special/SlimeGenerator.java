@@ -20,7 +20,7 @@ public class SlimeGenerator extends EntityGenerator {
             if(!handler.getWorld().getTile(locationX/128, locationX/128).isBarrier())
                 break;
         }
-        int ge = Math.random()<0.1?generatedEntity:iceSlime.getId();
+        int ge = Math.random()>0.1?generatedEntity:iceSlime.getId();
         Entity e = Entity.entityList[ge].clone();
         e.initialize(handler, locationX, locationY, locationX, locationY);
         handler.getWorld().getEntityManager().addEntityHot(e);
