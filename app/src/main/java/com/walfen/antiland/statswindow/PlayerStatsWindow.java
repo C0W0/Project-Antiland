@@ -8,11 +8,15 @@ import android.view.MotionEvent;
 
 import com.walfen.antiland.Constants;
 import com.walfen.antiland.Handler;
+import com.walfen.antiland.entities.properties.effect.StatusEffect;
 import com.walfen.antiland.gfx.Assets;
 import com.walfen.antiland.gfx.ImageEditor;
 import com.walfen.antiland.ui.bars.BarB;
 import com.walfen.antiland.ui.TouchEventListener;
 import com.walfen.antiland.ui.buttons.UIImageButton;
+import com.walfen.antiland.ui.decorative.UIDecoration;
+
+import java.util.ArrayList;
 
 public class PlayerStatsWindow implements TouchEventListener {
 
@@ -27,6 +31,9 @@ public class PlayerStatsWindow implements TouchEventListener {
     private BarB xpBar, hpBar, mpBar;
 
     private UIImageButton switchButton, closeButton;
+
+    private int statusIconBaseX, statusIconBaseY, statusIconXCount;
+    private ArrayList<StatusIcon> icons;
 
     private final Bitmap statsScreen;
 
@@ -56,6 +63,9 @@ public class PlayerStatsWindow implements TouchEventListener {
         defenceY = (int)(330*yRatio+yDispute);
         physNumX = (int)(92*xRatio+xDispute);
         magNumX = (int)(184*xRatio+xDispute);
+        statusIconXCount = (int)(188*xRatio/70);
+        statusIconBaseX = (int)(290*xRatio+xDispute);
+        statusIconBaseY = (int)(109*yRatio+yDispute);
         int xpBarX, xpBarY, hpBarX, hpBarY, mpBarX, mpBarY;
         int xpBarWidth, hpBarWidth, mpBarWidth, barHeight;
         xpBarX = (int)(113*xRatio+xDispute);
@@ -80,6 +90,7 @@ public class PlayerStatsWindow implements TouchEventListener {
         switchButton = new UIImageButton(xDispute, yDispute + statsHeight - Constants.UI_CLOSE_SIZE,
                 Constants.UI_CLOSE_SIZE, Constants.UI_CLOSE_SIZE,
                 Assets.switchFlip, () -> handler.getPlayer().getSkillsManager().setActive());
+        icons = new ArrayList<>();
     }
 
 
@@ -102,6 +113,12 @@ public class PlayerStatsWindow implements TouchEventListener {
     public void update() {
         if(!active)
             return;
+        for(int i = 0; i < icons.size(); i++){
+            if(!icons.get(i).getEffect().isValid()){
+                icons.remove(i);
+                i --;
+            }
+        }
         xpBar.update();
         hpBar.update();
         mpBar.update();
@@ -163,6 +180,9 @@ public class PlayerStatsWindow implements TouchEventListener {
         paint.getTextBounds(text, 0, text.length(), r);
         canvas.drawText(text, magNumX-r.width()/2.f, defenceY+2+r.height()/2.f, paint);
 
+        for(StatusIcon si: icons)
+            si.draw(canvas);
+
         xpBar.draw(canvas);
         hpBar.draw(canvas);
         mpBar.draw(canvas);
@@ -182,5 +202,10 @@ public class PlayerStatsWindow implements TouchEventListener {
 
     public boolean isActive() {
         return active;
+    }
+
+    public void addStatusIcon(StatusEffect effect){
+        StatusIcon icon = new StatusIcon((icons.size()%statusIconXCount)*70+statusIconBaseX, 70*(icons.size()/statusIconXCount)+statusIconBaseY, effect);
+        icons.add(icon);
     }
 }

@@ -12,6 +12,7 @@ import com.walfen.antiland.entities.properties.attack.Attack;
 import com.walfen.antiland.entities.properties.attack.rangedAttacks.PlayerDefaultAttack;
 import com.walfen.antiland.entities.properties.attack.rangedAttacks.RangedAttack;
 import com.walfen.antiland.entities.properties.effect.Shield;
+import com.walfen.antiland.entities.properties.effect.StatusEffect;
 import com.walfen.antiland.gfx.Animation;
 import com.walfen.antiland.gfx.Assets;
 import com.walfen.antiland.gfx.ImageEditor;
@@ -25,6 +26,7 @@ import com.walfen.antiland.mission.MissionManager;
 import com.walfen.antiland.mission.killing.KillTracker;
 import com.walfen.antiland.statswindow.PlayerSkillsManager;
 import com.walfen.antiland.statswindow.PlayerStatsWindow;
+import com.walfen.antiland.statswindow.StatusIcon;
 import com.walfen.antiland.ui.ChangeEvent;
 import com.walfen.antiland.ui.TouchEventListener;
 import com.walfen.antiland.ui.buttons.UIImageButton;
@@ -336,6 +338,12 @@ public class Player extends Creature implements TouchEventListener {
         skillsManager.draw(canvas);
         statsWindow.draw(canvas);
         trade.draw(canvas);
+    }
+
+    @Override
+    public void addEffect(StatusEffect effect) {
+        super.addEffect(effect);
+        statsWindow.addStatusIcon(effect);
     }
 
     public void savePlayer(String path) throws IOException{

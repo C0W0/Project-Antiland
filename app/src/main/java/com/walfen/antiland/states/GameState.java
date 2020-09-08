@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.walfen.antiland.Constants;
 import com.walfen.antiland.Handler;
 import com.walfen.antiland.entities.creatures.Player;
+import com.walfen.antiland.entities.properties.effect.special.BraveHeart;
 import com.walfen.antiland.entities.properties.effect.special.Stung;
 import com.walfen.antiland.gfx.Assets;
 import com.walfen.antiland.ui.bars.BarA;
@@ -147,5 +148,6 @@ public class GameState extends State {
     private void test(){
 //        uiManager.popUpAction("\"Can you still move?\" A weird and spooky voices wakes you up from inside.", "...",
 //                () -> uiManager.activeTutorial("Tutorial: Use the left joystick to move around", uiManager.getMovementJoystick().getBounds()));
+        player.addEffect(new BraveHeart(player, 5000, 5));
     }
 }
