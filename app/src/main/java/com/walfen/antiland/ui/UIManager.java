@@ -310,11 +310,9 @@ public class UIManager implements TouchEventListener{
             buttons = new ArrayList<>();
             yLocation = 64;
             buttonJustPressed = true;
-            System.out.println("closed");
         }
 
         private void activatePopup(String message, String[] options, ClickListener[] effects, boolean raw){
-            System.out.println("opened");
             active = true;
             this.message = message;
             if(raw){

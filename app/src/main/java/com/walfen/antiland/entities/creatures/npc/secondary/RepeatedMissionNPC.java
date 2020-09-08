@@ -45,11 +45,7 @@ public abstract class RepeatedMissionNPC extends NPC {
             return;
         }
         convBoxOn = true;
-        UIManager uiManager = handler.getUIManager();
-        uiManager.hideUI();
-        ArrayList<Conversation> c = getAssigningConversation();
-        uiManager.getConvBox().setConversationList(c, () -> {assignMission(); convBoxOn = false;});
-        uiManager.getConvBox().setActive();
+        assignConversationProcedure(handler.getUIManager());
     }
 
     @Override
@@ -72,11 +68,11 @@ public abstract class RepeatedMissionNPC extends NPC {
         }
     }
 
-    private void assignMission() {
+    protected void assignMission() {
         handler.getPlayer().getMissionManager().addMission(missionID);
     }
 
-    protected abstract ArrayList<Conversation> getAssigningConversation();
+    protected abstract void assignConversationProcedure(UIManager manager);
 
     protected abstract ArrayList<Conversation> getIncompleteConversation();
 

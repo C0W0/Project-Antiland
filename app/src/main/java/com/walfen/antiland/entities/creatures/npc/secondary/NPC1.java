@@ -9,6 +9,8 @@ import com.walfen.antiland.entities.creatures.Creature;
 import com.walfen.antiland.gfx.Animation;
 import com.walfen.antiland.gfx.Assets;
 import com.walfen.antiland.gfx.ImageEditor;
+import com.walfen.antiland.ui.ClickListener;
+import com.walfen.antiland.ui.UIManager;
 import com.walfen.antiland.ui.conversation.Conversation;
 
 import java.util.ArrayList;
@@ -28,16 +30,6 @@ public class NPC1 extends RepeatedMissionNPC {
     public void receiveDamage(int num, int type) {}
 
     @Override
-    protected ArrayList<Conversation> getAssigningConversation() {
-        ArrayList<Conversation> c = new ArrayList<>();
-        c.add(new Conversation("We are suffering from increasing number of slime attacks.", Assets.npcCrab[0], false));
-        c.add(new Conversation("What?! How can I help?", Assets.player_neutral, true));
-        c.add(new Conversation("Go down to the forests and kills 5 of them to decrease their number. " +
-                "Once you finish with them come back to me. I have some rewards for you.", Assets.npcCrab[0], false));
-        return c;
-    }
-
-    @Override
     protected ArrayList<Conversation> getIncompleteConversation() {
         ArrayList<Conversation> c = new ArrayList<>();
         c.add(new Conversation("You haven't complete the mission yet. Come back to me later.", Assets.npcCrab[0], false));
@@ -50,6 +42,25 @@ public class NPC1 extends RepeatedMissionNPC {
         c.add(new Conversation("Thanks for your help.", Assets.npcCrab[0], false));
         c.add(new Conversation("My duty.", Assets.player_neutral, true));
         return c;
+    }
+
+    @Override
+    protected void assignConversationProcedure(UIManager manager) {
+        manager.hideUI();
+        ArrayList<Conversation> c = new ArrayList<>();
+        ArrayList<Conversation> c2 = new ArrayList<>();
+        c.add(new Conversation("We are suffering from increasing number of slime attacks.", Assets.npcCrab[0], false));
+        manager.getConvBox().setConversationList(c, () -> {convBoxOn = false;
+        manager.popUpOptions("How would you reply?", new String[]{"(Simply walk away)", "How can I help?"}, new ClickListener[]{() -> {},
+                () -> {
+            c2.add(new Conversation("How can I help?",  Assets.player_neutral, true));
+            c2.add((new Conversation("Go down to the forests and kills 5 of them to decrease their number. " +
+                    "Once you finish with them come back to me. I have some rewards for you.", Assets.npcCrab[0], false)));
+            manager.hideUI();
+            manager.getConvBox().setConversationList(c2, () -> {assignMission(); convBoxOn = false;});
+            manager.getConvBox().setActive();
+        }}, false);});
+        manager.getConvBox().setActive();
     }
 
     @Override
