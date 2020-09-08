@@ -213,6 +213,7 @@ public abstract class Creature extends Entity {
     }
 
     public void addEffect(StatusEffect effect){
+        effect.onEffectActive();
         effects.add(effect);
     }
 
