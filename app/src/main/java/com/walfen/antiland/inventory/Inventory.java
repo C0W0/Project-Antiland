@@ -85,10 +85,10 @@ public class Inventory implements TouchEventListener {
         useButton = new UIImageButton(362.f/512*invWidth+xDispute, 146.f/384*invHeight+yDispute,
                 (int) (32.f/512*invWidth), (int) (16.f/384*invHeight),
                 new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, this::use);
-        fabSwitchButton = new UIImageButton(xDispute, yDispute*2+invHeight-itemBaseY,
+        fabSwitchButton = new UIImageButton(xDispute+5, yDispute+invHeight-Constants.UI_CLOSE_SIZE-5,
                 Constants.UI_CLOSE_SIZE, Constants.UI_CLOSE_SIZE,
                 Assets.switchFlip, () -> handler.getPlayer().getFabricator().setActive());
-        closeButton = new UIImageButton(xDispute*2+invWidth-itemBaseX, yDispute,
+        closeButton = new UIImageButton(xDispute+invWidth-Constants.UI_CLOSE_SIZE, yDispute,
                 Constants.UI_CLOSE_SIZE, Constants.UI_CLOSE_SIZE,
                 Assets.close, () -> setActive(false));
     }

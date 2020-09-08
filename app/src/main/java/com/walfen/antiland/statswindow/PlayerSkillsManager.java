@@ -109,11 +109,11 @@ public class PlayerSkillsManager implements TouchEventListener {
         }
         skillUIObjects.addAll(Arrays.asList(activeSkillSlot));
 
-        closeButton = new UIImageButton(xDispute + skillWidth - Constants.UI_CLOSE_SIZE, yDispute,
+        closeButton = new UIImageButton(xDispute + skillWidth - Constants.UI_CLOSE_SIZE, yDispute+15,
                 Constants.UI_CLOSE_SIZE, Constants.UI_CLOSE_SIZE,
                 Assets.close, () -> setActive(false));
-        switchButton = new UIImageButton(xDispute, yDispute + skillHeight - Constants.UI_CLOSE_SIZE,
-                Constants.UI_CLOSE_SIZE, Constants.UI_CLOSE_SIZE,
+        switchButton = new UIImageButton(xDispute+5, yDispute + skillHeight - Constants.UI_CLOSE_SIZE +5,
+                Constants.UI_CLOSE_SIZE-10, Constants.UI_CLOSE_SIZE-10,
                 Assets.switchFlip, this::setActive);
 
         skillIconSize *= 1.2;

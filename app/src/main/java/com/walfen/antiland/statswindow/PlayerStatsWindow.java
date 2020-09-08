@@ -84,11 +84,11 @@ public class PlayerStatsWindow implements TouchEventListener {
                 () -> handler.getPlayer().getMaxHp(), () -> handler.getPlayer().getHealth());
         mpBar = new BarB(mpBarX, mpBarY, mpBarWidth, barHeight, Assets.mp_bar,
                 () -> handler.getPlayer().getMaxMp(), () -> handler.getPlayer().getMp());
-        closeButton = new UIImageButton(xDispute + statsWidth - Constants.UI_CLOSE_SIZE, yDispute,
+        closeButton = new UIImageButton(xDispute + statsWidth - Constants.UI_CLOSE_SIZE, yDispute+15,
                 Constants.UI_CLOSE_SIZE, Constants.UI_CLOSE_SIZE,
                 Assets.close, () -> setActive(false));
-        switchButton = new UIImageButton(xDispute, yDispute + statsHeight - Constants.UI_CLOSE_SIZE,
-                Constants.UI_CLOSE_SIZE, Constants.UI_CLOSE_SIZE,
+        switchButton = new UIImageButton(xDispute+5, yDispute + statsHeight - Constants.UI_CLOSE_SIZE + 5,
+                Constants.UI_CLOSE_SIZE-10, Constants.UI_CLOSE_SIZE-10,
                 Assets.switchFlip, () -> handler.getPlayer().getSkillsManager().setActive());
         icons = new ArrayList<>();
     }

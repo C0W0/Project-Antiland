@@ -62,10 +62,10 @@ public class Fabricator implements TouchEventListener {
                 321.f / 384 * inventory.invHeight + inventory.yDispute,
                 (int) (170.f / 512 * inventory.invWidth), (int) (18.f / 384 * inventory.invHeight),
                 new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, this::craft);
-        invSwitchButton = new UIImageButton(inventory.xDispute, inventory.yDispute*2+inventory.invHeight-recipeBaseY,
+        invSwitchButton = new UIImageButton(inventory.xDispute+5, inventory.yDispute+inventory.invHeight-Constants.UI_CLOSE_SIZE-5,
                 Constants.UI_CLOSE_SIZE, Constants.UI_CLOSE_SIZE,
                 Assets.switchFlip, this::setActive);
-        closeButton = new UIImageButton(inventory.xDispute*2+inventory.invWidth-recipeBaseX, inventory.yDispute,
+        closeButton = new UIImageButton(inventory.xDispute+inventory.invWidth-Constants.UI_CLOSE_SIZE, inventory.yDispute,
                 Constants.UI_CLOSE_SIZE, Constants.UI_CLOSE_SIZE,
                 Assets.close, () -> setActive(false));
         loadRecipes(recipeFilePath);

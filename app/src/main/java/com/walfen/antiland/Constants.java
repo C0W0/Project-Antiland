@@ -43,7 +43,7 @@ public class Constants {
     public static void init(){
         UI_SCREEN_WIDTH = SCREEN_WIDTH - 200;
         UI_SCREEN_HEIGHT = SCREEN_HEIGHT - 100;
-        UI_CLOSE_SIZE = (int)(54.f/384*UI_SCREEN_HEIGHT);
+        UI_CLOSE_SIZE = (int)(44.f/384*UI_SCREEN_HEIGHT);
         iconSize = (int)(32.f/512* ImageEditor.scaleBitmap(Assets.craftingScreen,
                 UI_SCREEN_WIDTH, UI_SCREEN_HEIGHT).getWidth());
     }
