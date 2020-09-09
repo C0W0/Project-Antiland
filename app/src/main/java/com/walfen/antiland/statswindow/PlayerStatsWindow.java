@@ -8,6 +8,8 @@ import android.view.MotionEvent;
 
 import com.walfen.antiland.Constants;
 import com.walfen.antiland.Handler;
+import com.walfen.antiland.entities.creatures.Player;
+import com.walfen.antiland.entities.properties.effect.Shield;
 import com.walfen.antiland.entities.properties.effect.StatusEffect;
 import com.walfen.antiland.gfx.Assets;
 import com.walfen.antiland.gfx.ImageEditor;
@@ -15,7 +17,12 @@ import com.walfen.antiland.ui.bars.BarB;
 import com.walfen.antiland.ui.TouchEventListener;
 import com.walfen.antiland.ui.buttons.UIImageButton;
 import com.walfen.antiland.ui.decorative.UIDecoration;
+import com.walfen.antiland.untils.Utils;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class PlayerStatsWindow implements TouchEventListener {
@@ -91,6 +98,35 @@ public class PlayerStatsWindow implements TouchEventListener {
                 Constants.UI_CLOSE_SIZE-10, Constants.UI_CLOSE_SIZE-10,
                 Assets.switchFlip, () -> handler.getPlayer().getSkillsManager().setActive());
         icons = new ArrayList<>();
+    }
+
+    public void initStatusEffect(String path, Player player){
+        File statusFile = new File(path+"/player/effects.wld");
+        ArrayList<String> tokens;
+        try {
+            tokens = Utils.loadFileAsArrayList(new FileInputStream(statusFile));
+            int count = Utils.parseInt(tokens.get(0));
+            for(int i = 1; i < count+1; i++){
+                String[] token = tokens.get(i).split("\\s+");
+                int id = Utils.parseInt(token[0]);
+                long duration = Utils.parseLong(token[1]);
+                if(id == -127){ // special effects such as shields are negative number
+                    int durability = Utils.parseInt(token[2]);
+                    int[] dmgModifier = new int[token.length-3];
+                    for(int j = 3; j < token.length; j++)
+                        dmgModifier[j-3] = Utils.parseInt(token[j]);
+                    player.setShield(new Shield(durability, duration, dmgModifier));
+                }else {
+                    System.out.println(id);
+                    System.out.println(StatusEffect.statusEffects[id]);
+                    StatusEffect e = StatusEffect.statusEffects[id].clone();
+                    e.initialize(player, duration);
+                    player.addEffect(e);
+                }
+            }
+        }catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
 
@@ -188,6 +224,32 @@ public class PlayerStatsWindow implements TouchEventListener {
         mpBar.draw(canvas);
         closeButton.draw(canvas);
         switchButton.draw(canvas);
+    }
+
+    public void saveStatusEffect(String path, Player player) throws IOException{
+        File effectFile = new File(path+"/player/effects.wld");
+        effectFile.delete();
+        effectFile.createNewFile();
+        PrintWriter editor = new PrintWriter(effectFile);
+        int length = player.getEffects().size();
+        editor.println(length+(player.getShield()==null?0:1));
+        System.out.println(length+(player.getShield()==null?0:1));
+        for(StatusEffect e: player.getEffects()){
+            System.out.println(e.getId()+" "+e.getMSRemainingDuration());
+            editor.println(e.getId()+" "+e.getMSRemainingDuration());
+        }
+        if(player.getShield() != null){
+            Shield shield = player.getShield();
+            editor.print("-127 "+shield.getMSRemainingDuration()+" "+shield.getDurability()+" ");
+            System.out.println("-127 "+shield.getMSRemainingDuration()+" "+shield.getDurability()+" ");
+            int[] dmgPercentMod = shield.getDmgPercentMod();
+            for(int i = 0; i < dmgPercentMod.length; i++){
+                System.out.print(dmgPercentMod[i]+" ");
+                editor.print(dmgPercentMod[i]+" ");
+            }
+            editor.println();
+        }
+        editor.close();
     }
 
     public void setActive(){

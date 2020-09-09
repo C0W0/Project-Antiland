@@ -130,6 +130,15 @@ public class Utils {
         }
     }
 
+    public static long parseLong(String number){
+        try {
+            return Long.parseLong(number);
+        }catch (NumberFormatException e){
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
     public static float getDistance(Entity eA, Entity eB){
         return (float)Math.sqrt(Math.pow(eA.getX() - eB.getX(), 2) + Math.pow(eA.getY() - eB.getY(), 2));
     }

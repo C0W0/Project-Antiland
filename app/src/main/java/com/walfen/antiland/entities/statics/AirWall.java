@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
 import com.walfen.antiland.Handler;
+import com.walfen.antiland.gfx.Assets;
 import com.walfen.antiland.tiles.Tile;
 
 public class AirWall extends StaticEntity{
@@ -37,7 +38,7 @@ public class AirWall extends StaticEntity{
 
     @Override
     public Bitmap getTexture(int xSize, int ySize) {
-        return null;
+        return Assets.NULL;
     }
 
     @Override

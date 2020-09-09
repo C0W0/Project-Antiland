@@ -82,7 +82,7 @@ public class MenuState extends State {
     private void createNewSaveDocument(){
         String tileName = "tiles.wld", entityName = "entity.wld",
                 playerName = "player.wld", inventoryName = "inventory.wld",
-        missionName = "missions.wld", skillName = "skills.wld";
+        missionName = "missions.wld", skillName = "skills.wld", statusName = "effects.wld";
         try {
             Utils.deleteDirectoryFiles(new File(Constants.DIR+"/main"));
             Utils.deleteDirectoryFiles(new File(Constants.DIR+"/auto"));
@@ -110,12 +110,14 @@ public class MenuState extends State {
             copyFileFromAssets(Constants.DIR+"/main/player", inventoryName);
             copyFileFromAssets(Constants.DIR+"/main/player", missionName);
             copyFileFromAssets(Constants.DIR+"/main/player", skillName);
+            copyFileFromAssets(Constants.DIR+"/main/player", statusName);
             copyFileFromAssets(Constants.DIR+"/auto", tileName);
             copyFileFromAssets(Constants.DIR+"/auto", entityName);
             copyFileFromAssets(Constants.DIR+"/auto/player", playerName);
             copyFileFromAssets(Constants.DIR+"/auto/player", inventoryName);
             copyFileFromAssets(Constants.DIR+"/auto/player", missionName);
             copyFileFromAssets(Constants.DIR+"/auto/player", skillName);
+            copyFileFromAssets(Constants.DIR+"/auto/player", statusName);
         }catch (IOException e){
             uiManager.popUpMessage("Game file corrupted, please re-install the game");
             e.printStackTrace();
@@ -141,14 +143,14 @@ public class MenuState extends State {
     private void copyFileFromAssets(String path, String fileName) throws IOException {
         //copying all entity and tile files from assets folder
         //using a for loop and name files as tiles1, tile2,.etc?
-        ArrayList<String> tiles = Utils.loadFileAsArrayList(fileName);
+        ArrayList<String> lines = Utils.loadFileAsArrayList(fileName);
         File file = new File(path+"/"+fileName);
         if(file.exists()){
             file.delete();
             file.createNewFile();
         }
         PrintWriter writer = new PrintWriter(file);
-        for(String str: tiles)
+        for(String str: lines)
             writer.println(str);
         writer.close();
     }

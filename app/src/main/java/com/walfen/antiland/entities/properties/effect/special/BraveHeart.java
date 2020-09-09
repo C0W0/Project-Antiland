@@ -8,9 +8,13 @@ public class BraveHeart extends StatusEffect {
     private int defenceDelta, physAttackDelta;
 
     public BraveHeart(Player player, long activeDuration, int level) {
-        super(player, activeDuration);
+        super(player, activeDuration, 11);
         defenceDelta = player.getDefence()*level/10;
         physAttackDelta = player.getDefence()*level/5;
+    }
+
+    public BraveHeart(){
+        super(11);
     }
 
     @Override

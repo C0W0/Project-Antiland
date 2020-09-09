@@ -9,8 +9,12 @@ public class ArmourDebuff extends StatusEffect {
     private float percentDeduction;
 
     public ArmourDebuff(Creature carrier, long activeDuration, float percentDeduction) {
-        super(carrier, activeDuration);
+        super(carrier, activeDuration, 2);
         this.percentDeduction = percentDeduction;
+    }
+
+    public ArmourDebuff(){
+        super(2);
     }
 
     @Override

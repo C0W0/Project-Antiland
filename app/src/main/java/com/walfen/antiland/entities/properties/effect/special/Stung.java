@@ -6,7 +6,11 @@ import com.walfen.antiland.entities.properties.effect.StatusEffect;
 public class Stung extends StatusEffect {
 
     public Stung(Creature carrier, long activeDuration) {
-        super(carrier, activeDuration);
+        super(carrier, activeDuration, 1);
+    }
+
+    public Stung(){
+        super(1);
     }
 
     @Override

@@ -4,6 +4,8 @@ package com.walfen.antiland.entities;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 
+import androidx.annotation.NonNull;
+
 import com.walfen.antiland.GameHierarchyElement;
 import com.walfen.antiland.Handler;
 import com.walfen.antiland.entities.creatures.active.IceSlime;
@@ -19,6 +21,18 @@ import com.walfen.antiland.entities.statics.Tree;
 import com.walfen.antiland.untils.Utils;
 
 public abstract class Entity implements GameHierarchyElement, Cloneable {
+
+    /* Entity id:
+    AirWall: 1
+    Tree: 2
+    NPC1 (mission crab): 3
+    Slime: 4
+    WandererCrab (trade crab): 5
+    MushroomTrader: 6
+    SlimeSpawner: 7
+    IceSlime: 8
+    (UPDATE HERE)
+     */
 
     public static Entity[] entityList = new Entity[256];
     public static AirWall airWall = new AirWall();
@@ -120,6 +134,7 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
         return Utils.getDistance(this, e) <= distance;
     }
 
+    @NonNull
     @Override
     public Entity clone() {
         Entity result = null;

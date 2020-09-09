@@ -77,6 +77,7 @@ public class GameState extends State {
         initDefaultUI();
         handler.setWorld(world);
         player.getSkillsManager().initSkills(path, uiManager);
+        player.getStatsWindow().initStatusEffect(path, player);
     }
 
     private void initDefaultUI(){

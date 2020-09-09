@@ -11,6 +11,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import com.walfen.antiland.entities.Entity;
+import com.walfen.antiland.entities.properties.effect.StatusEffect;
 import com.walfen.antiland.gfx.Assets;
 import com.walfen.antiland.gfx.GameCamera;
 import com.walfen.antiland.items.Item;
@@ -79,6 +80,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback, Ke
         Item.initItems(handler);
         Entity.initEntities(handler);
         Tile.initTiles();
+        StatusEffect.initEffects();
     }
 
     @Override

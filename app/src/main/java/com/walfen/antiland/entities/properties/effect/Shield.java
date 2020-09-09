@@ -5,8 +5,7 @@ import java.util.Arrays;
 public class Shield {
 
     protected int[] dmgPercentMod;
-    protected int maxDurability;
-    protected int durability;
+    protected int maxDurability, durability;
     protected long shieldActiveTime, shieldActiveDuration;
 
     public Shield(int durability, long shieldActiveDuration, int... dmgPercentMod){
@@ -33,6 +32,20 @@ public class Shield {
         return System.currentTimeMillis() - shieldActiveTime < shieldActiveDuration;
     }
 
+    public String getRemainingDuration(){
+        int second = (int)((getMSRemainingDuration()+500)/1000);
+        int minute = second/60;
+        second %= 60;
+        if(second < 10)
+            return minute+":0"+second;
+        else
+            return minute+":"+second;
+    }
+
+    public long getMSRemainingDuration(){
+        return shieldActiveDuration+shieldActiveTime-System.currentTimeMillis();
+    }
+
     public boolean isShieldStillUp(){
         return durability > 0;
     }
@@ -52,5 +65,9 @@ public class Shield {
 
     public int getMaxDurability() {
         return maxDurability;
+    }
+
+    public int[] getDmgPercentMod() {
+        return dmgPercentMod;
     }
 }
