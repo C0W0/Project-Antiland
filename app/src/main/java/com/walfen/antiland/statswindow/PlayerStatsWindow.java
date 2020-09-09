@@ -197,31 +197,6 @@ public class PlayerStatsWindow implements TouchEventListener {
         switchButton.draw(canvas);
     }
 
-    public void saveStatusEffect(String path, Player player) throws IOException{
-        File effectFile = new File(path+"/player/effects.wld");
-        effectFile.delete();
-        effectFile.createNewFile();
-        PrintWriter editor = new PrintWriter(effectFile);
-        int length = player.getEffects().size();
-        editor.println(length+(player.getShield()==null?0:1));
-        System.out.println(length+(player.getShield()==null?0:1));
-        for(StatusEffect e: player.getEffects()){
-            System.out.println(e.getId()+" "+e.getMSRemainingDuration());
-            editor.println(e.getId()+" "+e.getMSRemainingDuration());
-        }
-        if(player.getShield() != null){
-            Shield shield = player.getShield();
-            editor.print("-127 "+shield.getMSRemainingDuration()+" "+shield.getDurability()+" ");
-            System.out.println("-127 "+shield.getMSRemainingDuration()+" "+shield.getDurability()+" ");
-            int[] dmgPercentMod = shield.getDmgPercentMod();
-            for(int i = 0; i < dmgPercentMod.length; i++){
-                System.out.print(dmgPercentMod[i]+" ");
-                editor.print(dmgPercentMod[i]+" ");
-            }
-            editor.println();
-        }
-        editor.close();
-    }
 
     public void setActive(){
         buttonJustPressed = true;

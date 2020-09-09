@@ -330,6 +330,11 @@ public class Player extends Creature implements TouchEventListener {
         missionManager.update();
         tracker.update();
 
+        //shield
+        if(shield != null)
+            if((!shield.isValid()) || shield.getDurability() <= 0)
+                shield = null;
+
     }
 
     @Override
@@ -430,8 +435,25 @@ public class Player extends Creature implements TouchEventListener {
             editor.println();
         }
         editor.close();
+        //status effects
+        File effectFile = new File(path+"/player/effects.wld");
+        effectFile.delete();
+        effectFile.createNewFile();
+        editor = new PrintWriter(effectFile);
+        int length = getEffects().size();
+        editor.println(length+(shield==null?0:1));
+        for(StatusEffect e: getEffects())
+            editor.println(e.getId()+" "+e.getMSRemainingDuration());
+        if(shield != null){
+            editor.print("-127 "+shield.getMSRemainingDuration()+" "+shield.getDurability()+" ");
+            int[] dmgPercentMod = shield.getDmgPercentMod();
+            for (int value : dmgPercentMod)
+                editor.print(value + " ");
+            editor.println();
+        }
+        editor.close();
+
         skillsManager.saveSkills(path);
-        statsWindow.saveStatusEffect(path, this);
     }
 
     public void equip(int id, int location){

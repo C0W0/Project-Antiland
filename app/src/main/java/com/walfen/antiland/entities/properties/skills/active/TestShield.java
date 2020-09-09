@@ -28,10 +28,8 @@ public class TestShield extends ActiveSkill {
     @Override
     protected void updateData() {
         if(isShieldOn){
-            if(!handler.getPlayer().getShield().isValid()){
-                handler.getPlayer().setShield(null);
+            if(handler.getPlayer().getShield() == null)
                 isShieldOn = false;
-            }
         }
     }
 
