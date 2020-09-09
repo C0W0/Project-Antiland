@@ -37,7 +37,7 @@ public class Fabricator implements TouchEventListener {
     private UIImageButton craftButton, invSwitchButton, closeButton;
     private final Bitmap craftingScreen, blueSquare, redSquare;
 
-    public Fabricator(Handler handler, Inventory inventory, String recipeFilePath){
+    public Fabricator(Handler handler, Inventory inventory){
         this.handler = handler;
         this.inventory = inventory;
         recipes = new HashMap<>();
@@ -68,10 +68,10 @@ public class Fabricator implements TouchEventListener {
         closeButton = new UIImageButton(inventory.xDispute+inventory.invWidth-Constants.UI_CLOSE_SIZE, inventory.yDispute,
                 Constants.UI_CLOSE_SIZE, Constants.UI_CLOSE_SIZE,
                 Assets.close, () -> setActive(false));
-        loadRecipes(recipeFilePath);
+        loadRecipes();
     }
 
-    private void loadRecipes(String filePath){
+    private void loadRecipes(){
         ArrayList<String> loadedRecipes = Utils.loadFileAsArrayList("recipes.wld");
         int x = 0, y = 0;
         for(String str: loadedRecipes){

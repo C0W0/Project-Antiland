@@ -100,35 +100,6 @@ public class PlayerStatsWindow implements TouchEventListener {
         icons = new ArrayList<>();
     }
 
-    public void initStatusEffect(String path, Player player){
-        File statusFile = new File(path+"/player/effects.wld");
-        ArrayList<String> tokens;
-        try {
-            tokens = Utils.loadFileAsArrayList(new FileInputStream(statusFile));
-            int count = Utils.parseInt(tokens.get(0));
-            for(int i = 1; i < count+1; i++){
-                String[] token = tokens.get(i).split("\\s+");
-                int id = Utils.parseInt(token[0]);
-                long duration = Utils.parseLong(token[1]);
-                if(id == -127){ // special effects such as shields are negative number
-                    int durability = Utils.parseInt(token[2]);
-                    int[] dmgModifier = new int[token.length-3];
-                    for(int j = 3; j < token.length; j++)
-                        dmgModifier[j-3] = Utils.parseInt(token[j]);
-                    player.setShield(new Shield(durability, duration, dmgModifier));
-                }else {
-                    System.out.println(id);
-                    System.out.println(StatusEffect.statusEffects[id]);
-                    StatusEffect e = StatusEffect.statusEffects[id].clone();
-                    e.initialize(player, duration);
-                    player.addEffect(e);
-                }
-            }
-        }catch (IOException e){
-            e.printStackTrace();
-        }
-    }
-
 
     @Override
     public void onTouchEvent(MotionEvent event) {

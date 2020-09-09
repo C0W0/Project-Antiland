@@ -29,6 +29,7 @@ import com.walfen.antiland.statswindow.PlayerStatsWindow;
 import com.walfen.antiland.statswindow.StatusIcon;
 import com.walfen.antiland.ui.ChangeEvent;
 import com.walfen.antiland.ui.TouchEventListener;
+import com.walfen.antiland.ui.UIManager;
 import com.walfen.antiland.ui.buttons.UIImageButton;
 import com.walfen.antiland.entities.creatures.npc.NPC.InteractionType;
 import com.walfen.antiland.untils.Utils;
@@ -74,38 +75,13 @@ public class Player extends Creature implements TouchEventListener {
     private UIImageButton interactButton;
 
 
-    public Player(Handler handler, String path) {
+    public Player(Handler handler) {
         super(Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT, 0);
 
-        File playerFile = new File(path+"/player/player.wld");
-        File inventoryFile = new File(path+"/player/inventory.wld");
-        File missionFile = new File(path+"/player/missions.wld");
-        ArrayList<String> tokens;
         physicalDamage = 1;
         magicalDamage = 0;
         maxHp = 10;
         maxMp = 5;
-        try {
-            tokens = Utils.loadFileAsArrayList(new FileInputStream(playerFile));
-            String[] line = tokens.get(0).split("\\s+");
-            x = Utils.parseInt(line[0]);
-            y = Utils.parseInt(line[1]);
-            line = tokens.get(1).split("\\s+");
-            health = Utils.parseInt(line[0]);
-            mp = Utils.parseInt(line[1]);
-            wealth = Utils.parseInt(line[2]);
-            line = tokens.get(2).split("\\s+");
-            level = Utils.parseInt(line[0]);
-            currLevelXp = Utils.parseInt(line[1]);
-            perkPoints = Utils.parseInt(line[2]);
-            line = tokens.get(3).split("\\s+");
-        }catch (IOException e){
-            e.printStackTrace();
-        }
-
-        for(int i = 2; i <= level; i++)
-            maxHp += Math.floor((level/10.f)+1);
-
 
         this.handler = handler;
 
@@ -130,10 +106,60 @@ public class Player extends Creature implements TouchEventListener {
         defaultAttack = new PlayerDefaultAttack(handler, Attack.Type.PHYSICAL, 256, 10, () -> physicalDamage);
         attack = defaultAttack;
 
-
         inventory = new Inventory(handler);
-        fabricator = new Fabricator(handler, inventory, "res/worlds/worldSDK");
+        fabricator = new Fabricator(handler, inventory);
         trade = new Trade(handler, inventory);
+
+
+        missionManager = new MissionManager(handler);
+        tracker = new KillTracker(handler);
+
+        interactButton = new UIImageButton(Constants.SCREEN_WIDTH-160, Constants.SCREEN_HEIGHT-504, 128, 128,
+                new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, this::onInteract);
+        event = Constants.EMPTY_EVENT;
+        interactButton.setActive(false);
+
+        skillsManager = new PlayerSkillsManager(handler);
+        statsWindow = new PlayerStatsWindow(handler);
+
+
+        //only for temp. use
+
+//        missionManager.addMission(Mission.collect10Woods.getId());
+//        missionManager.addMission(Mission.collect5Woods.getId());
+//        missionManager.addMission(Mission.collect10Apples.getId());
+//        missionManager.addMission(Mission.cutDown5Trees.getId());
+    }
+
+    public void loadPlayer(String path, UIManager manager){
+        //files
+        File playerFile = new File(path+"/player/player.wld");
+        File inventoryFile = new File(path+"/player/inventory.wld");
+        File missionFile = new File(path+"/player/missions.wld");
+        ArrayList<String> tokens;
+
+        //player base stats
+        try {
+            tokens = Utils.loadFileAsArrayList(new FileInputStream(playerFile));
+            String[] line = tokens.get(0).split("\\s+");
+            x = Utils.parseInt(line[0]);
+            y = Utils.parseInt(line[1]);
+            line = tokens.get(1).split("\\s+");
+            health = Utils.parseInt(line[0]);
+            mp = Utils.parseInt(line[1]);
+            wealth = Utils.parseInt(line[2]);
+            line = tokens.get(2).split("\\s+");
+            level = Utils.parseInt(line[0]);
+            currLevelXp = Utils.parseInt(line[1]);
+            perkPoints = Utils.parseInt(line[2]);
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        for(int i = 2; i <= level; i++)
+            maxHp += Math.floor((level/10.f)+1);
+
+        //inventory and equipments
         try {
             tokens = Utils.loadFileAsArrayList(new FileInputStream(inventoryFile));
             for(String str: tokens){
@@ -154,9 +180,7 @@ public class Player extends Creature implements TouchEventListener {
             e.printStackTrace();
         }
 
-
-        missionManager = new MissionManager(handler);
-        tracker = new KillTracker(handler);
+        //mission io and initial kill count calculation
         try{
             tokens = Utils.loadFileAsArrayList(new FileInputStream(missionFile));
             for(String str: tokens){
@@ -172,21 +196,33 @@ public class Player extends Creature implements TouchEventListener {
         }catch (IOException e){
             e.printStackTrace();
         }
-        interactButton = new UIImageButton(Constants.SCREEN_WIDTH-160, Constants.SCREEN_HEIGHT-504, 128, 128,
-                new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, this::onInteract);
-        event = Constants.EMPTY_EVENT;
-        interactButton.setActive(false);
 
-        skillsManager = new PlayerSkillsManager(handler);
-        statsWindow = new PlayerStatsWindow(handler);
+        File statusFile = new File(path+"/player/effects.wld");
+        try {
+            tokens = Utils.loadFileAsArrayList(new FileInputStream(statusFile));
+            int count = Utils.parseInt(tokens.get(0));
+            for(int i = 1; i < count+1; i++){
+                String[] token = tokens.get(i).split("\\s+");
+                int id = Utils.parseInt(token[0]);
+                long duration = Utils.parseLong(token[1]);
+                if(id == -127){ // special effects such as shields are negative number
+                    int durability = Utils.parseInt(token[2]);
+                    int[] dmgModifier = new int[token.length-3];
+                    for(int j = 3; j < token.length; j++)
+                        dmgModifier[j-3] = Utils.parseInt(token[j]);
+                    setShield(new Shield(durability, duration, dmgModifier));
+                }else {
+                    StatusEffect e = StatusEffect.statusEffects[id].clone();
+                    e.initialize(this, duration);
+                    addEffect(e);
+                }
+            }
+        }catch (IOException e){
+            e.printStackTrace();
+        }
 
-
-        //only for temp. use
-
-//        missionManager.addMission(Mission.collect10Woods.getId());
-//        missionManager.addMission(Mission.collect5Woods.getId());
-//        missionManager.addMission(Mission.collect10Apples.getId());
-//        missionManager.addMission(Mission.cutDown5Trees.getId());
+        //skills
+        skillsManager.initSkills(path, manager);
     }
 
     private void checkAttacks(){
