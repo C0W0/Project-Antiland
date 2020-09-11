@@ -1,4 +1,4 @@
-package com.walfen.antiland.ui.decorative;
+package com.walfen.antiland.ui.overlay;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -27,7 +27,7 @@ public class EnemyInfoPanel extends UIObject {
     public EnemyInfoPanel(KillTracker tracker) {
         super(Constants.SCREEN_WIDTH/2.f-150, 32, 800, 192);
         this.tracker = tracker;
-        image = ImageLoader.loadImage(R.drawable.enemy_panel);
+        image = ImageEditor.scaleBitmap(ImageLoader.loadImage(R.drawable.enemy_panel), 800, 192);
         entityHP = new BarA(x+496-250, y+96, 500, 64, Assets.hp_bar, () -> 1, () -> 1); // numbers are placeholder
     }
 

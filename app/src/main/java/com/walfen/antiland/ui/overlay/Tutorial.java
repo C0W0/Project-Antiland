@@ -1,4 +1,4 @@
-package com.walfen.antiland.ui;
+package com.walfen.antiland.ui.overlay;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;

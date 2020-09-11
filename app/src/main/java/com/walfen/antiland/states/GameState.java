@@ -11,13 +11,13 @@ import com.walfen.antiland.Constants;
 import com.walfen.antiland.Handler;
 import com.walfen.antiland.entities.creatures.Player;
 import com.walfen.antiland.entities.properties.effect.special.BraveHeart;
-import com.walfen.antiland.entities.properties.effect.special.Stung;
 import com.walfen.antiland.gfx.Assets;
 import com.walfen.antiland.ui.bars.BarA;
 import com.walfen.antiland.ui.UIManager;
 import com.walfen.antiland.ui.buttons.TextButton;
 import com.walfen.antiland.ui.buttons.UIImageButton;
-import com.walfen.antiland.ui.decorative.EnemyInfoPanel;
+import com.walfen.antiland.ui.mission.MissionPanel;
+import com.walfen.antiland.ui.overlay.EnemyInfoPanel;
 import com.walfen.antiland.ui.decorative.UITextDecoration;
 import com.walfen.antiland.world.World;
 
@@ -101,6 +101,7 @@ public class GameState extends State {
                 new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, () -> handler.getPlayer().getInventory().setActive()));
         uiManager.addUIObject(new TextButton(128, 416, 40, "Debug", Color.BLUE, this::test));
         uiManager.addUIObject(new EnemyInfoPanel(player.getTracker()));
+        uiManager.addUIObject(new MissionPanel(player.getMissionManager()));
     }
 
     private void saveGame(){

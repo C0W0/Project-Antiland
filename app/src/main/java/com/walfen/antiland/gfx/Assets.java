@@ -23,6 +23,7 @@ public class Assets {
 //    public static Bitmap [] water;
 
     public static Bitmap NULL;
+    public static Bitmap grey_transparent;
 
     //player
     public static Bitmap player_neutral;
@@ -45,6 +46,7 @@ public class Assets {
     public static Bitmap save, chat, operate, tradeInteract;
     public static Bitmap headSignOrange, headSignGray, hsoMissionComplete, hsgMissionComplete;
     public static Bitmap hsoGetMission, hsgGetMission, hsoTrade, hsgTrade;
+    public static Bitmap extend, collapse;
 
     //entities
     public static Bitmap tree;
@@ -273,6 +275,10 @@ public class Assets {
         hsoTrade = headSignSheet.crop(64*3, 0, 64, 64);
         hsgTrade = headSignSheet.crop(64*3, 64, 64, 64);
 
+        //overlays
+        extend = sheet1.crop(width*5, height*3, width, height);
+        collapse = sheet1.crop(width*6, height*3, width, height);
+
         //skills
         //icon circle: RGB: 233, 233, 233; 128*128, 4pt
         strength = skillSheet.crop(0, 0, width, height);
@@ -298,6 +304,7 @@ public class Assets {
         unlock = skillSheet.crop(width*5, 0, 250, 128);
 
         NULL = skillSheet.crop(width*7, 0, width, height);
+        grey_transparent = sheet1.crop(width*4, height*3, width, height);
 
     }
 
