@@ -235,11 +235,11 @@ public class Player extends Creature implements TouchEventListener {
                 skillsManager.isActive() || statsWindow.isActive() || trade.isActive()){
             return;
         }
-        float inputX = handler.getUIManager().getAttackJoystick().getMappedInputX();
-        float inputY = handler.getUIManager().getAttackJoystick().getMappedInputY();
+        float inputX = handler.getUIManager().getCGUI().getAttackJoystick().getMappedInputX();
+        float inputY = handler.getUIManager().getCGUI().getAttackJoystick().getMappedInputY();
         if(inputX == 0 && inputY == 0)
             return;
-        int radius = handler.getUIManager().getAttackJoystick().getRadius();
+        int radius = handler.getUIManager().getCGUI().getAttackJoystick().getRadius();
         inputX*= radius/Utils.Py.getC(inputX*radius, inputY*radius);
         inputY*= radius/Utils.Py.getC(inputX*radius, inputY*radius);
 
@@ -257,8 +257,8 @@ public class Player extends Creature implements TouchEventListener {
                 skillsManager.isActive() || trade.isActive()){
             return;
         }
-        xMove = handler.getUIManager().getMovementJoystick().getInputX()*speed;
-        yMove = handler.getUIManager().getMovementJoystick().getInputY()*speed;
+        xMove = handler.getUIManager().getCGUI().getMovementJoystick().getInputX()*speed;
+        yMove = handler.getUIManager().getCGUI().getMovementJoystick().getInputY()*speed;
     }
 
     private void setCurrentAnimation(){

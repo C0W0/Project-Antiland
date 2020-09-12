@@ -13,6 +13,7 @@ import com.walfen.antiland.mission.Mission;
 import com.walfen.antiland.ui.ClickListener;
 import com.walfen.antiland.ui.UIManager;
 import com.walfen.antiland.ui.conversation.Conversation;
+import com.walfen.antiland.ui.overlay.MissionPanel;
 
 import java.util.ArrayList;
 
@@ -59,7 +60,8 @@ public class NPC1 extends RepeatedMissionNPC {
                     "Once you finish with them come back to me. I have some rewards for you.", Assets.npcCrab[0], false)));
             manager.hideUI();
             manager.getConvBox().setConversationList(c2, () -> {assignMission(); convBoxOn = false;
-                Mission.missions[missionID].setCompleteMessage("Report back to Mr. Krab."); });
+                Mission.missions[missionID].setCompleteMessage("Report back to Mr. Krab.");
+                handler.getUIManager().getCGUI().getMissionPanel().changePosition(MissionPanel.EXTEND);});
             manager.getConvBox().setActive();
         }}, false);});
         manager.getConvBox().setActive();

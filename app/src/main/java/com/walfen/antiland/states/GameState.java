@@ -80,8 +80,7 @@ public class GameState extends State {
     }
 
     private void initDefaultUI(){
-        uiManager.createJoystick();
-        uiManager.createSkillButtons();
+        uiManager.getCGUI().initCriticalGameUI(player);
         uiManager.addUIObject(new UIImageButton(16, 16, 144, 144,
                 new Bitmap[]{Assets.player_neutral, Assets.player_neutral}, () -> handler.getPlayer().getStatsWindow().setActive()));
         uiManager.addUIObject(new BarA(192,32,600, Assets.hp_bar,
@@ -98,8 +97,6 @@ public class GameState extends State {
         uiManager.addUIObject(new UIImageButton(32, Constants.SCREEN_HEIGHT-456, 128, 128,
                 new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, () -> handler.getPlayer().getInventory().setActive()));
         uiManager.addUIObject(new TextButton(128, 416, 40, "Debug", Color.BLUE, this::test));
-        uiManager.addUIObject(new EnemyInfoPanel(player.getTracker()));
-        uiManager.addUIObject(new MissionPanel(player.getMissionManager()));
     }
 
     private void saveGame(){
@@ -146,7 +143,7 @@ public class GameState extends State {
     //for debugging purpose
     private void test(){
 //        uiManager.popUpAction("\"Can you still move?\" A weird and spooky voices wakes you up from inside.", "...",
-//                () -> uiManager.activeTutorial("Tutorial: Use the left joystick to move around", uiManager.getMovementJoystick().getBounds()));
+//                () -> uiManager.activeTutorial("Tutorial: Use the left joystick to move around", uiManager.getCGUI().getMovementJoystick().getBounds()));
         player.addEffect(new BraveHeart(player, 5000, 5));
     }
 }

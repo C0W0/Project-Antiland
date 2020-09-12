@@ -16,6 +16,9 @@ import com.walfen.antiland.ui.buttons.UIImageButton;
 
 public class MissionPanel extends UIImageButton {
 
+    public static final int EXTEND = -25;
+    public static final int COLLAPSE = 25;
+
     private MissionManager missionManager;
     private Rect rcBox;
     private Bitmap extend, collapse;
@@ -102,15 +105,15 @@ public class MissionPanel extends UIImageButton {
             float touchX = event.getX(pointerIndex);
             float touchY = event.getY(pointerIndex);
             if(rcBox.contains((int)touchX, (int)touchY))
-                changePosition(collapsed?-25:25);
+                changePosition(collapsed?EXTEND:COLLAPSE);
         }
         super.onTouchEvent(event);
     }
 
-    public void changePosition(int speedDelta){
+    public void changePosition(int targetPosSpeed){
         collapsed = !collapsed;
         motionInProgress = true;
-        xChange = speedDelta;
+        xChange = targetPosSpeed;
     }
 
     private void move(int dx, int dy){

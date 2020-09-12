@@ -29,19 +29,19 @@ public class UIManager implements TouchEventListener{
 
     private Handler handler;
     private ArrayList<UIObject> uiObjects;
-    private Joystick movement, attack;
+    private CriticalGameUI cGUI;
     private boolean hide;
     private ConversationBox convBox;
     private PopUp popUp;
     private OptionPopUp optionPopUp;
     private Tutorial tutorial;
     private KeyIOManager keyIOManager;
-    private SkillButton[] skillButtons;
 
     public UIManager(Handler handler){
         this.handler = handler;
         uiObjects = new ArrayList<>();
         hide = false;
+        cGUI = new CriticalGameUI(handler);
         convBox = new ConversationBox(this);
         popUp = new PopUp(800, 600);
         optionPopUp = new OptionPopUp(800, 800);
@@ -53,11 +53,10 @@ public class UIManager implements TouchEventListener{
     public void update(){
         if(convBox.active)
             convBox.update();
-        if(hide)
-            return;
         if(tutorial.isActive())
             tutorial.update();
         keyIOManager.update();
+        cGUI.update();
         for(UIObject o: uiObjects)
             o.update();
     }
@@ -69,6 +68,7 @@ public class UIManager implements TouchEventListener{
         if(hide)
             return;
         keyIOManager.draw(canvas);
+        cGUI.draw(canvas);
         for(UIObject o: uiObjects)
             o.draw(canvas);
         if(popUp.active)
@@ -98,6 +98,7 @@ public class UIManager implements TouchEventListener{
         if(hide)
             return;
         keyIOManager.onTouchEvent(event);
+        cGUI.onTouchEvent(event);
         for(UIObject o: uiObjects)
             o.onTouchEvent(event);
         try {
@@ -117,30 +118,9 @@ public class UIManager implements TouchEventListener{
         uiObjects.remove(o);
     }
 
-    public void createJoystick(){
-        movement = new Joystick(handler, 128, Constants.SCREEN_HEIGHT-300-128, 150);
-        attack = new Joystick(handler, Constants.SCREEN_WIDTH-300-128, Constants.SCREEN_HEIGHT-300-128, 150);
-        attack.setDeadZone(0.3f);
-        addUIObject(movement);
-        addUIObject(attack);
-    }
-
-    public void removeJoystick(){
-        removeUIObject(movement);
-        removeUIObject(attack);
-    }
-
-    public void createSkillButtons(){
-        skillButtons = new SkillButton[3];
-        skillButtons[0] = new SkillButton(Constants.SCREEN_WIDTH-300-64, Constants.SCREEN_HEIGHT-568, 128);
-        skillButtons[1] = new SkillButton(Constants.SCREEN_WIDTH-300-256, Constants.SCREEN_HEIGHT-440, 128);
-        skillButtons[2] = new SkillButton(Constants.SCREEN_WIDTH-300-256, Constants.SCREEN_HEIGHT-216, 128);
-        addUIObject(skillButtons);
-    }
-
     public void hideUI(){
         hide = true;
-        movement.onTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_UP, 0, 0, 0));
+        cGUI.onTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_UP, 0, 0, 0));
     }
 
     public void showUI(){
@@ -344,12 +324,8 @@ public class UIManager implements TouchEventListener{
         return uiObjects;
     }
 
-    public Joystick getMovementJoystick() {
-        return movement;
-    }
-
-    public Joystick getAttackJoystick() {
-        return attack;
+    public CriticalGameUI getCGUI() {
+        return cGUI;
     }
 
     public ConversationBox getConvBox() {
@@ -358,9 +334,5 @@ public class UIManager implements TouchEventListener{
 
     public KeyIOManager getKeyIOManager() {
         return keyIOManager;
-    }
-
-    public SkillButton[] getSkillButtons() {
-        return skillButtons;
     }
 }

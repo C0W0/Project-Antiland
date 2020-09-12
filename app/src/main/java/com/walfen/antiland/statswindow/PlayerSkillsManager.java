@@ -204,7 +204,7 @@ public class PlayerSkillsManager implements TouchEventListener {
             for(int i = 0; i < token.length; i++)
                 intelligenceSL.get(i).setLevel(Utils.parseInt(token[i]));
             token = tokens.get(5).split("\\s+");
-            SkillButton[] skillButtons = manager.getSkillButtons();
+            SkillButton[] skillButtons = manager.getCGUI().getSkillButtons();
             ArrayList<Skill>[] lists = new ArrayList[]{strengthSL, enduranceSL, agilitySL, knowledgeSL, intelligenceSL};
             for(int i = 0; i < 3; i++){
                 int hID = Utils.parseInt(token[i]);
@@ -319,7 +319,7 @@ public class PlayerSkillsManager implements TouchEventListener {
     }
 
     public void releaseDrag(Skill skill, int x, int y){
-        SkillButton[] skillButtons = handler.getUIManager().getSkillButtons();
+        SkillButton[] skillButtons = handler.getUIManager().getCGUI().getSkillButtons();
         for(int i = 0; i < 3; i++)
             if(new Rect(activeSkillSlot[i].getBounds()).contains(x, y)){
                 for(int j = 0; j < 3; j++){
@@ -478,7 +478,7 @@ public class PlayerSkillsManager implements TouchEventListener {
         for(Skill s: intelligenceSL)
             editor.print(s.getLevel()+" ");
         editor.println();
-        SkillButton[] skillButtons = handler.getUIManager().getSkillButtons();
+        SkillButton[] skillButtons = handler.getUIManager().getCGUI().getSkillButtons();
         for(int i = 0; i < 3; i++){
             ActiveSkill s = skillButtons[i].getSkill();
             if(s != null)
