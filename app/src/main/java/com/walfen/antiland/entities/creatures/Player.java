@@ -128,7 +128,6 @@ public class Player extends Creature implements TouchEventListener {
 //        missionManager.addMission(Mission.collect10Woods.getId());
 //        missionManager.addMission(Mission.collect5Woods.getId());
 //        missionManager.addMission(Mission.collect10Apples.getId());
-//        missionManager.addMission(Mission.cutDown5Trees.getId());
     }
 
     public void loadPlayer(String path, UIManager manager){

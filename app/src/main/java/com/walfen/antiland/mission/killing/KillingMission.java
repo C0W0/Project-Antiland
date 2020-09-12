@@ -25,14 +25,13 @@ public abstract class KillingMission extends Mission {
 
     @Override
     public void update() {
-
+        for(int i = 0; i < targetEntityID.length; i++)
+            progress[i] = Math.min(handler.getPlayer().getTracker().getTrackingCount(targetEntityID[i]) -
+                    beginningCount[i], finalProgress[i]);
     }
 
     @Override
     public boolean isCompleted() {
-        for(int i = 0; i < targetEntityID.length; i++)
-            progress[i] = Math.min(handler.getPlayer().getTracker().getTrackingCount(targetEntityID[i]) -
-                            beginningCount[i], finalProgress[i]);
         return Arrays.equals(progress,finalProgress);
     }
 

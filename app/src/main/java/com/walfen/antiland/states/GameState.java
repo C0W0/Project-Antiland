@@ -16,7 +16,7 @@ import com.walfen.antiland.ui.bars.BarA;
 import com.walfen.antiland.ui.UIManager;
 import com.walfen.antiland.ui.buttons.TextButton;
 import com.walfen.antiland.ui.buttons.UIImageButton;
-import com.walfen.antiland.ui.mission.MissionPanel;
+import com.walfen.antiland.ui.overlay.MissionPanel;
 import com.walfen.antiland.ui.overlay.EnemyInfoPanel;
 import com.walfen.antiland.ui.decorative.UITextDecoration;
 import com.walfen.antiland.world.World;
@@ -95,8 +95,6 @@ public class GameState extends State {
                 () -> Integer.toString(handler.getPlayer().getLevel()), 40, Constants.TEXT_COLOUR));
         uiManager.addUIObject(new UIImageButton(64, 224, 128, 128,
                 Assets.save, this::saveGame));
-        uiManager.addUIObject(new UIImageButton(32, Constants.SCREEN_HEIGHT-232, 128, 128,
-                new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, () -> handler.getPlayer().getMissionManager().setActive()));
         uiManager.addUIObject(new UIImageButton(32, Constants.SCREEN_HEIGHT-456, 128, 128,
                 new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, () -> handler.getPlayer().getInventory().setActive()));
         uiManager.addUIObject(new TextButton(128, 416, 40, "Debug", Color.BLUE, this::test));

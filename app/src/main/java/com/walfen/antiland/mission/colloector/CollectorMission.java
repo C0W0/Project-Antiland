@@ -23,11 +23,6 @@ public abstract class CollectorMission extends Mission {
 
     @Override
     public void update() {
-
-    }
-
-    @Override
-    public boolean isCompleted() {
         ArrayList<Item> inventoryItems = handler.getPlayer().getInventory().getInventoryItems();
         for(int i = 0; i < inventoryItems.size(); i++){
             Item tempItem = inventoryItems.get(i);
@@ -37,6 +32,10 @@ public abstract class CollectorMission extends Mission {
                 }
             }
         }
+    }
+
+    @Override
+    public boolean isCompleted() {
         return Arrays.equals(progress,finalProgress);
     }
 

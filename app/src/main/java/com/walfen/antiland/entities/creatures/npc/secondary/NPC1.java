@@ -9,6 +9,7 @@ import com.walfen.antiland.entities.creatures.Creature;
 import com.walfen.antiland.gfx.Animation;
 import com.walfen.antiland.gfx.Assets;
 import com.walfen.antiland.gfx.ImageEditor;
+import com.walfen.antiland.mission.Mission;
 import com.walfen.antiland.ui.ClickListener;
 import com.walfen.antiland.ui.UIManager;
 import com.walfen.antiland.ui.conversation.Conversation;
@@ -57,7 +58,8 @@ public class NPC1 extends RepeatedMissionNPC {
             c2.add((new Conversation("Go down to the forests and kills 5 of them to decrease their number. " +
                     "Once you finish with them come back to me. I have some rewards for you.", Assets.npcCrab[0], false)));
             manager.hideUI();
-            manager.getConvBox().setConversationList(c2, () -> {assignMission(); convBoxOn = false;});
+            manager.getConvBox().setConversationList(c2, () -> {assignMission(); convBoxOn = false;
+                Mission.missions[missionID].setCompleteMessage("Report back to Mr. Krab."); });
             manager.getConvBox().setActive();
         }}, false);});
         manager.getConvBox().setActive();

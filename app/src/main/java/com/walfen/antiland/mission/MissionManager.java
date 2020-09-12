@@ -88,11 +88,11 @@ public class MissionManager implements TouchEventListener {
     public void onTouchEvent(MotionEvent event) {
         if(!active)
             return;
+        closeButton.onTouchEvent(event);
         if(buttonJustPressed) {
             buttonJustPressed = false;
             return;
         }
-        closeButton.onTouchEvent(event);
         if(event.getActionMasked() == MotionEvent.ACTION_DOWN ||
                 event.getActionMasked() == MotionEvent.ACTION_POINTER_DOWN) {
             int pointerIndex = event.findPointerIndex(event.getPointerId(event.getActionIndex()));
@@ -138,8 +138,7 @@ public class MissionManager implements TouchEventListener {
         //progress
         paint.setColor(Color.RED);
         for(int i = 0; i < missions.get(selectedMission).getFinalProgress().length; i++){ // 190
-            text = missions.get(selectedMission).getProgress()[i]+" / "+
-                    missions.get(selectedMission).getFinalProgress()[i];
+            text = missions.get(selectedMission).getTextProgress()[i];
             paint.getTextBounds(text, 0, text.length(), r);
             canvas.drawText(text, misTtlX-r.width()/2.f, progressY+((float)misListSpacing/2.f)*i+r.height()/2.f, paint);
         }
@@ -192,5 +191,9 @@ public class MissionManager implements TouchEventListener {
 
     public ArrayList<Mission> getMissions() {
         return missions;
+    }
+
+    public Mission getSelectedMission(){
+        return missions.size()>selectedMission?missions.get(selectedMission):null;
     }
 }

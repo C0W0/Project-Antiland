@@ -1,8 +1,10 @@
-package com.walfen.antiland.ui.mission;
+package com.walfen.antiland.ui.overlay;
 
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Rect;
 import android.view.MotionEvent;
 
@@ -24,7 +26,7 @@ public class MissionPanel extends UIImageButton {
 
         //extend: x = Constants.SCREEN_WIDTH-556
         //collapse: x = Constants.SCREEN_WIDTH
-        super(Constants.SCREEN_WIDTH, 288, 556, 160, Assets.NULL, () -> {});
+        super(Constants.SCREEN_WIDTH, 288, 556, 160, Assets.NULL, missionManager::setActive);
         images[0] = ImageEditor.scaleBitmapForced(Assets.grey_transparent, width, height);
         images[1] = images[0];
         this.missionManager = missionManager;
@@ -60,7 +62,30 @@ public class MissionPanel extends UIImageButton {
 
     @Override
     public void draw(Canvas canvas) {
-        super.draw(canvas);
+        if(x != Constants.SCREEN_WIDTH){
+            super.draw(canvas);
+            if(missionManager.getSelectedMission() != null){
+                int centre = (int)(x+width/2);
+                Paint paint = new Paint();
+                Rect r = new Rect();
+                String text = missionManager.getSelectedMission().getTitle();
+                paint.setColor(Color.WHITE);
+                paint.setTextSize(38);
+                paint.setFakeBoldText(true);
+                paint.getTextBounds(text, 0, text.length(), r);
+                int bottom = (int)(y+15+r.height());
+                canvas.drawText(text, centre-r.width()/2.f, bottom, paint);
+                bottom += 13;
+                paint.setTextSize(30);
+                paint.setFakeBoldText(false);
+                for(int i = 0; i < missionManager.getSelectedMission().getFinalProgress().length; i++){
+                    text = missionManager.getSelectedMission().getTextProgress()[i];
+                    paint.getTextBounds(text, 0, text.length(), r);
+                    bottom += 2+r.height();
+                    canvas.drawText(text, centre-r.width()/2.f, bottom, paint);
+                }
+            }
+        }
         if(collapsed)
             canvas.drawBitmap(extend, null, new Rect((int)x-128, (int)y, (int)x, (int)y+160), Constants.getRenderPaint());
         else
@@ -69,7 +94,7 @@ public class MissionPanel extends UIImageButton {
 
     @Override
     public void onTouchEvent(MotionEvent event) {
-        if(motionInProgress)
+        if(motionInProgress || missionManager.isActive())
             return;
         if(event.getActionMasked() == MotionEvent.ACTION_DOWN ||
                 event.getActionMasked() == MotionEvent.ACTION_POINTER_DOWN) {

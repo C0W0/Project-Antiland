@@ -43,6 +43,7 @@ public abstract class Mission implements Cloneable{
     protected final int id;
     protected final String title;
     protected final String desc;
+    protected String completeMessage;
     protected int xpGain;
 
     public Mission(String title, String desc, int id, int xpGain){
@@ -51,6 +52,7 @@ public abstract class Mission implements Cloneable{
         this.title = title;
         this.desc = desc;
         this.xpGain = xpGain;
+        completeMessage = "";
         missions[id] = this;
     }
 
@@ -61,6 +63,7 @@ public abstract class Mission implements Cloneable{
     public void complete(){
         status = 2;
         receiveReward();
+        resetCompleteMessage();
     }
 
     public abstract void receiveReward();
@@ -116,5 +119,23 @@ public abstract class Mission implements Cloneable{
 
     public int[] getFinalProgress() {
         return finalProgress;
+    }
+
+    public String[] getTextProgress() {
+        if(isCompleted() && !completeMessage.equals(""))
+            return new String[]{completeMessage};
+        String[] texts = new String[progress.length];
+        for(int i = 0; i < texts.length; i++){
+            texts[i] = progress[i]+" / "+finalProgress[i];
+        }
+        return texts;
+    }
+
+    public void setCompleteMessage(String completeMessage) {
+        this.completeMessage = completeMessage;
+    }
+
+    public void resetCompleteMessage(){
+        setCompleteMessage("");
     }
 }
