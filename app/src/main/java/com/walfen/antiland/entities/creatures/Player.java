@@ -3,6 +3,7 @@ package com.walfen.antiland.entities.creatures;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Point;
 import android.graphics.Rect;
 import android.view.MotionEvent;
 
@@ -608,5 +609,14 @@ public class Player extends Creature implements TouchEventListener {
 
     public Shield getShield() {
         return shield;
+    }
+
+    public void setLocation(int x, int y){
+        this.x = x;
+        this.y = y;
+    }
+
+    public void setLocation(Point location){
+        setLocation(location.x, location.y);
     }
 }

@@ -19,20 +19,26 @@ import com.walfen.antiland.ui.buttons.UIImageButton;
 import com.walfen.antiland.ui.overlay.MissionPanel;
 import com.walfen.antiland.ui.overlay.EnemyInfoPanel;
 import com.walfen.antiland.ui.decorative.UITextDecoration;
+import com.walfen.antiland.untils.Utils;
 import com.walfen.antiland.world.World;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class GameState extends State {
 
     private World world;
     private Player player;
+    private String currentPath;
+    private ArrayList<World> worlds;
 
     public GameState(Handler handler){
         super(handler);
+        worlds = new ArrayList<>();
     }
 
     @Override
@@ -75,8 +81,16 @@ public class GameState extends State {
         player = new Player(handler);
         initDefaultUI();
         player.loadPlayer(path, uiManager);
-        world = new World(handler, path);
-        handler.setWorld(world);
+        worlds.add(new World(handler, path, 0));
+        worlds.add(new World(handler, path, 1));
+        try {
+            int index = Utils.parseInt(Utils.loadFileAsArrayList(new FileInputStream(new File(path+"/save.wld"))).get(1));
+            world = worlds.get(index);
+            handler.setWorld(world);
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        currentPath = path;
     }
 
     private void initDefaultUI(){
@@ -106,10 +120,12 @@ public class GameState extends State {
             if(saveFile.exists())
                 saveFile.delete();
             saveFile.createNewFile();
-            PrintWriter dateWriter = new PrintWriter(saveFile);
-            dateWriter.println(date);
-            dateWriter.close();
-            world.saveMap(Constants.DIR+"/main");
+            PrintWriter saveWriter = new PrintWriter(saveFile);
+            saveWriter.println(date);
+            saveWriter.println(world.getIndex());
+            saveWriter.close();
+            for(World w: worlds)
+                w.saveMap(Constants.DIR+"/main");
             player.savePlayer(Constants.DIR+"/main");
             Toast.makeText(handler.getGame().getContext(), "Save Successful", Toast.LENGTH_SHORT).show();
         }catch (IOException e){
@@ -125,10 +141,12 @@ public class GameState extends State {
             if(saveFile.exists())
                 saveFile.delete();
             saveFile.createNewFile();
-            PrintWriter dateWriter = new PrintWriter(saveFile);
-            dateWriter.println(date);
-            dateWriter.close();
-            world.saveMap(Constants.DIR+"/auto");
+            PrintWriter saveWriter = new PrintWriter(saveFile);
+            saveWriter.println(date);
+            saveWriter.println(world.getIndex());
+            saveWriter.close();
+            for(World w: worlds)
+                w.saveMap(Constants.DIR+"/auto");
             player.savePlayer(Constants.DIR+"/auto");
         }catch (IOException e){
             e.printStackTrace();
@@ -144,6 +162,22 @@ public class GameState extends State {
     private void test(){
 //        uiManager.popUpAction("\"Can you still move?\" A weird and spooky voices wakes you up from inside.", "...",
 //                () -> uiManager.activeTutorial("Tutorial: Use the left joystick to move around", uiManager.getCGUI().getMovementJoystick().getBounds()));
-        player.addEffect(new BraveHeart(player, 5000, 5));
+//        player.addEffect(new BraveHeart(player, 5000, 5));
+//        handler.setWorld();
+//        handler.setGameWorld(0, 640, 640);
+    }
+
+    public void changePlayerRegion(int world, int playerX, int playerY) {
+        autoSave();
+        this.world = worlds.get(world);
+        player.setLocation(playerX, playerY);
+    }
+
+    public ArrayList<World> getWorlds() {
+        return worlds;
+    }
+
+    public String getCurrentPath() {
+        return currentPath;
     }
 }

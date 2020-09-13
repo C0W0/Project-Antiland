@@ -36,6 +36,17 @@ public class Handler {
         return world;
     }
 
+    public void setGameWorld(int world, int playerX, int playerY){
+        GameState gs = (GameState)(getGame().getGameState());
+        gs.changePlayerRegion(world, playerX, playerY);
+        setWorld(gs.getWorlds().get(world));
+    }
+
+    public String getCurrentRunningPath(){
+        GameState gs = (GameState)(getGame().getGameState());
+        return gs.getCurrentPath();
+    }
+
     public Player getPlayer(){
         GameState gs = (GameState)(getGame().getGameState());
         return gs.getPlayer();

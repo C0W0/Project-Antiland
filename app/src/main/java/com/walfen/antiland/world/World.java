@@ -29,10 +29,10 @@ public class World implements GameHierarchyElement {
     private int yStart;
     private int yEnd;
 
+    private int index;
 
-
-    private String TILE_FILENAME = "tiles.wld";
-    private String ENTITY_FILENAME = "entity.wld";
+    private String TILE_FILENAME;
+    private String ENTITY_FILENAME;
 
 //    private int worldId;
 
@@ -53,9 +53,13 @@ public class World implements GameHierarchyElement {
 
     }
 
-    public World(Handler handler, String saveDirectory /*, int worldId*/){
+    public World(Handler handler, String saveDirectory, int worldId){
         entityManager = new EntityManager(handler, handler.getPlayer());
         this.handler = handler;
+        TILE_FILENAME = "tiles"+worldId+".wld";
+        ENTITY_FILENAME = "entity"+worldId+".wld";
+        index = worldId;
+
         loadWorld(saveDirectory);
 
         itemManager = new ItemManager(handler);
@@ -272,4 +276,7 @@ public class World implements GameHierarchyElement {
         return height;
     }
 
+    public int getIndex() {
+        return index;
+    }
 }

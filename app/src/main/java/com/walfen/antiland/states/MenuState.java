@@ -1,7 +1,6 @@
 package com.walfen.antiland.states;
 
 
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -11,11 +10,8 @@ import android.view.MotionEvent;
 
 import com.walfen.antiland.Constants;
 import com.walfen.antiland.Handler;
-import com.walfen.antiland.gfx.Assets;
 import com.walfen.antiland.ui.UIManager;
 import com.walfen.antiland.ui.buttons.TextButton;
-import com.walfen.antiland.ui.buttons.UIImageButton;
-import com.walfen.antiland.ui.keyIO.SimpleInputField;
 import com.walfen.antiland.untils.Utils;
 
 import java.io.File;
@@ -66,13 +62,13 @@ public class MenuState extends State {
         canvas.drawText(Constants.GAME_VERSION_DISPLAY, Constants.SCREEN_WIDTH-r.width()-100, Constants.SCREEN_HEIGHT-10, paint);
         paint.setColor(Color.BLACK);
         try{
-            String date = Utils.loadFileAsString(new FileInputStream(new File(Constants.DIR+"/main/save.wld")));
+            String date = Utils.loadFileAsArrayList(new FileInputStream(new File(Constants.DIR+"/main/save.wld"))).get(0);
             paint.setTextSize(25);
             paint.getTextBounds(date, 0, date.length(), r);
             canvas.drawText(date, Constants.SCREEN_WIDTH/2.f-r.width()/2.f, Constants.SCREEN_HEIGHT/2.f-80+r.height(), paint);
         }catch (IOException ignored){ }
         try {
-            String date = Utils.loadFileAsString(new FileInputStream(new File(Constants.DIR+"/auto/save.wld")));
+            String date = Utils.loadFileAsArrayList(new FileInputStream(new File(Constants.DIR+"/auto/save.wld"))).get(0);
             paint.getTextBounds(date, 0, date.length(), r);
             canvas.drawText(date, Constants.SCREEN_WIDTH/2.f-r.width()/2.f, Constants.SCREEN_HEIGHT/2.f+120+r.height(), paint);
         }catch (IOException ignored){ }
@@ -80,7 +76,7 @@ public class MenuState extends State {
     }
 
     private void createNewSaveDocument(){
-        String tileName = "tiles.wld", entityName = "entity.wld",
+        String tileNameGeneral = "tiles", entityNameGeneral = "entity",
                 playerName = "player.wld", inventoryName = "inventory.wld",
         missionName = "missions.wld", skillName = "skills.wld", statusName = "effects.wld";
         try {
@@ -93,26 +89,28 @@ public class MenuState extends State {
             if(saveFile.exists())
                 saveFile.delete();
             saveFile.createNewFile();
-            PrintWriter dateWriter = new PrintWriter(saveFile);
-            dateWriter.println(date);
-            dateWriter.close();
+            PrintWriter saveWriter = new PrintWriter(saveFile);
+            saveWriter.println(date);
+            saveWriter.println("0");
+            saveWriter.close();
             saveFile = new File(Constants.DIR+"/auto/save.wld");
             if(saveFile.exists())
                 saveFile.delete();
             saveFile.createNewFile();
-            dateWriter = new PrintWriter(saveFile);
-            dateWriter.println(date);
-            dateWriter.close();
+            saveWriter = new PrintWriter(saveFile);
+            saveWriter.println(date);
+            saveWriter.println("0");
+            saveWriter.close();
             new File(Constants.DIR+"/auto/save.wld").createNewFile();
-            copyFileFromAssets(Constants.DIR+"/main", tileName);
-            copyFileFromAssets(Constants.DIR+"/main", entityName);
+            copyFileSeriesFromAssets(Constants.DIR+"/main", tileNameGeneral, 0, 1);
+            copyFileSeriesFromAssets(Constants.DIR+"/main", entityNameGeneral, 0, 1);
             copyFileFromAssets(Constants.DIR+"/main/player", playerName);
             copyFileFromAssets(Constants.DIR+"/main/player", inventoryName);
             copyFileFromAssets(Constants.DIR+"/main/player", missionName);
             copyFileFromAssets(Constants.DIR+"/main/player", skillName);
             copyFileFromAssets(Constants.DIR+"/main/player", statusName);
-            copyFileFromAssets(Constants.DIR+"/auto", tileName);
-            copyFileFromAssets(Constants.DIR+"/auto", entityName);
+            copyFileSeriesFromAssets(Constants.DIR+"/auto", tileNameGeneral, 0, 1);
+            copyFileSeriesFromAssets(Constants.DIR+"/auto", entityNameGeneral, 0, 1);
             copyFileFromAssets(Constants.DIR+"/auto/player", playerName);
             copyFileFromAssets(Constants.DIR+"/auto/player", inventoryName);
             copyFileFromAssets(Constants.DIR+"/auto/player", missionName);
@@ -142,7 +140,6 @@ public class MenuState extends State {
      */
     private void copyFileFromAssets(String path, String fileName) throws IOException {
         //copying all entity and tile files from assets folder
-        //using a for loop and name files as tiles1, tile2,.etc?
         ArrayList<String> lines = Utils.loadFileAsArrayList(fileName);
         File file = new File(path+"/"+fileName);
         if(file.exists()){
@@ -153,6 +150,12 @@ public class MenuState extends State {
         for(String str: lines)
             writer.println(str);
         writer.close();
+    }
+
+    private void copyFileSeriesFromAssets(String path, String generalFileName, int start, int end) throws IOException{
+        for(int i = start; i < end+1; i++){
+            copyFileFromAssets(path, generalFileName+i+".wld");
+        }
     }
 
     @Override
