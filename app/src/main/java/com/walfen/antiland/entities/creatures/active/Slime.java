@@ -30,7 +30,7 @@ public class Slime extends Active {
         patrolRange = 512;
         giveUpRange = 1300;
         bounds.left = 0;
-        bounds.top = 0;
+        bounds.top = 20;
         bounds.right = Tile.TILEWIDTH;
         bounds.bottom = Tile.TILEHEIGHT;
         faction = 1;

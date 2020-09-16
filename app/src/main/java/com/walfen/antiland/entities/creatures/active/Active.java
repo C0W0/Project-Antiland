@@ -85,7 +85,7 @@ public abstract class Active extends Creature {
                 if(!isInRange(target, maxIdealRange)){
                     xMove = speed*rX;
                     yMove = speed*rY;
-                }else if(isInRange(target, minIdealRange)){
+                }else if(minIdealRange != 0 && isInRange(target, minIdealRange)){
                     xMove = -speed*rX;
                     yMove = -speed*rY;
                 }else{
