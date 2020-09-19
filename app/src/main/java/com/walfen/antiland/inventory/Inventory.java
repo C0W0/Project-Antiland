@@ -191,8 +191,6 @@ public class Inventory implements TouchEventListener {
         String name = selectedItem.getName();
         paint.getTextBounds(name, 0, name.length(), r);
         paint.setColor(Color.BLACK);
-//        canvas.drawRect(new Rect(invNameX-r.width()/2, invNameY-r.height()/2, invNameX+r.width()/2, invNameY+r.height()/2), paint);
-        System.out.println((invNameX-r.width()/2)+" "+(invNameY-r.height()/2)+" "+(invNameX+r.width()/2)+" "+(invNameY+r.height()/2));
         canvas.drawText(name, invNameX-r.width()/2.f, invNameY+r.height()/2.f-5, paint);
 
         paint.setColor(Color.BLACK);

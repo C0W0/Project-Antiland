@@ -25,8 +25,8 @@ public class SimpleArmour extends Armour {
 
     @Override
     protected void onRemove() {
-        handler.getPlayer().changeDefence(physicalDefence);
-        handler.getPlayer().changeMagicalDefence(magicDefence);
+        handler.getPlayer().changeDefence(-physicalDefence);
+        handler.getPlayer().changeMagicalDefence(-magicDefence);
     }
 
     @Override

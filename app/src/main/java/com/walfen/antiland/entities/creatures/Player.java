@@ -457,7 +457,8 @@ public class Player extends Creature implements TouchEventListener {
     }
 
     public void equip(int id, int location){
-        removeEquipment(location);
+        if(inventory.getEquipments()[location] != null)
+            inventory.getEquipments()[location].onActive();
         Equipment e = (Equipment)Item.items[id].addToInv(1);
         e.setEquippedOn(true);
         e.setHandler(handler);
@@ -466,8 +467,6 @@ public class Player extends Creature implements TouchEventListener {
     }
 
     public void removeEquipment(int location){
-        if(inventory.getEquipments()[location] == null)
-            return;
         inventory.addItem(inventory.getEquipments()[location].addToInv(1));
         inventory.getEquipments()[location] = null;
     }
