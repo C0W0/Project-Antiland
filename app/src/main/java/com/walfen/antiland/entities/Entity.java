@@ -20,6 +20,8 @@ import com.walfen.antiland.entities.statics.AirWall;
 import com.walfen.antiland.entities.statics.Tree;
 import com.walfen.antiland.untils.Utils;
 
+import java.util.Arrays;
+
 public abstract class Entity implements GameHierarchyElement, Cloneable {
 
     /* Entity id:
@@ -76,9 +78,7 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
         entityList[id] = this;
         resistance = new int[3];
         dmgPercentMod = new int[10];
-        for(int i = 0; i < 10; i++){
-            dmgPercentMod[i] = 100;
-        }
+        Arrays.fill(dmgPercentMod, 100);
 
         bounds = new Rect(0, 0, width, height);//default
     }
@@ -256,6 +256,10 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
 
     public void changeDefence(int defenceValue) {
         resistance[Attack.Type.PHYSICAL] += defenceValue;
+    }
+
+    public void changeMagicalDefence(int defenceValue){
+        resistance[2] += defenceValue;
     }
 
     public int getDmgModPercent(int type){

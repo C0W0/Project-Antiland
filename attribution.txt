@@ -20,6 +20,9 @@ CC-BY-SA 3.0: https://opengameart.org/content/2d-lost-garden-tileset-transition-
 Guido Bos, Yar, Paulina Riva (PauR), William.Thompsonj, Casper Nilsson, Hyptosis, ansimuz, qubodup, Bart K., Blarumyrran, Lanea Zimmerman (Sharm), Leonard Pabin, Chris Phillips, Barbara Rivera, and Talosaurus. 
 CC-BY-SA 3.0
 
+"[LPC] Items and game effects" by Sharm, ETTiNGRiNDER, wulax, Nila122, daneeklu, JaidynReiman, pennomi, laetissima, makrohn,and Jetrel
+licensed CC-BY-SA 3.0, GPL 3.0, or GPL 2.0: https://opengameart.org/content/lpc-items-and-game-effects
+
 Lots of trees and plants from OGA (DB32) tilesets pack 1
 Jetrel, Zabin, Hyptosis, Surt
 CC0

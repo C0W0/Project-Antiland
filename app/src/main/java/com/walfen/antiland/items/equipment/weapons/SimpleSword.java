@@ -7,24 +7,27 @@ import com.walfen.antiland.items.equipment.Equipment;
 
 public class SimpleSword extends Weapon {
 
-    public SimpleSword(Bitmap texture, String name, int id) {
-        super(texture, name, id, 100);
+    private final int dmg;
+
+    public SimpleSword(Bitmap texture, String name, int dmg, int id) {
+        super(texture, name, id, 100*dmg*dmg);
+        this.dmg = dmg;
     }
 
 
     @Override
     public void onEquip(Player player) {
-        player.changePhysicalDamage(1);
+        player.changePhysicalDamage(dmg);
     }
 
     @Override
     public void onRemove() {
-        handler.getPlayer().changePhysicalDamage(-1);
+        handler.getPlayer().changePhysicalDamage(-dmg);
     }
 
     @Override
     public Equipment addToInv(int count) {
-        SimpleSword i = new SimpleSword(texture, name, id);
+        SimpleSword i = new SimpleSword(texture, name, dmg, id);
         i.setPickedUP(true);
         i.count = count;
         return i;
@@ -32,7 +35,7 @@ public class SimpleSword extends Weapon {
 
     @Override
     public Equipment createNew(int x, int y, int count) {
-        SimpleSword i = new SimpleSword(texture, name, id);
+        SimpleSword i = new SimpleSword(texture, name, dmg, id);
         i.count = count;
         i.setPosition(x, y);
         return i;
@@ -40,11 +43,11 @@ public class SimpleSword extends Weapon {
 
     @Override
     public String getDesc() {
-        return "The door handle of the shield.";
+        return "Simple but effective weapon";
     }
 
     @Override
     public String[] getEffect() {
-        return new String[]{"dmg +1"};
+        return new String[]{"dmg +"+dmg};
     }
 }

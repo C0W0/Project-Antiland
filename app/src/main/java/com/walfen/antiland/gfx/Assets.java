@@ -58,8 +58,8 @@ public class Assets {
 
     //items
     public static Bitmap wood, stone, bottle, slimeGel;
-    public static Bitmap apple, redPotion1, greenPotion1;
-    public static Bitmap shield, sword;
+    public static Bitmap apple, syrup, redPotion1, greenPotion1;
+    public static Bitmap[] roundShields, heaterShields, swords, axes, armours;
     public static Bitmap inventoryScreen, missionScreen, craftingScreen, statsScreen, skillScreen, tradeScreen;
     public static Bitmap blueSqr, redSqr;
 
@@ -158,7 +158,7 @@ public class Assets {
         tt1_wallMidBottom = newTownTiles.crop(width*3, height*2, width, height);
         tt1_wallRightTop = newTownTiles.crop(width*4, 0, width, height);
         tt1_wallRightMid = newTownTiles.crop(width*4, height, width, height);
-        tt1_wallRightBottom = newTownTiles.crop(width*4, height*2, width, height);;
+        tt1_wallRightBottom = newTownTiles.crop(width*4, height*2, width, height);
 
 
 
@@ -174,7 +174,7 @@ public class Assets {
         player_left = new Bitmap[2];
         player_left[0] = sheet.crop(width*2,height,width,height);
         player_left[1] = sheet.crop(width*3,height,width,height);
-        player_neutral = sheet.crop(0,height*2,width,height);;
+        player_neutral = sheet.crop(0,height*2,width,height);
         player_Attack = sheet.crop(width*3, height*2, width, height);
         player_SharpWind = loadSpriteAsArray(new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.magic_firelion_big)), 4, 4, width, height);
         explosion = loadSpriteAsArray(new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.explosion_1)), 6, 1, width, height*2);
@@ -225,11 +225,26 @@ public class Assets {
         slimeGel = items.crop(0, 0, iWidth, iHeight);
 
         apple = ImageLoader.loadImage(R.drawable.apple);
+        syrup = items.crop(iWidth*2, 0, iWidth, iHeight);
         redPotion1 = potions.crop(0, iHeight, iWidth, iHeight);
         greenPotion1 = potions.crop(0, 0, iWidth, iHeight);
 
-        sword = ImageLoader.loadImage(R.drawable.sword);
-        shield = ImageLoader.loadImage(R.drawable.shield);
+        swords = new Bitmap[5];
+        for(int y = 0; y < 3; y++)
+            swords[y] = items.crop(0, iHeight+2*y*iHeight, iWidth, iHeight);
+        axes = new Bitmap[5];
+        for(int y = 0; y < 3; y++)
+            axes[y] = items.crop(iWidth, iHeight+2*y*iHeight, iWidth, iHeight);
+        roundShields = new Bitmap[5];
+        for(int y = 0; y < 3; y++)
+            roundShields[y] = items.crop(iWidth*2, iHeight+2*y*iHeight, iWidth, iHeight);
+        armours = new Bitmap[5];
+        for(int y = 0; y < 3; y++)
+            armours[y] = items.crop(0, iHeight*2+2*y*iHeight, iWidth, iHeight);
+        heaterShields = new Bitmap[5];
+        for(int y = 0; y < 3; y++)
+            heaterShields[y] = items.crop(iWidth*2, iHeight*2+2*y*iHeight, iWidth, iHeight);
+
 
         blueSqr = ImageLoader.loadImage(R.drawable.selected);
         redSqr = ImageLoader.loadImage(R.drawable.red_square);
