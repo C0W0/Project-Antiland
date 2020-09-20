@@ -14,8 +14,9 @@ import com.walfen.antiland.entities.creatures.npc.secondary.NPC1;
 import com.walfen.antiland.entities.creatures.npc.trader.MushroomTrader;
 import com.walfen.antiland.entities.creatures.npc.trader.WandererCrab;
 import com.walfen.antiland.entities.properties.attack.Attack;
-import com.walfen.antiland.entities.special.EntityGenerator;
-import com.walfen.antiland.entities.special.SlimeGenerator;
+import com.walfen.antiland.entities.special.command.passive.EntityGenerator;
+import com.walfen.antiland.entities.special.command.passive.SlimeGenerator;
+import com.walfen.antiland.entities.special.command.passive.WorldGate;
 import com.walfen.antiland.entities.statics.AirWall;
 import com.walfen.antiland.entities.statics.Tree;
 import com.walfen.antiland.untils.Utils;
@@ -33,6 +34,7 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
     MushroomTrader: 6
     SlimeSpawner: 7
     IceSlime: 8
+    WorldGate: 9
     (UPDATE HERE)
      */
 
@@ -45,9 +47,11 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
     public static MushroomTrader mushroomTrader = new MushroomTrader();
     public static EntityGenerator slimeSpawner;
     public static IceSlime iceSlime = new IceSlime();
+    public static WorldGate gate;
 
     public static void initEntities(Handler handler){
          slimeSpawner = new SlimeGenerator(handler);
+         gate = new WorldGate(handler, 9, 1, 640, 640);
     }
 
     //Entities

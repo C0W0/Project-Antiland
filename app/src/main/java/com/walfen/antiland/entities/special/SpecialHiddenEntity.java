@@ -3,16 +3,12 @@ package com.walfen.antiland.entities.special;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 
-import com.walfen.antiland.Handler;
 import com.walfen.antiland.entities.Entity;
 
-public abstract class CommandEntity extends Entity {
+public abstract class SpecialHiddenEntity extends Entity {
 
-    protected Handler handler;
-
-    public CommandEntity(Handler handler, int id) {
-        super(1, 1, id);
-        this.handler = handler;
+    public SpecialHiddenEntity(int width, int height, int id) {
+        super(width, height, id);
     }
 
     @Override
@@ -26,10 +22,10 @@ public abstract class CommandEntity extends Entity {
     }
 
     @Override
-    public void update() {
-        if(isActionAllowed())
-            commandAction();
-    }
+    public void receiveDamage(int num, int type) { }
+
+    @Override
+    protected void onDeath() { }
 
     @Override
     public Bitmap getTexture(int xSize, int ySize) {
@@ -40,9 +36,5 @@ public abstract class CommandEntity extends Entity {
     public String getName() {
         return null;
     }
-
-    protected abstract void commandAction();
-
-    protected abstract boolean isActionAllowed();
 
 }

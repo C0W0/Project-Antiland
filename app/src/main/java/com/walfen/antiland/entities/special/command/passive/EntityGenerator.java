@@ -1,4 +1,4 @@
-package com.walfen.antiland.entities.special;
+package com.walfen.antiland.entities.special.command.passive;
 
 import android.graphics.Canvas;
 import android.graphics.Point;
@@ -9,7 +9,7 @@ import com.walfen.antiland.Handler;
 import com.walfen.antiland.entities.Entity;
 import com.walfen.antiland.untils.Utils;
 
-public class EntityGenerator extends CommandEntity {
+public class EntityGenerator extends PassiveCommandEntity {
 
     protected long lastGeneration, generationCooldown;
     protected int generatedEntity, spawnRange, criticalDensity;
@@ -84,13 +84,7 @@ public class EntityGenerator extends CommandEntity {
     }
 
     @Override
-    protected void onDeath() { }
-
-    @Override
     public void draw(Canvas canvas) { }
-
-    @Override
-    public void receiveDamage(int num, int type) { }
 
     public static class GenerationSpeed{
 
