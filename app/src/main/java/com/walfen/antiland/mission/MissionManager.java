@@ -196,4 +196,12 @@ public class MissionManager implements TouchEventListener {
     public Mission getSelectedMission(){
         return missions.size()>selectedMission?missions.get(selectedMission):null;
     }
+
+    public void setSelectedMission(int selectedMission) {
+        this.selectedMission = selectedMission;
+    }
+
+    public void setSelectedMission(){
+        this.selectedMission = missions.size()-1;
+    }
 }

@@ -17,7 +17,7 @@ public class WandererCrab extends Trader {
     private Animation dynamicTexture;
 
     public WandererCrab() {
-        super(Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT, 5);
+        super(Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT, 401);
         dynamicTexture = new Animation(3, Assets.npcCrab);
         dynamicTexture.scale(width, height);
     }

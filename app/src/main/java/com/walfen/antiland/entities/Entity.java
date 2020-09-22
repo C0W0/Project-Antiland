@@ -26,32 +26,47 @@ import java.util.Arrays;
 public abstract class Entity implements GameHierarchyElement, Cloneable {
 
     /* Entity id:
-    AirWall: 1
-    Tree: 2
-    NPC1 (mission crab): 3
-    Slime: 4
-    WandererCrab (trade crab): 5
-    MushroomTrader: 6
-    SlimeSpawner: 7
-    IceSlime: 8
-    WorldGate: 9
     (UPDATE HERE)
+    ------------------------
+    Hostile/neutral: 101 ~ 400
+    Slime: 201
+    IceSlime: 202
+    ------------------------
+    NPC: 401 ~ 700
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        traders: 401 ~ 500
+        WandererCrab (trade crab): 401
+        MushroomTrader: 402
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        mission: 501 ~ 600
+        NPC1 (mission crab): 501
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        other: 601 ~ 700
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ------------------------
+    Static: 701 ~ 1000
+    AirWall: 701
+    Tree: 702
+    ------------------------
+    Special: 1001+
+    WorldGate: 1001
+    SlimeSpawner: 1101
      */
 
-    public static Entity[] entityList = new Entity[256];
-    public static AirWall airWall = new AirWall();
-    public static Tree tree = new Tree();
-    public static NPC1 crab = new NPC1();
+    public static Entity[] entityList = new Entity[2048];
     public static Slime slime = new Slime();
+    public static IceSlime iceSlime = new IceSlime();
     public static WandererCrab traderCrab = new WandererCrab();
     public static MushroomTrader mushroomTrader = new MushroomTrader();
-    public static EntityGenerator slimeSpawner;
-    public static IceSlime iceSlime = new IceSlime();
+    public static NPC1 crab = new NPC1();
+    public static AirWall airWall = new AirWall();
+    public static Tree tree = new Tree();
     public static WorldGate gate;
+    public static EntityGenerator slimeSpawner;
 
     public static void initEntities(Handler handler){
          slimeSpawner = new SlimeGenerator(handler);
-         gate = new WorldGate(handler, 9, 1, 640, 640);
+         gate = new WorldGate(handler, 1001, 1, 640, 640);
     }
 
     //Entities

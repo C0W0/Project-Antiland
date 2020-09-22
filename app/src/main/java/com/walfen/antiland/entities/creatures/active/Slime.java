@@ -23,7 +23,7 @@ public class Slime extends Active {
     private MSTimeController animationCtrlTimer = new MSTimeController();
 
     public Slime() {
-        super(Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT, 1000, 4, 1);
+        super(Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT, 1000, 201, 1);
         spottingRange = 512;
         maxIdealRange = 128;
         minIdealRange = 0; // melee

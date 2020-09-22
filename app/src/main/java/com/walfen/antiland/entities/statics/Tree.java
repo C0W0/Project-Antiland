@@ -15,7 +15,7 @@ import com.walfen.antiland.tiles.Tile;
 public class Tree extends StaticEntity {
 
     public Tree() {
-        super(Tile.TILEWIDTH, Tile.TILEHEIGHT*4, 2);
+        super(Tile.TILEWIDTH, Tile.TILEHEIGHT*4, 702);
 
         bounds.left = 50;
         bounds.top = 100;

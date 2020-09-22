@@ -11,7 +11,7 @@ import com.walfen.antiland.tiles.Tile;
 public class AirWall extends StaticEntity{
 
     public AirWall() {
-        super(Tile.TILEWIDTH, Tile.TILEHEIGHT, 1);
+        super(Tile.TILEWIDTH, Tile.TILEHEIGHT, 701);
 
         bounds.left = 0;
         bounds.top = Tile.TILEHEIGHT-1;

@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class MushroomTrader extends Trader {
 
     public MushroomTrader() {
-        super(192, 232, 6);
+        super(192, 232, 402);
     }
 
     @Override

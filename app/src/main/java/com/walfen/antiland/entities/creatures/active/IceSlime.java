@@ -22,7 +22,7 @@ public class IceSlime extends Active {
     private MSTimeController animationCtrlTimer = new MSTimeController();
 
     public IceSlime() {
-        super(Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT, 5000, 8, 5);
+        super(Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT, 5000, 202, 5);
         spottingRange = 512;
         maxIdealRange = 384;
         minIdealRange = 128;

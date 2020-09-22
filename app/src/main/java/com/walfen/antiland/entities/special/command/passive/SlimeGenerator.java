@@ -7,7 +7,7 @@ import com.walfen.antiland.untils.Utils;
 public class SlimeGenerator extends EntityGenerator {
 
     public SlimeGenerator(Handler handler) {
-        super(handler, slime.getId(), 256, 5, EntityGenerator.GenerationSpeed.FAST_GENERATION, 7);
+        super(handler, slime.getId(), 256, 5, EntityGenerator.GenerationSpeed.FAST_GENERATION, 1101);
     }
 
     @Override

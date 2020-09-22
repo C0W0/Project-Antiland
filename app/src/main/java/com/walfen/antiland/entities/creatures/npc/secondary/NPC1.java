@@ -22,7 +22,7 @@ public class NPC1 extends RepeatedMissionNPC {
     private Animation dynamicTexture;
 
     public NPC1() {
-        super(Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT, 3, 4);
+        super(Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT, 501, 4);
         interRange = 2;
         dynamicTexture = new Animation(6, Assets.npcCrab);
         dynamicTexture.scale(width, height);
@@ -61,6 +61,7 @@ public class NPC1 extends RepeatedMissionNPC {
             manager.hideUI();
             manager.getConvBox().setConversationList(c2, () -> {assignMission(); convBoxOn = false;
                 Mission.missions[missionID].setCompleteMessage("Report back to Mr. Krab.");
+                handler.getPlayer().getMissionManager().setSelectedMission();
                 handler.getUIManager().getCGUI().getMissionPanel().changePosition(MissionPanel.EXTEND);});
             manager.getConvBox().setActive();
         }}, false);});

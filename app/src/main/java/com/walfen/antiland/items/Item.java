@@ -21,7 +21,7 @@ public abstract class Item implements GameHierarchyElement {
 
     //handler
 
-    public static Item[] items = new Item[256];
+    public static Item[] items = new Item[512];
 
     public static NeutralItem woodItem, bottle, slimeGel; //id 0-99
     public static UsableItem apple, lvOneHpPotion, lvOneGreenPotion, mapleSyrup; //id 100-199
