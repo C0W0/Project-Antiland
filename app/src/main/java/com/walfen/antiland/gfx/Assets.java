@@ -20,7 +20,7 @@ public class Assets {
     public static Bitmap tt1_window, tt1_smokestack, tt1_balcony, tt1_doorTop, tt1_doorBottom,
             tt1_wallLeftTop, tt1_wallLeftMid, tt1_wallLeftBottom, tt1_wallMidTop, tt1_wallCommon1, tt1_wallMidBottom,
             tt1_wallRightTop, tt1_wallRightMid, tt1_wallRightBottom;
-//    public static Bitmap [] water;
+    public static Bitmap[][] a1_tiles;
 
     public static Bitmap NULL;
     public static Bitmap grey_transparent;
@@ -88,6 +88,7 @@ public class Assets {
         SpriteSheet iceSlimeMovement = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.ice_slime_movement));
         SpriteSheet iceSlimeAttack = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.ice_slime_attack));
         SpriteSheet headSignSheet = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.head_sign));
+        SpriteSheet area1Tiles = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.area_1_tiles));
 
         grass = newTownTiles.crop(width*11,0,width,height);
         grassStone = sheet1.crop(width*3,height,width,height);
@@ -160,7 +161,12 @@ public class Assets {
         tt1_wallRightMid = newTownTiles.crop(width*4, height, width, height);
         tt1_wallRightBottom = newTownTiles.crop(width*4, height*2, width, height);
 
-
+        a1_tiles = new Bitmap[3][4];
+        for(int y = 0; y < a1_tiles.length; y++){
+            for(int x = 0; x < a1_tiles[y].length; x++){
+                a1_tiles[y][x] = area1Tiles.crop(x*width, y*height, width, height);
+            }
+        }
 
         player_down = new Bitmap[2];
         player_down[0] = sheet.crop(0,0,width,height);

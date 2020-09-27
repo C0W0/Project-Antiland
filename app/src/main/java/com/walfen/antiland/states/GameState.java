@@ -83,6 +83,7 @@ public class GameState extends State {
         player.loadPlayer(path, uiManager);
         worlds.add(new World(handler, path, 0));
         worlds.add(new World(handler, path, 1));
+        worlds.add(new World(handler, path, 2));
         try {
             int index = Utils.parseInt(Utils.loadFileAsArrayList(new FileInputStream(new File(path+"/save.wld"))).get(1));
             world = worlds.get(index);
@@ -163,7 +164,7 @@ public class GameState extends State {
 //        uiManager.popUpAction("\"Can you still move?\" A weird and spooky voices wakes you up from inside.", "...",
 //                () -> uiManager.activeTutorial("Tutorial: Use the left joystick to move around", uiManager.getCGUI().getMovementJoystick().getBounds()));
 //        player.addEffect(new BraveHeart(player, 5000, 5));
-//        handler.setGameWorld(0, 640, 640);
+        handler.setGameWorld(2, 320, 640);
     }
 
     public void changePlayerRegion(int world, int playerX, int playerY) {

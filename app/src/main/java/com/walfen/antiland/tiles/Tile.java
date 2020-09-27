@@ -104,6 +104,21 @@ public class Tile implements GraphicalTerminalElement {
         new Tile(Assets.tt1_window, 76, true);
         new Tile(Assets.tt1_doorTop, 77, true);
         new Tile(Assets.tt1_doorBottom, 78, false);
+
+        new Tile(Assets.a1_tiles[0][0], 79, true);
+        new Tile(Assets.a1_tiles[0][1], 80, true);
+        new Tile(Assets.a1_tiles[0][2], 81, true);
+        new Tile(Assets.a1_tiles[0][3], 82, true);
+        new Tile(Assets.a1_tiles[1][3], 83, true);
+        new Tile(Assets.a1_tiles[2][3], 84, true);
+
+        new Tile(Assets.a1_tiles[1][2], 85, true);
+        new Tile(Assets.a1_tiles[2][2], 86, false);
+        new Tile(Assets.a1_tiles[2][1], 87, true);
+        new Tile(Assets.a1_tiles[1][0], 88, true);
+        new Tile(Assets.a1_tiles[1][1], 89, true);
+
+        new Tile(Assets.a1_tiles[2][0], 90, false);
     }
 
 
