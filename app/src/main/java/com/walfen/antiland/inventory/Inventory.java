@@ -269,13 +269,6 @@ public class Inventory implements TouchEventListener {
     }
 
     //getters and setters
-    public Handler getHandler() {
-        return handler;
-    }
-
-    public void setHandler(Handler handler) {
-        this.handler = handler;
-    }
 
     public boolean isActive() {
         return active;
@@ -298,6 +291,7 @@ public class Inventory implements TouchEventListener {
     public Equipment[] getEquipments() {
         return equipments;
     }
+
     public void setInventoryItems(ArrayList<Item> inventoryItems) {
         this.inventoryItems=inventoryItems;
     }

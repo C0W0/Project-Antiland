@@ -164,7 +164,8 @@ public class GameState extends State {
 //        uiManager.popUpAction("\"Can you still move?\" A weird and spooky voices wakes you up from inside.", "...",
 //                () -> uiManager.activeTutorial("Tutorial: Use the left joystick to move around", uiManager.getCGUI().getMovementJoystick().getBounds()));
 //        player.addEffect(new BraveHeart(player, 5000, 5));
-        handler.setGameWorld(2, 320, 640);
+//        handler.setGameWorld(2, 320, 640);
+        player.getGlobalMap().setActive();
     }
 
     public void changePlayerRegion(int world, int playerX, int playerY) {

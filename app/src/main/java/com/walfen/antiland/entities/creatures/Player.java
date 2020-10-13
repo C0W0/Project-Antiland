@@ -22,12 +22,13 @@ import com.walfen.antiland.inventory.Inventory;
 import com.walfen.antiland.inventory.Trade;
 import com.walfen.antiland.items.Item;
 import com.walfen.antiland.items.equipment.Equipment;
+import com.walfen.antiland.map.GlobalMap;
+import com.walfen.antiland.map.Map;
 import com.walfen.antiland.mission.Mission;
 import com.walfen.antiland.mission.MissionManager;
 import com.walfen.antiland.mission.killing.KillTracker;
 import com.walfen.antiland.statswindow.PlayerSkillsManager;
 import com.walfen.antiland.statswindow.PlayerStatsWindow;
-import com.walfen.antiland.statswindow.StatusIcon;
 import com.walfen.antiland.ui.ChangeEvent;
 import com.walfen.antiland.ui.TouchEventListener;
 import com.walfen.antiland.ui.UIManager;
@@ -62,6 +63,9 @@ public class Player extends Creature implements TouchEventListener {
     //mission system
     private MissionManager missionManager;
     private KillTracker tracker;
+
+    //map
+    private Map globalMap;
 
     //player stats
     private int currLevelXp;
@@ -111,6 +115,7 @@ public class Player extends Creature implements TouchEventListener {
         fabricator = new Fabricator(handler, inventory);
         trade = new Trade(handler, inventory);
 
+        globalMap = new GlobalMap(handler);
 
         missionManager = new MissionManager(handler);
         tracker = new KillTracker(handler);
@@ -233,7 +238,8 @@ public class Player extends Creature implements TouchEventListener {
             return;
         }
         if(inventory.isActive() || fabricator.isActive() || missionManager.isActive() ||
-                skillsManager.isActive() || statsWindow.isActive() || trade.isActive()){
+                skillsManager.isActive() || statsWindow.isActive() || trade.isActive() ||
+                globalMap.isActive()){
             return;
         }
         float inputX = handler.getUIManager().getCGUI().getAttackJoystick().getMappedInputX();
@@ -255,7 +261,8 @@ public class Player extends Creature implements TouchEventListener {
         yMove = 0;
 
         if(inventory.isActive() || fabricator.isActive() || missionManager.isActive() ||
-                skillsManager.isActive() || trade.isActive()){
+                skillsManager.isActive() || statsWindow.isActive() || trade.isActive() ||
+                globalMap.isActive()){
             return;
         }
         xMove = handler.getUIManager().getCGUI().getMovementJoystick().getInputX()*speed;
@@ -318,6 +325,7 @@ public class Player extends Creature implements TouchEventListener {
         inventory.update();
         fabricator.update();
         trade.update();
+        globalMap.update();
 
         //skills
         skillsManager.update();
@@ -353,6 +361,8 @@ public class Player extends Creature implements TouchEventListener {
         statsWindow.onTouchEvent(event);
         trade.onTouchEvent(event);
 
+        globalMap.onTouchEvent(event);
+
         interactButton.onTouchEvent(event);
     }
 
@@ -379,6 +389,8 @@ public class Player extends Creature implements TouchEventListener {
         skillsManager.draw(canvas);
         statsWindow.draw(canvas);
         trade.draw(canvas);
+
+        globalMap.draw(canvas);
     }
 
     @Override
@@ -584,6 +596,10 @@ public class Player extends Creature implements TouchEventListener {
 
     public PlayerStatsWindow getStatsWindow() {
         return statsWindow;
+    }
+
+    public Map getGlobalMap() {
+        return globalMap;
     }
 
     public int getPerkPoints() {

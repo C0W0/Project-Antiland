@@ -61,6 +61,7 @@ public class Assets {
     public static Bitmap apple, syrup, redPotion1, greenPotion1;
     public static Bitmap[] roundShields, heaterShields, swords, axes, armours;
     public static Bitmap inventoryScreen, missionScreen, craftingScreen, statsScreen, skillScreen, tradeScreen;
+    public static Bitmap mapBackground, worldMap_0;
     public static Bitmap blueSqr, redSqr;
 
     //skills
@@ -262,6 +263,8 @@ public class Assets {
         skillScreen = ImageLoader.loadImage(R.drawable.skill_selection_screen);
         statsScreen = ImageLoader.loadImage(R.drawable.status_screen);
         tradeScreen = ImageLoader.loadImage(R.drawable.trade_screen);
+        mapBackground = ImageLoader.loadImage(R.drawable.map_paper);
+        worldMap_0 = ImageLoader.loadImage(R.drawable.map_0);
         popup1 = ImageLoader.loadImage(R.drawable.popup_1);
         popup2 = ImageLoader.loadImage(R.drawable.popup_2);
         popupButton1 = sheet1.crop(width*4, height*2, width*2, height);
