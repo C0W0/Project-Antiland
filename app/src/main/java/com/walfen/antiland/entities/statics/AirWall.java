@@ -17,7 +17,6 @@ public class AirWall extends StaticEntity{
         bounds.top = Tile.TILEHEIGHT-1;
         bounds.right = bounds.left+Tile.TILEWIDTH;
         bounds.bottom = bounds.top+Tile.TILEHEIGHT;
-        id = 1;
     }
 
     @Override

@@ -86,7 +86,7 @@ public class World implements GameHierarchyElement {
             String[] entities = loadedEntities.get(i).split("\\s+");
             entityManager.addEntity(getEntityWithID(Utils.parseInt(entities[0]), // id
                     Utils.parseInt(entities[1]), Utils.parseInt(entities[2]), // initial x and y
-                    Utils.parseInt(entities[3]), Utils.parseInt(entities[4]), // offset x and y
+                    Utils.parseInt(entities[3]), Utils.parseInt(entities[4]), // original x and y
                     Utils.parseInt(entities[5]))); // status
         }
     }
@@ -113,7 +113,7 @@ public class World implements GameHierarchyElement {
                 String[] entities = loadedEntities.get(i).split("\\s+");
                 entityManager.addEntity(getEntityWithID(Utils.parseInt(entities[0]), // id
                         Utils.parseInt(entities[1]), Utils.parseInt(entities[2]), // initial x and y
-                        Utils.parseInt(entities[3]), Utils.parseInt(entities[4]), // offset x and y
+                        Utils.parseInt(entities[3]), Utils.parseInt(entities[4]), // original x and y
                         Utils.parseInt(entities[5]))); // status
             }
         }catch (IOException e){

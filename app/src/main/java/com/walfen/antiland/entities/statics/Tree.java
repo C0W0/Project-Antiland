@@ -24,7 +24,6 @@ public class Tree extends StaticEntity {
         setEntityHealth(2);
         setDefence(1);
         dmgPercentMod[Attack.Type.MAGICAL_FIRE] = 400;
-        id = 2;
     }
 
     @Override
