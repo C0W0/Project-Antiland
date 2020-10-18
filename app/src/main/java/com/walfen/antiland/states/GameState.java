@@ -83,7 +83,7 @@ public class GameState extends State {
         player.loadPlayer(path, uiManager);
         worlds.add(new World(handler, path, 0));
         worlds.add(new World(handler, path, 1));
-        worlds.add(new World(handler, path, 2));
+//        worlds.add(new World(handler, path, 2));
         try {
             int index = Utils.parseInt(Utils.loadFileAsArrayList(new FileInputStream(new File(path+"/save.wld"))).get(1));
             world = worlds.get(index);

@@ -66,7 +66,7 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
 
     public static void initEntities(Handler handler){
          slimeSpawner = new SlimeGenerator(handler);
-         gate = new WorldGate(handler, 1001, 1, 640, 640);
+         gate = new WorldGate(handler, 1001, 1, 6656, 2304);
     }
 
     //Entities

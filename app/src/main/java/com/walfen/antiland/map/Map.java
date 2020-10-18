@@ -18,9 +18,9 @@ public abstract class Map implements TouchEventListener {
     protected UIImageButton mapSwitchButton, closeButton;
     protected Handler handler;
     protected boolean active = false, buttonJustPressed = false;
-    protected final Bitmap mapBackGround;
+    protected final Bitmap mapBackGround, map;
 
-    public Map(Handler handler){
+    public Map(Handler handler, Bitmap map){
         this.handler = handler;
         mapBackGround = ImageEditor.scaleBitmap(Assets.mapBackground,
                 Constants.UI_SCREEN_WIDTH, Constants.UI_SCREEN_HEIGHT);
@@ -28,6 +28,7 @@ public abstract class Map implements TouchEventListener {
         mapHeight = mapBackGround.getHeight();
         mapXDispute = Constants.SCREEN_WIDTH/2-mapWidth/2;
         mapYDispute = Constants.SCREEN_HEIGHT/2-mapHeight/2;
+        this.map = ImageEditor.scaleBitmap(map, mapWidth, mapHeight);
         mapSwitchButton = new UIImageButton(mapXDispute+5, mapYDispute+mapHeight-Constants.UI_CLOSE_SIZE-5,
                 Constants.UI_CLOSE_SIZE, Constants.UI_CLOSE_SIZE,
                 Assets.switchFlip, () -> System.out.println("Open another map"));
@@ -59,6 +60,9 @@ public abstract class Map implements TouchEventListener {
             return;
         canvas.drawBitmap(mapBackGround, null, new Rect
                 (mapXDispute, mapYDispute, mapXDispute+mapWidth, mapYDispute+mapHeight),
+                Constants.getRenderPaint());
+        canvas.drawBitmap(map, null, new Rect
+                        (mapXDispute, mapYDispute, mapXDispute+mapWidth, mapYDispute+mapHeight),
                 Constants.getRenderPaint());
         postDraw(canvas);
         mapSwitchButton.draw(canvas);

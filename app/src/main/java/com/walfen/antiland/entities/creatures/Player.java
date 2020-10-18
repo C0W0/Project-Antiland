@@ -303,6 +303,7 @@ public class Player extends Creature implements TouchEventListener {
     @Override
     public void update() {
         super.update();
+//        System.out.println(x+" "+y);
         if(disable){
             handler.getGameCamera().centerOnEntity(this);
             return;
