@@ -6,10 +6,15 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.os.SystemClock;
 import android.view.MotionEvent;
 
+import com.walfen.antiland.Constants;
 import com.walfen.antiland.GameHierarchyElement;
+import com.walfen.antiland.Handler;
 import com.walfen.antiland.gfx.Animation;
+import com.walfen.antiland.ui.ChangeEvent;
+import com.walfen.antiland.ui.ClickListener;
 
 public class Tutorial implements GameHierarchyElement {
 
@@ -17,10 +22,12 @@ public class Tutorial implements GameHierarchyElement {
     private boolean active = false;
     private long lastFrame, frameTime;
     private int index;
+    private ChangeEvent action;
 
     public Tutorial(){
         frameTime = 350;
         index = 0;
+        action = Constants.EMPTY_EVENT;
     }
 
     public boolean onTouchEvent(MotionEvent event){
@@ -31,6 +38,8 @@ public class Tutorial implements GameHierarchyElement {
             float touchY = event.getY(pointerIndex);
             if(target.contains((int)touchX, (int)touchY)){
                 active = false;
+                action.onChange();
+                action = Constants.EMPTY_EVENT;
                 return true;
             }
         }
@@ -71,6 +80,11 @@ public class Tutorial implements GameHierarchyElement {
         this.active = active;
         if(active)
             lastFrame = System.currentTimeMillis();
+    }
+
+    public void setActive(boolean active, ChangeEvent action) {
+        setActive(active);
+        this.action = action;
     }
 
     public void setActive(){

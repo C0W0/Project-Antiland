@@ -11,8 +11,8 @@ public class WorldGate extends PassiveCommandEntity {
     private Rect actionBounds;
     private int targetWorld, targetX, targetY;
 
-    public WorldGate(Handler handler, int id, int targetWorld, int targetX, int targetY) {
-        super(handler, id);
+    public WorldGate(int id, int targetWorld, int targetX, int targetY) {
+        super(id);
         playerEnterTime = -1;
         actionBounds = new Rect(0, 0, 128, 128);
         this.targetWorld = targetWorld;
@@ -38,7 +38,7 @@ public class WorldGate extends PassiveCommandEntity {
             playerEnterTime = -1;
             return false;
         }
-        return playerEnterTime != -1 && System.currentTimeMillis() - playerEnterTime > 1500;
+        return playerEnterTime != -1 && System.currentTimeMillis() - playerEnterTime > 700;
     }
 
     @Override

@@ -78,7 +78,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback, Ke
         State.setState(menuState);
 //        gameState.init();
         Item.initItems(handler);
-        Entity.initEntities(handler);
+        Entity.initEntities();
         Tile.initTiles();
         StatusEffect.initEffects();
     }

@@ -52,4 +52,9 @@ public class Handler {
         return gs.getPlayer();
     }
 
+    public int getGameWorldIndex(){
+        GameState gs = (GameState)(getGame().getGameState());
+        return gs.getWorldIndex();
+    }
+
 }

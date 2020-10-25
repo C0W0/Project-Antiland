@@ -243,6 +243,10 @@ public class World implements GameHierarchyElement {
         }
     }
 
+    public void setTile(int xLocation, int yLocation, int tileID){
+        worldTiles[xLocation][yLocation] = tileID;
+    }
+
     //getters and setters
     public EntityManager getEntityManager() {
         return entityManager;

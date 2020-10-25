@@ -147,6 +147,10 @@ public class UIManager implements TouchEventListener{
         popUpAction(message, "OK", () -> {tutorial.setTarget(target); tutorial.setActive(true);});
     }
 
+    public void activeTutorial(String message, Rect target, ChangeEvent action){
+        popUpAction(message, "OK", () -> {tutorial.setTarget(target); tutorial.setActive(true, action);});
+    }
+
     private static class PopUp extends UIObject{
 
         private String message;

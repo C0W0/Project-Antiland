@@ -12,14 +12,11 @@ import com.walfen.antiland.gfx.ImageEditor;
 
 public class GlobalMap extends Map {
 
-    public GlobalMap(Handler handler) {
-        super(handler, Assets.worldMap_0);
+
+    public GlobalMap(Handler handler, int mapWidth, int mapHeight) {
+        super(handler, Assets.worldMap_0, mapWidth, mapHeight);
     }
 
-    @Override
-    protected void postTouchEvent(MotionEvent event) {
-
-    }
 
     @Override
     public void update() {
@@ -28,6 +25,11 @@ public class GlobalMap extends Map {
 
     @Override
     protected void postDraw(Canvas canvas) {
+
+    }
+
+    @Override
+    public void onTouchEvent(MotionEvent event) {
 
     }
 }

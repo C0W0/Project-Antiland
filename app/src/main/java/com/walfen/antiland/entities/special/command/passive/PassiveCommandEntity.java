@@ -9,11 +9,9 @@ import com.walfen.antiland.entities.special.SpecialHiddenEntity;
 
 public abstract class PassiveCommandEntity extends SpecialHiddenEntity {
 
-    protected Handler handler;
 
-    public PassiveCommandEntity(Handler handler, int id) {
+    public PassiveCommandEntity(int id) {
         super(1, 1, id);
-        this.handler = handler;
     }
 
     @Override

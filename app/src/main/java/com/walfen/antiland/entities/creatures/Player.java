@@ -22,8 +22,7 @@ import com.walfen.antiland.inventory.Inventory;
 import com.walfen.antiland.inventory.Trade;
 import com.walfen.antiland.items.Item;
 import com.walfen.antiland.items.equipment.Equipment;
-import com.walfen.antiland.map.GlobalMap;
-import com.walfen.antiland.map.Map;
+import com.walfen.antiland.map.MapManager;
 import com.walfen.antiland.mission.Mission;
 import com.walfen.antiland.mission.MissionManager;
 import com.walfen.antiland.mission.killing.KillTracker;
@@ -65,7 +64,7 @@ public class Player extends Creature implements TouchEventListener {
     private KillTracker tracker;
 
     //map
-    private Map globalMap;
+    private MapManager mapManager;
 
     //player stats
     private int currLevelXp;
@@ -115,7 +114,7 @@ public class Player extends Creature implements TouchEventListener {
         fabricator = new Fabricator(handler, inventory);
         trade = new Trade(handler, inventory);
 
-        globalMap = new GlobalMap(handler);
+        mapManager = new MapManager(handler);
 
         missionManager = new MissionManager(handler);
         tracker = new KillTracker(handler);
@@ -239,7 +238,7 @@ public class Player extends Creature implements TouchEventListener {
         }
         if(inventory.isActive() || fabricator.isActive() || missionManager.isActive() ||
                 skillsManager.isActive() || statsWindow.isActive() || trade.isActive() ||
-                globalMap.isActive()){
+                mapManager.isActive()){
             return;
         }
         float inputX = handler.getUIManager().getCGUI().getAttackJoystick().getMappedInputX();
@@ -262,7 +261,7 @@ public class Player extends Creature implements TouchEventListener {
 
         if(inventory.isActive() || fabricator.isActive() || missionManager.isActive() ||
                 skillsManager.isActive() || statsWindow.isActive() || trade.isActive() ||
-                globalMap.isActive()){
+                mapManager.isActive()){
             return;
         }
         xMove = handler.getUIManager().getCGUI().getMovementJoystick().getInputX()*speed;
@@ -303,6 +302,7 @@ public class Player extends Creature implements TouchEventListener {
     @Override
     public void update() {
         super.update();
+//        System.out.println((int)x/128+" "+(int)y/128);
 //        System.out.println(x+" "+y);
         if(disable){
             handler.getGameCamera().centerOnEntity(this);
@@ -326,7 +326,7 @@ public class Player extends Creature implements TouchEventListener {
         inventory.update();
         fabricator.update();
         trade.update();
-        globalMap.update();
+        mapManager.update();
 
         //skills
         skillsManager.update();
@@ -362,7 +362,7 @@ public class Player extends Creature implements TouchEventListener {
         statsWindow.onTouchEvent(event);
         trade.onTouchEvent(event);
 
-        globalMap.onTouchEvent(event);
+        mapManager.onTouchEvent(event);
 
         interactButton.onTouchEvent(event);
     }
@@ -391,7 +391,7 @@ public class Player extends Creature implements TouchEventListener {
         statsWindow.draw(canvas);
         trade.draw(canvas);
 
-        globalMap.draw(canvas);
+        mapManager.draw(canvas);
     }
 
     @Override
@@ -599,8 +599,8 @@ public class Player extends Creature implements TouchEventListener {
         return statsWindow;
     }
 
-    public Map getGlobalMap() {
-        return globalMap;
+    public MapManager getMapManager() {
+        return mapManager;
     }
 
     public int getPerkPoints() {

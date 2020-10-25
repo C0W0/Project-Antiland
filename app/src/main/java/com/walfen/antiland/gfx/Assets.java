@@ -61,7 +61,8 @@ public class Assets {
     public static Bitmap apple, syrup, redPotion1, greenPotion1;
     public static Bitmap[] roundShields, heaterShields, swords, axes, armours;
     public static Bitmap inventoryScreen, missionScreen, craftingScreen, statsScreen, skillScreen, tradeScreen;
-    public static Bitmap mapBackground, worldMap_0;
+    public static Bitmap mapBackground, worldMap_0, localMap_0;
+    public static Bitmap portalIcon, exitIcon, combatIcon, bossIcon, unknownIcon, objectiveIcon;
     public static Bitmap blueSqr, redSqr;
 
     //skills
@@ -90,6 +91,7 @@ public class Assets {
         SpriteSheet iceSlimeAttack = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.ice_slime_attack));
         SpriteSheet headSignSheet = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.head_sign));
         SpriteSheet area1Tiles = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.area_1_tiles));
+        SpriteSheet mapIconSheet = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.map_icons));
 
         grass = newTownTiles.crop(width*11,0,width,height);
         grassStone = sheet1.crop(width*3,height,width,height);
@@ -264,7 +266,7 @@ public class Assets {
         statsScreen = ImageLoader.loadImage(R.drawable.status_screen);
         tradeScreen = ImageLoader.loadImage(R.drawable.trade_screen);
         mapBackground = ImageLoader.loadImage(R.drawable.map_paper);
-        worldMap_0 = ImageLoader.loadImage(R.drawable.map_0);
+
         popup1 = ImageLoader.loadImage(R.drawable.popup_1);
         popup2 = ImageLoader.loadImage(R.drawable.popup_2);
         popupButton1 = sheet1.crop(width*4, height*2, width*2, height);
@@ -288,6 +290,16 @@ public class Assets {
         horizontalTickMark = sheet1.crop(width*5, height, width, height);
         adjusterUp = sheet1.crop(width*6, 0, width, height);
         adjusterDown = sheet1.crop(width*7, 0, width, height);
+
+        //map
+        worldMap_0 = ImageLoader.loadImage(R.drawable.map_0);
+        localMap_0 = ImageLoader.loadImage(R.drawable.localmap_0);
+        portalIcon = mapIconSheet.crop(0, 0, iWidth, iHeight);
+        exitIcon = mapIconSheet.crop(iWidth, 0, iWidth, iHeight);
+        combatIcon = mapIconSheet.crop(iWidth*2, 0, iWidth, iHeight);
+        bossIcon = mapIconSheet.crop(iWidth*3, 0, iWidth, iHeight);
+        unknownIcon = mapIconSheet.crop(iWidth*4, 0, iWidth, iHeight);
+        objectiveIcon = mapIconSheet.crop(iWidth*5, 0, iWidth, iHeight);
 
         //headSign
         headSignOrange = headSignSheet.crop(0, 0, 64, 64);

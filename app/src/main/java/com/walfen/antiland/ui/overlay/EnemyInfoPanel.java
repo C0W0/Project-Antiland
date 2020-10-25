@@ -41,7 +41,7 @@ public class EnemyInfoPanel extends UIObject {
         active = tracker.getTopEntity() != null && tracker.getTopEntity().getHealth() > 0;
         if(!active)
             return;
-        if(currEntityID != tracker.getTopEntity().getId()){
+        if(tracker.getTopEntity() != null && currEntityID != tracker.getTopEntity().getId()){
             currEntityID = tracker.getTopEntity().getId();
             currEntityTexture = tracker.getTopEntity().getTexture(128, 128);
             currEntityName = tracker.getTopEntity().getName();

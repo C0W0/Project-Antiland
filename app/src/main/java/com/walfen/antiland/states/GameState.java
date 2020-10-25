@@ -3,6 +3,7 @@ package com.walfen.antiland.states;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.widget.Toast;
@@ -35,6 +36,7 @@ public class GameState extends State {
     private Player player;
     private String currentPath;
     private ArrayList<World> worlds;
+    private int worldIndex;
 
     public GameState(Handler handler){
         super(handler);
@@ -85,8 +87,8 @@ public class GameState extends State {
         worlds.add(new World(handler, path, 1));
 //        worlds.add(new World(handler, path, 2));
         try {
-            int index = Utils.parseInt(Utils.loadFileAsArrayList(new FileInputStream(new File(path+"/save.wld"))).get(1));
-            world = worlds.get(index);
+            worldIndex = Utils.parseInt(Utils.loadFileAsArrayList(new FileInputStream(new File(path+"/save.wld"))).get(1));
+            world = worlds.get(worldIndex);
             handler.setWorld(world);
         }catch (IOException e){
             e.printStackTrace();
@@ -109,8 +111,10 @@ public class GameState extends State {
                 () -> Integer.toString(handler.getPlayer().getLevel()), 40, Constants.TEXT_COLOUR));
         uiManager.addUIObject(new UIImageButton(64, 224, 128, 128,
                 Assets.save, this::saveGame));
-        uiManager.addUIObject(new UIImageButton(32, Constants.SCREEN_HEIGHT-456, 128, 128,
+        uiManager.addUIObject(new UIImageButton(8, Constants.SCREEN_HEIGHT-8-128, 128, 128,
                 new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, () -> handler.getPlayer().getInventory().setActive()));
+        uiManager.addUIObject(new UIImageButton(Constants.SCREEN_WIDTH-8-128, Constants.SCREEN_HEIGHT-8-128, 128, 128,
+                new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, () -> handler.getPlayer().getMapManager().setActive()));
         uiManager.addUIObject(new TextButton(128, 416, 40, "Debug", Color.BLUE, this::test));
     }
 
@@ -161,16 +165,32 @@ public class GameState extends State {
 
     //for debugging purpose
     private void test(){
-//        uiManager.popUpAction("\"Can you still move?\" A weird and spooky voices wakes you up from inside.", "...",
-//                () -> uiManager.activeTutorial("Tutorial: Use the left joystick to move around", uiManager.getCGUI().getMovementJoystick().getBounds()));
+        uiManager.popUpAction("\"Can you still move?\" A weird and spooky voices wakes you up from inside.", "...",
+                () -> uiManager.activeTutorial("Tutorial: Use the left joystick to move around", uiManager.getCGUI().getMovementJoystick().getBounds()));
 //        player.addEffect(new BraveHeart(player, 5000, 5));
 //        handler.setGameWorld(2, 320, 640);
-        player.getGlobalMap().setActive();
+//        for(int x = 40; x < 48; x++){
+//            handler.getWorld().setTile(x, 9, 89);
+//        }
+//        for(int y = 10; y < 12; y++){
+//            for(int x = 40; x < 48; x++)
+//                handler.getWorld().setTile(x, y, 79);
+//        }
+//        for(int y = 12; y < 14; y++){
+//            for(int x = 40; x < 48; x++)
+//                handler.getWorld().setTile(x, y, 87);
+//        }
+        //89
+        //79
+        //79
+        //87
+        //87
     }
 
     public void changePlayerRegion(int world, int playerX, int playerY) {
         autoSave();
         this.world = worlds.get(world);
+        worldIndex = world;
         player.setLocation(playerX, playerY);
     }
 
@@ -180,5 +200,9 @@ public class GameState extends State {
 
     public String getCurrentPath() {
         return currentPath;
+    }
+
+    public int getWorldIndex() {
+        return worldIndex;
     }
 }

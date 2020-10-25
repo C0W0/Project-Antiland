@@ -14,8 +14,8 @@ public class EntityGenerator extends PassiveCommandEntity {
     protected long lastGeneration, generationCooldown;
     protected int generatedEntity, spawnRange, criticalDensity;
 
-    public EntityGenerator(Handler handler, int generatedEntity, int spawnRange, int criticalDensity, int generationSpeed, int id) {
-        super(handler, id);
+    public EntityGenerator(int generatedEntity, int spawnRange, int criticalDensity, int generationSpeed, int id) {
+        super(id);
         switch (generationSpeed){
             case GenerationSpeed.NO_PERIODIC_GENERATION:
                 generationCooldown = -1;

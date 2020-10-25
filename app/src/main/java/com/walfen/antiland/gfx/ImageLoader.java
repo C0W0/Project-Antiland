@@ -10,7 +10,14 @@ import java.lang.reflect.Field;
 public class ImageLoader {
 
     public static Bitmap loadImage(int fileName){
-        return BitmapFactory.decodeResource(Constants.RES, fileName);
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        try {
+            Field f = options.getClass().getField("inScaled");
+            f.set(options, Boolean.FALSE);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return BitmapFactory.decodeResource(Constants.RES, fileName, options);
     }
 
     public static Bitmap loadSpriteSheet(int filename){

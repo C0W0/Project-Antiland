@@ -44,4 +44,7 @@ public class MushroomTrader extends Trader {
     public String getName() {
         return "Mushroom Trader";
     }
+
+    @Override
+    public void receiveDamage(int num, int type) {}
 }
