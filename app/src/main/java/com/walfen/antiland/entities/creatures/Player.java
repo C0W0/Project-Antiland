@@ -227,6 +227,9 @@ public class Player extends Creature implements TouchEventListener {
 
         //skills
         skillsManager.initSkills(path, manager);
+
+        //map
+        mapManager.loadMap(path);
     }
 
     private void checkAttacks(){

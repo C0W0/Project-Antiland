@@ -165,8 +165,6 @@ public class GameState extends State {
 
     //for debugging purpose
     private void test(){
-        uiManager.popUpAction("\"Can you still move?\" A weird and spooky voices wakes you up from inside.", "...",
-                () -> uiManager.activeTutorial("Tutorial: Use the left joystick to move around", uiManager.getCGUI().getMovementJoystick().getBounds()));
 //        player.addEffect(new BraveHeart(player, 5000, 5));
 //        handler.setGameWorld(2, 320, 640);
 //        for(int x = 40; x < 48; x++){

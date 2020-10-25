@@ -10,6 +10,7 @@ import com.walfen.antiland.entities.Entity;
 import com.walfen.antiland.entities.EntityManager;
 import com.walfen.antiland.items.ItemManager;
 import com.walfen.antiland.tiles.Tile;
+import com.walfen.antiland.ui.ChangeEvent;
 import com.walfen.antiland.untils.Utils;
 
 import java.io.File;
@@ -34,61 +35,27 @@ public class World implements GameHierarchyElement {
     private String TILE_FILENAME;
     private String ENTITY_FILENAME;
 
-//    private int worldId;
+    private ChangeEvent[] worldEvents;
 
     //entities
     private EntityManager entityManager;
-//    private Player player;
     private ArrayList<String> loadedEntities = new ArrayList<>();
 
     //items
     private ItemManager itemManager;
-
-    public World(Handler handler){
-        entityManager = new EntityManager(handler, handler.getPlayer());
-        this.handler = handler;
-        loadWorld();
-
-        itemManager = new ItemManager(handler);
-
-    }
 
     public World(Handler handler, String saveDirectory, int worldId){
         entityManager = new EntityManager(handler, handler.getPlayer());
         this.handler = handler;
         TILE_FILENAME = "tiles"+worldId+".wld";
         ENTITY_FILENAME = "entity"+worldId+".wld";
+//        saveDirectory = saveDirectory+"/world";
         index = worldId;
+        worldEvents = WorldEvents.allWorldEvents[worldId];
 
         loadWorld(saveDirectory);
 
         itemManager = new ItemManager(handler);
-    }
-
-
-    private void loadWorld(){
-        //loading the map file
-        String[] tokens = Utils.loadFileAsString(TILE_FILENAME).split("\\s+");
-        width = Utils.parseInt(tokens[0]);
-        height = Utils.parseInt(tokens[1]);
-
-        worldTiles = new int[width][height];
-
-        for(int y = 0; y < height; y++){
-            for(int x = 0; x < width; x++){
-                worldTiles[x][y] = Utils.parseInt(tokens[x + y * width + 2]);
-            }
-        }
-
-        //loading the entity file
-        loadedEntities = Utils.loadFileAsArrayList(ENTITY_FILENAME);
-        for(int i = 0; i < loadedEntities.size(); i++){
-            String[] entities = loadedEntities.get(i).split("\\s+");
-            entityManager.addEntity(getEntityWithID(Utils.parseInt(entities[0]), // id
-                    Utils.parseInt(entities[1]), Utils.parseInt(entities[2]), // initial x and y
-                    Utils.parseInt(entities[3]), Utils.parseInt(entities[4]), // original x and y
-                    Utils.parseInt(entities[5]))); // status
-        }
     }
 
     private void loadWorld(String saveDirectory){
@@ -133,7 +100,7 @@ public class World implements GameHierarchyElement {
      */
     private Entity getEntityWithID(int id, int x, int y, int ox, int oy, int status){
         Entity e = Entity.entityList[id].clone();
-        e.initialize(handler, x, y, ox, oy);
+        e.initialize(handler, x, y, ox, oy, status);
         return e;
     }
 
@@ -173,7 +140,7 @@ public class World implements GameHierarchyElement {
             if(e.getId() == 0)
                 continue;
             String line = e.getId()+" "+(int)e.getX()+" "+
-                    (int)e.getY()+" "+e.getOX()+" "+e.getOY()+" 0";
+                    (int)e.getY()+" "+e.getOX()+" "+e.getOY()+" "+e.getStatus();
             entityEditor.println(line);
         }
         entityEditor.close();
@@ -245,6 +212,10 @@ public class World implements GameHierarchyElement {
 
     public void setTile(int xLocation, int yLocation, int tileID){
         worldTiles[xLocation][yLocation] = tileID;
+    }
+
+    public void triggerWorldEvent(int eventID){
+        worldEvents[eventID].onChange();
     }
 
     //getters and setters

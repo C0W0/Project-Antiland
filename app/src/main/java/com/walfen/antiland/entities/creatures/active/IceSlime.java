@@ -79,8 +79,8 @@ public class IceSlime extends Active {
     }
 
     @Override
-    public void initialize(Handler handler, float x, float y, int oX, int oY) {
-        super.initialize(handler, x, y, oX, oY);
+    public void initialize(Handler handler, float x, float y, int oX, int oY, int status) {
+        super.initialize(handler, x, y, oX, oY, status);
         attack = new IceSpike(handler, () -> magicalDamage, this);
     }
 

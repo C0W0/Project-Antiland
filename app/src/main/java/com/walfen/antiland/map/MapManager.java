@@ -48,6 +48,10 @@ public class MapManager implements TouchEventListener {
 
     }
 
+    public void loadMap(String path){
+
+    }
+
 
     @Override
     public void onTouchEvent(MotionEvent event) {

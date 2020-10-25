@@ -4,31 +4,41 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 
 import com.walfen.antiland.Constants;
+import com.walfen.antiland.entities.Entity;
 import com.walfen.antiland.gfx.Assets;
 
 public class TempleBossCoffin extends ActiveCommandEntity {
 
-    private boolean interacted;
-
     public TempleBossCoffin() {
         super(1, 1, 3, 1301);
-        interacted = false;
+    }
+
+    @Override
+    public boolean checkEntityCollision(float xOffset, float yOffset) {
+        return false; //no collision
+    }
+
+    @Override
+    public Rect getCollisionBounds(float xOffset, float yOffset) {
+        return new Rect(0, 0, 0, 0);
     }
 
 
     @Override
     protected void interact() {
-        if(interacted)
+        if(status == 1)
             return;
-        handler.getPlayer().getMapManager().getMaps()[0].triggerMapEvent(0);
-//        Entity e = Entity.entityList[202].clone();
-//        e.initialize(handler, x, y+400, (int)(x-128), (int)y);
-//        handler.getWorld().getEntityManager().addEntityHot(e);
+        status = 1;
+//        handler.getPlayer().getMapManager().getMaps()[0].triggerMapEvent(0);
+        handler.getWorld().triggerWorldEvent(0);
+        Entity e = Entity.entityList[204].clone();
+        e.initialize(handler, x, y+400, (int)(x-128), (int)y, 0);
+        handler.getWorld().getEntityManager().addEntityHot(e);
     }
 
     @Override
     protected void drawHeadSign(Canvas canvas) {
-        if(interacted)
+        if(status == 1)
             return;
         int iX = (int)(x+width/2-32-handler.getGameCamera().getxOffset());
         int iY = (int)(y-68-handler.getGameCamera().getyOffset());
@@ -39,7 +49,7 @@ public class TempleBossCoffin extends ActiveCommandEntity {
 
     @Override
     protected void drawEntity(Canvas canvas) {
-        if(!interacted)
+        if(status != 1)
             return;
         //draw the cracks on the coffin
     }

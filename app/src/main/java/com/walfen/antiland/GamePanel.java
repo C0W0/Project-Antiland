@@ -20,6 +20,7 @@ import com.walfen.antiland.states.MenuState;
 import com.walfen.antiland.states.State;
 import com.walfen.antiland.tiles.Tile;
 import com.walfen.antiland.untils.Utils;
+import com.walfen.antiland.world.WorldEvents;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -77,6 +78,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback, Ke
         }
         State.setState(menuState);
 //        gameState.init();
+        WorldEvents.initEvents(handler);
         Item.initItems(handler);
         Entity.initEntities();
         Tile.initTiles();

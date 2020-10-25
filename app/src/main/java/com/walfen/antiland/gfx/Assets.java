@@ -52,6 +52,8 @@ public class Assets {
     public static Bitmap tree;
 
     public static Bitmap[] npcSlime, slimeAttackLeft, slimeAttackRight, slimeMovementLeft, slimeMovementRight;
+    public static Bitmap[] trappedSpiritAttackLeft, trappedSpiritAttackRight, trappedSpiritMovementLeft, trappedSpiritMovementRight;
+    public static Bitmap  trappedSpiritAttackUp, trappedSpiritAttackDown, trappedSpiritMovementUp, trappedSpiritMovementDown;
     public static Bitmap[] npcCrab, npcMushroom;
     public static Bitmap[] iceSlimeAttackLeft, iceSlimeAttackRight, iceSlimeMovementLeft, iceSlimeMovementRight;
     public static Bitmap[] ice_spike;
@@ -93,6 +95,7 @@ public class Assets {
         SpriteSheet area1Tiles = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.area_1_tiles));
         SpriteSheet mapIconSheet = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.map_icons));
         SpriteSheet characterMovement = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.character_movement));
+        SpriteSheet trappedSpirit = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.mini_boss));
 
         grass = newTownTiles.crop(width*11,0,width,height);
         grassStone = sheet1.crop(width*3,height,width,height);
@@ -236,6 +239,28 @@ public class Assets {
         iceSlimeMovementRight[0] = iceSlimeMovement.crop(0,0,width,height);
         iceSlimeMovementRight[1] = iceSlimeMovement.crop(width,0,width,height);
         iceSlimeMovementRight[2] = iceSlimeMovement.crop(width*2,0,width,height);
+
+        trappedSpiritMovementRight = new Bitmap[3];
+        trappedSpiritMovementRight[0] = trappedSpirit.crop(0,0,width,height);
+        trappedSpiritMovementRight[1] = trappedSpirit.crop(width,0,width,height);
+        trappedSpiritMovementRight[2] = trappedSpirit.crop(width*2,0,width,height);
+        trappedSpiritMovementUp = trappedSpirit.crop(width*3,0,width,height);
+        trappedSpiritMovementLeft = new Bitmap[3];
+        trappedSpiritMovementLeft[0] = trappedSpirit.crop(0,height,width,height);
+        trappedSpiritMovementLeft[1] = trappedSpirit.crop(width,height,width,height);
+        trappedSpiritMovementLeft[2] = trappedSpirit.crop(width*2,height,width,height);
+        trappedSpiritMovementDown = trappedSpirit.crop(width*3,height,width,height);
+
+        trappedSpiritAttackRight = new Bitmap[3];
+        trappedSpiritAttackRight[0] = trappedSpirit.crop(0,height*2,width,height);
+        trappedSpiritAttackRight[1] = trappedSpirit.crop(width,height*2,width,height);
+        trappedSpiritAttackRight[2] = trappedSpirit.crop(width*2,height*2,width,height);
+        trappedSpiritAttackUp = trappedSpirit.crop(width*3,height*2,width,height);
+        trappedSpiritAttackLeft = new Bitmap[3];
+        trappedSpiritAttackLeft[0] = trappedSpirit.crop(0,height*3,width,height);
+        trappedSpiritAttackLeft[1] = trappedSpirit.crop(width,height*3,width,height);
+        trappedSpiritAttackLeft[2] = trappedSpirit.crop(width*2,height*3,width,height);
+        trappedSpiritAttackDown = trappedSpirit.crop(width*3,height*3,width,height);
 
         ice_spike = loadSpriteAsArray(new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.ice_spike)), 7, 1, 128, 128);
 

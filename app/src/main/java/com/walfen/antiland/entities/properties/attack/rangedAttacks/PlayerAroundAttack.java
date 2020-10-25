@@ -49,7 +49,6 @@ public class PlayerAroundAttack extends RangedAttack {
         for(Entity e: handler.getWorld().getEntityManager().getEntities()) {
             if (e.getCollisionBounds(0, 0).intersect(collisionQueue.get(0).getBound()) &&
                     !e.equals(handler.getPlayer())) {
-                handler.getPlayer().getTracker().addTracking(e);
                 e.receiveDamage(baseDamage, type);
                 if(e.getHealth() > 0)
                     handler.getPlayer().getTracker().addTracking(e);

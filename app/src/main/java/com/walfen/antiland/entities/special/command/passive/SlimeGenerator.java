@@ -22,7 +22,7 @@ public class SlimeGenerator extends EntityGenerator {
         }
         int ge = Math.random()>0.1?generatedEntity:iceSlime.getId();
         Entity e = Entity.entityList[ge].clone();
-        e.initialize(handler, locationX, locationY, locationX, locationY);
+        e.initialize(handler, locationX, locationY, locationX, locationY, 0);
         handler.getWorld().getEntityManager().addEntityHot(e);
     }
 }

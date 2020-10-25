@@ -44,7 +44,7 @@ public class EntityGenerator extends PassiveCommandEntity {
                 break;
         }
         Entity e = Entity.entityList[generatedEntity].clone();
-        e.initialize(handler, locationX, locationY, locationX, locationY);
+        e.initialize(handler, locationX, locationY, locationX, locationY, 0);
         handler.getWorld().getEntityManager().addEntityHot(e);
     }
 

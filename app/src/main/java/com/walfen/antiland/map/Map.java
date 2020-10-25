@@ -43,6 +43,10 @@ public abstract class Map implements TouchEventListener {
         mapEvents = new ChangeEvent[32];
     }
 
+    public void load(String path){
+
+    }
+
     @Override
     public void draw(Canvas canvas) {
         canvas.drawBitmap(map, null, new Rect
@@ -53,7 +57,11 @@ public abstract class Map implements TouchEventListener {
 
     protected abstract void postDraw(Canvas canvas);
 
-    public void triggerMapEvent(int index){
-        mapEvents[index].onChange();
+    public void triggerMapEvent(int eventID){
+        mapEvents[eventID].onChange();
+    }
+
+    public void save(){
+
     }
 }

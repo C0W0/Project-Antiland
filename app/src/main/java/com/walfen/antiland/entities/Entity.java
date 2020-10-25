@@ -10,6 +10,7 @@ import com.walfen.antiland.GameHierarchyElement;
 import com.walfen.antiland.Handler;
 import com.walfen.antiland.entities.creatures.active.IceSlime;
 import com.walfen.antiland.entities.creatures.active.Slime;
+import com.walfen.antiland.entities.creatures.active.TrappedSpirit;
 import com.walfen.antiland.entities.creatures.npc.secondary.NPC1;
 import com.walfen.antiland.entities.creatures.npc.trader.MushroomTrader;
 import com.walfen.antiland.entities.creatures.npc.trader.WandererCrab;
@@ -33,6 +34,7 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
     Hostile/neutral: 101 ~ 400
     Slime: 201
     IceSlime: 202
+    TrappedSpirit: 204
     ------------------------
     NPC: 401 ~ 700
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -63,11 +65,12 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
     public static Tree tree = new Tree();
 
     public static void initEntities(){
+        new TrappedSpirit();
         new WandererCrab();
         new MushroomTrader();
         new NPC1();
         new AirWall();
-        new WorldGate(1001, 1, 6656, 2304);
+        new WorldGate(1001, 1, 6656, 2280);
         new TutorialMessagers.TutorialMovement();
         new TutorialMessagers.TutorialAttack();
         new TutorialMessagers.TutorialPortal();
@@ -86,6 +89,7 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
 
     protected float x,y;
     protected int oX, oY; // o stands for original
+    protected int status;
     protected Handler handler;
     protected int width, height; //the size of the entity
     protected Rect bounds; //collision detection
@@ -117,6 +121,8 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
 
 
     public void receiveDamage(int num, int type){
+        if(health <= 0)
+            return;
         num *= dmgPercentMod[type]/100.f;
         if(type == Attack.Type.SPECIAL_IGNORE_DEFENCE)
             health -= num;
@@ -173,12 +179,13 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
         return result;
     }
 
-    public void initialize(Handler handler, float x, float y, int oX, int oY){
+    public void initialize(Handler handler, float x, float y, int oX, int oY, int status){
         this.handler = handler;
         this.x = x;
         this.y = y;
         this.oX = oX;
         this.oY = oY;
+        this.status = status;
     }
 
     public abstract Bitmap getTexture(int xSize, int ySize);
@@ -262,6 +269,14 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
 
     public int getOY(){
         return oY;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public int getDefence(){

@@ -34,8 +34,8 @@ public abstract class NPC extends Creature {
     protected abstract void interact();
 
     @Override
-    public void initialize(Handler handler, float x, float y, int oX, int oY) {
-        super.initialize(handler, x, y, oX, oY);
+    public void initialize(Handler handler, float x, float y, int oX, int oY, int status) {
+        super.initialize(handler, x, y, oX, oY, status);
         playerInteractEvent = this::interact;
     }
 
