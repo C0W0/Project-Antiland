@@ -351,7 +351,8 @@ public class Player extends Creature implements TouchEventListener {
         attack.draw(canvas);
         int left = (int)(x - handler.getGameCamera().getxOffset());
         int top = (int)(y - handler.getGameCamera().getyOffset());
-        currentAnimation.draw(canvas, new Rect(left, top, left+Assets.player_neutral.getWidth(), top+Assets.player_neutral.getHeight()));
+        currentAnimation.draw(canvas, new Rect(left, top-96, left+Assets.player_neutral.getWidth(), top-96+Assets.player_neutral.getHeight()));
+        //canvas.drawRect(new Rect(left+bounds.left,top+bounds.top,left+bounds.right,top+bounds.bottom), Constants.getRenderPaint());
     }
 
     public void onTouchEvent(MotionEvent event){

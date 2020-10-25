@@ -92,6 +92,7 @@ public class Assets {
         SpriteSheet headSignSheet = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.head_sign));
         SpriteSheet area1Tiles = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.area_1_tiles));
         SpriteSheet mapIconSheet = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.map_icons));
+        SpriteSheet characterMovement = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.character_movement));
 
         grass = newTownTiles.crop(width*11,0,width,height);
         grassStone = sheet1.crop(width*3,height,width,height);
@@ -171,19 +172,29 @@ public class Assets {
             }
         }
 
-        player_down = new Bitmap[2];
-        player_down[0] = sheet.crop(0,0,width,height);
-        player_down[1] = sheet.crop(width,0,width,height);
-        player_up = new Bitmap[2];
-        player_up[0] = sheet.crop(width*2,0,width,height);
-        player_up[1] = sheet.crop(width*3,0,width,height);
-        player_right = new Bitmap[2];
-        player_right[0] = sheet.crop(0,height,width,height);
-        player_right[1] = sheet.crop(width,height,width,height);
-        player_left = new Bitmap[2];
-        player_left[0] = sheet.crop(width*2,height,width,height);
-        player_left[1] = sheet.crop(width*3,height,width,height);
-        player_neutral = sheet.crop(0,height*2,width,height);
+        player_down = new Bitmap[4];
+        player_down[0] = characterMovement.crop(0,0,width,height*2);
+        player_down[1] = characterMovement.crop(width,0,width,height*2);
+        player_down[2] = characterMovement.crop(0,0,width,height*2);
+        player_down[3] = characterMovement.crop(width*2,0,width,height*2);
+        player_up = new Bitmap[4];
+        player_up[0] = characterMovement.crop(width*3,0,width,height*2);
+        player_up[1] = characterMovement.crop(width*4,0,width,height*2);
+        player_up[2] = characterMovement.crop(width*3,0,width,height*2);
+        player_up[3] = characterMovement.crop(width*5,0,width,height*2);
+        player_left = new Bitmap[4];
+        player_left[0] = characterMovement.crop(0,height*2,width,height*2);
+        player_left[1] = characterMovement.crop(width,height*2,width,height*2);
+        player_left[2] = characterMovement.crop(0,height*2,width,height*2);
+        player_left[3] = characterMovement.crop(width*2,height*2,width,height*2);
+        player_right = new Bitmap[4];
+        player_right[0] = characterMovement.crop(width*3,height*2,width,height*2);
+        player_right[1] = characterMovement.crop(width*4,height*2,width,height*2);
+        player_right[2] = characterMovement.crop(width*3,height*2,width,height*2);
+        player_right[3] = characterMovement.crop(width*5,height*2,width,height*2);
+        player_neutral = characterMovement.crop(0,0,width,height*2);
+
+
         player_Attack = sheet.crop(width*3, height*2, width, height);
         player_SharpWind = loadSpriteAsArray(new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.magic_firelion_big)), 4, 4, width, height);
         explosion = loadSpriteAsArray(new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.explosion_1)), 6, 1, width, height*2);
