@@ -49,7 +49,19 @@ public class MapManager implements TouchEventListener {
     }
 
     public void loadMap(String path){
+        globalMap.load(path+"/globalMap.wld");
+        for(int i = 0; i < maps.length; i++){
+            if(maps[i] != null)
+                maps[i].load(path+"/world"+i+"/map"+i+".wld");
+        }
+    }
 
+    public void saveMap(String path){
+        globalMap.save(path+"/globalMap.wld");
+        for(int i = 0; i < maps.length; i++){
+            if(maps[i] != null)
+                maps[i].save(path+"/world"+i+"/map"+i+".wld");
+        }
     }
 
 

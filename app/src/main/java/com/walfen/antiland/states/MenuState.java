@@ -78,12 +78,17 @@ public class MenuState extends State {
     private void createNewSaveDocument(){
         String tileNameGeneral = "tiles", entityNameGeneral = "entity",
                 playerName = "player.wld", inventoryName = "inventory.wld",
-        missionName = "missions.wld", skillName = "skills.wld", statusName = "effects.wld";
+        missionName = "missions.wld", skillName = "skills.wld", statusName = "effects.wld",
+        mapNameGeneral = "map", globalMap = "globalMap.wld";
         try {
             Utils.deleteDirectoryFiles(new File(Constants.DIR+"/main"));
             Utils.deleteDirectoryFiles(new File(Constants.DIR+"/auto"));
             new File(Constants.DIR+"/auto/player").mkdirs();
             new File(Constants.DIR+"/main/player").mkdirs();
+            for(int i = 0; i < 2; i++){
+                new File(Constants.DIR+"/auto/world"+i).mkdirs();
+                new File(Constants.DIR+"/main/world"+i).mkdirs();
+            }
             String date = Calendar.getInstance().getTime().toString();
             File saveFile = new File(Constants.DIR+"/main/save.wld");
             if(saveFile.exists())
@@ -101,23 +106,26 @@ public class MenuState extends State {
             saveWriter.println(date);
             saveWriter.println("0");
             saveWriter.close();
-            new File(Constants.DIR+"/auto/save.wld").createNewFile();
-            copyFileSeriesFromAssets(Constants.DIR+"/main", tileNameGeneral, 0, 1);
-            copyFileSeriesFromAssets(Constants.DIR+"/main", entityNameGeneral, 0, 1);
+            copyFileSeriesFromAssets(Constants.DIR+"/main/world", tileNameGeneral, 0, 1);
+            copyFileSeriesFromAssets(Constants.DIR+"/main/world", entityNameGeneral, 0, 1);
+            createFileSeries(Constants.DIR+"/main/world", mapNameGeneral, 0, 1);
             copyFileFromAssets(Constants.DIR+"/main/player", playerName);
             copyFileFromAssets(Constants.DIR+"/main/player", inventoryName);
             copyFileFromAssets(Constants.DIR+"/main/player", missionName);
             copyFileFromAssets(Constants.DIR+"/main/player", skillName);
             copyFileFromAssets(Constants.DIR+"/main/player", statusName);
-            copyFileSeriesFromAssets(Constants.DIR+"/auto", tileNameGeneral, 0, 1);
-            copyFileSeriesFromAssets(Constants.DIR+"/auto", entityNameGeneral, 0, 1);
+            copyFileFromAssets(Constants.DIR+"/main", globalMap);
+            copyFileSeriesFromAssets(Constants.DIR+"/auto/world", tileNameGeneral, 0, 1);
+            copyFileSeriesFromAssets(Constants.DIR+"/auto/world", entityNameGeneral, 0, 1);
+            createFileSeries(Constants.DIR+"/auto/world", mapNameGeneral, 0, 1);
             copyFileFromAssets(Constants.DIR+"/auto/player", playerName);
             copyFileFromAssets(Constants.DIR+"/auto/player", inventoryName);
             copyFileFromAssets(Constants.DIR+"/auto/player", missionName);
             copyFileFromAssets(Constants.DIR+"/auto/player", skillName);
             copyFileFromAssets(Constants.DIR+"/auto/player", statusName);
+            copyFileFromAssets(Constants.DIR+"/auto", globalMap);
         }catch (IOException e){
-            uiManager.popUpMessage("Game file corrupted, please re-install the game");
+//            uiManager.popUpMessage("Game file corrupted, please re-install the game");
             e.printStackTrace();
             return;
         }
@@ -144,8 +152,8 @@ public class MenuState extends State {
         File file = new File(path+"/"+fileName);
         if(file.exists()){
             file.delete();
-            file.createNewFile();
         }
+        file.createNewFile();
         PrintWriter writer = new PrintWriter(file);
         for(String str: lines)
             writer.println(str);
@@ -154,7 +162,17 @@ public class MenuState extends State {
 
     private void copyFileSeriesFromAssets(String path, String generalFileName, int start, int end) throws IOException{
         for(int i = start; i < end+1; i++){
-            copyFileFromAssets(path, generalFileName+i+".wld");
+            copyFileFromAssets(path+i, generalFileName+i+".wld");
+        }
+    }
+
+    private void createFileSeries(String path, String generalFileName, int start, int end) throws IOException{
+        for(int i = start; i < end+1; i++){
+            File file = new File(path+i+"/"+generalFileName+i+".wld");
+            if(file.exists()){
+                file.delete();
+            }
+            file.createNewFile();
         }
     }
 

@@ -12,6 +12,14 @@ import com.walfen.antiland.gfx.ImageEditor;
 import com.walfen.antiland.ui.ChangeEvent;
 import com.walfen.antiland.ui.TouchEventListener;
 import com.walfen.antiland.ui.buttons.UIImageButton;
+import com.walfen.antiland.untils.Utils;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public abstract class Map implements TouchEventListener {
 
@@ -23,6 +31,7 @@ public abstract class Map implements TouchEventListener {
     protected Bitmap portal, exit, combat, boss, unknown, objective;
 
     protected ChangeEvent[] mapEvents;
+    protected ArrayList<Integer> triggeredEvents;
 
     public Map(Handler handler, Bitmap map, int mapWidth, int mapHeight){
         this.handler = handler;
@@ -41,10 +50,20 @@ public abstract class Map implements TouchEventListener {
         mapYDispute = Constants.SCREEN_HEIGHT/2-mapHeight/2;
         this.map = ImageEditor.scaleBitmap(map, mapWidth, mapHeight);
         mapEvents = new ChangeEvent[32];
+        triggeredEvents = new ArrayList<>();
     }
 
     public void load(String path){
-
+        try{
+            String[] tokens = Utils.loadFileAsString(new FileInputStream(new File(path))).split("\\s+");
+            if(tokens.length == 0 || tokens[0].equals(""))
+                return;
+            for(String str: tokens){
+                triggerMapEvent(Utils.parseInt(str));
+            }
+        }catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -58,10 +77,21 @@ public abstract class Map implements TouchEventListener {
     protected abstract void postDraw(Canvas canvas);
 
     public void triggerMapEvent(int eventID){
-        mapEvents[eventID].onChange();
+        if(!triggeredEvents.contains(eventID)){
+            mapEvents[eventID].onChange();
+            triggeredEvents.add(eventID);
+        }
     }
 
-    public void save(){
-
+    public void save(String path){
+        try{
+            File file = new File(path);
+            PrintWriter writer = new PrintWriter(file);
+            for(int i: triggeredEvents)
+                writer.print(i+" ");
+            writer.close();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
     }
 }

@@ -471,6 +471,7 @@ public class Player extends Creature implements TouchEventListener {
         editor.close();
 
         skillsManager.saveSkills(path);
+        mapManager.saveMap(path);
     }
 
     public void equip(int id, int location){

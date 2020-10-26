@@ -49,7 +49,7 @@ public class World implements GameHierarchyElement {
         this.handler = handler;
         TILE_FILENAME = "tiles"+worldId+".wld";
         ENTITY_FILENAME = "entity"+worldId+".wld";
-//        saveDirectory = saveDirectory+"/world";
+        saveDirectory = saveDirectory+"/world"+worldId;
         index = worldId;
         worldEvents = WorldEvents.allWorldEvents[worldId];
 
@@ -117,8 +117,8 @@ public class World implements GameHierarchyElement {
     }
 
     public void saveMap(String path) throws IOException {
-        File mapFile = new File(path+"/"+TILE_FILENAME);
-        File entityFile = new File(path+"/"+ENTITY_FILENAME);
+        File mapFile = new File(path+"/world"+index+"/"+TILE_FILENAME);
+        File entityFile = new File(path+"/world"+index+"/"+ENTITY_FILENAME);
         mapFile.delete();
         entityFile.delete();
         mapFile.createNewFile();
