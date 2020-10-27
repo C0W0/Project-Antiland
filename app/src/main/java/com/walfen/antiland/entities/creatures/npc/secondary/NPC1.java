@@ -42,7 +42,7 @@ public class NPC1 extends RepeatedMissionNPC {
     protected ArrayList<Conversation> getCompleteConversation() {
         ArrayList<Conversation> c = new ArrayList<>();
         c.add(new Conversation("Thanks for your help.", Assets.npcCrab[0], false));
-        c.add(new Conversation("My duty.", Assets.player_neutral, true));
+        c.add(new Conversation("My duty.", Assets.player_icon, true));
         return c;
     }
 
@@ -55,7 +55,7 @@ public class NPC1 extends RepeatedMissionNPC {
         manager.getConvBox().setConversationList(c, () -> {convBoxOn = false;
         manager.popUpOptions("How would you reply?", new String[]{"(Simply walk away)", "How can I help?"}, new ClickListener[]{() -> {},
                 () -> {
-            c2.add(new Conversation("How can I help?",  Assets.player_neutral, true));
+            c2.add(new Conversation("How can I help?",  Assets.player_icon, true));
             c2.add((new Conversation("Go down to the forests and kills 5 of them to decrease their number. " +
                     "Once you finish with them come back to me. I have some rewards for you.", Assets.npcCrab[0], false)));
             manager.hideUI();

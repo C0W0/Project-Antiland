@@ -73,6 +73,7 @@ public class MenuState extends State {
             canvas.drawText(date, Constants.SCREEN_WIDTH/2.f-r.width()/2.f, Constants.SCREEN_HEIGHT/2.f+120+r.height(), paint);
         }catch (IOException ignored){ }
         uiManager.draw(canvas);
+        uiManager.postDraw(canvas);
     }
 
     private void createNewSaveDocument(){
@@ -85,7 +86,7 @@ public class MenuState extends State {
             Utils.deleteDirectoryFiles(new File(Constants.DIR+"/auto"));
             new File(Constants.DIR+"/auto/player").mkdirs();
             new File(Constants.DIR+"/main/player").mkdirs();
-            for(int i = 0; i < 2; i++){
+            for(int i = 0; i < 3; i++){
                 new File(Constants.DIR+"/auto/world"+i).mkdirs();
                 new File(Constants.DIR+"/main/world"+i).mkdirs();
             }
@@ -106,18 +107,18 @@ public class MenuState extends State {
             saveWriter.println(date);
             saveWriter.println("0");
             saveWriter.close();
-            copyFileSeriesFromAssets(Constants.DIR+"/main/world", tileNameGeneral, 0, 1);
-            copyFileSeriesFromAssets(Constants.DIR+"/main/world", entityNameGeneral, 0, 1);
-            createFileSeries(Constants.DIR+"/main/world", mapNameGeneral, 0, 1);
+            copyFileSeriesFromAssets(Constants.DIR+"/main/world", tileNameGeneral, 0, 2);
+            copyFileSeriesFromAssets(Constants.DIR+"/main/world", entityNameGeneral, 0, 2);
+            createFileSeries(Constants.DIR+"/main/world", mapNameGeneral, 0, 2);
             copyFileFromAssets(Constants.DIR+"/main/player", playerName);
             copyFileFromAssets(Constants.DIR+"/main/player", inventoryName);
             copyFileFromAssets(Constants.DIR+"/main/player", missionName);
             copyFileFromAssets(Constants.DIR+"/main/player", skillName);
             copyFileFromAssets(Constants.DIR+"/main/player", statusName);
             copyFileFromAssets(Constants.DIR+"/main", globalMap);
-            copyFileSeriesFromAssets(Constants.DIR+"/auto/world", tileNameGeneral, 0, 1);
-            copyFileSeriesFromAssets(Constants.DIR+"/auto/world", entityNameGeneral, 0, 1);
-            createFileSeries(Constants.DIR+"/auto/world", mapNameGeneral, 0, 1);
+            copyFileSeriesFromAssets(Constants.DIR+"/auto/world", tileNameGeneral, 0, 2);
+            copyFileSeriesFromAssets(Constants.DIR+"/auto/world", entityNameGeneral, 0, 2);
+            createFileSeries(Constants.DIR+"/auto/world", mapNameGeneral, 0, 2);
             copyFileFromAssets(Constants.DIR+"/auto/player", playerName);
             copyFileFromAssets(Constants.DIR+"/auto/player", inventoryName);
             copyFileFromAssets(Constants.DIR+"/auto/player", missionName);
@@ -134,8 +135,7 @@ public class MenuState extends State {
 
     private void startGameFromPath(String path){
         try{
-            GameState gs = (GameState)handler.getGame().getGameState();
-            State.setStateAndInit(gs, path);
+            State.setStateAndInit(handler.getGame().getGameState(), path);
         }catch (Exception e){
 //            uiManager.popUpMessage("Save document not found, please create a new save document");
             e.printStackTrace();

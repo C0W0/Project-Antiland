@@ -90,7 +90,16 @@ public class Utils {
         ArrayList<String> output = new ArrayList<>();
         int size = 0;
         for(String str: string.split("\\s+")){
-            if(size >= substringSize){
+            if(str.startsWith("/nl/")){ //nl stands for next line
+                output.add(builder.toString());
+                builder = new StringBuilder();
+                str = str.substring(4);
+            } else if(str.startsWith("/sl/")){ //sl stands for skip line
+                output.add(builder.toString());
+                builder = new StringBuilder();
+                output.add("");
+                str = str.substring(4);
+            }else if(size >= substringSize){
                 output.add(builder.toString());
                 builder = new StringBuilder();
             }

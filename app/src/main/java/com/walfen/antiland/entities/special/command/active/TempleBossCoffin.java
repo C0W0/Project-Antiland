@@ -6,6 +6,10 @@ import android.graphics.Rect;
 import com.walfen.antiland.Constants;
 import com.walfen.antiland.entities.Entity;
 import com.walfen.antiland.gfx.Assets;
+import com.walfen.antiland.ui.conversation.Conversation;
+import com.walfen.antiland.ui.overlay.MissionPanel;
+
+import java.util.ArrayList;
 
 public class TempleBossCoffin extends ActiveCommandEntity {
 
@@ -23,17 +27,32 @@ public class TempleBossCoffin extends ActiveCommandEntity {
         return new Rect(0, 0, 0, 0);
     }
 
+    @Override
+    public void update() {
+        super.update();
+        if(status == 1){
+            handler.getPlayer().setInteractionEvent(Constants.EMPTY_EVENT, -1);
+            handler.getPlayer().setInterButtonVisibility(false);
+        }
+    }
 
     @Override
     protected void interact() {
         if(status == 1)
             return;
         status = 1;
-//        handler.getPlayer().getMapManager().getMaps()[0].triggerMapEvent(0);
-        handler.getWorld().triggerWorldEvent(0);
-        Entity e = Entity.entityList[204].clone();
-        e.initialize(handler, x, y+400, (int)(x-128), (int)y, 0);
-        handler.getWorld().getEntityManager().addEntityHot(e);
+        ArrayList<Conversation> c = new ArrayList<>();
+        c.add(new Conversation("Finally, after an eternity of suffering, I'm free!", Assets.trappedSpiritMovementDown, false));
+        c.add(new Conversation("But I still can't break through the temple...", Assets.trappedSpiritMovementDown, false));
+        c.add(new Conversation("...", Assets.player_icon, true));
+        c.add(new Conversation("What's next? (I have a bad feeling about this)", Assets.player_icon, true));
+        c.add(new Conversation("Ah, you just have to do me one more favour. I just need the energy of...", Assets.trappedSpiritMovementDown, false));
+        c.add(new Conversation("YOUR LIFE!", Assets.trappedSpiritAttackDown, false));
+        handler.getUIManager().hideUI();
+        handler.getUIManager().getConvBox().setConversationList(c, () -> handler.getWorld().triggerWorldEvent(0));
+        handler.getUIManager().getConvBox().setActive();
+        handler.getPlayer().getMissionManager().addMission(2);
+        handler.getUIManager().getCGUI().getMissionPanel().changePosition(MissionPanel.EXTEND);
     }
 
     @Override

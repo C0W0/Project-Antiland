@@ -8,21 +8,25 @@ import com.walfen.antiland.entities.Entity;
 import com.walfen.antiland.items.Item;
 import com.walfen.antiland.mission.colloector.CollectApple;
 import com.walfen.antiland.mission.colloector.CollectWood;
+import com.walfen.antiland.mission.explore.TempleEscape;
 import com.walfen.antiland.mission.killing.CutTrees;
 import com.walfen.antiland.mission.killing.DestroyEntity;
 import com.walfen.antiland.mission.killing.KillTracker;
+import com.walfen.antiland.mission.killing.TempleMasterMind;
 
 public abstract class Mission implements Cloneable{
 
     public static Mission[] missions = new Mission[256];
+    public static Mission templeMasterMind = new TempleMasterMind();
+    public static Mission templeEscape = new TempleEscape();
     public static Mission collect10Woods = new CollectWood("Collect 10 woods",
             "Collect 10 woods for the construction of our town", 0, 10);
-    public static Mission collect5Woods = new CollectWood("Collect 5 woods",
-           "Collect 5 woods for the construction of our town", 1, 5);
-    public static Mission collect10Apples = new CollectApple("Collect 10 apples",
-            "Collect 10 apples for little Alice",2, 10);
-//    public static Mission cutDown5Trees = new CutTrees("Cut Down 5 Trees",
-//            "Cut down 5 trees to gain living space", 3, 5);
+//    public static Mission collect5Woods = new CollectWood("Collect 5 woods",
+//           "Collect 5 woods for the construction of our town", 1, 5);
+//    public static Mission collect10Apples = new CollectApple("Collect 10 apples",
+//            "Collect 10 apples for little Alice",2, 10);
+    public static Mission cutDown5Trees = new CutTrees("Cut Down 5 Trees",
+            "Cut down 5 trees to gain living space", 3, 5);
     public static Mission kill5Slimes = new DestroyEntity("Eliminate 5 slimes",
             "Reduce the number of slimes by eliminating 5 of them.", new int[]{Entity.slime.getId()}, 4, new int[]{5},
         10, Item.lvOneHpPotion.getId(), 10);

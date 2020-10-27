@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
 import com.walfen.antiland.entities.creatures.npc.NPC;
+import com.walfen.antiland.gfx.Assets;
 
 public abstract class ActiveCommandEntity extends NPC {
 
@@ -18,12 +19,12 @@ public abstract class ActiveCommandEntity extends NPC {
 
     @Override
     public Bitmap getTexture(int xSize, int ySize) {
-        return null;
+        return Assets.NULL;
     }
 
     @Override
     public String getName() {
-        return null;
+        return "";
     }
 
     @Override

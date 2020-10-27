@@ -180,8 +180,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback, Ke
         return gameCamera;
     }
 
-    public State getGameState() {
-        return gameState;
+    public GameState getGameState() {
+        return (GameState)gameState;
     }
 
     public boolean allowsExit() {

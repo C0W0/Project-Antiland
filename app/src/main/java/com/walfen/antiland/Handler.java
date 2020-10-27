@@ -37,24 +37,20 @@ public class Handler {
     }
 
     public void setGameWorld(int world, int playerX, int playerY){
-        GameState gs = (GameState)(getGame().getGameState());
-        gs.changePlayerRegion(world, playerX, playerY);
-        setWorld(gs.getWorlds().get(world));
+        getGame().getGameState().changePlayerRegion(world, playerX, playerY);
+        setWorld(getGame().getGameState().getWorlds().get(world));
     }
 
     public String getCurrentRunningPath(){
-        GameState gs = (GameState)(getGame().getGameState());
-        return gs.getCurrentPath();
+        return getGame().getGameState().getCurrentPath();
     }
 
     public Player getPlayer(){
-        GameState gs = (GameState)(getGame().getGameState());
-        return gs.getPlayer();
+        return getGame().getGameState().getPlayer();
     }
 
     public int getGameWorldIndex(){
-        GameState gs = (GameState)(getGame().getGameState());
-        return gs.getWorldIndex();
+        return getGame().getGameState().getWorldIndex();
     }
 
 }

@@ -26,6 +26,7 @@ public class Assets {
     public static Bitmap grey_transparent;
 
     //player
+    public static Bitmap player_icon;
     public static Bitmap player_neutral;
     public static Bitmap[] player_down, player_up, player_left, player_right;
     public static Bitmap player_Attack;
@@ -196,6 +197,7 @@ public class Assets {
         player_right[2] = characterMovement.crop(width*3,height*2,width,height*2);
         player_right[3] = characterMovement.crop(width*5,height*2,width,height*2);
         player_neutral = characterMovement.crop(0,0,width,height*2);
+        player_icon = characterMovement.crop(0, 0, width, height);
 
 
         player_Attack = sheet.crop(width*3, height*2, width, height);

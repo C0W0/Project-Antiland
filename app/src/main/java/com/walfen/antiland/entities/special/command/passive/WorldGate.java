@@ -23,6 +23,7 @@ public class WorldGate extends PassiveCommandEntity {
     @Override
     protected void commandAction() {
         handler.setGameWorld(targetWorld, targetX, targetY);
+        handler.getGame().getGameState().autoSave();
     }
 
     @Override
@@ -38,7 +39,7 @@ public class WorldGate extends PassiveCommandEntity {
             playerEnterTime = -1;
             return false;
         }
-        return playerEnterTime != -1 && System.currentTimeMillis() - playerEnterTime > 700;
+        return playerEnterTime != -1 && System.currentTimeMillis() - playerEnterTime > 500;
     }
 
     @Override

@@ -3,7 +3,6 @@ package com.walfen.antiland.states;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Rect;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.widget.Toast;
@@ -11,14 +10,11 @@ import android.widget.Toast;
 import com.walfen.antiland.Constants;
 import com.walfen.antiland.Handler;
 import com.walfen.antiland.entities.creatures.Player;
-import com.walfen.antiland.entities.properties.effect.special.BraveHeart;
 import com.walfen.antiland.gfx.Assets;
 import com.walfen.antiland.ui.bars.BarA;
 import com.walfen.antiland.ui.UIManager;
 import com.walfen.antiland.ui.buttons.TextButton;
 import com.walfen.antiland.ui.buttons.UIImageButton;
-import com.walfen.antiland.ui.overlay.MissionPanel;
-import com.walfen.antiland.ui.overlay.EnemyInfoPanel;
 import com.walfen.antiland.ui.decorative.UITextDecoration;
 import com.walfen.antiland.untils.Utils;
 import com.walfen.antiland.world.World;
@@ -56,7 +52,8 @@ public class GameState extends State {
         if(world != null){
             world.draw(canvas);
             uiManager.draw(canvas);
-            player.postdraw(canvas);
+            player.postDraw(canvas);
+            uiManager.postDraw(canvas);
         }
     }
 
@@ -85,6 +82,7 @@ public class GameState extends State {
         player.loadPlayer(path, uiManager);
         worlds.add(new World(handler, path, 0));
         worlds.add(new World(handler, path, 1));
+        worlds.add(new World(handler, path, 2));
 //        worlds.add(new World(handler, path, 2));
         try {
             worldIndex = Utils.parseInt(Utils.loadFileAsArrayList(new FileInputStream(new File(path+"/save.wld"))).get(1));
@@ -99,7 +97,7 @@ public class GameState extends State {
     private void initDefaultUI(){
         uiManager.getCGUI().initCriticalGameUI(player);
         uiManager.addUIObject(new UIImageButton(16, 16, 144, 144,
-                new Bitmap[]{Assets.player_neutral, Assets.player_neutral}, () -> handler.getPlayer().getStatsWindow().setActive()));
+                new Bitmap[]{Assets.player_icon, Assets.player_icon}, () -> handler.getPlayer().getStatsWindow().setActive()));
         uiManager.addUIObject(new BarA(192,32,600, Assets.hp_bar,
                 () -> handler.getPlayer().getMaxHp(), () -> handler.getPlayer().getHealth()));
         uiManager.addUIObject(new BarA(192, 102, 512, Assets.mp_bar,

@@ -53,8 +53,9 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
     Tree: 702
     ------------------------
     Special: 1001+
-    WorldGate: 1001
-    Tutorial messagers: 1002-1012
+    WorldGate(temple 0-1): 1001
+    WorldGate(temple - world): 1002
+    Tutorial messagers: 1003-1012
     SlimeSpawner: 1101
     TempleBossCoffin: 1301
      */
@@ -70,8 +71,10 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
         new MushroomTrader();
         new NPC1();
         new AirWall();
-        new WorldGate(1001, 1, 6656, 2280);
+        new WorldGate(1001, 1, 6656, 2250);
+        new WorldGate(1002, 2, 1024, 1024);
         new TutorialMessagers.TutorialMovement();
+        new TutorialMessagers.TutorialMission();
         new TutorialMessagers.TutorialAttack();
         new TutorialMessagers.TutorialPortal();
         new TutorialMessagers.TutorialUnleash();

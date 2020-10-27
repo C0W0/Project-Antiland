@@ -40,11 +40,13 @@ public class MapManager implements TouchEventListener {
                 Constants.UI_CLOSE_SIZE, Constants.UI_CLOSE_SIZE,
                 Assets.close, () -> setActive(false));
 
-        currentMap = 0;
+        currentMap = -1;
         globalMap = new GlobalMap(handler, mapWidth, mapHeight);
 
         maps = new Map[10];
         maps[0] = new TempleMap(handler, mapWidth, mapHeight);
+        maps[1] = maps[0];
+        maps[2] = maps[0]; //TODO: a map for the island
 
     }
 
@@ -135,5 +137,10 @@ public class MapManager implements TouchEventListener {
 
     public Map[] getMaps() {
         return maps;
+    }
+
+    public Rect getSwitchButtonBounds(){
+        return new Rect(mapXDispute+5, mapYDispute+mapHeight-Constants.UI_CLOSE_SIZE-5,
+                mapXDispute+5+Constants.UI_CLOSE_SIZE, mapYDispute+mapHeight-5);
     }
 }

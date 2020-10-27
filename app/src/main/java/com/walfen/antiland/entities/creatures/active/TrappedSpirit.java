@@ -3,6 +3,8 @@ package com.walfen.antiland.entities.creatures.active;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import android.os.SystemClock;
+import android.view.MotionEvent;
 
 import com.walfen.antiland.Handler;
 import com.walfen.antiland.entities.properties.attack.meleeAttacks.SlimeBash;
@@ -10,7 +12,10 @@ import com.walfen.antiland.entities.properties.attack.meleeAttacks.SoulBash;
 import com.walfen.antiland.gfx.Animation;
 import com.walfen.antiland.gfx.Assets;
 import com.walfen.antiland.tiles.Tile;
+import com.walfen.antiland.ui.conversation.Conversation;
 import com.walfen.antiland.untils.MSTimeController;
+
+import java.util.ArrayList;
 
 public class TrappedSpirit extends Active {
 
@@ -81,13 +86,31 @@ public class TrappedSpirit extends Active {
 
     @Override
     protected void onDeath() {
-        handler.getWorld().triggerWorldEvent(1);
+        handler.getUIManager().getCGUI().onTouchEvent(
+                MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(),
+                        MotionEvent.ACTION_UP, 0, 0, 0));
+        handler.getUIManager().getCGUI().onTouchEvent(
+                MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(),
+                        MotionEvent.ACTION_UP, 0, 0, 0));
+        handler.getUIManager().getCGUI().onTouchEvent(
+                MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(),
+                        MotionEvent.ACTION_UP, 0, 0, 0));
+        ArrayList<Conversation> c = new ArrayList<>();
+        c.add(new Conversation("No! This is impossible! You can't just destroy me!", Assets.trappedSpiritMovementDown, false));
+        c.add(new Conversation("After all these year! After all of the suffering!", Assets.trappedSpiritMovementDown, false));
+        handler.getUIManager().hideUI();
+        handler.getUIManager().getConvBox().setConversationList(c, () -> {
+            handler.getWorld().triggerWorldEvent(1);
+            handler.getUIManager().popUpMessage("As the evil spirit fades away, the entire temple starts shaking. Suddenly, a piece of wall collapsed and " +
+                    "a tunnel towards the exit was presented in front of you. /nl/Hurry! The entire temple is /nl/disintegrating!");
+        });
+        handler.getUIManager().getConvBox().setActive();
     }
 
     @Override
     public void initialize(Handler handler, float x, float y, int oX, int oY, int status) {
         super.initialize(handler, x, y, oX, oY, 0);
-        attack = new SoulBash(handler, 2, this);
+        attack = new SoulBash(handler, physicalDamage, this);
     }
 
     @Override

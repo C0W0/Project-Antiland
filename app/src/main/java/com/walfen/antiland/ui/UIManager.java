@@ -71,6 +71,9 @@ public class UIManager implements TouchEventListener{
         cGUI.draw(canvas);
         for(UIObject o: uiObjects)
             o.draw(canvas);
+    }
+
+    public void postDraw(Canvas canvas){
         if(popUp.active)
             popUp.draw(canvas);
         if(optionPopUp.active)
@@ -252,7 +255,7 @@ public class UIManager implements TouchEventListener{
             active = false;
             image = ImageEditor.scaleBitmapForced(Assets.popup1, width, height);
             buttons = new ArrayList<>();
-            yLocation = 64;
+            yLocation = 96;
         }
 
         @Override
@@ -291,7 +294,7 @@ public class UIManager implements TouchEventListener{
         private void removePopup(){
             active = false;
             buttons = new ArrayList<>();
-            yLocation = 64;
+            yLocation = 96;
             buttonJustPressed = true;
         }
 
@@ -299,15 +302,15 @@ public class UIManager implements TouchEventListener{
             active = true;
             this.message = message;
             if(raw){
-                OptionButtonA oba = new OptionButtonA(x+width/2, y+height-yLocation, 33,
-                        "Back", Color.BLACK, Assets.popupButton1, this::removePopup, 750);
+                OptionButtonA oba = new OptionButtonA(x+width/2.f+1, y+height-yLocation, 33,
+                        "Back", Color.BLACK, Assets.popupButton1, this::removePopup, 690);
                 buttons.add(oba);
                 yLocation += oba.getBounds().height()+10;
             }
             for(int i = 0; i < options.length; i++){
                 int finalI = i;
-                OptionButtonA oba = new OptionButtonA(x+width/2.f, y+height-yLocation, 33,
-                        options[i], Color.BLACK, Assets.popupButton1, () -> {removePopup(); effects[finalI].onClick();}, 750);
+                OptionButtonA oba = new OptionButtonA(x+width/2.f+1, y+height-yLocation, 33,
+                        options[i], Color.BLACK, Assets.popupButton1, () -> {removePopup(); effects[finalI].onClick();}, 690);
                 buttons.add(oba);
                 yLocation += oba.getBounds().height()+10;
             }

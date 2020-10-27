@@ -3,8 +3,11 @@ package com.walfen.antiland.entities.creatures;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.os.SystemClock;
 import android.view.MotionEvent;
 
 import com.walfen.antiland.Constants;
@@ -89,10 +92,10 @@ public class Player extends Creature implements TouchEventListener {
 
         this.handler = handler;
 
-        bounds.left = 42;
-        bounds.top = 60;
-        bounds.right = bounds.left+64;
-        bounds.bottom = bounds.top+64;
+        bounds.left = 30;
+        bounds.top = 48;
+        bounds.right = bounds.left+70;
+        bounds.bottom = bounds.top+110;
 
 
         //attack timer
@@ -355,7 +358,7 @@ public class Player extends Creature implements TouchEventListener {
         int left = (int)(x - handler.getGameCamera().getxOffset());
         int top = (int)(y - handler.getGameCamera().getyOffset());
         currentAnimation.draw(canvas, new Rect(left, top-96, left+Assets.player_neutral.getWidth(), top-96+Assets.player_neutral.getHeight()));
-        //canvas.drawRect(new Rect(left+bounds.left,top+bounds.top,left+bounds.right,top+bounds.bottom), Constants.getRenderPaint());
+//        canvas.drawRect(new Rect(left+bounds.left,top+bounds.top,left+bounds.right,top+bounds.bottom), Constants.getRenderPaint());
     }
 
     public void onTouchEvent(MotionEvent event){
@@ -386,7 +389,7 @@ public class Player extends Creature implements TouchEventListener {
     @Override
     protected void onDeath() { }
 
-    public void postdraw(Canvas canvas){
+    public void postDraw(Canvas canvas){
         interactButton.draw(canvas);
         inventory.draw(canvas);
         missionManager.draw(canvas);
@@ -491,7 +494,7 @@ public class Player extends Creature implements TouchEventListener {
 
     @Override
     public Bitmap getTexture(int xSize, int ySize) {
-        return ImageEditor.scaleBitmap(Assets.player_neutral, xSize, ySize);
+        return ImageEditor.scaleBitmap(Assets.player_icon, xSize, ySize);
     }
 
     @Override
@@ -501,6 +504,9 @@ public class Player extends Creature implements TouchEventListener {
 
     public void onInteract(){
         event.onChange();
+        handler.getUIManager().getCGUI().onTouchEvent(
+                MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(),
+                MotionEvent.ACTION_UP, 0, 0, 0));
     }
 
     //getters and setters
