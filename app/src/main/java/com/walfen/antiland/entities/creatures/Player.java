@@ -504,9 +504,7 @@ public class Player extends Creature implements TouchEventListener {
 
     public void onInteract(){
         event.onChange();
-        handler.getUIManager().getCGUI().onTouchEvent(
-                MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(),
-                MotionEvent.ACTION_UP, 0, 0, 0));
+        handler.getUIManager().getCGUI().resetJoystick();
     }
 
     //getters and setters

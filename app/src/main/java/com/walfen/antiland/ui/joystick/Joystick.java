@@ -2,7 +2,6 @@ package com.walfen.antiland.ui.joystick;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Point;
 import android.graphics.Rect;
 import android.view.MotionEvent;
 
@@ -23,6 +22,7 @@ public class Joystick extends UIObject {
     private float inputX = 0, inputY = 0;
     private float deadZone = 0;
     private Bitmap pad, controller;
+    private boolean lockedUp;
 
     public Joystick(Handler handler, float x, float y, int radius) {
         super(x, y, radius*2, radius*2);
@@ -32,10 +32,17 @@ public class Joystick extends UIObject {
         pad = ImageEditor.scaleBitmap(Assets.joystick_pad, width);
         controller = ImageEditor.scaleBitmap(Assets.joystick_controller, (float)width/3);
         this.radius = radius;
+        lockedUp = false;
     }
 
     @Override
     public void onTouchEvent(MotionEvent event) {
+        if(lockedUp){
+            inputX = 0;
+            inputY = 0;
+            System.out.println("joystick lockedUp");
+            return;
+        }
         Player player = handler.getPlayer();
         if(player.getInventory().isActive() || player.getFabricator().isActive()
                 || player.getMissionManager().isActive() || player.getSkillsManager().isActive()
@@ -137,5 +144,22 @@ public class Joystick extends UIObject {
 
     public int getRadius() {
         return radius;
+    }
+
+    public void reset(){
+        inputX = 0;
+        inputY = 0;
+    }
+
+    public void lockUp(){
+        lockedUp = true;
+    }
+
+    public void unlock(){
+        lockedUp = false;
+    }
+
+    public boolean isLockedUp() {
+        return lockedUp;
     }
 }

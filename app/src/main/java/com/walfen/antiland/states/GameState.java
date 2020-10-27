@@ -163,24 +163,7 @@ public class GameState extends State {
 
     //for debugging purpose
     private void test(){
-//        player.addEffect(new BraveHeart(player, 5000, 5));
-//        handler.setGameWorld(2, 320, 640);
-//        for(int x = 40; x < 48; x++){
-//            handler.getWorld().setTile(x, 9, 89);
-//        }
-//        for(int y = 10; y < 12; y++){
-//            for(int x = 40; x < 48; x++)
-//                handler.getWorld().setTile(x, y, 79);
-//        }
-//        for(int y = 12; y < 14; y++){
-//            for(int x = 40; x < 48; x++)
-//                handler.getWorld().setTile(x, y, 87);
-//        }
-        //89
-        //79
-        //79
-        //87
-        //87
+        handler.getUIManager().getCGUI().resetJoystick();
     }
 
     public void changePlayerRegion(int world, int playerX, int playerY) {

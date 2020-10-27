@@ -123,7 +123,8 @@ public class UIManager implements TouchEventListener{
 
     public void hideUI(){
         hide = true;
-        cGUI.onTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_UP, 0, 0, 0));
+        cGUI.resetJoystick();
+//        cGUI.onTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_UP, 0, 0, 0));
     }
 
     public void showUI(){

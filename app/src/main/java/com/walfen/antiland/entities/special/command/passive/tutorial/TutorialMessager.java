@@ -14,9 +14,7 @@ public abstract class TutorialMessager extends Messager {
     @Override
     protected void commandAction() {
         status = 1;
-        handler.getUIManager().getCGUI().onTouchEvent(
-                MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(),
-                        MotionEvent.ACTION_UP, 0, 0, 0));
+        handler.getUIManager().getCGUI().resetJoystick();
         displayMessage();
     }
 

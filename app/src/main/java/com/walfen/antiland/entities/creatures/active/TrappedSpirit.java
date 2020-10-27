@@ -86,15 +86,9 @@ public class TrappedSpirit extends Active {
 
     @Override
     protected void onDeath() {
-        handler.getUIManager().getCGUI().onTouchEvent(
-                MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(),
-                        MotionEvent.ACTION_UP, 0, 0, 0));
-        handler.getUIManager().getCGUI().onTouchEvent(
-                MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(),
-                        MotionEvent.ACTION_UP, 0, 0, 0));
-        handler.getUIManager().getCGUI().onTouchEvent(
-                MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(),
-                        MotionEvent.ACTION_UP, 0, 0, 0));
+        handler.getUIManager().getCGUI().resetJoystick();
+        handler.getUIManager().getCGUI().getAttackJoystick().lockUp();
+        handler.getUIManager().getCGUI().getMovementJoystick().lockUp();
         ArrayList<Conversation> c = new ArrayList<>();
         c.add(new Conversation("No! This is impossible! You can't just destroy me!", Assets.trappedSpiritMovementDown, false));
         c.add(new Conversation("After all these year! After all of the suffering!", Assets.trappedSpiritMovementDown, false));
@@ -103,6 +97,9 @@ public class TrappedSpirit extends Active {
             handler.getWorld().triggerWorldEvent(1);
             handler.getUIManager().popUpMessage("As the evil spirit fades away, the entire temple starts shaking. Suddenly, a piece of wall collapsed and " +
                     "a tunnel towards the exit was presented in front of you. /nl/Hurry! The entire temple is /nl/disintegrating!");
+            handler.getUIManager().getCGUI().resetJoystick();
+            handler.getUIManager().getCGUI().getAttackJoystick().unlock();
+            handler.getUIManager().getCGUI().getMovementJoystick().unlock();
         });
         handler.getUIManager().getConvBox().setActive();
     }

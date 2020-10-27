@@ -71,6 +71,11 @@ public class CriticalGameUI implements TouchEventListener{
         addUIObject(skillButtons);
     }
 
+    public void resetJoystick(){
+        movement.reset();
+        attack.reset();
+    }
+
     public void addUIObject(UIObject o){
         criticalUIs.add(o);
     }

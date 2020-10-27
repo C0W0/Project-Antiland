@@ -42,9 +42,13 @@ public class EnemyInfoPanel extends UIObject {
         if(!active)
             return;
         if(tracker.getTopEntity() != null && currEntityID != tracker.getTopEntity().getId()){
-            currEntityID = tracker.getTopEntity().getId();
-            currEntityTexture = tracker.getTopEntity().getTexture(128, 128);
-            currEntityName = tracker.getTopEntity().getName();
+            if(tracker.getTopEntity().getTexture(128, 128) == null){
+                currEntityTexture = ImageEditor.scaleBitmapForced(Assets.NULL, 128);
+            }else {
+                currEntityID = tracker.getTopEntity().getId();
+                currEntityTexture = Bitmap.createBitmap(tracker.getTopEntity().getTexture(128, 128));
+                currEntityName = tracker.getTopEntity().getName();
+            }
         }
         entityHP.setTotalValue(tracker.getTopEntity().getMaxHp());
         entityHP.setCurrentValue(tracker.getTopEntity().getHealth());
