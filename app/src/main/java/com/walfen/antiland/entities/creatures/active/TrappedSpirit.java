@@ -63,8 +63,7 @@ public class TrappedSpirit extends Active {
                     currentAnimation = distanceX < 0?leftIdle:rightIdle;
                 else //up or down
                     currentAnimation = distanceY < 0?upMove:downMove;
-            }
-            else if(Math.abs(xMove) > Math.abs(yMove)) //left or right
+            } else if(Math.abs(xMove) > Math.abs(yMove)) //left or right
                 currentAnimation = xMove < 0?leftMove:rightMove;
             else //up or down
                 currentAnimation = yMove < 0?upMove:downMove;

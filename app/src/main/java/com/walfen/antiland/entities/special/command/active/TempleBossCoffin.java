@@ -52,7 +52,7 @@ public class TempleBossCoffin extends ActiveCommandEntity {
         handler.getUIManager().getConvBox().setConversationList(c, () -> handler.getWorld().triggerWorldEvent(0));
         handler.getUIManager().getConvBox().setActive();
         handler.getPlayer().getMissionManager().addMission(2);
-        handler.getUIManager().getCGUI().getMissionPanel().changePosition(MissionPanel.EXTEND);
+        handler.getUIManager().getCGUI().getMissionPanel().extendPanel();
     }
 
     @Override

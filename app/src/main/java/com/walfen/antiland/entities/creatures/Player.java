@@ -275,30 +275,32 @@ public class Player extends Creature implements TouchEventListener {
     }
 
     private void setCurrentAnimation(){
-        if(yMove < 0){
-            currentAnimation = upAnim;
-            downAnim.reset();
-            rightAnim.reset();
-            leftAnim.reset();
-        } else if(xMove > 0){
-            currentAnimation = rightAnim;
-            downAnim.reset();
-            upAnim.reset();
-            leftAnim.reset();
-        } else if(xMove < 0){
-            currentAnimation = leftAnim;
-            downAnim.reset();
-            upAnim.reset();
-            rightAnim.reset();
-        } else if(yMove > 0){
-            currentAnimation = downAnim;
-            upAnim.reset();
-            rightAnim.reset();
-            leftAnim.reset();
-        } else {
+        if(xMove == 0 && yMove == 0) {
             currentAnimation = neutralAnim;
             downAnim.reset();
             upAnim.reset();
+            rightAnim.reset();
+            leftAnim.reset();
+        }else if(Math.abs(xMove) > Math.abs(yMove)){
+            //left or right
+            if(xMove > 0){
+                currentAnimation = rightAnim;
+                leftAnim.reset();
+            } else{
+                currentAnimation = leftAnim;
+                rightAnim.reset();
+            }
+            downAnim.reset();
+            upAnim.reset();
+        } else{
+            //up or down
+            if(yMove > 0){
+                currentAnimation = downAnim;
+                upAnim.reset();
+            } else {
+                currentAnimation = upAnim;
+                downAnim.reset();
+            }
             rightAnim.reset();
             leftAnim.reset();
         }

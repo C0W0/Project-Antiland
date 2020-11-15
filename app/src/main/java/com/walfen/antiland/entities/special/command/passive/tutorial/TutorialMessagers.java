@@ -18,7 +18,7 @@ public class TutorialMessagers {
             handler.getUIManager().popUpAction("\"Can you still move?\" A weird and spooky voices wakes you up from inside.", "(Where am I)",
                     () -> handler.getUIManager().activeTutorial("Tutorial: Use the left joystick to move around", handler.getUIManager().getCGUI().getMovementJoystick().getBounds()));
             handler.getPlayer().getMissionManager().addMission(1);
-            handler.getUIManager().getCGUI().getMissionPanel().changePosition(MissionPanel.EXTEND);
+            handler.getUIManager().getCGUI().getMissionPanel().extendPanel();
         }
     }
 
@@ -31,6 +31,7 @@ public class TutorialMessagers {
 
         @Override
         protected void displayMessage() {
+            handler.getUIManager().getCGUI().getMissionPanel().extendPanel();
             handler.getUIManager().activeTutorial("Tutorial: Check your current mission by opening up the mission tab", handler.getUIManager().getCGUI().getMissionPanel().getBounds(),
                     () -> handler.getUIManager().popUpMessage("You can expand and collapse the mission panel by pressing on the arrow on the side"));
         }

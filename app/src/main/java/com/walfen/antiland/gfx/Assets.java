@@ -7,6 +7,7 @@ import com.walfen.antiland.R;
 
 public class Assets {
 
+    //tiles
     public static Bitmap grass, grassStone, dirt, dirtStone;
     public static Bitmap pathVerticalLeft, pathVerticalRight, pathHorizontalTop, pathHorizontalBottom,
             pathCornerUpRight, pathCornerUpLeft, pathCornerDownLeft, pathCornerDownRight, pathCross;
@@ -21,6 +22,10 @@ public class Assets {
             tt1_wallLeftTop, tt1_wallLeftMid, tt1_wallLeftBottom, tt1_wallMidTop, tt1_wallCommon1, tt1_wallMidBottom,
             tt1_wallRightTop, tt1_wallRightMid, tt1_wallRightBottom;
     public static Bitmap[][] a1_tiles;
+    public static Bitmap beachDrySand, beachDryCrater, beachTransitionUp, beachTransitionDown,
+            beachWetSand, beachWetCrater, beachShoreUp1, beachShoreUp2, beachOcean1, beachOcean2,
+            beachShoreDown1, beachShoreDown2, beachGrassFlower, beachGrass1, beachGrass2, beachVerticalEast, beachVerticalWest;
+    public static Bitmap[][] beach_diagonals, beach_Verticals;
 
     public static Bitmap NULL;
     public static Bitmap grey_transparent;
@@ -97,6 +102,7 @@ public class Assets {
         SpriteSheet mapIconSheet = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.map_icons));
         SpriteSheet characterMovement = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.character_movement));
         SpriteSheet trappedSpirit = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.mini_boss));
+        SpriteSheet beachIslandTile1 = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.beach));
 
         grass = newTownTiles.crop(width*11,0,width,height);
         grassStone = sheet1.crop(width*3,height,width,height);
@@ -175,6 +181,37 @@ public class Assets {
                 a1_tiles[y][x] = area1Tiles.crop(x*width, y*height, width, height);
             }
         }
+
+        beachDryCrater = beachIslandTile1.crop(0, 0, width, height);
+        beachDrySand = beachIslandTile1.crop(width, 0, width, height);
+        beachTransitionUp = beachIslandTile1.crop(width*2, 0, width, height);
+        beachTransitionDown = beachIslandTile1.crop(width*3, 0, width, height);
+        beachWetCrater = beachIslandTile1.crop(0, height, width, height);
+        beachWetSand = beachIslandTile1.crop(width, height, width, height);
+        beachShoreUp1 = beachIslandTile1.crop(width*2, height, width, height);
+        beachShoreUp2 = beachIslandTile1.crop(width*3, height, width, height);
+        beachOcean1 = beachIslandTile1.crop(0, height*2, width, height);
+        beachOcean2 = beachIslandTile1.crop(width, height*2, width, height);
+        beachShoreDown1 = beachIslandTile1.crop(width*2, height*2, width, height);
+        beachShoreDown2 = beachIslandTile1.crop(width*3, height*2, width, height);
+        beachGrassFlower = beachIslandTile1.crop(0, height*3, width, height);
+        beachGrass1 = beachIslandTile1.crop(width, height*3, width, height);
+        beachGrass2 = beachIslandTile1.crop(width*2, height*3, width, height);
+        beach_diagonals = new Bitmap[4][4];
+        for(int y = 0; y < 4; y++){
+            for(int x = 0; x < 4; x++){
+                beach_diagonals[y][x] = beachIslandTile1.crop(width*(x+4), height*y, width, height);
+            }
+        }
+        beach_Verticals = new Bitmap[4][2];
+        for(int y = 0; y < 4; y++){
+            for(int x = 0; x < 2; x++){
+                beach_Verticals[y][x] = beachIslandTile1.crop(width*(x+4), height*(y+4), width, height);
+            }
+        }
+        beachVerticalWest = beachIslandTile1.crop(width*6, height*4, width, height);
+        beachVerticalEast = beachIslandTile1.crop(width*7, height*4, width, height);
+
 
         player_down = new Bitmap[4];
         player_down[0] = characterMovement.crop(0,0,width,height*2);

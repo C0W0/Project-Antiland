@@ -118,6 +118,37 @@ public class Tile implements GraphicalTerminalElement {
         new Tile(Assets.a1_tiles[1][0], 88, true);
         new Tile(Assets.a1_tiles[1][1], 89, true);
 
+        new Tile(Assets.beachDrySand, 91, false);
+        new Tile(Assets.beachDryCrater, 92, false);
+        new Tile(Assets.beachTransitionUp, 93, false);
+        new Tile(Assets.beachTransitionDown, 94, false);
+        new Tile(Assets.beachWetSand, 95, false);
+        new Tile(Assets.beachWetCrater, 96, false);
+        new Tile(Assets.beachShoreUp1, 97, false);
+        new Tile(Assets.beachShoreUp2, 98, false);
+        new Tile(Assets.beachShoreDown1, 99, false);
+        new Tile(Assets.beachShoreDown2, 100, false);
+        new Tile(Assets.beachGrassFlower, 101, false);
+        new Tile(Assets.beachGrass1, 102, false);
+        new Tile(Assets.beachGrass2, 103, false);
+
+        new Tile(Assets.beachOcean1, 104, true);
+        new Tile(Assets.beachOcean2, 105, true);
+
+        for(int y = 0; y < 4; y++){
+            for(int x = 0; x < 4; x++){
+                new Tile(Assets.beach_diagonals[y][x], 106+4*y+x, false);
+            }
+        }
+
+        for(int y = 0; y < 4; y++){
+            for(int x = 0; x < 2; x++){
+                new Tile(Assets.beach_Verticals[y][x], 122+2*y+x, false);
+            }
+        }
+
+        new Tile(Assets.beachVerticalWest, 130, false);
+        new Tile(Assets.beachVerticalEast, 131, false);
     }
 
 

@@ -163,7 +163,7 @@ public class GameState extends State {
 
     //for debugging purpose
     private void test(){
-        handler.getUIManager().getCGUI().resetJoystick();
+        handler.setGameWorld(2, 2048, 2048);
     }
 
     public void changePlayerRegion(int world, int playerX, int playerY) {

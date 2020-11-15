@@ -62,7 +62,7 @@ public class NPC1 extends RepeatedMissionNPC {
             manager.getConvBox().setConversationList(c2, () -> {assignMission(); convBoxOn = false;
                 Mission.missions[missionID].setCompleteMessage("Report back to Mr. Krab.");
                 handler.getPlayer().getMissionManager().setSelectedMission();
-                handler.getUIManager().getCGUI().getMissionPanel().changePosition(MissionPanel.EXTEND);});
+                handler.getUIManager().getCGUI().getMissionPanel().extendPanel();});
             manager.getConvBox().setActive();
         }}, false);});
         manager.getConvBox().setActive();
