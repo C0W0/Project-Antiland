@@ -22,21 +22,18 @@ public class EntityManager implements GameHierarchyElement {
     private ArrayList<Entity> entities;
     private ArrayList<Entity> addingQueue;
 
-    private Comparator<Entity> renderComparator = new Comparator<Entity>() {
-        @Override
-        public int compare(Entity a, Entity b) {
-            if(a.getY() + a.getHeight() < b.getY() + b.getHeight()){
-                return -1;
-            }
-            return 1;
+    private Comparator<Entity> renderComparator = (a, b) -> {
+        if(a.getY() + a.getHeight() < b.getY() + b.getHeight()){
+            return -1;
         }
+        return 1;
     };
 
 
     public EntityManager(Handler handler, Player player){
         this.handler = handler;
         this.player = player;
-        entities = new ArrayList<Entity>();
+        entities = new ArrayList<>();
         addingQueue = new ArrayList<>();
         addEntity(player);
     }

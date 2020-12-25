@@ -53,6 +53,7 @@ public class Assets {
     public static Bitmap headSignOrange, headSignGray, hsoMissionComplete, hsgMissionComplete;
     public static Bitmap hsoGetMission, hsgGetMission, hsoTrade, hsgTrade;
     public static Bitmap extend, collapse;
+    public static Bitmap splashScreen, splashBackground;
 
     //entities
     public static Bitmap tree;
@@ -334,6 +335,9 @@ public class Assets {
         redSqr = ImageLoader.loadImage(R.drawable.red_square);
 
         //UI
+        splashScreen = ImageLoader.loadImage(R.drawable.antiland_splash_page);
+        splashBackground = ImageLoader.loadImage(R.drawable.splash_background);
+
         inventoryScreen = ImageLoader.loadImage(R.drawable.inventory_screen_new);
         craftingScreen = ImageLoader.loadImage(R.drawable.craft_screen);
         missionScreen = ImageLoader.loadImage(R.drawable.mission_screen);

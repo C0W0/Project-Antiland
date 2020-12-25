@@ -44,11 +44,5 @@ public class WorldGate extends PassiveCommandEntity {
     }
 
     @Override
-    public void draw(Canvas canvas) {
-        int left = (int) (actionBounds.left+x-handler.getGameCamera().getxOffset());
-        int right = (int) (actionBounds.right+x-handler.getGameCamera().getxOffset());
-        int top = (int) (actionBounds.top+y-handler.getGameCamera().getyOffset());
-        int bottom = (int) (actionBounds.bottom+y-handler.getGameCamera().getyOffset());
-        canvas.drawRect(new Rect(left, top, right, bottom), new Paint());
-    }
+    public void draw(Canvas canvas) { }
 }

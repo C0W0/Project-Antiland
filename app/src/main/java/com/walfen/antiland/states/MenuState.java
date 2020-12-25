@@ -1,6 +1,7 @@
 package com.walfen.antiland.states;
 
 
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -10,6 +11,8 @@ import android.view.MotionEvent;
 
 import com.walfen.antiland.Constants;
 import com.walfen.antiland.Handler;
+import com.walfen.antiland.gfx.Assets;
+import com.walfen.antiland.gfx.ImageEditor;
 import com.walfen.antiland.ui.UIManager;
 import com.walfen.antiland.ui.buttons.TextButton;
 import com.walfen.antiland.untils.Utils;
@@ -24,10 +27,16 @@ import java.util.Calendar;
 public class MenuState extends State {
 
     private UIManager uiManager;
+    private Bitmap splashScreen, splashBackground;
+    private int xDispute, yDispute;
 
     public MenuState(Handler handler){
         super(handler);
         uiManager = new UIManager(handler);
+        splashScreen = ImageEditor.scaleBitmap(Assets.splashScreen, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
+        splashBackground = ImageEditor.scaleBitmapForced(Assets.splashBackground, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
+        xDispute = Constants.SCREEN_WIDTH/2 - splashScreen.getWidth()/2;
+        yDispute = Constants.SCREEN_HEIGHT/2 - splashScreen.getHeight()/2;
         uiManager.addUIObject(new TextButton(Constants.SCREEN_WIDTH/2.f, Constants.SCREEN_HEIGHT/2.f-300,
                 40, "new game", Color.BLACK,
                 () -> uiManager.popUpMessage("This will wipe out all existing save files, " +
@@ -53,9 +62,12 @@ public class MenuState extends State {
         Paint paint = new Paint();
         paint.setColor(Color.BLUE);
         canvas.drawRect(new Rect(0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT), paint); // placeholder for background
+        canvas.drawBitmap(splashBackground, null, new Rect(0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT), Constants.getRenderPaint());
+        canvas.drawBitmap(splashScreen, null, new Rect(xDispute, yDispute, xDispute+splashScreen.getWidth(), yDispute+splashScreen.getHeight()), Constants.getRenderPaint());
+
         paint.setColor(Color.WHITE);
-        canvas.drawRect(new Rect(Constants.SCREEN_WIDTH/2-300, Constants.SCREEN_HEIGHT/2-400,
-                Constants.SCREEN_WIDTH/2+300, Constants.SCREEN_HEIGHT/2+400), paint); // placeholder for loading
+//        canvas.drawRect(new Rect(Constants.SCREEN_WIDTH/2-300, Constants.SCREEN_HEIGHT/2-400,
+//                Constants.SCREEN_WIDTH/2+300, Constants.SCREEN_HEIGHT/2+400), paint); // placeholder for loading
         Rect r = new Rect();
         paint.setTextSize(30);
         paint.getTextBounds(Constants.GAME_VERSION_DISPLAY, 0, Constants.GAME_VERSION_DISPLAY.length(), r);

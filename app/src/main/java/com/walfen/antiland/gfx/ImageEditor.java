@@ -18,6 +18,20 @@ public class ImageEditor {
                 (int)(ratio*original.getHeight()), true);
     }
 
+    public static Bitmap scaleFill(Bitmap original, float xSize, float ySize){
+        float ratio = Math.max(xSize/original.getWidth(),
+                ySize/original.getHeight());
+        return Bitmap.createScaledBitmap(original, (int)(ratio*original.getWidth()),
+                (int)(ratio*original.getHeight()), true);
+    }
+
+    public static Bitmap scaleFill(Bitmap original, float size){
+        float ratio = Math.max(size/original.getWidth(),
+                size/original.getHeight());
+        return Bitmap.createScaledBitmap(original, (int)(ratio*original.getWidth()),
+                (int)(ratio*original.getHeight()), true);
+    }
+
     public static Bitmap scaleBitmapForced(Bitmap original, float size){
         return Bitmap.createScaledBitmap(original, (int)size, (int)size, true);
     }

@@ -384,12 +384,10 @@ public class Player extends Creature implements TouchEventListener {
     }
 
     @Override
-    public void die() {
-        System.out.println("You lose");
+    protected void onDeath() {
+        if(!handler.getGame().getGameState().isDisabled())
+            handler.getGame().getGameState().playerDeath();
     }
-
-    @Override
-    protected void onDeath() { }
 
     public void postDraw(Canvas canvas){
         interactButton.draw(canvas);

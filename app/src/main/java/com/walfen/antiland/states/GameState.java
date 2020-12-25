@@ -3,6 +3,8 @@ package com.walfen.antiland.states;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.widget.Toast;
@@ -28,6 +30,8 @@ import java.util.Calendar;
 
 public class GameState extends State {
 
+    private boolean disabled;
+    private int transparency;
     private World world;
     private Player player;
     private String currentPath;
@@ -37,6 +41,8 @@ public class GameState extends State {
     public GameState(Handler handler){
         super(handler);
         worlds = new ArrayList<>();
+        disabled = false;
+        transparency = 0;
     }
 
     @Override
@@ -49,12 +55,19 @@ public class GameState extends State {
 
     @Override
     public void draw(Canvas canvas) {
-        if(world != null){
+        if(world != null && transparency <= 255){
             world.draw(canvas);
             uiManager.draw(canvas);
             player.postDraw(canvas);
-            uiManager.postDraw(canvas);
         }
+        if(disabled){
+            Paint paint = new Paint();
+            paint.setColor(Color.BLACK);
+            transparency += 5;
+            paint.setAlpha(Math.min(transparency, 255));
+            canvas.drawRect(new Rect(0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT), paint);
+        }
+        uiManager.postDraw(canvas);
     }
 
     @Override
@@ -76,6 +89,8 @@ public class GameState extends State {
     }
 
     public void init(String path) {
+        disabled = false;
+        transparency = 0;
         uiManager = new UIManager(handler);
         player = new Player(handler);
         initDefaultUI();
@@ -157,6 +172,12 @@ public class GameState extends State {
         }
     }
 
+    public void playerDeath(){
+        disabled = true;
+        uiManager.popUpAction("You died", "Return to the menu",
+                () -> {State.setState(handler.getGame().getMenuState()); worlds.clear();});
+    }
+
     public Player getPlayer(){
         return player;
     }
@@ -183,5 +204,9 @@ public class GameState extends State {
 
     public int getWorldIndex() {
         return worldIndex;
+    }
+
+    public boolean isDisabled() {
+        return disabled;
     }
 }

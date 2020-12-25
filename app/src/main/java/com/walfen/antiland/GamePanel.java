@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.view.KeyEvent;
+import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -182,6 +183,10 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback, Ke
 
     public GameState getGameState() {
         return (GameState)gameState;
+    }
+
+    public MenuState getMenuState() {
+        return (MenuState)menuState;
     }
 
     public boolean allowsExit() {
