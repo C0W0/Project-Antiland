@@ -24,8 +24,28 @@ public class Assets {
     public static Bitmap[][] a1_tiles;
     public static Bitmap beachDrySand, beachDryCrater, beachTransitionUp, beachTransitionDown,
             beachWetSand, beachWetCrater, beachShoreUp1, beachShoreUp2, beachOcean1, beachOcean2,
-            beachShoreDown1, beachShoreDown2, beachGrassFlower, beachGrass1, beachGrass2, beachVerticalEast, beachVerticalWest;
+            beachShoreDown1, beachShoreDown2, beachGrassFlower, beachGrass1, beachGrass2, beachVerticalEast, beachVerticalWest,
+            beachOceanTransition;
     public static Bitmap[][] beach_diagonals, beach_Verticals;
+
+    public static Bitmap tt2_grass, tt3_grass;
+    public static Bitmap tt2_pathVerticalLeft, tt2_pathVerticalRight, tt2_pathHorizontalTop, tt2_pathHorizontalBottom,
+            tt2_pathCornerUpRight, tt2_pathCornerUpLeft, tt2_pathCornerDownLeft, tt2_pathCornerDownRight, tt2_pathCross;
+    public static Bitmap tt2_roofTop, tt2_roofCommon, tt2_roofLeftTop, tt2_roofLeftMid, tt2_roofLeftBottom,
+            tt2_roofRightTop, tt2_roofRightMid, tt2_roofRightBottom, tt2_halfRoofTop, tt2_SmallARoof;
+    public static Bitmap tt2_window, tt2_smokestack, tt2_balcony, tt2_doorTop, tt2_doorBottom,
+            tt2_wallLeftTop, tt2_wallLeftMid, tt2_wallLeftBottom, tt2_wallMidTop, tt2_wallCommon1, tt2_wallMidBottom,
+            tt2_wallRightTop, tt2_wallRightMid, tt2_wallRightBottom;
+    public static Bitmap tt3_pathVerticalLeft, tt3_pathVerticalRight, tt3_pathHorizontalTop, tt3_pathHorizontalBottom,
+            tt3_pathCornerUpRight, tt3_pathCornerUpLeft, tt3_pathCornerDownLeft, tt3_pathCornerDownRight, tt3_pathCross;
+    public static Bitmap tt3_roofTop, tt3_roofCommon, tt3_roofLeftTop, tt3_roofLeftMid, tt3_roofLeftBottom,
+            tt3_roofRightTop, tt3_roofRightMid, tt3_roofRightBottom, tt3_halfRoofTop, tt3_SmallARoof;
+    public static Bitmap tt3_window, tt3_smokestack, tt3_balcony, tt3_doorTop, tt3_doorBottom,
+            tt3_wallLeftTop, tt3_wallLeftMid, tt3_wallLeftBottom, tt3_wallMidTop, tt3_wallCommon1, tt3_wallMidBottom,
+            tt3_wallRightTop, tt3_wallRightMid, tt3_wallRightBottom;
+    public static Bitmap[] drySand_diagonals, wetSand_diagonals, grassTransition;
+    public static Bitmap sandTransitionLeft, sandTransitionRight, drySandVertical, wetSandVertical;
+    public static Bitmap[] transition_diagonals;
 
     public static Bitmap NULL;
     public static Bitmap grey_transparent;
@@ -93,7 +113,6 @@ public class Assets {
         SpriteSheet slimeMovement = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.slime_movement));
         SpriteSheet skillSheet = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.skills_sprite));
         SpriteSheet rockHouseSheet = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.house_tiles));
-        SpriteSheet newTownTiles = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.town_tiles));
         SpriteSheet potions = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.potions));
         SpriteSheet items = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.items));
         SpriteSheet iceSlimeMovement = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.ice_slime_movement));
@@ -102,8 +121,13 @@ public class Assets {
         SpriteSheet area1Tiles = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.area_1_tiles));
         SpriteSheet mapIconSheet = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.map_icons));
         SpriteSheet characterMovement = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.character_movement));
+        SpriteSheet characterAttack = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.character_attack));
         SpriteSheet trappedSpirit = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.mini_boss));
         SpriteSheet beachIslandTile1 = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.beach));
+
+        SpriteSheet newTownTiles = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.port_town));
+        SpriteSheet oldTownTiles = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.town_tiles));
+        SpriteSheet harbourTiles = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.far_harbour));
 
         grass = newTownTiles.crop(width*11,0,width,height);
         grassStone = sheet1.crop(width*3,height,width,height);
@@ -176,6 +200,114 @@ public class Assets {
         tt1_wallRightMid = newTownTiles.crop(width*4, height, width, height);
         tt1_wallRightBottom = newTownTiles.crop(width*4, height*2, width, height);
 
+        tt2_grass = oldTownTiles.crop(width*11,0,width,height);
+
+        tt2_pathVerticalLeft = oldTownTiles.crop(width*6,height,width,height);
+        tt2_pathVerticalRight = oldTownTiles.crop(width*8,height,width,height);
+        tt2_pathHorizontalTop = oldTownTiles.crop(width*7,0,width,height);
+        tt2_pathHorizontalBottom = oldTownTiles.crop(width*7,height*2,width,height);
+        tt2_pathCornerUpRight = oldTownTiles.crop(width*6,0,width,height);
+        tt2_pathCornerUpLeft = oldTownTiles.crop(width*8,0,width,height);
+        tt2_pathCornerDownLeft = oldTownTiles.crop(width*6,height*2,width,height);
+        tt2_pathCornerDownRight = oldTownTiles.crop(width*8,height*2,width,height);
+        tt2_pathCross = oldTownTiles.crop(width*11,height,width,height);
+
+        tt2_roofTop = oldTownTiles.crop(0, 0, width, height);
+        tt2_roofCommon = oldTownTiles.crop(width, 0, width, height);
+        tt2_roofLeftTop = oldTownTiles.crop(width*9, 0, width, height);
+        tt2_roofLeftMid = oldTownTiles.crop(width*9, height, width, height);
+        tt2_roofLeftBottom = oldTownTiles.crop(width*9, height*2, width, height);
+        tt2_roofRightTop = oldTownTiles.crop(width*10, 0, width, height);
+        tt2_roofRightMid = oldTownTiles.crop(width*10, height, width, height);
+        tt2_roofRightBottom = oldTownTiles.crop(width*10, height*2, width, height);
+        tt2_halfRoofTop = oldTownTiles.crop(width, height, width, height);
+        tt2_SmallARoof = oldTownTiles.crop(0, height, width, height);
+        tt2_window = oldTownTiles.crop(0, height*2, width, height);
+        tt2_smokestack = oldTownTiles.crop(width*5, height*2, width, height);
+        tt2_balcony = oldTownTiles.crop(width, height*2, width, height);
+        tt2_doorTop = oldTownTiles.crop(width*5, 0, width, height);
+        tt2_doorBottom = oldTownTiles.crop(width*5, height, width, height);
+        tt2_wallLeftTop = oldTownTiles.crop(width*2, 0, width, height);
+        tt2_wallLeftMid = oldTownTiles.crop(width*2, height, width, height);
+        tt2_wallLeftBottom = oldTownTiles.crop(width*2, height*2, width, height);
+        tt2_wallMidTop = oldTownTiles.crop(width*3, 0, width, height);
+        tt2_wallCommon1 = oldTownTiles.crop(width*3, height, width, height);
+        tt2_wallMidBottom = oldTownTiles.crop(width*3, height*2, width, height);
+        tt2_wallRightTop = oldTownTiles.crop(width*4, 0, width, height);
+        tt2_wallRightMid = oldTownTiles.crop(width*4, height, width, height);
+        tt2_wallRightBottom = oldTownTiles.crop(width*4, height*2, width, height);
+
+        tt3_grass = harbourTiles.crop(width*11,0,width,height);
+
+        tt3_pathVerticalLeft = harbourTiles.crop(width*6,height,width,height);
+        tt3_pathVerticalRight = harbourTiles.crop(width*8,height,width,height);
+        tt3_pathHorizontalTop = harbourTiles.crop(width*7,0,width,height);
+        tt3_pathHorizontalBottom = harbourTiles.crop(width*7,height*2,width,height);
+        tt3_pathCornerUpRight = harbourTiles.crop(width*6,0,width,height);
+        tt3_pathCornerUpLeft = harbourTiles.crop(width*8,0,width,height);
+        tt3_pathCornerDownLeft = harbourTiles.crop(width*6,height*2,width,height);
+        tt3_pathCornerDownRight = harbourTiles.crop(width*8,height*2,width,height);
+        tt3_pathCross = harbourTiles.crop(width*11,height,width,height);
+
+        tt3_roofTop = harbourTiles.crop(0, 0, width, height);
+        tt3_roofCommon = harbourTiles.crop(width, 0, width, height);
+        tt3_roofLeftTop = harbourTiles.crop(width*9, 0, width, height);
+        tt3_roofLeftMid = harbourTiles.crop(width*9, height, width, height);
+        tt3_roofLeftBottom = harbourTiles.crop(width*9, height*2, width, height);
+        tt3_roofRightTop = harbourTiles.crop(width*10, 0, width, height);
+        tt3_roofRightMid = harbourTiles.crop(width*10, height, width, height);
+        tt3_roofRightBottom = harbourTiles.crop(width*10, height*2, width, height);
+        tt3_halfRoofTop = harbourTiles.crop(width, height, width, height);
+        tt3_SmallARoof = harbourTiles.crop(0, height, width, height);
+        tt3_window = harbourTiles.crop(0, height*2, width, height);
+        tt3_smokestack = harbourTiles.crop(width*5, height*2, width, height);
+        tt3_balcony = harbourTiles.crop(width, height*2, width, height);
+        tt3_doorTop = harbourTiles.crop(width*5, 0, width, height);
+        tt3_doorBottom = harbourTiles.crop(width*5, height, width, height);
+        tt3_wallLeftTop = harbourTiles.crop(width*2, 0, width, height);
+        tt3_wallLeftMid = harbourTiles.crop(width*2, height, width, height);
+        tt3_wallLeftBottom = harbourTiles.crop(width*2, height*2, width, height);
+        tt3_wallMidTop = harbourTiles.crop(width*3, 0, width, height);
+        tt3_wallCommon1 = harbourTiles.crop(width*3, height, width, height);
+        tt3_wallMidBottom = harbourTiles.crop(width*3, height*2, width, height);
+        tt3_wallRightTop = harbourTiles.crop(width*4, 0, width, height);
+        tt3_wallRightMid = harbourTiles.crop(width*4, height, width, height);
+        tt3_wallRightBottom = harbourTiles.crop(width*4, height*2, width, height);
+
+        drySand_diagonals = new Bitmap[4];
+        drySand_diagonals[0] = beachIslandTile1.crop(0, height*4, width, height);
+        drySand_diagonals[1] = beachIslandTile1.crop(width, height*4, width, height);
+        drySand_diagonals[2] = beachIslandTile1.crop(0, height*5, width, height);
+        drySand_diagonals[3] = beachIslandTile1.crop(width, height*5, width, height);
+        wetSand_diagonals = new Bitmap[4];
+        wetSand_diagonals[0] = beachIslandTile1.crop(0, height*6, width, height);
+        wetSand_diagonals[1] = beachIslandTile1.crop(width, height*6, width, height);
+        wetSand_diagonals[2] = beachIslandTile1.crop(0, height*7, width, height);
+        wetSand_diagonals[3] = beachIslandTile1.crop(width, height*7, width, height);
+        grassTransition = new Bitmap[12];
+        for(int i = 0; i < 6; i++)
+            grassTransition[i] = beachIslandTile1.crop(width*i, height*8, width, height);
+        grassTransition[6] = beachIslandTile1.crop(width*6, height*5, width, height);
+        grassTransition[7] = beachIslandTile1.crop(width*7, height*5, width, height);
+        grassTransition[8] = beachIslandTile1.crop(width*6, height*6, width, height);
+        grassTransition[9] = beachIslandTile1.crop(width*7, height*6, width, height);
+        grassTransition[10] = beachIslandTile1.crop(width*6, height*7, width, height);
+        grassTransition[11] = beachIslandTile1.crop(width*7, height*7, width, height);
+        sandTransitionRight = beachIslandTile1.crop(width*2, height*4, width, height);
+        sandTransitionLeft = beachIslandTile1.crop(width*2, height*5, width, height);
+        wetSandVertical = beachIslandTile1.crop(width*3, height*4, width, height);
+        drySandVertical = beachIslandTile1.crop(width*3, height*5, width, height);
+
+        transition_diagonals = new Bitmap[8];
+        transition_diagonals[0] = beachIslandTile1.crop(width*2, height*6, width, height);
+        transition_diagonals[1] = beachIslandTile1.crop(width*3, height*6, width, height);
+        transition_diagonals[2] = beachIslandTile1.crop(width*2, height*7, width, height);
+        transition_diagonals[3] = beachIslandTile1.crop(width*3, height*7, width, height);
+        transition_diagonals[4] = beachIslandTile1.crop(width*6, height*8, width, height);
+        transition_diagonals[5] = beachIslandTile1.crop(width*7, height*8, width, height);
+        transition_diagonals[6] = beachIslandTile1.crop(width*6, height*9, width, height);
+        transition_diagonals[7] = beachIslandTile1.crop(width*7, height*9, width, height);
+
         a1_tiles = new Bitmap[3][4];
         for(int y = 0; y < a1_tiles.length; y++){
             for(int x = 0; x < a1_tiles[y].length; x++){
@@ -193,6 +325,7 @@ public class Assets {
         beachShoreUp2 = beachIslandTile1.crop(width*3, height, width, height);
         beachOcean1 = beachIslandTile1.crop(0, height*2, width, height);
         beachOcean2 = beachIslandTile1.crop(width, height*2, width, height);
+        beachOceanTransition = beachIslandTile1.crop(0, height*3, width, height);
         beachShoreDown1 = beachIslandTile1.crop(width*2, height*2, width, height);
         beachShoreDown2 = beachIslandTile1.crop(width*3, height*2, width, height);
         beachGrassFlower = beachIslandTile1.crop(0, height*3, width, height);

@@ -48,6 +48,7 @@ public class Player extends Creature implements TouchEventListener {
 
     //animations
     private Animation downAnim, upAnim, rightAnim, leftAnim, neutralAnim;
+    private Animation downAttackAnim, upAttackAnim, rightAttackAnim, leftAttackAnim;
     private Animation currentAnimation;
 
     //attack
