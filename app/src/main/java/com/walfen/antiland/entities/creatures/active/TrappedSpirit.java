@@ -51,6 +51,34 @@ public class TrappedSpirit extends Active {
         level = 1;
     }
 
+    public TrappedSpirit(int id){
+        super(DEFAULT_CREATURE_WIDTH, DEFAULT_CREATURE_HEIGHT, 3000, id, 15);
+        spottingRange = 640;
+        maxIdealRange = 128;
+        minIdealRange = 0; // melee
+        patrolRange = 640;
+        giveUpRange = 1300;
+        bounds.left = 40;
+        bounds.top = 0;
+        bounds.right = 90;
+        bounds.bottom = 120;
+        faction = 1;
+        speed = 10;
+        leftMove = new Animation(0.3f, new Bitmap[]{Assets.trappedSpiritMovementLeft[0]});
+        rightMove = new Animation(0.3f, new Bitmap[]{Assets.trappedSpiritMovementRight[0]});
+        upMove = new Animation(0.3f, new Bitmap[]{Assets.trappedSpiritMovementUp});
+        downMove = new Animation(0.3f, new Bitmap[]{Assets.trappedSpiritMovementDown});
+        leftIdle = new Animation(0.5f, Assets.trappedSpiritMovementLeft);
+        rightIdle = new Animation(0.5f, Assets.trappedSpiritMovementRight);
+
+        currentAnimation = downMove;
+        setEntityHealth(15);
+        currentAnimation = leftMove;
+        physicalDamage = 2;
+        setDefence(0);
+        level = 1;
+    }
+
 
     @Override
     public void update(){

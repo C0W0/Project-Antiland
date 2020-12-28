@@ -271,6 +271,9 @@ public class Tile implements GraphicalTerminalElement {
         new Tile(Assets.sandTransitionRight, 230, false);
         for(int i = 0; i < Assets.transition_diagonals.length; i++)
             new Tile(Assets.transition_diagonals[i], 231+i, false);
+        new Tile(Assets.holeTop, 239, true);
+        new Tile(Assets.holeBottom, 240, true);
+        new Tile(Assets.holeGrass, 241, true);
     }
 
 

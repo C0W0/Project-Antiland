@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.Rect;
 
 import com.walfen.antiland.entities.Entity;
+import com.walfen.antiland.gfx.Assets;
 
 public abstract class SpecialHiddenEntity extends Entity {
 
@@ -29,12 +30,12 @@ public abstract class SpecialHiddenEntity extends Entity {
 
     @Override
     public Bitmap getTexture(int xSize, int ySize) {
-        return null;
+        return Assets.NULL;
     }
 
     @Override
     public String getName() {
-        return null;
+        return "You are not supposed to see this";
     }
 
 }

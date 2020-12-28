@@ -23,7 +23,9 @@ public class EntityManager implements GameHierarchyElement {
     private ArrayList<Entity> addingQueue;
 
     private Comparator<Entity> renderComparator = (a, b) -> {
-        if(a.getY() + a.getHeight() < b.getY() + b.getHeight()){
+        if(a.isBackground() && !b.isBackground())
+            return -1;
+        if (!b.isBackground() && a.getY() + a.getHeight() < b.getY() + b.getHeight()) {
             return -1;
         }
         return 1;
@@ -70,8 +72,8 @@ public class EntityManager implements GameHierarchyElement {
             Rect r = e.getCollisionBounds(0 ,0);
             int xOffset = (int) handler.getGameCamera().getxOffset();
             int yOffset = (int) handler.getGameCamera().getyOffset();
-            if(r.width() != 0 && (r.right - xOffset < -128 || r.left - xOffset > Constants.SCREEN_WIDTH+128 ||
-            r.bottom - yOffset < -128 || r.top - yOffset > Constants.SCREEN_HEIGHT+128)){
+            if(r.width() != 0 && (r.right - xOffset < -512 || r.left - xOffset > Constants.SCREEN_WIDTH+512 ||
+            r.bottom - yOffset < -512 || r.top - yOffset > Constants.SCREEN_HEIGHT+512)){
                 continue;
             }
             e.draw(canvas);

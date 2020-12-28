@@ -3,11 +3,8 @@ package com.walfen.antiland.entities.creatures;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
-import android.os.SystemClock;
 import android.view.MotionEvent;
 
 import com.walfen.antiland.Constants;
@@ -108,7 +105,13 @@ public class Player extends Creature implements TouchEventListener {
         upAnim = new Animation(0.5f, Assets.player_up);
         rightAnim = new Animation(0.5f, Assets.player_right);
         leftAnim = new Animation(0.5f, Assets.player_left);
-        neutralAnim = new Animation(0.5f, new Bitmap[]{Assets.player_neutral});
+
+        downAttackAnim = new Animation(0.8f, Assets.player_attack_down);
+        upAttackAnim = new Animation(0.8f, Assets.player_attack_up);
+        rightAttackAnim = new Animation(0.8f, Assets.player_attack_right);
+        leftAttackAnim = new Animation(0.8f, Assets.player_attack_left);
+
+        neutralAnim = new Animation(1, new Bitmap[]{Assets.player_neutral});
         currentAnimation = neutralAnim;
 
         defaultAttack = new PlayerDefaultAttack(handler, Attack.Type.PHYSICAL, 256, 10, () -> physicalDamage);
@@ -256,6 +259,30 @@ public class Player extends Creature implements TouchEventListener {
         inputX*= radius/Utils.Py.getC(inputX*radius, inputY*radius);
         inputY*= radius/Utils.Py.getC(inputX*radius, inputY*radius);
 
+        if(Math.abs(inputX) > Math.abs(inputY)){
+            //left or right
+            if(inputX > 0){
+                currentAnimation = rightAttackAnim;
+                leftAttackAnim.reset();
+            } else{
+                currentAnimation = leftAttackAnim;
+                rightAttackAnim.reset();
+            }
+            downAttackAnim.reset();
+            upAttackAnim.reset();
+        }
+        else{
+            //up or down
+            if(inputY > 0){
+                currentAnimation = downAttackAnim;
+                upAttackAnim.reset();
+            } else {
+                currentAnimation = upAttackAnim;
+                downAttackAnim.reset();
+            }
+            rightAttackAnim.reset();
+            leftAttackAnim.reset();
+        }
         attack.generateAttack(inputX, inputY);
 
         attackTimer = 0;
@@ -275,7 +302,9 @@ public class Player extends Creature implements TouchEventListener {
         yMove = handler.getUIManager().getCGUI().getMovementJoystick().getInputY()*speed;
     }
 
-    private void setCurrentAnimation(){
+    private void setCurrentMovementAnimation(){
+        if(attackTimer < 800)
+            return;
         if(xMove == 0 && yMove == 0) {
             currentAnimation = neutralAnim;
             downAnim.reset();
@@ -311,6 +340,7 @@ public class Player extends Creature implements TouchEventListener {
     @Override
     public void update() {
         super.update();
+//        System.out.println(attackTimer);
 //        System.out.println((int)x/128+" "+(int)y/128);
 //        System.out.println(x+" "+y);
         if(disable){
@@ -319,7 +349,7 @@ public class Player extends Creature implements TouchEventListener {
         }
 
         //animation
-        setCurrentAnimation();
+        setCurrentMovementAnimation();
         currentAnimation.update();
 
         //movement

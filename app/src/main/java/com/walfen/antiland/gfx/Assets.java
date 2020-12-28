@@ -46,6 +46,8 @@ public class Assets {
     public static Bitmap[] drySand_diagonals, wetSand_diagonals, grassTransition;
     public static Bitmap sandTransitionLeft, sandTransitionRight, drySandVertical, wetSandVertical;
     public static Bitmap[] transition_diagonals;
+    public static Bitmap holeTop, holeBottom, holeGrass;
+
 
     public static Bitmap NULL;
     public static Bitmap grey_transparent;
@@ -54,6 +56,7 @@ public class Assets {
     public static Bitmap player_icon;
     public static Bitmap player_neutral;
     public static Bitmap[] player_down, player_up, player_left, player_right;
+    public static Bitmap[] player_attack_down, player_attack_up, player_attack_left, player_attack_right;
     public static Bitmap player_Attack;
     public static Bitmap[] player_SharpWind;
     public static Bitmap[] explosion;
@@ -84,6 +87,11 @@ public class Assets {
     public static Bitmap[] npcCrab, npcMushroom;
     public static Bitmap[] iceSlimeAttackLeft, iceSlimeAttackRight, iceSlimeMovementLeft, iceSlimeMovementRight;
     public static Bitmap[] ice_spike;
+
+    public static Bitmap rock, tree1, tree2, tree3, pier, pierHorizontal, boat1, boat2;
+    public static Bitmap[] spiritKnightMovement, spiritKnightAttack, lostGhostMovement, lostGhostAttack;
+    public static Bitmap[] crabSmith, foxKeeper, hermit, spiritLeak;
+    public static Bitmap npcChicken, npcCactus;
 
     //items
     public static Bitmap wood, stone, bottle, slimeGel;
@@ -128,16 +136,15 @@ public class Assets {
         SpriteSheet newTownTiles = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.port_town));
         SpriteSheet oldTownTiles = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.town_tiles));
         SpriteSheet harbourTiles = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.far_harbour));
+        SpriteSheet npcSheet = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.island_npc));
+        SpriteSheet ghostEntitySheet = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.spirit_entity));
+        SpriteSheet staticEntities = new SpriteSheet(ImageLoader.loadImage(R.drawable.island_static_entity));
+
 
         grass = newTownTiles.crop(width*11,0,width,height);
         grassStone = sheet1.crop(width*3,height,width,height);
         dirt = townTiles.crop(width,height,width,height);
         dirtStone = sheet1.crop(width*6,height,width,height);
-//        water = new Bitmap[4];
-//        water[0] = townTiles.crop(0,height*4,width,height);
-//        water[1] = townTiles.crop(width,height*4,width,height);
-//        water[2] = townTiles.crop(width*2,height*4,width,height);
-//        water[3] = townTiles.crop(width*3,height*4,width,height);
         simpleHouseTiles = new Bitmap[18];
         simpleHouseTiles = loadSpriteAsArray(new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.resident_test_2)), 6, 3, 128, 128);
 
@@ -345,6 +352,9 @@ public class Assets {
         }
         beachVerticalWest = beachIslandTile1.crop(width*6, height*4, width, height);
         beachVerticalEast = beachIslandTile1.crop(width*7, height*4, width, height);
+        holeTop = newTownTiles.crop(width*12, 0, width, height);
+        holeBottom = newTownTiles.crop(width*12, height, width, height);
+        holeGrass = newTownTiles.crop(width*12, height*2, width, height);
 
 
         player_down = new Bitmap[4];
@@ -369,6 +379,27 @@ public class Assets {
         player_right[3] = characterMovement.crop(width*5,height*2,width,height*2);
         player_neutral = characterMovement.crop(0,0,width,height*2);
         player_icon = characterMovement.crop(0, 0, width, height);
+
+        player_attack_left = new Bitmap[4];
+        player_attack_left[0] = characterAttack.crop(0,0,width,height*2);
+        player_attack_left[1] = characterAttack.crop(width,0,width,height*2);
+        player_attack_left[2] = characterAttack.crop(width*2,0,width,height*2);
+        player_attack_left[3] = characterAttack.crop(width*3,0,width,height*2);
+        player_attack_right = new Bitmap[4];
+        player_attack_right[0] = characterAttack.crop(0,height*2,width,height*2);
+        player_attack_right[1] = characterAttack.crop(width,height*2,width,height*2);
+        player_attack_right[2] = characterAttack.crop(width*2,height*2,width,height*2);
+        player_attack_right[3] = characterAttack.crop(width*3,height*2,width,height*2);
+        player_attack_up = new Bitmap[4];
+        player_attack_up[0] = characterAttack.crop(0,height*4,width,height*2);
+        player_attack_up[1] = characterAttack.crop(width,height*4,width,height*2);
+        player_attack_up[2] = characterAttack.crop(width*2,height*4,width,height*2);
+        player_attack_up[3] = characterAttack.crop(width*3,height*4,width,height*2);
+        player_attack_down = new Bitmap[4];
+        player_attack_down[0] = characterAttack.crop(0,height*6,width,height*2);
+        player_attack_down[1] = characterAttack.crop(width,height*6,width,height*2);
+        player_attack_down[2] = characterAttack.crop(width*2,height*6,width,height*2);
+        player_attack_down[3] = characterAttack.crop(width*3,height*6,width,height*2);
 
 
         player_Attack = sheet.crop(width*3, height*2, width, height);
@@ -434,6 +465,31 @@ public class Assets {
         trappedSpiritAttackLeft[1] = trappedSpirit.crop(width,height*3,width,height);
         trappedSpiritAttackLeft[2] = trappedSpirit.crop(width*2,height*3,width,height);
         trappedSpiritAttackDown = trappedSpirit.crop(width*3,height*3,width,height);
+
+        spiritKnightMovement = new Bitmap[4];
+        for(int i = 0; i < 4; i++)
+            spiritKnightMovement[i] = ghostEntitySheet.crop(width*i, 0, width, height);
+        spiritKnightAttack = new Bitmap[4];
+        for(int i = 0; i < 4; i++)
+            spiritKnightAttack[i] = ghostEntitySheet.crop(width*(i+4), 0, width, height);
+        lostGhostMovement = new Bitmap[3];
+        for(int i = 0; i < 3; i++)
+            lostGhostMovement[i] = ghostEntitySheet.crop(width*i, height, width, height);
+        lostGhostAttack = new Bitmap[3];
+        for(int i = 0; i < 3; i++)
+            lostGhostAttack[i] = ghostEntitySheet.crop(width*(i+3), height, width, height);
+        
+        rock = staticEntities.crop(0, 0, width, height);
+        tree1 = staticEntities.crop(width, 0, width*2, height*4);
+        tree2 = staticEntities.crop(width*3, 0, width*3, height*4);
+        pier = staticEntities.crop(width*6, 0, width*2, height*2);
+        pierHorizontal = staticEntities.crop(0, height*7, width*3, height*2);
+        tree3 = staticEntities.crop(0, height*4, width*3, height*3);
+        boat1 = staticEntities.crop(width*5, height*4, width*3, height*2);
+        boat2 = staticEntities.crop(width*5, height*6, width*3, height*2);
+        spiritLeak = new Bitmap[2];
+        spiritLeak[0] = staticEntities.crop(width*6, height*2, width, height);
+        spiritLeak[1] = staticEntities.crop(width*7, height*2, width, height);
 
         ice_spike = loadSpriteAsArray(new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.ice_spike)), 7, 1, 128, 128);
 

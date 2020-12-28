@@ -8,7 +8,9 @@ import androidx.annotation.NonNull;
 
 import com.walfen.antiland.GameHierarchyElement;
 import com.walfen.antiland.Handler;
+import com.walfen.antiland.entities.creatures.active.EvilSpirit;
 import com.walfen.antiland.entities.creatures.active.IceSlime;
+import com.walfen.antiland.entities.creatures.active.LostGhost;
 import com.walfen.antiland.entities.creatures.active.Slime;
 import com.walfen.antiland.entities.creatures.active.TrappedSpirit;
 import com.walfen.antiland.entities.creatures.npc.secondary.NPC1;
@@ -18,10 +20,20 @@ import com.walfen.antiland.entities.properties.attack.Attack;
 import com.walfen.antiland.entities.special.command.active.TempleBossCoffin;
 import com.walfen.antiland.entities.special.command.passive.EntityGenerator;
 import com.walfen.antiland.entities.special.command.passive.SlimeGenerator;
+import com.walfen.antiland.entities.special.command.passive.SpiritLeak;
 import com.walfen.antiland.entities.special.command.passive.WorldGate;
 import com.walfen.antiland.entities.special.command.passive.tutorial.TutorialMessagers;
 import com.walfen.antiland.entities.statics.AirWall;
+import com.walfen.antiland.entities.statics.BarrierTree;
+import com.walfen.antiland.entities.statics.BeachTree;
+import com.walfen.antiland.entities.statics.Boat;
+import com.walfen.antiland.entities.statics.ForestTree;
+import com.walfen.antiland.entities.statics.HorizontalPier;
+import com.walfen.antiland.entities.statics.MagicalTree;
+import com.walfen.antiland.entities.statics.Pier;
+import com.walfen.antiland.entities.statics.Rock1;
 import com.walfen.antiland.entities.statics.Tree;
+import com.walfen.antiland.gfx.Assets;
 import com.walfen.antiland.untils.Utils;
 
 import java.util.Arrays;
@@ -35,6 +47,8 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
     Slime: 201
     IceSlime: 202
     TrappedSpirit: 204
+    EvilSpirit: 205
+    Ghost: 206
     ------------------------
     NPC: 401 ~ 700
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -50,13 +64,21 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
     ------------------------
     Static: 701 ~ 1000
     AirWall: 701
-    Tree: 702
+    Tree: 702 (not used)
+    Trees: 703 ~ 706
+    Pier: 720
+    Boat1: 721
+    Boat2: 722
+    HorizontalPier: 723
+    Rock: 730
     ------------------------
     Special: 1001+
     WorldGate(temple 0-1): 1001
     WorldGate(temple - world): 1002
     Tutorial messagers: 1003-1012
     SlimeSpawner: 1101
+    SpiritSpawner: 1102
+    SpiritGap: 1103
     TempleBossCoffin: 1301
      */
 
@@ -80,6 +102,20 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
         new TutorialMessagers.TutorialUnleash();
         new SlimeGenerator();
         new TempleBossCoffin();
+
+        new EvilSpirit();
+        new LostGhost();
+        new EntityGenerator(205, 256, 5, EntityGenerator.GenerationSpeed.NORMAL_GENERATION, 1102);
+        new SpiritLeak();
+        new ForestTree();
+        new BarrierTree();
+        new BeachTree();
+        new MagicalTree();
+        new Pier();
+        new HorizontalPier();
+        new Rock1();
+        new Boat(Assets.boat1, 721);
+        new Boat(Assets.boat2, 722);
     }
 
     //Entities
@@ -198,6 +234,12 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
     protected void setEntityHealth(int health){
         maxHp = health;
         this.health = health;
+    }
+
+    //property method
+
+    public boolean isBackground(){
+        return false;
     }
 
     //Getters and Setters

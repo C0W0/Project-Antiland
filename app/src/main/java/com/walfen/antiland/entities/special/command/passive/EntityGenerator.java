@@ -37,12 +37,8 @@ public class EntityGenerator extends PassiveCommandEntity {
     protected void spawnEntity(){
         int locationX, locationY;
 
-        while (true){
-            locationX = Utils.pickNumberBetween((int)(x-spawnRange), (int)(x+spawnRange));
-            locationY = Utils.pickNumberBetween((int)(y-spawnRange), (int)(y+spawnRange));
-            if(!handler.getWorld().getTile(locationX/128, locationX/128).isBarrier())
-                break;
-        }
+        locationX = Utils.pickNumberBetween((int)(x-spawnRange), (int)(x+spawnRange));
+        locationY = Utils.pickNumberBetween((int)(y-spawnRange), (int)(y+spawnRange));
         Entity e = Entity.entityList[generatedEntity].clone();
         e.initialize(handler, locationX, locationY, locationX, locationY, 0);
         handler.getWorld().getEntityManager().addEntityHot(e);
@@ -70,9 +66,7 @@ public class EntityGenerator extends PassiveCommandEntity {
         }
 
         //chance to spawn in check
-        float spawnChance = 0.7f;
-        if(density >= criticalDensity/2)
-            spawnChance = 0.5f;
+        float spawnChance = density >= criticalDensity/2?0.5f:0.7f;
         if(Math.random() >= spawnChance)
             spawnEntity();
 

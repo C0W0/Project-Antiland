@@ -14,12 +14,10 @@ public class SlimeGenerator extends EntityGenerator {
     protected void spawnEntity() {
         int locationX, locationY;
 
-        while (true){
-            locationX = Utils.pickNumberBetween((int)(x-spawnRange), (int)(x+spawnRange));
-            locationY = Utils.pickNumberBetween((int)(y-spawnRange), (int)(y+spawnRange));
-            if(!handler.getWorld().getTile(locationX/128, locationX/128).isBarrier())
-                break;
-        }
+        do {
+            locationX = Utils.pickNumberBetween((int) (x - spawnRange), (int) (x + spawnRange));
+            locationY = Utils.pickNumberBetween((int) (y - spawnRange), (int) (y + spawnRange));
+        } while (handler.getWorld().getTile(locationX / 128, locationX / 128).isBarrier());
         int ge = Math.random()>0.1?generatedEntity:iceSlime.getId();
         Entity e = Entity.entityList[ge].clone();
         e.initialize(handler, locationX, locationY, locationX, locationY, 0);
