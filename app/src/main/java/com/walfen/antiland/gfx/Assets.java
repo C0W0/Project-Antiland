@@ -494,6 +494,20 @@ public class Assets {
 
         ice_spike = loadSpriteAsArray(new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.ice_spike)), 7, 1, 128, 128);
 
+        foxKeeper = new Bitmap[8];
+        for(int i = 0; i < 4; i++)
+            foxKeeper[i] = npcSheet.crop(width*2*i, 0, width*2, height);
+        for(int i = 0; i < 4; i++)
+            foxKeeper[i+4] = npcSheet.crop(width*2*i, height, width*2, height);
+        crabSmith = new Bitmap[8];
+        for(int i = 0; i < 8; i++)
+            crabSmith[i] = npcSheet.crop(width*i, height*2, width, height);
+        npcCactus = npcSheet.crop(0, height*3, width, height);
+        npcChicken = npcSheet.crop(width, height*3, width, height);
+        hermit = new Bitmap[8];
+        for(int i = 0; i < 8; i++)
+            hermit[i] = npcSheet.crop(width*i, height*4, width, height);
+
         //items
         wood = sheet1.crop(width*7,height,width,height);
         bottle = items.crop(iWidth, 0, iWidth, iHeight);

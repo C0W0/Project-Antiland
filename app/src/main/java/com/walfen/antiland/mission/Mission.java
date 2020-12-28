@@ -6,32 +6,37 @@ import androidx.annotation.NonNull;
 import com.walfen.antiland.Handler;
 import com.walfen.antiland.entities.Entity;
 import com.walfen.antiland.items.Item;
-import com.walfen.antiland.mission.colloector.CollectApple;
-import com.walfen.antiland.mission.colloector.CollectWood;
-import com.walfen.antiland.mission.colloector.CollectorMission;
-import com.walfen.antiland.mission.colloector.SimpleCollectorMission;
+import com.walfen.antiland.mission.collector.CollectWood;
+import com.walfen.antiland.mission.collector.SimpleCollectorMission;
+import com.walfen.antiland.mission.explore.CheckBarricade;
+import com.walfen.antiland.mission.explore.FaintWhisper;
 import com.walfen.antiland.mission.explore.TempleEscape;
 import com.walfen.antiland.mission.killing.CutTrees;
 import com.walfen.antiland.mission.killing.DestroyEntity;
 import com.walfen.antiland.mission.killing.KillTracker;
+import com.walfen.antiland.mission.killing.RestlessSouls;
 import com.walfen.antiland.mission.killing.TempleMasterMind;
+import com.walfen.antiland.mission.killing.TrialByFire;
 
 public abstract class Mission implements Cloneable{
 
     public static Mission[] missions = new Mission[256];
     public static Mission templeEscape = new TempleEscape(); //id: 1
     public static Mission templeMasterMind = new TempleMasterMind(); //id: 2
-    public static Mission gotASpare = new SimpleCollectorMission("Go a Spare?", "Return the shop key", Item.key.getId(), 1, 3);
-    public static Mission ghostTown = new SimpleCollectorMission("Ghost Town", "Fetch the Blacksmith's hammer", Item.hammer.getId(), 1, 4);
-//    public static Mission
+    public static Mission gotASpare = new SimpleCollectorMission("Got a Spare?", "Return the shop key", Item.key.getId(), 1, 3, 20, 50);
+    public static Mission ghostTown = new SimpleCollectorMission("Ghost Town", "Fetch the Blacksmith's hammer", Item.hammer.getId(), 1, 4, 20, 0);
+    public static Mission toBlockOrNot = new CheckBarricade(); //id: 5
+    public static Mission trialByFore = new TrialByFire(); //id: 6
+    public static Mission faintWhisper = new FaintWhisper(); //id: 7
+    public static Mission restlessSouls = new RestlessSouls(); //id: 8
 
-    public static Mission collect10Woods = new CollectWood("Collect 10 woods",
-            "Collect 10 woods for the construction of our town", 0, 10);
-    public static Mission cutDown5Trees = new CutTrees("Cut Down 5 Trees",
-            "Cut down 5 trees to gain living space", 3, 5);
-    public static Mission kill5Slimes = new DestroyEntity("Eliminate 5 slimes",
-            "Reduce the number of slimes by eliminating 5 of them.", new int[]{Entity.slime.getId()}, 4, new int[]{5},
-        10, Item.lvOneHpPotion.getId(), 10);
+//    public static Mission collect10Woods = new CollectWood("Collect 10 woods",
+//            "Collect 10 woods for the construction of our town", 0, 10);
+//    public static Mission cutDown5Trees = new CutTrees("Cut Down 5 Trees",
+//            "Cut down 5 trees to gain living space", 3, 5);
+//    public static Mission kill5Slimes = new DestroyEntity("Eliminate 5 slimes",
+//            "Reduce the number of slimes by eliminating 5 of them.", new int[]{Entity.slime.getId()}, 4, new int[]{5},
+//        10, Item.lvOneHpPotion.getId(), 10);
 
     protected int status;
     /** 0 - not active
@@ -67,9 +72,9 @@ public abstract class Mission implements Cloneable{
     public abstract boolean isCompleted();
 
     public void complete(){
-        status = 2;
         receiveReward();
         resetCompleteMessage();
+        status = 2;
     }
 
     public abstract void receiveReward();

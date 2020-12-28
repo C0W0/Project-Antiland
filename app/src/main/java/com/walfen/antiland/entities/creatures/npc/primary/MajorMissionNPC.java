@@ -1,4 +1,4 @@
-package com.walfen.antiland.entities.creatures.npc.secondary;
+package com.walfen.antiland.entities.creatures.npc.primary;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;
@@ -12,33 +12,34 @@ import com.walfen.antiland.ui.conversation.Conversation;
 
 import java.util.ArrayList;
 
-public abstract class RepeatedMissionNPC extends NPC {
+public abstract class MajorMissionNPC extends NPC {
 
     protected boolean convBoxOn = false;
-    protected int missionID;
+    protected int[] missionSet;
 
-    public RepeatedMissionNPC(int width, int height, int id, int missionID) {
+    public MajorMissionNPC(int width, int height, int id, int[] missionSet) {
         super(width, height, id);
-        this.missionID = missionID;
+        this.missionSet = missionSet;
     }
 
     @Override
     protected void interact() {
         if(convBoxOn)
             return;
-        if(handler.getPlayer().getMissionManager().hasMission(missionID)){
-            if(Mission.missions[missionID].isCompleted()){
+        if(handler.getPlayer().getMissionManager().hasMission(missionSet[status])){
+            if(Mission.missions[missionSet[status]].isCompleted()){
                 convBoxOn = true;
                 UIManager uiManager = handler.getUIManager();
                 uiManager.hideUI();
-                ArrayList<Conversation> c = getCompleteConversation();
-                uiManager.getConvBox().setConversationList(c, () -> {Mission.missions[missionID].complete(); convBoxOn = false;});
+                ArrayList<Conversation> c = getCompleteConversation()[status];
+                uiManager.getConvBox().setConversationList(c, () -> {Mission.missions[missionSet[status]].complete(); convBoxOn = false;
+                    status ++;});
                 uiManager.getConvBox().setActive();
             }else {
                 convBoxOn = true;
                 UIManager uiManager = handler.getUIManager();
                 uiManager.hideUI();
-                ArrayList<Conversation> c = getIncompleteConversation();
+                ArrayList<Conversation> c = getIncompleteConversation()[status];
                 uiManager.getConvBox().setConversationList(c, () -> convBoxOn = false);
                 uiManager.getConvBox().setActive();
             }
@@ -53,8 +54,8 @@ public abstract class RepeatedMissionNPC extends NPC {
         int iX = (int)(x+width/2-32-handler.getGameCamera().getxOffset());
         int iY = (int)(y-68-handler.getGameCamera().getyOffset());
         Rect destRect = new Rect(iX, iY, iX+64, iY+64);
-        if(handler.getPlayer().getMissionManager().hasMission(missionID)){
-            if(Mission.missions[missionID].isCompleted()){
+        if(handler.getPlayer().getMissionManager().hasMission(missionSet[status])){
+            if(Mission.missions[missionSet[status]].isCompleted()){
                 canvas.drawBitmap(Assets.headSignOrange, null, destRect, Constants.getRenderPaint());
                 canvas.drawBitmap(Assets.hsoMissionComplete, null, destRect, Constants.getRenderPaint());
             }else {
@@ -68,13 +69,13 @@ public abstract class RepeatedMissionNPC extends NPC {
     }
 
     protected void assignMission() {
-        handler.getPlayer().getMissionManager().addMission(missionID);
+        handler.getPlayer().getMissionManager().addMission(missionSet[status]);
     }
 
     protected abstract void assignConversationProcedure(UIManager manager);
 
-    protected abstract ArrayList<Conversation> getIncompleteConversation();
+    protected abstract ArrayList<Conversation>[] getIncompleteConversation();
 
-    protected abstract ArrayList<Conversation> getCompleteConversation();
+    protected abstract ArrayList<Conversation>[] getCompleteConversation();
 
 }

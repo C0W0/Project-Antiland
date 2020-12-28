@@ -13,6 +13,7 @@ import com.walfen.antiland.entities.creatures.active.IceSlime;
 import com.walfen.antiland.entities.creatures.active.LostGhost;
 import com.walfen.antiland.entities.creatures.active.Slime;
 import com.walfen.antiland.entities.creatures.active.TrappedSpirit;
+import com.walfen.antiland.entities.creatures.npc.primary.CrabSmith;
 import com.walfen.antiland.entities.creatures.npc.secondary.NPC1;
 import com.walfen.antiland.entities.creatures.npc.trader.MushroomTrader;
 import com.walfen.antiland.entities.creatures.npc.trader.WandererCrab;
@@ -55,9 +56,14 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
         traders: 401 ~ 500
         WandererCrab (trade crab): 401
         MushroomTrader: 402
+        FoxKeeper: 403
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         mission: 501 ~ 600
         NPC1 (mission crab): 501
+        CrabSmith: 502
+        cactus: 504
+        chicken: 505
+        hermit: 506
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         other: 601 ~ 700
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -78,7 +84,7 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
     Tutorial messagers: 1003-1012
     SlimeSpawner: 1101
     SpiritSpawner: 1102
-    SpiritGap: 1103
+    SpiritLeak: 1103
     TempleBossCoffin: 1301
      */
 
@@ -116,6 +122,8 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
         new Rock1();
         new Boat(Assets.boat1, 721);
         new Boat(Assets.boat2, 722);
+
+        new CrabSmith();
     }
 
     //Entities

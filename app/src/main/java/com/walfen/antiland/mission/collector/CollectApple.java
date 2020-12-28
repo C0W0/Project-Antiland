@@ -1,4 +1,4 @@
-package com.walfen.antiland.mission.colloector;
+package com.walfen.antiland.mission.collector;
 
 
 import com.walfen.antiland.items.Item;
