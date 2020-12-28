@@ -23,8 +23,8 @@ public abstract class Item implements GameHierarchyElement {
 
     public static Item[] items = new Item[512];
 
-    public static NeutralItem woodItem, bottle, slimeGel; //id 0-99
-    public static UsableItem apple, lvOneHpPotion, lvOneGreenPotion, mapleSyrup; //id 100-199
+    public static NeutralItem woodItem, bottle, slimeGel, key, hammer; //id 0-99
+    public static UsableItem apple, lvOneHpPotion, lvOneGreenPotion, mapleSyrup, fish; //id 100-199
     public static Equipment shield1, sword1, shield2, sword2, shield3, sword3; //id 200-299
     public static Equipment armour1, armour2, armour3;
 
@@ -36,6 +36,8 @@ public abstract class Item implements GameHierarchyElement {
                 5, new String[]{"Liquid", "Container"}, "A bottle for liquids");
         slimeGel = new NeutralItem(Assets.slimeGel, "Slime Gel", 2,
                 5, new String[]{"crafting", "material"}, "Green-ish jelly stuff");
+        key = new NeutralItem(Assets.key, "Key", 3, 0, new String[]{"Mission", "Item"}, "Do not sell");
+        hammer = new NeutralItem(Assets.brokenHammer, "Hammer", 4, 0, new String[]{"Mission", "Item"}, "Do not sell");
 
         apple = new UsableItem(Assets.apple, "apple", 100,
                 5, "A commonly seen fruit.", new String[]{"hp regen: 1"},
@@ -49,6 +51,9 @@ public abstract class Item implements GameHierarchyElement {
         mapleSyrup = new UsableItem(Assets.syrup, "brown syrup", 103,
                 500, "Very rare sweet syrup.", new String[]{"hp regen: 100", "mp regen: 50"},
                 () -> {handler.getPlayer().changeHealth(100); handler.getPlayer().changeMp(50);});
+        fish = new UsableItem(Assets.fish, "Fish", 104,
+                5, "A Fish", new String[]{"hp regen: 1", "mp regen: 1"},
+                () -> {handler.getPlayer().changeHealth(1); handler.getPlayer().changeMp(1);});
 
         shield1 = new SimpleShield(Assets.roundShields[0], "wooden shield", 1, 200);
         sword1 = new SimpleSword(Assets.swords[0], "old sword", 1, 201);

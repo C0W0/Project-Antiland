@@ -27,10 +27,8 @@ public class SpiritLeak extends EntityGenerator {
     protected void spawnEntity() {
         int locationX, locationY;
 
-        do {
-            locationX = Utils.pickNumberBetween((int) (x - spawnRange), (int) (x + spawnRange));
-            locationY = Utils.pickNumberBetween((int) (y - spawnRange), (int) (y + spawnRange));
-        } while (handler.getWorld().getTile(locationX / 128, locationX / 128).isBarrier());
+        locationX = Utils.pickNumberBetween((int) (x - spawnRange), (int) (x + spawnRange));
+        locationY = Utils.pickNumberBetween((int) (y - spawnRange), (int) (y + spawnRange));
         int ge = Math.random()>0.4?generatedEntity:205;
         Entity e = Entity.entityList[ge].clone();
         e.initialize(handler, locationX, locationY, locationX, locationY, 0);

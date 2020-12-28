@@ -14,6 +14,8 @@ public abstract class PassiveCommandEntity extends SpecialHiddenEntity {
         super(1, 1, id);
     }
 
+
+
     @Override
     public void update() {
         if(isActionAllowed())

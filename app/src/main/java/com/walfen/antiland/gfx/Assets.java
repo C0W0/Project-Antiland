@@ -97,6 +97,7 @@ public class Assets {
     public static Bitmap wood, stone, bottle, slimeGel;
     public static Bitmap apple, syrup, redPotion1, greenPotion1;
     public static Bitmap[] roundShields, heaterShields, swords, axes, armours;
+    public static Bitmap key, brokenHammer, fish;
     public static Bitmap inventoryScreen, missionScreen, craftingScreen, statsScreen, skillScreen, tradeScreen;
     public static Bitmap mapBackground, worldMap_0, localMap_0;
     public static Bitmap portalIcon, exitIcon, combatIcon, bossIcon, unknownIcon, objectiveIcon;
@@ -518,6 +519,9 @@ public class Assets {
         heaterShields = new Bitmap[5];
         for(int y = 0; y < 3; y++)
             heaterShields[y] = items.crop(iWidth*2, iHeight*2+2*y*iHeight, iWidth, iHeight);
+        brokenHammer = items.crop(iWidth*3, 0, iWidth, iHeight);
+        key = items.crop(iWidth*4, 0, iWidth, iHeight);
+        fish = items.crop(iWidth*3, iHeight, iWidth, iHeight);
 
 
         blueSqr = ImageLoader.loadImage(R.drawable.selected);

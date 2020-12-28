@@ -37,7 +37,7 @@ public class MissionManager implements TouchEventListener {
 
     public MissionManager(Handler handler){
         this.handler = handler;
-        missions = new ArrayList<Mission>();
+        missions = new ArrayList<>();
         missionScreen = ImageEditor.scaleBitmap(Assets.missionScreen,
                 Constants.UI_SCREEN_WIDTH, Constants.UI_SCREEN_HEIGHT);
         misHeight = missionScreen.getHeight();
