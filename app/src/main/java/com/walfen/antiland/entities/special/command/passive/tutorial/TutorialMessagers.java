@@ -3,7 +3,11 @@ package com.walfen.antiland.entities.special.command.passive.tutorial;
 import android.graphics.Rect;
 
 import com.walfen.antiland.Constants;
+import com.walfen.antiland.gfx.Assets;
+import com.walfen.antiland.ui.conversation.Conversation;
 import com.walfen.antiland.ui.overlay.MissionPanel;
+
+import java.util.ArrayList;
 
 public class TutorialMessagers {
 
@@ -15,8 +19,16 @@ public class TutorialMessagers {
 
         @Override
         protected void displayMessage() {
-            handler.getUIManager().popUpAction("\"Can you still move?\" A weird and spooky voices wakes you up from inside.", "(Where am I)",
+            ArrayList<Conversation> c = new ArrayList<>();
+            c.add(new Conversation("Ow… my head… that fall really hurt.", Assets.player_icon, false));
+            c.add(new Conversation("...guh...", Assets.NULL, false));
+            c.add(new Conversation("!", Assets.player_icon, false));
+            c.add(new Conversation("...", Assets.player_icon, false));
+            c.add(new Conversation("I gotta get out...", Assets.player_icon, false));
+            handler.getUIManager().hideUI();
+            handler.getUIManager().getConvBox().setConversationList(c,
                     () -> handler.getUIManager().activeTutorial("Tutorial: Use the left joystick to move around", handler.getUIManager().getCGUI().getMovementJoystick().getBounds()));
+            handler.getUIManager().getConvBox().setActive();
             handler.getPlayer().getMissionManager().addMission(1);
             handler.getUIManager().getCGUI().getMissionPanel().extendPanel();
         }
@@ -46,7 +58,7 @@ public class TutorialMessagers {
 
         @Override
         protected void displayMessage() {
-            handler.getUIManager().popUpAction("\"It looks like you are fine. Good.\" The sound continues: \"But it looks like you will have some trouble in the front. " +
+            handler.getUIManager().popUpAction("\"It looks like you are fine. Good.\" A Spooky sound appeared in your head \"But it looks like you will have some trouble in the front. " +
                     "There are slimes guarding the path. Still remember how to fight?\"", "(What's going on)", () -> handler.getUIManager().activeTutorial(
                             "Tutorial: Use the right joystick to attack. /sl/Hint: try to stay outside of enemy's attack range while fighting",
                     handler.getUIManager().getCGUI().getAttackJoystick().getBounds()));

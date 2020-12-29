@@ -4,15 +4,11 @@ package com.walfen.antiland.mission;
 import androidx.annotation.NonNull;
 
 import com.walfen.antiland.Handler;
-import com.walfen.antiland.entities.Entity;
 import com.walfen.antiland.items.Item;
-import com.walfen.antiland.mission.collector.CollectWood;
 import com.walfen.antiland.mission.collector.SimpleCollectorMission;
 import com.walfen.antiland.mission.explore.CheckBarricade;
 import com.walfen.antiland.mission.explore.FaintWhisper;
 import com.walfen.antiland.mission.explore.TempleEscape;
-import com.walfen.antiland.mission.killing.CutTrees;
-import com.walfen.antiland.mission.killing.DestroyEntity;
 import com.walfen.antiland.mission.killing.KillTracker;
 import com.walfen.antiland.mission.killing.RestlessSouls;
 import com.walfen.antiland.mission.killing.TempleMasterMind;
@@ -23,7 +19,7 @@ public abstract class Mission implements Cloneable{
     public static Mission[] missions = new Mission[256];
     public static Mission templeEscape = new TempleEscape(); //id: 1
     public static Mission templeMasterMind = new TempleMasterMind(); //id: 2
-    public static Mission gotASpare = new SimpleCollectorMission("Got a Spare?", "Return the shop key", Item.key.getId(), 1, 3, 20, 50);
+    public static Mission gotASpare = new SimpleCollectorMission.GotASpare();
     public static Mission ghostTown = new SimpleCollectorMission("Ghost Town", "Fetch the Blacksmith's hammer", Item.hammer.getId(), 1, 4, 20, 0);
     public static Mission toBlockOrNot = new CheckBarricade(); //id: 5
     public static Mission trialByFore = new TrialByFire(); //id: 6

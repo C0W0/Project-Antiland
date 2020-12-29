@@ -36,7 +36,6 @@ public abstract class Trader extends NPC {
         Rect destRect = new Rect(iX, iY, iX+64, iY+64);
         canvas.drawBitmap(Assets.headSignOrange, null, destRect, Constants.getRenderPaint());
         canvas.drawBitmap(Assets.hsoTrade, null, destRect, Constants.getRenderPaint());
-        //TODO: check if store requirement meet and display orange or gray sign accordingly
     }
 
     public static class TraderInvManager{
@@ -63,6 +62,18 @@ public abstract class Trader extends NPC {
             return items;
         }
 
+
+        public static ArrayList<Item> getPortTraderInv(Handler handler){
+            ArrayList<Item> items = new ArrayList<>();
+            addItem(handler, Item.apple.addToInv(50), items);
+            addItem(handler, Item.coconut.addToInv(50), items);
+            addItem(handler, Item.woodItem.addToInv(50), items);
+            addItem(handler, Item.lvOneHpPotion.addToInv(10), items);
+            addItem(handler, Item.lvOneGreenPotion.addToInv(10), items);
+            addItem(handler, Item.bottle.addToInv(20), items);
+            addItem(handler, Item.fish.addToInv(20), items);
+            return items;
+        }
     }
 
     public ArrayList<Item> getTraderInventory() {

@@ -16,6 +16,7 @@ import com.walfen.antiland.entities.creatures.active.SpiritWarrior;
 import com.walfen.antiland.entities.creatures.active.TrappedSpirit;
 import com.walfen.antiland.entities.creatures.npc.primary.CrabSmith;
 import com.walfen.antiland.entities.creatures.npc.secondary.NPC1;
+import com.walfen.antiland.entities.creatures.npc.trader.FoxKeeper;
 import com.walfen.antiland.entities.creatures.npc.trader.MushroomTrader;
 import com.walfen.antiland.entities.creatures.npc.trader.WandererCrab;
 import com.walfen.antiland.entities.properties.attack.Attack;
@@ -136,6 +137,7 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
         new Boat(Assets.boat2, 722);
 
         new CrabSmith();
+        new FoxKeeper();
         new IslandMessagers.EncounterMonster();
         new IslandMessagers.BarricadeBroken();
         new StaticSpirit();

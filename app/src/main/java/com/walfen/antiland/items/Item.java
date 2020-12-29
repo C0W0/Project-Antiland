@@ -24,7 +24,7 @@ public abstract class Item implements GameHierarchyElement {
     public static Item[] items = new Item[512];
 
     public static NeutralItem woodItem, bottle, slimeGel, key, hammer; //id 0-99
-    public static UsableItem apple, lvOneHpPotion, lvOneGreenPotion, mapleSyrup, fish; //id 100-199
+    public static UsableItem apple, lvOneHpPotion, lvOneGreenPotion, mapleSyrup, fish, coconut; //id 100-199
     public static Equipment shield1, sword1, shield2, sword2, shield3, sword3; //id 200-299
     public static Equipment armour1, armour2, armour3;
 
@@ -54,6 +54,9 @@ public abstract class Item implements GameHierarchyElement {
         fish = new UsableItem(Assets.fish, "Fish", 104,
                 5, "A Fish", new String[]{"hp regen: 1", "mp regen: 1"},
                 () -> {handler.getPlayer().changeHealth(1); handler.getPlayer().changeMp(1);});
+        coconut = new UsableItem(Assets.apple, "coconut", 105,
+                5, "This coconut has an unusual appearance", new String[]{"hp regen: 1"},
+                () -> handler.getPlayer().changeHealth(1));
 
         shield1 = new SimpleShield(Assets.roundShields[0], "wooden shield", 1, 200);
         sword1 = new SimpleSword(Assets.swords[0], "old sword", 1, 201);

@@ -91,6 +91,7 @@ public class Assets {
     public static Bitmap rock, tree1, tree2, tree3, pier, pierHorizontal, boat1, boat2;
     public static Bitmap[] spiritWarriorMovement, spiritWarriorAttack, lostGhostMovement, lostGhostAttack;
     public static Bitmap[] crabSmith, foxKeeper, hermit, spiritLeak;
+    public static Bitmap foxKeeperIcon;
     public static Bitmap npcChicken, npcCactus;
 
     //items
@@ -495,6 +496,7 @@ public class Assets {
         ice_spike = loadSpriteAsArray(new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.ice_spike)), 7, 1, 128, 128);
 
         foxKeeper = new Bitmap[8];
+        foxKeeperIcon = npcSheet.crop(0, height, width, height);
         for(int i = 0; i < 4; i++)
             foxKeeper[i] = npcSheet.crop(width*2*i, 0, width*2, height);
         for(int i = 0; i < 4; i++)

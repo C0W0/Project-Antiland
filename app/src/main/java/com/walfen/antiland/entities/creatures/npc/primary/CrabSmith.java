@@ -48,25 +48,25 @@ public class CrabSmith extends MajorMissionNPC {
                 c.add(new Conversation("Oh, hello. Uhh, do you mind helping us?", Assets.crabSmith[0], true));
                 c.add(new Conversation("?", Assets.player_icon, false));
                 c.add(new Conversation("This dingus really outdid himself this time.", Assets.crabSmith[0], true));
-                c.add(new Conversation("It’s not my fault I dropped the keys!", Assets.foxKeeper[0], true));
-                c.add(new Conversation("Would you rather I get attacked by slimes instead?", Assets.foxKeeper[0], true));
+                c.add(new Conversation("It’s not my fault I dropped the keys!", Assets.foxKeeperIcon, true));
+                c.add(new Conversation("Would you rather I get attacked by slimes instead?", Assets.foxKeeperIcon, true));
                 c.add(new Conversation("You wouldn’t have been attacked if you hadn’t gone to the beach.", Assets.crabSmith[0], true));
-                c.add(new Conversation("Well, where else am I going to enjoy such a refreshing breeze?", Assets.foxKeeper[0], true));
+                c.add(new Conversation("Well, where else am I going to enjoy such a refreshing breeze?", Assets.foxKeeperIcon, true));
                 c.add(new Conversation("You’ve sure got your priorities straight.", Assets.crabSmith[0], true));
                 c.add(new Conversation("...", Assets.player_icon, false));
                 c.add(new Conversation("If you’re here to shop, then I’m afraid we can’t serve you right now.", Assets.crabSmith[0], true));
-                c.add(new Conversation("Unless you can get my keys back, otherwise, this shop is closed.", Assets.foxKeeper[0], true));
+                c.add(new Conversation("Unless you can get my keys back, otherwise, this shop is closed.", Assets.foxKeeperIcon, true));
 
 
-                c2.add(new Conversation("Really?!?", Assets.foxKeeper[0], true));
-                c2.add(new Conversation("Wow, that was easy.", Assets.foxKeeper[0], true));
+                c2.add(new Conversation("Really?!?", Assets.foxKeeperIcon, true));
+                c2.add(new Conversation("Wow, that was easy.", Assets.foxKeeperIcon, true));
                 c2.add(new Conversation("I hope you didn’t just agree to something you haven’t thought through.", Assets.crabSmith[0], false));
                 c2.add(new Conversation("Nevertheless, I appreciate your kindness.", Assets.crabSmith[0], false));
-                c2.add(new Conversation("The key should be around Sunshine Beach. About south-west of our town.", Assets.foxKeeper[0], true));
-                c2.add(new Conversation("Be careful, those slimes may look cute, but they pack a real punch.", Assets.foxKeeper[0], true));
+                c2.add(new Conversation("The key should be around Sunshine Beach. About south-west of our town.", Assets.foxKeeperIcon, true));
+                c2.add(new Conversation("Be careful, those slimes may look cute, but they pack a real punch.", Assets.foxKeeperIcon, true));
 
                 c3.add(new Conversation("Thought so.", Assets.crabSmith[0], false));
-                c3.add(new Conversation("Hey, I wouldn’t help myself either. Those slimes are aggressive.", Assets.foxKeeper[0], true));
+                c3.add(new Conversation("Hey, I wouldn’t help myself either. Those slimes are aggressive.", Assets.foxKeeperIcon, true));
 
                 manager.hideUI();
                 manager.getConvBox().setConversationList(c, () -> {
@@ -107,14 +107,14 @@ public class CrabSmith extends MajorMissionNPC {
                 c.add(new Conversation("Listen, I left behind my trusty hammer and I want you to get it back for me. " +
                         "I’d go there myself, but, you see..", Assets.crabSmith[0], true));
                 c.add(new Conversation("I have to take care of this bozo.", Assets.crabSmith[0], true));
-                c.add(new Conversation("You called?", Assets.foxKeeper[0], true));
+                c.add(new Conversation("You called?", Assets.foxKeeperIcon, true));
                 c.add(new Conversation("Would you please bring back my hammer from the Abandoned Port?", Assets.crabSmith[0], true));
 
                 c2.add(new Conversation("Thank you.", Assets.crabSmith[0], true));
                 c2.add(new Conversation("(The Blacksmith’s reveals a small smile)", Assets.NULL, false));
-                c2.add(new Conversation("Are you smiling?", Assets.foxKeeper[0], false));
+                c2.add(new Conversation("Are you smiling?", Assets.foxKeeperIcon, false));
                 c2.add(new Conversation("*cough* No.", Assets.crabSmith[0], true));
-                c2.add(new Conversation("*chuckles*", Assets.foxKeeper[0], false));
+                c2.add(new Conversation("*chuckles*", Assets.foxKeeperIcon, false));
                 c2.add(new Conversation("*What are you laughing about!", Assets.crabSmith[0], true));
 
                 c3.add(new Conversation("*sigh* That’s alright, I won’t hold you against it.", Assets.crabSmith[0], true));
@@ -219,7 +219,7 @@ public class CrabSmith extends MajorMissionNPC {
         ArrayList<Conversation> c = new ArrayList<>();
         c.add(new Conversation("Here you go.", Assets.player_icon, false));
         c.add(new Conversation("(The shop keeper swiftly grabs the key and unlocked the door to the shop)", Assets.NULL, false));
-        c.add(new Conversation("We’re back in business!", Assets.foxKeeper[0], true));
+        c.add(new Conversation("We’re back in business!", Assets.foxKeeperIcon, true));
         c.add(new Conversation("Thank you for helping us.", Assets.crabSmith[0], true));
         c.add(new Conversation("(The Blacksmith rummages through their pockets and pulls out some gold pieces)", Assets.NULL, false));
         c.add(new Conversation("I’d feel bad if I didn’t give you something in return, take this for your help.", Assets.crabSmith[0], true));
