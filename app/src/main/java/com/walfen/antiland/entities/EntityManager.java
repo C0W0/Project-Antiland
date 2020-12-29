@@ -21,6 +21,8 @@ public class EntityManager implements GameHierarchyElement {
     private Player player;
     private ArrayList<Entity> entities;
     private ArrayList<Entity> addingQueue;
+    private ArrayList<Integer> modifyingQueue;
+    private ArrayList<String> modifyingKey;
 
     private Comparator<Entity> renderComparator = (a, b) -> {
         if(a.isBackground() && !b.isBackground())
@@ -37,6 +39,8 @@ public class EntityManager implements GameHierarchyElement {
         this.player = player;
         entities = new ArrayList<>();
         addingQueue = new ArrayList<>();
+        modifyingQueue = new ArrayList<>();
+        modifyingKey = new ArrayList<>();
         addEntity(player);
     }
 
@@ -50,6 +54,14 @@ public class EntityManager implements GameHierarchyElement {
         if(addingQueue.size() > 0){
             entities.addAll(addingQueue);
             addingQueue = new ArrayList<>();
+        }
+
+        if(modifyingQueue.size() > 0){
+            for(int i = 0; i < modifyingQueue.size(); i++){
+                for(Entity e: entities)
+                    if(e.getName().equals(modifyingKey.get(i)))
+                        e.setStatus(modifyingQueue.get(i));
+            }
         }
 
         Iterator<Entity> it = entities.iterator();
@@ -87,6 +99,11 @@ public class EntityManager implements GameHierarchyElement {
 
     public void addEntityHot(Entity e){
         addingQueue.add(e);
+    }
+
+    public void modifyEntityHot(String key, int status){
+        modifyingKey.add(key);
+        modifyingQueue.add(status);
     }
 
     public void setEntities(ArrayList<Entity> entities) {

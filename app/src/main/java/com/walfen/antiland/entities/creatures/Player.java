@@ -675,4 +675,8 @@ public class Player extends Creature implements TouchEventListener {
     public void setLocation(Point location){
         setLocation(location.x, location.y);
     }
+
+    public Handler getHandler(){
+        return handler;
+    }
 }

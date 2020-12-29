@@ -14,6 +14,7 @@ import com.walfen.antiland.items.equipment.Equipment;
 import com.walfen.antiland.items.equipment.armours.SimpleArmour;
 import com.walfen.antiland.items.equipment.auxiliaries.SimpleShield;
 import com.walfen.antiland.items.equipment.weapons.SimpleSword;
+import com.walfen.antiland.items.equipment.weapons.SoulSword;
 import com.walfen.antiland.items.functionless.NeutralItem;
 import com.walfen.antiland.items.usable.UsableItem;
 
@@ -25,7 +26,7 @@ public abstract class Item implements GameHierarchyElement {
 
     public static NeutralItem woodItem, bottle, slimeGel, key, hammer; //id 0-99
     public static UsableItem apple, lvOneHpPotion, lvOneGreenPotion, mapleSyrup, fish, coconut; //id 100-199
-    public static Equipment shield1, sword1, shield2, sword2, shield3, sword3; //id 200-299
+    public static Equipment shield1, sword1, shield2, sword2, shield3, sword3, soulSword; //id 200-299
     public static Equipment armour1, armour2, armour3;
 
     public static void initItems(Handler handler){
@@ -67,6 +68,7 @@ public abstract class Item implements GameHierarchyElement {
         armour1 = new SimpleArmour(Assets.armours[0], "copper body armour", 0, 3, 206);
         armour2 = new SimpleArmour(Assets.armours[1], "iron body armour", 1, 5, 207);
         armour3 = new SimpleArmour(Assets.armours[2], "black steel body armour", 5, 11, 208);
+        soulSword = new SoulSword();
     }
 
     //class

@@ -81,7 +81,7 @@ public class CrabSmith extends MajorMissionNPC {
                         manager.getConvBox().setConversationList(c2, () -> {
                             assignMission();
                             convBoxOn = false;
-                            Mission.missions[missionSet[status]].setCompleteMessage("Report back to Mr. Krab.");
+                            Mission.missions[missionSet[status]].setCompleteMessage("Report back to Mr. Crab.");
                             handler.getPlayer().getMissionManager().setSelectedMission();
                             handler.getUIManager().getCGUI().getMissionPanel().extendPanel();
                             Entity e = Entity.entityList[1201].clone();
@@ -135,7 +135,7 @@ public class CrabSmith extends MajorMissionNPC {
                         manager.getConvBox().setConversationList(c2, () -> {
                             assignMission();
                             convBoxOn = false;
-                            Mission.missions[missionSet[status]].setCompleteMessage("Report back to Mr. Krab.");
+                            Mission.missions[missionSet[status]].setCompleteMessage("Report back to Mr. Crab.");
                             handler.getPlayer().getMissionManager().setSelectedMission();
                             handler.getUIManager().getCGUI().getMissionPanel().extendPanel();
                             Entity e = Entity.entityList[740].clone();
@@ -255,6 +255,6 @@ public class CrabSmith extends MajorMissionNPC {
 
     @Override
     public String getName() {
-        return "Mr. Krab Smith";
+        return "Mr. Crab Smith";
     }
 }

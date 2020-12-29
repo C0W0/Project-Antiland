@@ -18,6 +18,6 @@ public class TempleEscape extends ExploreMission {
 
     @Override
     public void receiveReward() {
-        handler.getPlayer().addEffect(new MentalUnrest(handler.getPlayer()));
+
     }
 }

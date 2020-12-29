@@ -1,30 +1,56 @@
 package com.walfen.antiland.mission;
 
 
+import android.graphics.Point;
+
 import androidx.annotation.NonNull;
 
 import com.walfen.antiland.Handler;
 import com.walfen.antiland.items.Item;
+import com.walfen.antiland.mission.collector.CollectApple;
 import com.walfen.antiland.mission.collector.SimpleCollectorMission;
 import com.walfen.antiland.mission.explore.CheckBarricade;
 import com.walfen.antiland.mission.explore.FaintWhisper;
 import com.walfen.antiland.mission.explore.TempleEscape;
+import com.walfen.antiland.mission.explore.TestOfEndurance;
+import com.walfen.antiland.mission.killing.DestroyEntity;
 import com.walfen.antiland.mission.killing.KillTracker;
 import com.walfen.antiland.mission.killing.RestlessSouls;
 import com.walfen.antiland.mission.killing.TempleMasterMind;
+import com.walfen.antiland.mission.killing.TestOfPower;
+import com.walfen.antiland.mission.killing.TheAncientBattlefield;
 import com.walfen.antiland.mission.killing.TrialByFire;
+import com.walfen.antiland.mission.talking.TalkingMission;
+import com.walfen.antiland.mission.talking.VillageRivalryEnd;
 
 public abstract class Mission implements Cloneable{
 
     public static Mission[] missions = new Mission[256];
+
+    //main story missions
     public static Mission templeEscape = new TempleEscape(); //id: 1
     public static Mission templeMasterMind = new TempleMasterMind(); //id: 2
     public static Mission gotASpare = new SimpleCollectorMission.GotASpare();
-    public static Mission ghostTown = new SimpleCollectorMission("Ghost Town", "Fetch the Blacksmith's hammer", Item.hammer.getId(), 1, 4, 20, 0);
+    public static Mission ghostTown = new SimpleCollectorMission.GhostTown();
     public static Mission toBlockOrNot = new CheckBarricade(); //id: 5
     public static Mission trialByFore = new TrialByFire(); //id: 6
     public static Mission faintWhisper = new FaintWhisper(); //id: 7
     public static Mission restlessSouls = new RestlessSouls(); //id: 8
+
+    //side missions
+    public static Mission testOfEndurance1 = new TestOfEndurance(9, new Point(1408, 3968));
+    public static Mission testOfEndurance2 = new TestOfEndurance(10, new Point(1664, 2176));
+    public static Mission testOfEndurance3 = new TestOfEndurance(11, new Point(2432, 2304));
+    public static Mission testOfEndurance4 = new TestOfEndurance.EndTestOfEndurance(); //12
+    public static Mission testOfPower = new TestOfPower(); //13
+    public static Mission villageRivalry1 = new TalkingMission("Village Rivalry 1", "Settle the dispute between two villagers", 14, 5);
+    public static Mission villageRivalry2 = new TalkingMission("Village Rivalry 2", "Settle the dispute between two villagers", 15, 5);
+    public static Mission villageRivalry3 = new TalkingMission("Village Rivalry 3", "Settle the dispute between two villagers", 16, 5);
+    public static Mission villageRivalry4 = new VillageRivalryEnd(); //17
+    public static Mission theAncientBattlefield = new TheAncientBattlefield(); //18
+
+    //repeated missions
+    public static Mission aIsForApple = new CollectApple("A is for Apple", "Collect one Apple from a tree and give it to the Hermit.", 19, 1);
 
 //    public static Mission collect10Woods = new CollectWood("Collect 10 woods",
 //            "Collect 10 woods for the construction of our town", 0, 10);

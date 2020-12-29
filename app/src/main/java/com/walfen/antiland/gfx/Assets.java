@@ -94,6 +94,8 @@ public class Assets {
     public static Bitmap foxKeeperIcon;
     public static Bitmap npcChicken, npcCactus;
 
+    public static Bitmap[] targetIndicator;
+
     //items
     public static Bitmap wood, stone, bottle, slimeGel;
     public static Bitmap apple, syrup, redPotion1, greenPotion1;
@@ -492,6 +494,10 @@ public class Assets {
         spiritLeak = new Bitmap[2];
         spiritLeak[0] = staticEntities.crop(width*6, height*2, width, height);
         spiritLeak[1] = staticEntities.crop(width*7, height*2, width, height);
+
+        targetIndicator = new Bitmap[2];
+        targetIndicator[0] = staticEntities.crop(0, height, width, height);
+        targetIndicator[1] = staticEntities.crop(0, height*2, width, height);
 
         ice_spike = loadSpriteAsArray(new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.ice_spike)), 7, 1, 128, 128);
 

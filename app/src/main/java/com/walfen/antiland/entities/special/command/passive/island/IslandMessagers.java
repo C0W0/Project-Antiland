@@ -1,8 +1,10 @@
 package com.walfen.antiland.entities.special.command.passive.island;
 
+import android.graphics.Canvas;
 import android.graphics.Rect;
 
 import com.walfen.antiland.entities.special.command.passive.tutorial.TutorialMessager;
+import com.walfen.antiland.gfx.Animation;
 import com.walfen.antiland.gfx.Assets;
 import com.walfen.antiland.ui.conversation.Conversation;
 
@@ -68,6 +70,36 @@ public class IslandMessagers {
                         handler.getUIManager().hideUI();
                         handler.getUIManager().getConvBox().setActive();
                     });
+        }
+    }
+
+    public static class Indicator extends TutorialMessager{
+
+        private Animation dynamicTexture;
+
+        public Indicator() {
+            super(1018);
+            dynamicTexture = new Animation(0.2f, Assets.targetIndicator);
+            actionBounds = new Rect(0, 0, 384, 384);
+        }
+
+        @Override
+        protected void displayMessage() {
+            health = 0;
+            active = false;
+        }
+
+        @Override
+        public void update() {
+            super.update();
+            dynamicTexture.update();
+        }
+
+        @Override
+        public void draw(Canvas canvas) {
+            int left = (int)(x - handler.getGameCamera().getxOffset());
+            int top = (int)(y - handler.getGameCamera().getyOffset());
+            dynamicTexture.draw(canvas, new Rect(left, top, left+128, top+128));
         }
     }
 

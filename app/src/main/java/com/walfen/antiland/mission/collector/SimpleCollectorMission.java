@@ -32,14 +32,24 @@ public class SimpleCollectorMission extends CollectorMission {
         @Override
         public void receiveReward() {
             super.receiveReward();
-            for(Entity e: handler.getWorld().getEntityManager().getEntities()){
-                if(e.getName().equals("Mr. Fox Keeper")){
-                    e.setStatus(1);
-                    return;
-                }
-            }
+            handler.getWorld().getEntityManager().modifyEntityHot("Mr. Fox Keeper", 1);
         }
 
+    }
+
+    public static class GhostTown extends SimpleCollectorMission{
+
+        public GhostTown() {
+            super("Ghost Town", "Fetch the Blacksmith's hammer", Item.hammer.getId(), 1, 4, 20, 0);
+        }
+
+        @Override
+        public void receiveReward() {
+            super.receiveReward();
+            handler.getWorld().getEntityManager().modifyEntityHot("Ms. Chi-Ken", 1);
+            handler.getWorld().getEntityManager().modifyEntityHot("Captain Cactus", 1);
+            handler.getWorld().getEntityManager().modifyEntityHot("The Hermit", 1);
+        }
 
     }
 }

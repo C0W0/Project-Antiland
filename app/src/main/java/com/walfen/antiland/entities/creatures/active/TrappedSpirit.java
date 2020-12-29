@@ -19,9 +19,9 @@ import java.util.ArrayList;
 
 public class TrappedSpirit extends Active {
 
-    private Animation leftMove, rightMove, upMove, downMove, currentAnimation;
-    private Animation leftIdle, rightIdle;
-    private MSTimeController animationCtrlTimer = new MSTimeController();
+    protected Animation leftMove, rightMove, upMove, downMove, currentAnimation;
+    protected Animation leftIdle, rightIdle;
+    protected MSTimeController animationCtrlTimer = new MSTimeController();
 
     public TrappedSpirit() {
         super(DEFAULT_CREATURE_WIDTH, DEFAULT_CREATURE_HEIGHT, 3000, 204, 15);

@@ -8,13 +8,17 @@ import androidx.annotation.NonNull;
 
 import com.walfen.antiland.GameHierarchyElement;
 import com.walfen.antiland.Handler;
+import com.walfen.antiland.entities.creatures.active.AntiWraith;
 import com.walfen.antiland.entities.creatures.active.EvilSpirit;
 import com.walfen.antiland.entities.creatures.active.IceSlime;
 import com.walfen.antiland.entities.creatures.active.LostGhost;
 import com.walfen.antiland.entities.creatures.active.Slime;
 import com.walfen.antiland.entities.creatures.active.SpiritWarrior;
 import com.walfen.antiland.entities.creatures.active.TrappedSpirit;
+import com.walfen.antiland.entities.creatures.npc.primary.CactusNPC;
+import com.walfen.antiland.entities.creatures.npc.primary.ChickenNPC;
 import com.walfen.antiland.entities.creatures.npc.primary.CrabSmith;
+import com.walfen.antiland.entities.creatures.npc.primary.Hermit;
 import com.walfen.antiland.entities.creatures.npc.secondary.NPC1;
 import com.walfen.antiland.entities.creatures.npc.trader.FoxKeeper;
 import com.walfen.antiland.entities.creatures.npc.trader.MushroomTrader;
@@ -57,6 +61,7 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
     EvilSpirit: 205
     Ghost: 206
     SpiritWorrier: 207
+    AntiWraith: 208
     ------------------------
     NPC: 401 ~ 700
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -91,7 +96,8 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
     WorldGate(temple - world): 1002
     Tutorial messagers: 1003-1013
     Island Tutorials: 1014 & 1015
-    Island messagers: 1016-1017
+    Island messagers: 1016 & 1017
+    Indicator: 1018
     SlimeSpawner: 1101
     SpiritSpawner: 1102
     SpiritLeak: 1103
@@ -123,6 +129,7 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
         new EvilSpirit();
         new LostGhost();
         new SpiritWarrior();
+        new AntiWraith();
         new EntityGenerator(205, 256, 5, GenerationConstant.FAST_GENERATION, 1102);
         new SpiritLeak();
         new KeyGenerator();
@@ -138,8 +145,12 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
 
         new CrabSmith();
         new FoxKeeper();
+        new CactusNPC();
+        new ChickenNPC();
+        new Hermit();
         new IslandMessagers.EncounterMonster();
         new IslandMessagers.BarricadeBroken();
+        new IslandMessagers.Indicator();
         new StaticSpirit();
     }
 
