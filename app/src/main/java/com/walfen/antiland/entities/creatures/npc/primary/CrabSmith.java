@@ -112,14 +112,15 @@ public class CrabSmith extends MajorMissionNPC {
 
                 c2.add(new Conversation("Thank you.", Assets.crabSmith[0], true));
                 c2.add(new Conversation("(The Blacksmith cracks a small smile)", Assets.NULL, false));
-                c2.add(new Conversation("Are you smiling?", Assets.foxKeeper[0], false));
+                c2.add(new Conversation("Are you smiling?", Assets.foxKeeperIcon, false));
                 c2.add(new Conversation("*cough* No.", Assets.crabSmith[0], true));
-                c2.add(new Conversation("*chuckles*", Assets.foxKeeper[0], false));
+                c2.add(new Conversation("*chuckles*", Assets.foxKeeperIcon, false));
                 c2.add(new Conversation("What are you laughing about!", Assets.crabSmith[0], true));
 
                 c3.add(new Conversation("*sigh* That’s alright, I won’t hold you against it.", Assets.crabSmith[0], true));
                 c3.add(new Conversation("I mean...", Assets.crabSmith[0], true));
                 c3.add(new Conversation("We left that port for a reason.", Assets.crabSmith[0], true));
+                c3.add(new Conversation("...", Assets.foxKeeperIcon, true));
 
                 manager.hideUI();
                 manager.getConvBox().setConversationList(c, () -> {
