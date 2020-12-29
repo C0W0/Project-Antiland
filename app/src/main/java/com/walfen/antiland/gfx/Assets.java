@@ -89,7 +89,7 @@ public class Assets {
     public static Bitmap[] ice_spike;
 
     public static Bitmap rock, tree1, tree2, tree3, pier, pierHorizontal, boat1, boat2;
-    public static Bitmap[] spiritKnightMovement, spiritKnightAttack, lostGhostMovement, lostGhostAttack;
+    public static Bitmap[] spiritWarriorMovement, spiritWarriorAttack, lostGhostMovement, lostGhostAttack;
     public static Bitmap[] crabSmith, foxKeeper, hermit, spiritLeak;
     public static Bitmap npcChicken, npcCactus;
 
@@ -467,12 +467,12 @@ public class Assets {
         trappedSpiritAttackLeft[2] = trappedSpirit.crop(width*2,height*3,width,height);
         trappedSpiritAttackDown = trappedSpirit.crop(width*3,height*3,width,height);
 
-        spiritKnightMovement = new Bitmap[4];
+        spiritWarriorMovement = new Bitmap[4];
         for(int i = 0; i < 4; i++)
-            spiritKnightMovement[i] = ghostEntitySheet.crop(width*i, 0, width, height);
-        spiritKnightAttack = new Bitmap[4];
+            spiritWarriorMovement[i] = ghostEntitySheet.crop(width*i, 0, width, height);
+        spiritWarriorAttack = new Bitmap[4];
         for(int i = 0; i < 4; i++)
-            spiritKnightAttack[i] = ghostEntitySheet.crop(width*(i+4), 0, width, height);
+            spiritWarriorAttack[i] = ghostEntitySheet.crop(width*(i+4), 0, width, height);
         lostGhostMovement = new Bitmap[3];
         for(int i = 0; i < 3; i++)
             lostGhostMovement[i] = ghostEntitySheet.crop(width*i, height, width, height);

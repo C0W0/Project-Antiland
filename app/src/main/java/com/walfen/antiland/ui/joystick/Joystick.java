@@ -40,7 +40,6 @@ public class Joystick extends UIObject {
         if(lockedUp){
             inputX = 0;
             inputY = 0;
-            System.out.println("joystick lockedUp");
             return;
         }
         Player player = handler.getPlayer();

@@ -12,6 +12,7 @@ import com.walfen.antiland.entities.creatures.active.EvilSpirit;
 import com.walfen.antiland.entities.creatures.active.IceSlime;
 import com.walfen.antiland.entities.creatures.active.LostGhost;
 import com.walfen.antiland.entities.creatures.active.Slime;
+import com.walfen.antiland.entities.creatures.active.SpiritWarrior;
 import com.walfen.antiland.entities.creatures.active.TrappedSpirit;
 import com.walfen.antiland.entities.creatures.npc.primary.CrabSmith;
 import com.walfen.antiland.entities.creatures.npc.secondary.NPC1;
@@ -19,10 +20,13 @@ import com.walfen.antiland.entities.creatures.npc.trader.MushroomTrader;
 import com.walfen.antiland.entities.creatures.npc.trader.WandererCrab;
 import com.walfen.antiland.entities.properties.attack.Attack;
 import com.walfen.antiland.entities.special.command.active.TempleBossCoffin;
-import com.walfen.antiland.entities.special.command.passive.EntityGenerator;
-import com.walfen.antiland.entities.special.command.passive.SlimeGenerator;
-import com.walfen.antiland.entities.special.command.passive.SpiritLeak;
+import com.walfen.antiland.entities.special.command.passive.generators.entities.EntityGenerator;
+import com.walfen.antiland.entities.special.command.passive.generators.GenerationConstant;
+import com.walfen.antiland.entities.special.command.passive.generators.entities.SlimeGenerator;
+import com.walfen.antiland.entities.special.command.passive.generators.entities.SpiritLeak;
 import com.walfen.antiland.entities.special.command.passive.WorldGate;
+import com.walfen.antiland.entities.special.command.passive.generators.items.KeyGenerator;
+import com.walfen.antiland.entities.special.command.passive.island.IslandMessagers;
 import com.walfen.antiland.entities.special.command.passive.tutorial.TutorialMessagers;
 import com.walfen.antiland.entities.statics.AirWall;
 import com.walfen.antiland.entities.statics.BarrierTree;
@@ -33,6 +37,7 @@ import com.walfen.antiland.entities.statics.HorizontalPier;
 import com.walfen.antiland.entities.statics.MagicalTree;
 import com.walfen.antiland.entities.statics.Pier;
 import com.walfen.antiland.entities.statics.Rock1;
+import com.walfen.antiland.entities.statics.StaticSpirit;
 import com.walfen.antiland.entities.statics.Tree;
 import com.walfen.antiland.gfx.Assets;
 import com.walfen.antiland.untils.Utils;
@@ -50,6 +55,7 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
     TrappedSpirit: 204
     EvilSpirit: 205
     Ghost: 206
+    SpiritWorrier: 207
     ------------------------
     NPC: 401 ~ 700
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -77,14 +83,18 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
     Boat2: 722
     HorizontalPier: 723
     Rock: 730
+    StaticSpirit: 740
     ------------------------
     Special: 1001+
     WorldGate(temple 0-1): 1001
     WorldGate(temple - world): 1002
-    Tutorial messagers: 1003-1012
+    Tutorial messagers: 1003-1013
+    Island Tutorials: 1014 & 1015
+    Island messagers: 1016-1017
     SlimeSpawner: 1101
     SpiritSpawner: 1102
     SpiritLeak: 1103
+    KeyGenerator: 1201
     TempleBossCoffin: 1301
      */
 
@@ -100,7 +110,7 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
         new NPC1();
         new AirWall();
         new WorldGate(1001, 1, 6656, 2250);
-        new WorldGate(1002, 2, 1024, 1024);
+        new WorldGate(1002, 2, 6656, 1152);
         new TutorialMessagers.TutorialMovement();
         new TutorialMessagers.TutorialMission();
         new TutorialMessagers.TutorialAttack();
@@ -111,8 +121,10 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
 
         new EvilSpirit();
         new LostGhost();
-        new EntityGenerator(205, 256, 5, EntityGenerator.GenerationSpeed.NORMAL_GENERATION, 1102);
+        new SpiritWarrior();
+        new EntityGenerator(205, 256, 5, GenerationConstant.FAST_GENERATION, 1102);
         new SpiritLeak();
+        new KeyGenerator();
         new ForestTree();
         new BarrierTree();
         new BeachTree();
@@ -124,6 +136,9 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
         new Boat(Assets.boat2, 722);
 
         new CrabSmith();
+        new IslandMessagers.EncounterMonster();
+        new IslandMessagers.BarricadeBroken();
+        new StaticSpirit();
     }
 
     //Entities

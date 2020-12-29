@@ -7,7 +7,7 @@ import com.walfen.antiland.entities.properties.effect.passive.MentalUnrest;
 public class TempleEscape extends ExploreMission {
 
     public TempleEscape() {
-        super("Temple Escape", "Falling into a strange place for no reason. Have to somehow get out as soon as possible.", 1, 40, new Point(1792, 1664), 1, 3);
+        super("Temple Run", "Escape the temple", 1, 40, new Point(1792, 1664), 1, 3);
     }
 
     @Override

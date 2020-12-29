@@ -52,4 +52,8 @@ public class ItemManager {
     public void setHandler(Handler handler) {
         this.handler = handler;
     }
+
+    public ArrayList<Item> getItems() {
+        return items;
+    }
 }

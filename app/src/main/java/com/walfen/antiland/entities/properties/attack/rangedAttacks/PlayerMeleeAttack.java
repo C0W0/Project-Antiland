@@ -51,7 +51,6 @@ public class PlayerMeleeAttack extends PlayerDefaultAttack {
     public void generateAttack(float dX, float dY) {
         int fixX = (int)(x+11+99*dX);
         int fixY = (int)(y+28+96*dY);
-        System.out.println(dX+" "+dY);
         RangedAttackCollision rc = new RangedAttackCollision(fixX, fixY, fixX+128, fixY+128, dX, dY, (int)travelSpeed);
         collisionQueue.add(rc);
         handler.getPlayer().resetAttack();

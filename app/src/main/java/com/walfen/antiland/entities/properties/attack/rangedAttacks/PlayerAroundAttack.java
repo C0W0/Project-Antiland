@@ -72,7 +72,6 @@ public class PlayerAroundAttack extends RangedAttack {
     public void draw(Canvas canvas) {
         for(int i = 0; i < animations.size(); i++){
             Animation a = animations.get(i);
-            System.out.println(range);
             Rect r = new Rect((int)(x-range), (int)(y-range), (int)(x+128+range), (int)(y+128+range));
             int left = (int)(r.left - handler.getGameCamera().getxOffset());
             int top = (int)(r.top - handler.getGameCamera().getyOffset());

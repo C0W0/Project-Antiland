@@ -1,12 +1,13 @@
-package com.walfen.antiland.entities.special.command.passive;
+package com.walfen.antiland.entities.special.command.passive.generators.entities;
 
 import android.graphics.Canvas;
 import android.graphics.Point;
 import android.graphics.Rect;
 
 import com.walfen.antiland.Constants;
-import com.walfen.antiland.Handler;
 import com.walfen.antiland.entities.Entity;
+import com.walfen.antiland.entities.special.command.passive.PassiveCommandEntity;
+import com.walfen.antiland.entities.special.command.passive.generators.GenerationConstant;
 import com.walfen.antiland.untils.Utils;
 
 public class EntityGenerator extends PassiveCommandEntity {
@@ -17,13 +18,13 @@ public class EntityGenerator extends PassiveCommandEntity {
     public EntityGenerator(int generatedEntity, int spawnRange, int criticalDensity, int generationSpeed, int id) {
         super(id);
         switch (generationSpeed){
-            case GenerationSpeed.NO_PERIODIC_GENERATION:
+            case GenerationConstant.NO_PERIODIC_GENERATION:
                 generationCooldown = -1;
                 break;
-            case GenerationSpeed.SLOW_GENERATION:
+            case GenerationConstant.SLOW_GENERATION:
                 generationCooldown = 10*1000;
                 break;
-            case GenerationSpeed.FAST_GENERATION:
+            case GenerationConstant.FAST_GENERATION:
                 generationCooldown = 3*1000;
                 break;
             default:
@@ -66,7 +67,7 @@ public class EntityGenerator extends PassiveCommandEntity {
         }
 
         //chance to spawn in check
-        float spawnChance = density >= criticalDensity/2?0.5f:0.7f;
+        float spawnChance = density >= criticalDensity/2?0.7f:0.5f;
         if(Math.random() >= spawnChance)
             spawnEntity();
 
@@ -79,14 +80,5 @@ public class EntityGenerator extends PassiveCommandEntity {
 
     @Override
     public void draw(Canvas canvas) { }
-
-    public static class GenerationSpeed{
-
-        public static final int NO_PERIODIC_GENERATION = 0;
-        public static final int SLOW_GENERATION = 1;
-        public static final int NORMAL_GENERATION = 2;
-        public static final int FAST_GENERATION = 3;
-
-    }
 
 }

@@ -28,8 +28,11 @@ public class MagicalTree extends StaticEntity {
 
     @Override
     public void receiveDamage(int num, int type) {
-        if(num > 10)
+        if(num > 10){
             health = 0;
+            active = false;
+            die();
+        }
     }
 
     @Override

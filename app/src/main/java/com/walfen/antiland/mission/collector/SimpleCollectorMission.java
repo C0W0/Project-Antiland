@@ -1,5 +1,7 @@
 package com.walfen.antiland.mission.collector;
 
+import com.walfen.antiland.items.Item;
+
 public class SimpleCollectorMission extends CollectorMission {
 
     private int goldGain;
@@ -14,6 +16,9 @@ public class SimpleCollectorMission extends CollectorMission {
     @Override
     public void receiveReward() {
         super.receiveReward();
+        for(Item i: handler.getPlayer().getInventory().getInventoryItems())
+            if(i.getId() == targetItemID[0])
+                i.setCount(i.getCount() - finalProgress[0]);
         handler.getPlayer().changeWealth(goldGain);
     }
 }

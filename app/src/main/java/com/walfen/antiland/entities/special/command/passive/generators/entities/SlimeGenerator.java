@@ -1,13 +1,13 @@
-package com.walfen.antiland.entities.special.command.passive;
+package com.walfen.antiland.entities.special.command.passive.generators.entities;
 
-import com.walfen.antiland.Handler;
 import com.walfen.antiland.entities.Entity;
+import com.walfen.antiland.entities.special.command.passive.generators.GenerationConstant;
 import com.walfen.antiland.untils.Utils;
 
 public class SlimeGenerator extends EntityGenerator {
 
     public SlimeGenerator() {
-        super(slime.getId(), 256, 5, EntityGenerator.GenerationSpeed.FAST_GENERATION, 1101);
+        super(slime.getId(), 256, 5, GenerationConstant.FAST_GENERATION, 1101);
     }
 
     @Override

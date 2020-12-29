@@ -26,7 +26,7 @@ public abstract class MajorMissionNPC extends NPC {
     protected void interact() {
         if(convBoxOn)
             return;
-        if(handler.getPlayer().getMissionManager().hasMission(missionSet[status])){
+        if(status < missionSet.length && handler.getPlayer().getMissionManager().hasMission(missionSet[status])){
             if(Mission.missions[missionSet[status]].isCompleted()){
                 convBoxOn = true;
                 UIManager uiManager = handler.getUIManager();
@@ -51,6 +51,8 @@ public abstract class MajorMissionNPC extends NPC {
 
     @Override
     protected void drawHeadSign(Canvas canvas) {
+        if(status >= missionSet.length)
+            return;
         int iX = (int)(x+width/2-32-handler.getGameCamera().getxOffset());
         int iY = (int)(y-68-handler.getGameCamera().getyOffset());
         Rect destRect = new Rect(iX, iY, iX+64, iY+64);

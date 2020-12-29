@@ -52,7 +52,7 @@ public class TrappedSpirit extends Active {
     }
 
     public TrappedSpirit(int id){
-        super(DEFAULT_CREATURE_WIDTH, DEFAULT_CREATURE_HEIGHT, 3000, id, 15);
+        super(DEFAULT_CREATURE_WIDTH, DEFAULT_CREATURE_HEIGHT, 3000, id, 3);
         spottingRange = 640;
         maxIdealRange = 128;
         minIdealRange = 0; // melee
