@@ -46,7 +46,7 @@ public class MapManager implements TouchEventListener {
         maps = new Map[10];
         maps[0] = new TempleMap(handler, mapWidth, mapHeight);
         maps[1] = maps[0];
-        maps[2] = maps[0]; //TODO: a map for the island
+        maps[2] = new IslandMap(handler, mapWidth, mapHeight);
 
     }
 

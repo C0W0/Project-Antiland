@@ -28,12 +28,12 @@ public class RestlessSouls extends KillingMission {
                         c.add(new Conversation("This island will fall...", Assets.spiritWarriorAttack[0], false));
                         c.add(new Conversation("My fight is not over.", Assets.spiritWarriorAttack[0], false));
                         c.add(new Conversation("...", Assets.player_icon, false));
-                        c.add(new Conversation("The spirit disappears and you are left by yourself.", Assets.NULL, false));
-                        c.add(new Conversation("...", Assets.player_icon, false));
+                        c.add(new Conversation("The spirit disappears and your senses slowly return to normal.", Assets.NULL, false));
+                        c.add(new Conversation("...", Assets.NULL, false));
                         c.add(new Conversation("The wind and waves sing a pleasant song.", Assets.NULL, false));
-                        c.add(new Conversation("...", Assets.player_icon, false));
+                        c.add(new Conversation("...", Assets.NULL, false));
                         c.add(new Conversation("The smell of salt fills your nose.", Assets.NULL, false));
-                        c.add(new Conversation("...", Assets.player_icon, false));
+                        c.add(new Conversation("...", Assets.NULL, false));
                         c.add(new Conversation("The spirit is gone.", Assets.NULL, false));
 
                         handler.getUIManager().getConvBox().setConversationList(c, () -> {
