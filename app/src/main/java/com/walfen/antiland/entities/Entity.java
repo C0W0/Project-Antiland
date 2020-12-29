@@ -27,6 +27,7 @@ import com.walfen.antiland.entities.special.command.passive.generators.entities.
 import com.walfen.antiland.entities.special.command.passive.generators.entities.SpiritLeak;
 import com.walfen.antiland.entities.special.command.passive.WorldGate;
 import com.walfen.antiland.entities.special.command.passive.generators.items.KeyGenerator;
+import com.walfen.antiland.entities.special.command.passive.generators.items.MapleSyrupGenerator;
 import com.walfen.antiland.entities.special.command.passive.island.IslandMessagers;
 import com.walfen.antiland.entities.special.command.passive.tutorial.TutorialMessagers;
 import com.walfen.antiland.entities.statics.AirWall;
@@ -96,6 +97,7 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
     SpiritSpawner: 1102
     SpiritLeak: 1103
     KeyGenerator: 1201
+    MapleSyrupGenerator: 1202
     TempleBossCoffin: 1301
      */
 
@@ -126,6 +128,7 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
         new EntityGenerator(205, 256, 5, GenerationConstant.FAST_GENERATION, 1102);
         new SpiritLeak();
         new KeyGenerator();
+        new MapleSyrupGenerator();
         new ForestTree();
         new BarrierTree();
         new BeachTree();
