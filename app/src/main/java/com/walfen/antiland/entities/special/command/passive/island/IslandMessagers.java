@@ -56,14 +56,14 @@ public class IslandMessagers {
 
         @Override
         protected void displayMessage() {
-            handler.getUIManager().popUpAction("You recognize the barricade from the Blacksmith’s description but the gaping hole suggests otherwise." +
+            handler.getUIManager().popUpAction("You recognize the barricade from the Blacksmith’s description but the gaping hole suggests otherwise. " +
                     "As you examine the barricade, you feel the ancient helmet shaking", "...",
                     () ->{
                         ArrayList<Conversation> c = new ArrayList<>();
                         c.add(new Conversation("... come ...", Assets.NULL, false));
-                        handler.getUIManager().getConvBox().setConversationList(c, () -> handler.getUIManager().popUpAction("Looking past the barricade, you notice an object radiating light and coughing out monsters." +
-                                "The monsters have not noticed you but they seem rather violent." +
-                                "As their numbers level out, you realize the threat that they could pose to the village.", "It seems I’ll have to deal with it soon",
+                        handler.getUIManager().getConvBox().setConversationList(c, () -> handler.getUIManager().popUpAction("Looking past the barricade, you notice an object radiating light and coughing out monsters. " +
+                                "The monsters have not noticed you but they seem rather violent. " +
+                                "As their numbers level out, you realize the threat that they could pose to the village. ", "It seems I’ll have to deal with it soon ",
                                 () -> handler.getPlayer().getMissionManager().addMission(6)));
                         handler.getUIManager().hideUI();
                         handler.getUIManager().getConvBox().setActive();

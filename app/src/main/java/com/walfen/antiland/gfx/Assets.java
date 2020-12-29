@@ -100,7 +100,7 @@ public class Assets {
     public static Bitmap[] roundShields, heaterShields, swords, axes, armours;
     public static Bitmap key, brokenHammer, fish;
     public static Bitmap inventoryScreen, missionScreen, craftingScreen, statsScreen, skillScreen, tradeScreen;
-    public static Bitmap mapBackground, worldMap_0, localMap_0;
+    public static Bitmap mapBackground, worldMap_0, localMap_0,localMap_1;
     public static Bitmap portalIcon, exitIcon, combatIcon, bossIcon, unknownIcon, objectiveIcon;
     public static Bitmap blueSqr, redSqr;
 
@@ -582,6 +582,7 @@ public class Assets {
         //map
         worldMap_0 = ImageLoader.loadImage(R.drawable.map_0);
         localMap_0 = ImageLoader.loadImage(R.drawable.localmap_0);
+        localMap_1 = ImageLoader.loadImage(R.drawable.localmap_1);
         portalIcon = mapIconSheet.crop(0, 0, iWidth, iHeight);
         exitIcon = mapIconSheet.crop(iWidth, 0, iWidth, iHeight);
         combatIcon = mapIconSheet.crop(iWidth*2, 0, iWidth, iHeight);
