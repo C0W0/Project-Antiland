@@ -129,6 +129,8 @@ public abstract class Creature extends Entity {
     //changers
     public void changeHealth(int deltaHealth){
         health = Math.min(health + deltaHealth, maxHp);
+        if(health < 0)
+            health = 0;
     }
 
     public void changeMaxHp(int deltaHealth){
@@ -152,7 +154,9 @@ public abstract class Creature extends Entity {
     }
 
     public void changeMp(int deltaMp){
-        mp +=  Math.min(mp + deltaMp, maxMp);
+        mp =  Math.min(mp + deltaMp, maxMp);
+        if(mp < 0)
+            mp = 0;
     }
 
     //getters and setters

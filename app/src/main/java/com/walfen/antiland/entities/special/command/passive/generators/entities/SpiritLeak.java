@@ -42,7 +42,7 @@ public class SpiritLeak extends EntityGenerator {
     private void interact(){
         handler.getPlayer().getTracker().addTracking(this);
         handler.getUIManager().popUpAction("The sounds of spirits are leaking into the air around you. " +
-                "As you approach the spiritual leak, the helmet begins to react. You expose the helmet to the leak and it absorbs the energy.",
+                "As you approach the spiritual leak, the book you got from the temple begins to react. You expose the book to the leak and it absorbs the energy.",
                 "seal the leak!", () -> {health = 0;
                     active = false;
                     handler.getPlayer().setInteractionEvent(Constants.EMPTY_EVENT, -1);

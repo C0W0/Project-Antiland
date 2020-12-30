@@ -1,7 +1,10 @@
 package com.walfen.antiland.entities.properties.effect.special;
 
+import android.graphics.Bitmap;
+
 import com.walfen.antiland.entities.creatures.Player;
 import com.walfen.antiland.entities.properties.effect.StatusEffect;
+import com.walfen.antiland.gfx.Assets;
 
 public class BraveHeart extends StatusEffect {
 
@@ -10,7 +13,7 @@ public class BraveHeart extends StatusEffect {
     public BraveHeart(Player player, long activeDuration, int level) {
         super(player, activeDuration, 11);
         defenceDelta = player.getDefence()*level/10;
-        physAttackDelta = player.getDefence()*level/5;
+        physAttackDelta = player.getPhysicalDamage()*level/5;
     }
 
     public BraveHeart(){
@@ -29,5 +32,10 @@ public class BraveHeart extends StatusEffect {
         carrier.changePhysicalDamage(-physAttackDelta);
         carrier.changeDefence(-defenceDelta);
         carrier.changeHealth(hp);
+    }
+
+    @Override
+    public Bitmap getTexture() {
+        return Assets.strengthSkills[5];
     }
 }

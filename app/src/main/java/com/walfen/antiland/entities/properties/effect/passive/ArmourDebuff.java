@@ -1,7 +1,10 @@
 package com.walfen.antiland.entities.properties.effect.passive;
 
+import android.graphics.Bitmap;
+
 import com.walfen.antiland.entities.creatures.Creature;
 import com.walfen.antiland.entities.properties.effect.StatusEffect;
+import com.walfen.antiland.gfx.Assets;
 
 public class ArmourDebuff extends StatusEffect {
 
@@ -26,5 +29,10 @@ public class ArmourDebuff extends StatusEffect {
     @Override
     public void onEffectRemoved() {
         carrier.changeDefence(defenceDelta);
+    }
+
+    @Override
+    public Bitmap getTexture() {
+        return Assets.NULL;
     }
 }

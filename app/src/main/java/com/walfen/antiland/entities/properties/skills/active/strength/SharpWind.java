@@ -1,23 +1,26 @@
-package com.walfen.antiland.entities.properties.skills.active;
+package com.walfen.antiland.entities.properties.skills.active.strength;
 
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
 import com.walfen.antiland.Handler;
 import com.walfen.antiland.entities.properties.attack.Attack;
-import com.walfen.antiland.entities.properties.attack.rangedAttacks.PlayerHeadBash;
+import com.walfen.antiland.entities.properties.attack.rangedAttacks.PlayerAbilityAttack;
 import com.walfen.antiland.entities.properties.attack.rangedAttacks.RangedAttack;
+import com.walfen.antiland.entities.properties.skills.active.ActiveSkill;
+import com.walfen.antiland.gfx.Animation;
 import com.walfen.antiland.gfx.Assets;
 
-public class HeadBash extends ActiveSkill {
+public class SharpWind extends ActiveSkill {
 
-
+    private int additionalDmg;
     private RangedAttack attack;
-    private float chance;
 
-    public HeadBash(Handler handler) {
-        super(handler, 5, 2000, Assets.strengthSkills[1], 2);
-        chance = 0.3f;
-        attack = new PlayerHeadBash(handler, () -> handler.getPlayer().getPhysicalDamage(), () -> (int)(chance*100));
+    public SharpWind(Handler handler) {
+        super(handler, 10, 4000, Assets.strengthSkills[0], 1);
+        additionalDmg = 5;
+        attack = new PlayerAbilityAttack(handler, Attack.Type.PHYSICAL, 256, 10,
+                () -> (handler.getPlayer().getPhysicalDamage()+additionalDmg), () -> new Animation(2, new Bitmap[]{Assets.player_sharpWind}));
     }
 
     @Override
@@ -49,32 +52,31 @@ public class HeadBash extends ActiveSkill {
 
     @Override
     protected void onLevelUp() {
-        chance += 0.05;
+        additionalDmg += level;
     }
 
     @Override
     public boolean levelUpReqMeet() {
-        return handler.getPlayer().getSkillsManager().getStrength().getLevel() > 2*level-1;
+        return handler.getPlayer().getSkillsManager().getStrength().getLevel() > level;
     }
 
     @Override
     public String getTitle() {
-        return "Head Bash";
+        return "Sharp Wind Strike";
     }
 
     @Override
     public String getDesc() {
-        return "Hit the enemy hard with the helmet.";
+        return "Concentrate the strength and sent off a lethal strike.";
     }
 
     @Override
     public String getEffect() {
-        return "Cause "+handler.getPlayer().getPhysicalDamage()+" damage to entities of a small area at the direction of attack. " +
-                (float)((int)(chance*100))+"% chance of causing a Stung";
+        return "Cause "+(handler.getPlayer().getPhysicalDamage()+additionalDmg)+" damage to entities of a small area at the direction of attack.";
     }
 
     @Override
     public String getReq() {
-        return "Strength: Lv."+(level*2);
+        return "Strength: Lv."+(level+1);
     }
 }

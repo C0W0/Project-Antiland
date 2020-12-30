@@ -11,6 +11,7 @@ import com.walfen.antiland.entities.properties.attack.meleeAttacks.SlimeBash;
 import com.walfen.antiland.entities.properties.attack.meleeAttacks.SoulBash;
 import com.walfen.antiland.gfx.Animation;
 import com.walfen.antiland.gfx.Assets;
+import com.walfen.antiland.items.Item;
 import com.walfen.antiland.tiles.Tile;
 import com.walfen.antiland.ui.conversation.Conversation;
 import com.walfen.antiland.untils.MSTimeController;
@@ -119,6 +120,8 @@ public class TrappedSpirit extends Active {
         ArrayList<Conversation> c = new ArrayList<>();
         c.add(new Conversation("No! This is impossible! You can't just destroy me!", Assets.trappedSpiritMovementDown, false));
         c.add(new Conversation("After all these year! After all of the suffering!", Assets.trappedSpiritMovementDown, false));
+        c.add(new Conversation("The spirit fades away, leaving an ancient black book on the coffin. You picked it up. ", Assets.NULL, false));
+        handler.getPlayer().getInventory().addItem(Item.book.addToInv(1));
         handler.getUIManager().hideUI();
         handler.getUIManager().getConvBox().setConversationList(c, () -> {
             handler.getWorld().triggerWorldEvent(1);

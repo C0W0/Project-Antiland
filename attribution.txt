@@ -25,7 +25,10 @@ CC-BY-SA 3.0
 "[LPC] Items and game effects" by Sharm, ETTiNGRiNDER, wulax, Nila122, daneeklu, JaidynReiman, pennomi, laetissima, makrohn,and Jetrel
 licensed CC-BY-SA 3.0, GPL 3.0, or GPL 2.0: https://opengameart.org/content/lpc-items-and-game-effects
 
-## Trees
+
+"rpg ui icons: inventory, map, quests, spells, status" by lukems-br licensed CC-BY 3.0: https://opengameart.org/content/rpg-ui-icons-inventory-map-quests-spells-status
+
+
 Lots of trees and plants from OGA (DB32) tilesets pack 1
 Jetrel, Zabin, Hyptosis, Surt
 CC0
@@ -191,3 +194,5 @@ The Mana World, Evol Online Palm trees
 Frode Lindeijer aka (Modanung) (big palm tree), and Leonard Pabin (small palm tree)
 CC-BY 3.0 / GPL 3.0 / GPL 2.0
 https://faq.tuxfamily.org/Game:EvolOnline/En
+
+

@@ -1,12 +1,13 @@
-package com.walfen.antiland.entities.properties.skills.passive;
+package com.walfen.antiland.entities.properties.skills.passive.strength;
 
 import com.walfen.antiland.Handler;
+import com.walfen.antiland.entities.properties.skills.passive.PassiveSkill;
 import com.walfen.antiland.gfx.Assets;
 
 public class BigLeague extends PassiveSkill {
 
     public BigLeague(Handler handler) {
-        super(handler, 10, null, Assets.NULL); //TODO: icon
+        super(handler, 10, null, Assets.strengthSkills[2]);
     }
 
     @Override

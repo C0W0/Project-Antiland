@@ -19,11 +19,34 @@ import com.walfen.antiland.untils.MSTimeController;
 
 public class Slime extends Active {
 
-    private Animation leftMove, rightMove, idle, currentAnimation;
-    private MSTimeController animationCtrlTimer = new MSTimeController();
+    protected Animation leftMove, rightMove, idle, currentAnimation;
+    protected MSTimeController animationCtrlTimer = new MSTimeController();
 
     public Slime() {
         super(Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT, 1000, 201, 1);
+        spottingRange = 512;
+        maxIdealRange = 128;
+        minIdealRange = 0; // melee
+        patrolRange = 512;
+        giveUpRange = 1300;
+        bounds.left = 0;
+        bounds.top = 20;
+        bounds.right = Tile.TILEWIDTH;
+        bounds.bottom = Tile.TILEHEIGHT;
+        faction = 1;
+        leftMove = new Animation(0.3f, Assets.slimeMovementLeft);
+        rightMove = new Animation(0.3f, Assets.slimeMovementRight);
+        idle = new Animation(0.3f, Assets.npcSlime);
+        currentAnimation = idle;
+        setEntityHealth(1);
+        currentAnimation = leftMove;
+        physicalDamage = 1; //no effect, as slime bash is hard coded to do only 1 damage
+        setDefence(0);
+        level = 1;
+    }
+
+    public Slime(int deathXP, int id) {
+        super(Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT, 1000, id, deathXP);
         spottingRange = 512;
         maxIdealRange = 128;
         minIdealRange = 0; // melee

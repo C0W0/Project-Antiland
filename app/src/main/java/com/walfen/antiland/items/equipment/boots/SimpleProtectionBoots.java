@@ -1,0 +1,52 @@
+package com.walfen.antiland.items.equipment.boots;
+
+import android.graphics.Bitmap;
+
+import com.walfen.antiland.entities.creatures.Player;
+import com.walfen.antiland.items.equipment.Equipment;
+
+public class SimpleProtectionBoots extends Boots {
+
+    private final int defence;
+
+    public SimpleProtectionBoots(Bitmap texture, String name, int defence, int id) {
+        super(texture, name, id, 100*defence*defence);
+        this.defence = defence;
+    }
+
+    @Override
+    public void onEquip(Player player) {
+        player.changeDefence(defence);
+    }
+
+    @Override
+    protected void onRemove() {
+        handler.getPlayer().changeDefence(-defence);
+    }
+
+    @Override
+    public Equipment addToInv(int count) {
+        SimpleProtectionBoots i = new SimpleProtectionBoots(texture, name, defence, id);
+        i.setPickedUP(true);
+        i.count = count;
+        return i;
+    }
+
+    @Override
+    public Equipment createNew(int x, int y, int count) {
+        SimpleProtectionBoots i = new SimpleProtectionBoots(texture, name, defence, id);
+        i.count = count;
+        i.setPosition(x, y);
+        return i;
+    }
+
+    @Override
+    public String getDesc() {
+        return "Heavy steel boots";
+    }
+
+    @Override
+    public String[] getEffect() {
+        return new String[]{"defence +"+defence};
+    }
+}

@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 
 import com.walfen.antiland.Constants;
+import com.walfen.antiland.entities.Entity;
 import com.walfen.antiland.entities.creatures.Creature;
 import com.walfen.antiland.entities.creatures.npc.secondary.RepeatedMissionNPC;
 import com.walfen.antiland.gfx.Assets;
@@ -53,6 +54,11 @@ public class ChickenNPC extends MajorMissionNPC {
                 c.add(new Conversation("Anyways, I want to see how well you can run. I already have a course planned.", Assets.npcChicken, true));
                 c.add(new Conversation("Just get through the entire course without taking damage. Simple!", Assets.npcChicken, true));
                 manager.getConvBox().setConversationList(c, () -> {
+                    for(int i = 0; i < 4; i++){
+                        Entity e = Entity.entityList[210].clone();
+                        e.initialize(handler, 1408+128*i, 3968, 1408, 3968, 0);
+                        handler.getWorld().getEntityManager().addEntityHot(e);
+                    }
                     assignMission();
                     convBoxOn = false;
                     handler.getPlayer().getMissionManager().setSelectedMission();

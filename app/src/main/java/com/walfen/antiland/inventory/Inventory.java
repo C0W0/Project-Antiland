@@ -16,6 +16,7 @@ import com.walfen.antiland.gfx.ImageEditor;
 import com.walfen.antiland.items.Item;
 import com.walfen.antiland.items.equipment.Equipment;
 import com.walfen.antiland.ui.TouchEventListener;
+import com.walfen.antiland.ui.buttons.TextImageButton;
 import com.walfen.antiland.ui.buttons.UIImageButton;
 import com.walfen.antiland.untils.Utils;
 
@@ -40,7 +41,8 @@ public class Inventory implements TouchEventListener {
     private int equipBaseX, equipBaseY, equipDYConstant;
     private final Bitmap inventoryScreen;
     final Bitmap blueSquare;
-    private UIImageButton useButton, fabSwitchButton, closeButton;
+    private UIImageButton fabSwitchButton, closeButton;
+    private TextImageButton useButtonText;
 
     private Item selectedItem;
 
@@ -82,9 +84,8 @@ public class Inventory implements TouchEventListener {
 
         selectedItem = null;
 
-        useButton = new UIImageButton(362.f/512*invWidth+xDispute, 146.f/384*invHeight+yDispute,
-                (int) (32.f/512*invWidth), (int) (16.f/384*invHeight),
-                new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, this::use);
+        useButtonText = new TextImageButton(378.f/512*invWidth+xDispute, 154.f/384*invHeight+yDispute,
+                33, "use", Color.argb(255, 0, 138, 0), Assets.popupButton2, this::use);
         fabSwitchButton = new UIImageButton(xDispute+5, yDispute+invHeight-Constants.UI_CLOSE_SIZE-5,
                 Constants.UI_CLOSE_SIZE, Constants.UI_CLOSE_SIZE,
                 Assets.switchFlip, () -> handler.getPlayer().getFabricator().setActive());
@@ -119,7 +120,7 @@ public class Inventory implements TouchEventListener {
     public void onTouchEvent(MotionEvent event) {
         if(!active)
             return;
-        useButton.onTouchEvent(event);
+        useButtonText.onTouchEvent(event);
         if(buttonJustPressed) {
             buttonJustPressed = false;
             return;
@@ -169,7 +170,7 @@ public class Inventory implements TouchEventListener {
                 canvas.drawText(count, left+numOffsetX-r.width()-2, top+numOffsetY-2, paint);
             }
         }
-        useButton.draw(canvas);
+        useButtonText.draw(canvas);
         fabSwitchButton.draw(canvas);
         closeButton.draw(canvas);
         for(int i = 0; i < 4; i++){

@@ -2,8 +2,6 @@ package com.walfen.antiland.mission.explore;
 
 import android.graphics.Point;
 
-import com.walfen.antiland.entities.properties.effect.passive.MentalUnrest;
-
 public class TempleEscape extends ExploreMission {
 
     public TempleEscape() {

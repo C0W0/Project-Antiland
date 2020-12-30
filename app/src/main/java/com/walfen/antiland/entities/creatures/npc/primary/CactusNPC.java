@@ -5,10 +5,12 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 
 import com.walfen.antiland.Constants;
+import com.walfen.antiland.entities.Entity;
 import com.walfen.antiland.entities.creatures.Creature;
 import com.walfen.antiland.gfx.Assets;
 import com.walfen.antiland.gfx.ImageEditor;
 import com.walfen.antiland.mission.Mission;
+import com.walfen.antiland.ui.ClickListener;
 import com.walfen.antiland.ui.UIManager;
 import com.walfen.antiland.ui.conversation.Conversation;
 
@@ -23,6 +25,25 @@ public class CactusNPC extends MajorMissionNPC {
 
     @Override
     public void receiveDamage(int num, int type) { }
+
+    @Override
+    protected void interact() {
+        if(status >= 1 && status <= 4)
+            super.interact();
+        else {
+            if(Mission.missions[20].isCompleted()){
+                convBoxOn = true;
+                UIManager uiManager = handler.getUIManager();
+                uiManager.hideUI();
+                ArrayList<Conversation> c = getCompleteConversation()[2];
+                uiManager.getConvBox().setConversationList(c, () -> {Mission.missions[20].complete(); convBoxOn = false;});
+                uiManager.getConvBox().setActive();
+            }else {
+                convBoxOn = true;
+                assignConversationProcedure(handler.getUIManager());
+            }
+        }
+    }
 
     @Override
     protected void assignConversationProcedure(UIManager manager) {
@@ -132,8 +153,57 @@ public class CactusNPC extends MajorMissionNPC {
                 break;
             default:
                 c.clear();
-                c.add(new Conversation("Good Day.", Assets.npcCactus, false));
-                manager.getConvBox().setConversationList(c, () -> convBoxOn = false);
+                double r = Math.random();
+                boolean killingSlimes = false;
+                for(Mission m: handler.getPlayer().getMissionManager().getMissions()){
+                    if(m.getId() == 20){
+                        killingSlimes = true;
+                        break;
+                    }
+                }
+                if (r < 0.5 || killingSlimes) {
+                    System.out.println(killingSlimes);
+                    c.add(new Conversation("Good Day.", Assets.npcCactus, false));
+                    manager.getConvBox().setConversationList(c, () -> convBoxOn = false);
+                }else {
+                    ArrayList<Conversation> c2 = new ArrayList<>();
+                    ArrayList<Conversation> c3 = new ArrayList<>();
+                    c.add(new Conversation("Hello", Assets.player_icon, false));
+                    c.add(new Conversation("Hello", Assets.npcCactus, true));
+                    c.add(new Conversation("Do you, by chance, happen to have some time to spare?", Assets.npcCactus, true));
+                    c.add(new Conversation("?", Assets.player_icon, false));
+                    c.add(new Conversation("The slime population west of town has been steadily increasing.", Assets.npcCactus, true));
+                    c.add(new Conversation("It may soon pose a danger to our village.", Assets.npcCactus, true));
+                    c.add(new Conversation("Would you take a few out?", Assets.npcCactus, true));
+
+                    c2.add(new Conversation("Thank you.", Assets.npcCactus, true));
+                    c2.add(new Conversation("I’ll have something for you when you finish.", Assets.npcCactus, true));
+
+                    c3.add(new Conversation("Alright then, but those slimes won't slay themselves.", Assets.npcCactus, true));
+
+                    manager.getConvBox().setConversationList(c, () -> {
+                        convBoxOn = false;
+                        manager.popUpOptions("How would you respond?", new String[]{"Leave", "\"Yes\""}, new ClickListener[]{() -> {
+                            manager.hideUI();
+                            manager.getConvBox().setConversationList(c3, () -> {
+                            });
+                            manager.getConvBox().setActive();
+                        }, () -> {
+                            manager.hideUI();
+                            manager.getConvBox().setConversationList(c2, () -> {
+                                handler.getPlayer().getMissionManager().addMission(20);
+                                convBoxOn = false;
+                                Mission.missions[20].setCompleteMessage("Report back to Captain Cactus");
+                                handler.getPlayer().getMissionManager().setSelectedMission();
+                                handler.getUIManager().getCGUI().getMissionPanel().extendPanel();
+                                Entity e = Entity.entityList[740].clone();
+                                e.initialize(handler, 5120, 7552, 5120, 7552, 0);
+                                handler.getWorld().getEntityManager().addEntityHot(e);
+                            });
+                            manager.getConvBox().setActive();
+                        }}, false);
+                    });
+                }
         }
         manager.hideUI();
         manager.getConvBox().setActive();
@@ -191,7 +261,11 @@ public class CactusNPC extends MajorMissionNPC {
         c.add(new Conversation("No matter what you do, every action you make can change your life.", Assets.npcCactus, true));
         c.add(new Conversation("It’s not just about cutting down a tree, It’s about changing the world around you.", Assets.npcCactus, true));
         c.add(new Conversation("I hope what I’ve said can help you with your adventures. I’m sorry I ever doubted you.", Assets.npcCactus, true));
+        conversations.add((ArrayList<Conversation>) c.clone());
 
+        c.clear();
+        c.add(new Conversation("Excellent.", Assets.npcCactus, true));
+        c.add(new Conversation("Here, take this.", Assets.npcCactus, true));
         conversations.add((ArrayList<Conversation>) c.clone());
         return conversations.toArray(new ArrayList[0]);
     }

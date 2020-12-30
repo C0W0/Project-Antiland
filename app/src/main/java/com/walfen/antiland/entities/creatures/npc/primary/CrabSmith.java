@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 
+import com.walfen.antiland.Constants;
 import com.walfen.antiland.entities.Entity;
 import com.walfen.antiland.entities.creatures.Creature;
 import com.walfen.antiland.entities.creatures.npc.secondary.RepeatedMissionNPC;
@@ -144,6 +145,7 @@ public class CrabSmith extends MajorMissionNPC {
                             e = Entity.entityList[1016].clone();
                             e.initialize(handler, 4992, 7552, 4992, 7552, 0);
                             handler.getWorld().getEntityManager().addEntityHot(e);
+                            inventoryTutorial();
                         });
                         manager.getConvBox().setActive();
                     }}, false);
@@ -234,6 +236,15 @@ public class CrabSmith extends MajorMissionNPC {
         c.add(new Conversation("The Blacksmith seems visibly distressed", Assets.NULL, false));
         conversations.add((ArrayList<Conversation>) c.clone());
         return conversations.toArray(new ArrayList[0]);
+    }
+
+    private void inventoryTutorial(){
+        handler.getUIManager().activeTutorial("Tutorial: check the Inventory", new Rect(8, Constants.SCREEN_HEIGHT-8-128,
+                128+8, Constants.SCREEN_HEIGHT-8), () ->
+                handler.getUIManager().popUpAction("All items collected will be listed in the inventory. Select an item and click the \"use\" button to use the item",
+                        "Ok", () -> handler.getUIManager().activeTutorial("Tutorial: switch to the craft screen",
+                                handler.getPlayer().getMapManager().getSwitchButtonBounds(),
+                                () -> handler.getUIManager().popUpMessage("You can craft basic items in the craft screen."))));
     }
 
     @Override

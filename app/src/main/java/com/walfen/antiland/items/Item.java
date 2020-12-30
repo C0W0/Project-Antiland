@@ -13,6 +13,8 @@ import com.walfen.antiland.gfx.ImageEditor;
 import com.walfen.antiland.items.equipment.Equipment;
 import com.walfen.antiland.items.equipment.armours.SimpleArmour;
 import com.walfen.antiland.items.equipment.auxiliaries.SimpleShield;
+import com.walfen.antiland.items.equipment.boots.SimpleProtectionBoots;
+import com.walfen.antiland.items.equipment.boots.SimpleSpeedBoots;
 import com.walfen.antiland.items.equipment.weapons.SimpleSword;
 import com.walfen.antiland.items.equipment.weapons.SoulSword;
 import com.walfen.antiland.items.functionless.NeutralItem;
@@ -24,10 +26,13 @@ public abstract class Item implements GameHierarchyElement {
 
     public static Item[] items = new Item[512];
 
-    public static NeutralItem woodItem, bottle, slimeGel, key, hammer; //id 0-99
-    public static UsableItem apple, lvOneHpPotion, lvOneGreenPotion, mapleSyrup, fish, coconut; //id 100-199
+    public static NeutralItem woodItem, bottle, slimeGel, steelNugget,
+            key, hammer, book; //id 0-99
+    public static UsableItem apple, mapleSyrup, fish, coconut;
+    public static UsableItem hpPotion1, greenPotion1, bluePotion1, hpPotion2, greenPotion2, bluePotion2,
+            hpPotion3, greenPotion3, bluePotion3;//id 100-199
     public static Equipment shield1, sword1, shield2, sword2, shield3, sword3, soulSword; //id 200-299
-    public static Equipment armour1, armour2, armour3;
+    public static Equipment armour1, armour2, armour3, leatherBoots, steelBoots;
 
     public static void initItems(Handler handler){
 
@@ -39,16 +44,19 @@ public abstract class Item implements GameHierarchyElement {
                 5, new String[]{"crafting", "material"}, "Green-ish jelly stuff");
         key = new NeutralItem(Assets.key, "Key", 3, 0, new String[]{"Mission", "Item"}, "Do not sell");
         hammer = new NeutralItem(Assets.brokenHammer, "Hammer", 4, 0, new String[]{"Mission", "Item"}, "Do not sell");
+        book = new NeutralItem(Assets.evilBook, "Magic Book", 5, 0, new String[]{"Mission", "Item"}, "An old book");
+        steelNugget = new NeutralItem(Assets.steelNugget, "Steel Nugget", 6,
+                5, new String[]{"crafting", "material"}, "A chunk of steel");
 
         apple = new UsableItem(Assets.apple, "apple", 100,
                 5, "A commonly seen fruit.", new String[]{"hp regen: 1"},
                 () -> handler.getPlayer().changeHealth(1));
-        lvOneGreenPotion = new UsableItem(Assets.greenPotion1, "potion", 101,
-                20, "Tastes bitter", new String[]{"mp regen: 10", "poison: 1"},
-                () -> {handler.getPlayer().changeHealth(-1); handler.getPlayer().changeMp(10);});
-        lvOneHpPotion = new UsableItem(Assets.redPotion1, "potion", 102,
-                20, "Also know as apple juice.", new String[]{"hp regen: 10"},
-                () -> handler.getPlayer().changeHealth(10));
+        greenPotion1 = new UsableItem(Assets.greenPotions[0], "green potion", 101,
+                20, "Tastes bitter", new String[]{"mp regen: 5", "poison: 1"},
+                () -> {handler.getPlayer().changeHealth(-1); handler.getPlayer().changeMp(5);});
+        hpPotion1 = new UsableItem(Assets.redPotions[0], "hp potion", 102,
+                20, "Also know as apple juice.", new String[]{"hp regen: 5"},
+                () -> handler.getPlayer().changeHealth(5));
         mapleSyrup = new UsableItem(Assets.syrup, "brown syrup", 103,
                 500, "Very rare sweet syrup.", new String[]{"hp regen: 100", "mp regen: 50"},
                 () -> {handler.getPlayer().changeHealth(100); handler.getPlayer().changeMp(50);});
@@ -58,6 +66,27 @@ public abstract class Item implements GameHierarchyElement {
         coconut = new UsableItem(Assets.apple, "coconut", 105,
                 5, "This coconut has an unusual appearance", new String[]{"hp regen: 1"},
                 () -> handler.getPlayer().changeHealth(1));
+        bluePotion1 = new UsableItem(Assets.bluePotions[0], "mp potion", 106,
+                20, "This came from fish?!", new String[]{"mp regen: 1"},
+                () -> handler.getPlayer().changeMp(1));
+        greenPotion2 = new UsableItem(Assets.greenPotions[1], "green potion", 107,
+                50, "Even more bitter", new String[]{"mp regen: 10", "poison: 2"},
+                () -> {handler.getPlayer().changeHealth(-2); handler.getPlayer().changeMp(10);});
+        hpPotion2 = new UsableItem(Assets.redPotions[1], "hp potion", 108,
+                50, "Sweet red juice.", new String[]{"hp regen: 10"},
+                () -> handler.getPlayer().changeHealth(10));
+        bluePotion2 = new UsableItem(Assets.bluePotions[1], "mp potion", 109,
+                50, "Doesn't taste fishy", new String[]{"mp regen: 5"},
+                () -> handler.getPlayer().changeMp(5));
+        greenPotion3 = new UsableItem(Assets.greenPotions[2], "green potion", 110,
+                100, "Almost poison", new String[]{"mp regen: 30", "poison: 5"},
+                () -> {handler.getPlayer().changeHealth(-5); handler.getPlayer().changeMp(30);});
+        hpPotion3 = new UsableItem(Assets.redPotions[2], "hp potion", 111,
+                100, "A bit too sweet", new String[]{"hp regen: 40"},
+                () -> handler.getPlayer().changeHealth(40));
+        bluePotion3 = new UsableItem(Assets.bluePotions[2], "mp potion", 112,
+                100, "No idea how this is made", new String[]{"mp regen: 15"},
+                () -> handler.getPlayer().changeMp(15));
 
         shield1 = new SimpleShield(Assets.roundShields[0], "wooden shield", 1, 200);
         sword1 = new SimpleSword(Assets.swords[0], "old sword", 1, 201);
@@ -68,6 +97,8 @@ public abstract class Item implements GameHierarchyElement {
         armour1 = new SimpleArmour(Assets.armours[0], "copper body armour", 0, 3, 206);
         armour2 = new SimpleArmour(Assets.armours[1], "iron body armour", 1, 5, 207);
         armour3 = new SimpleArmour(Assets.armours[2], "black steel body armour", 5, 11, 208);
+        leatherBoots = new SimpleSpeedBoots(Assets.leatherBoots, "Leather Boots", 4, 209);
+        steelBoots = new SimpleProtectionBoots(Assets.steelBoots, "Steel Boots", 5, 210);
         soulSword = new SoulSword();
     }
 

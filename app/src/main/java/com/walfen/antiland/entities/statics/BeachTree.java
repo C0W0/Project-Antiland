@@ -24,7 +24,7 @@ public class BeachTree extends StaticEntity {
     @Override
     public void receiveDamage(int num, int type) {
         super.receiveDamage(num, type);
-        handler.getWorld().getItemManager().addItem(Item.apple.createNew((int)(x + width/2 - Item.ITEMWIDTH/2 + Math.random()*32-16),
+        handler.getWorld().getItemManager().addItem(Item.coconut.createNew((int)(x + width/2 - Item.ITEMWIDTH/2 + Math.random()*32-16),
                 (int)(y + height - Item.ITEMHEIGHT + 32), (int)(Math.random()*2)+1));
     }
 

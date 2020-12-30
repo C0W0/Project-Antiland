@@ -11,11 +11,28 @@ import com.walfen.antiland.Constants;
 import com.walfen.antiland.Handler;
 import com.walfen.antiland.entities.properties.skills.Skill;
 import com.walfen.antiland.entities.properties.skills.active.ActiveSkill;
-import com.walfen.antiland.entities.properties.skills.active.HeadBash;
-import com.walfen.antiland.entities.properties.skills.active.RedStamp;
-import com.walfen.antiland.entities.properties.skills.active.SharpWind;
-import com.walfen.antiland.entities.properties.skills.active.TestShield;
-import com.walfen.antiland.entities.properties.skills.passive.BigLeague;
+import com.walfen.antiland.entities.properties.skills.active.agility.HighSpeedLowDrag;
+import com.walfen.antiland.entities.properties.skills.active.agility.HitAndRun;
+import com.walfen.antiland.entities.properties.skills.active.agility.LastGasp;
+import com.walfen.antiland.entities.properties.skills.active.endurance.SecondWind;
+import com.walfen.antiland.entities.properties.skills.active.endurance.SkinHardening;
+import com.walfen.antiland.entities.properties.skills.active.intelligence.FireBall;
+import com.walfen.antiland.entities.properties.skills.active.intelligence.IceSpike;
+import com.walfen.antiland.entities.properties.skills.active.intelligence.WindBlade;
+import com.walfen.antiland.entities.properties.skills.active.knowledge.ArcaneMissile;
+import com.walfen.antiland.entities.properties.skills.active.knowledge.MageArmour;
+import com.walfen.antiland.entities.properties.skills.active.strength.BraveHeart;
+import com.walfen.antiland.entities.properties.skills.active.strength.HeadBash;
+import com.walfen.antiland.entities.properties.skills.active.strength.RedStamp;
+import com.walfen.antiland.entities.properties.skills.active.strength.SharpWind;
+import com.walfen.antiland.entities.properties.skills.passive.PassiveSkill;
+import com.walfen.antiland.entities.properties.skills.passive.endurance.Dreadnought;
+import com.walfen.antiland.entities.properties.skills.passive.endurance.Perseverance;
+import com.walfen.antiland.entities.properties.skills.active.knowledge.Meditation;
+import com.walfen.antiland.entities.properties.skills.passive.knowledge.Chemistry;
+import com.walfen.antiland.entities.properties.skills.passive.knowledge.Physics;
+import com.walfen.antiland.entities.properties.skills.passive.strength.BigLeague;
+import com.walfen.antiland.entities.properties.skills.passive.strength.DemoExpert;
 import com.walfen.antiland.entities.properties.skills.passive.SimplePlayerSkill;
 import com.walfen.antiland.gfx.Assets;
 import com.walfen.antiland.gfx.ImageEditor;
@@ -59,6 +76,8 @@ public class PlayerSkillsManager implements TouchEventListener {
 
     //5 base:
     private SimplePlayerSkill strength, endurance, agility, knowledge, intelligence;
+    //2 knowledge
+    private PassiveSkill physics, chemistry;
     //Skill lists
     private ArrayList<Skill> strengthSL, enduranceSL, agilitySL, knowledgeSL, intelligenceSL;
 
@@ -170,15 +189,89 @@ public class PlayerSkillsManager implements TouchEventListener {
                 new Bitmap[]{Assets.strengthSkillsG[1], Assets.strengthSkills[1]}, headBash));
         strengthSL.add(headBash);
         Skill bigLeague = new BigLeague(handler);
-        strengthSU.add(new SkillIcon(skillL1X, skillL1Y-skillIconSize-10, skillIconSize, skillIconSize,
+        strengthSU.add(new SkillStaticIcon(skillL1X, skillL1Y-skillIconSize-10, skillIconSize, skillIconSize,
                 new Bitmap[]{Assets.strengthSkillsG[2], Assets.strengthSkills[2]}, bigLeague));
         strengthSL.add(bigLeague);
         Skill redStamp = new RedStamp(handler);
         strengthSU.add(new SkillIcon(skillL1X-10-skillIconSize/2.f, skillL1Y-skillIconSize*2-20, skillIconSize, skillIconSize,
                 new Bitmap[]{Assets.strengthSkillsG[3], Assets.strengthSkills[3]}, redStamp));
         strengthSL.add(redStamp);
+        Skill demoExpert = new DemoExpert(handler);
+        strengthSU.add(new SkillStaticIcon(skillL1X+10+skillIconSize/2.f, skillL1Y-skillIconSize*2-20, skillIconSize, skillIconSize,
+                new Bitmap[]{Assets.strengthSkillsG[4], Assets.strengthSkills[4]}, demoExpert));
+        strengthSL.add(demoExpert);
+        Skill braveHeart = new BraveHeart(handler);
+        strengthSU.add(new SkillIcon(skillL1X, skillL1Y-skillIconSize*3-30, skillIconSize, skillIconSize,
+                new Bitmap[]{Assets.strengthSkillsG[5], Assets.strengthSkills[5]}, braveHeart));
+        strengthSL.add(braveHeart);
 
         //endurance skills:
+        Skill secondWind = new SecondWind(handler);
+        enduranceSU.add(new SkillIcon(skillL1X+20+skillIconSize, skillL1Y-skillIconSize-10, skillIconSize, skillIconSize,
+                new Bitmap[]{Assets.enduranceSkillsG[0], Assets.enduranceSkills[0]}, secondWind));
+        enduranceSL.add(secondWind);
+        Skill perseverance = new Perseverance(handler);
+        enduranceSU.add(new SkillStaticIcon(skillL1X-20-skillIconSize, skillL1Y-skillIconSize-10, skillIconSize, skillIconSize,
+                new Bitmap[]{Assets.enduranceSkillsG[1], Assets.enduranceSkills[1]}, perseverance));
+        enduranceSL.add(perseverance);
+        Skill skinHardening = new SkinHardening(handler);
+        enduranceSU.add(new SkillIcon(skillL1X, skillL1Y-skillIconSize*2-20, skillIconSize, skillIconSize,
+                new Bitmap[]{Assets.enduranceSkillsG[2], Assets.enduranceSkills[2]}, skinHardening));
+        enduranceSL.add(skinHardening);
+        Skill dreadnought = new Dreadnought(handler);
+        enduranceSU.add(new SkillStaticIcon(skillL1X, skillL1Y-skillIconSize*3-30, skillIconSize, skillIconSize,
+                new Bitmap[]{Assets.enduranceSkillsG[3], Assets.enduranceSkills[3]}, dreadnought));
+        enduranceSL.add(dreadnought);
+
+        //agility skills:
+        Skill lastGasp = new LastGasp(handler);
+        agilitySU.add(new SkillIcon(skillL1X+20+skillIconSize, skillL1Y-skillIconSize-10, skillIconSize, skillIconSize,
+                new Bitmap[]{Assets.agilitySkillsG[1], Assets.agilitySkills[1]}, lastGasp));
+        agilitySL.add(lastGasp);
+        Skill speedDrag = new HighSpeedLowDrag(handler);
+        agilitySU.add(new SkillIcon(skillL1X-20-skillIconSize, skillL1Y-skillIconSize-10, skillIconSize, skillIconSize,
+                new Bitmap[]{Assets.agilitySkillsG[2], Assets.agilitySkills[2]}, speedDrag));
+        agilitySL.add(speedDrag);
+        Skill hitAndRun = new HitAndRun(handler);
+        agilitySU.add(new SkillIcon(skillL1X, skillL1Y-skillIconSize*3-30, skillIconSize, skillIconSize,
+                new Bitmap[]{Assets.agilitySkillsG[3], Assets.agilitySkills[3]}, hitAndRun));
+        agilitySL.add(hitAndRun);
+
+        //knowledge skills
+        Skill meditation = new Meditation(handler);
+        knowledgeSU.add(new SkillIcon(skillL1X-10-skillIconSize/2.f, skillL1Y-skillIconSize-10, skillIconSize, skillIconSize,
+                new Bitmap[]{Assets.knowledgeSkillsG[0], Assets.knowledgeSkills[0]}, meditation));
+        knowledgeSL.add(meditation);
+        Skill mageArmour = new MageArmour(handler);
+        knowledgeSU.add(new SkillIcon(skillL1X+10+skillIconSize/2.f, skillL1Y-skillIconSize-10, skillIconSize, skillIconSize,
+                new Bitmap[]{Assets.knowledgeSkillsG[1], Assets.knowledgeSkills[1]}, mageArmour));
+        knowledgeSL.add(mageArmour);
+        physics = new Physics(handler);
+        knowledgeSU.add(new SkillStaticIcon(skillL1X+20+skillIconSize, skillL1Y-skillIconSize*2-20, skillIconSize, skillIconSize,
+                new Bitmap[]{Assets.knowledgeSkillsG[3], Assets.knowledgeSkills[3]}, physics));
+        knowledgeSL.add(physics);
+        chemistry = new Chemistry(handler);
+        knowledgeSU.add(new SkillStaticIcon(skillL1X-20-skillIconSize, skillL1Y-skillIconSize*2-20, skillIconSize, skillIconSize,
+                new Bitmap[]{Assets.knowledgeSkillsG[4], Assets.knowledgeSkills[4]}, chemistry));
+        knowledgeSL.add(chemistry);
+        Skill arcaneMissile = new ArcaneMissile(handler);
+        knowledgeSU.add(new SkillIcon(skillL1X, skillL1Y-skillIconSize*3-30, skillIconSize, skillIconSize,
+                new Bitmap[]{Assets.knowledgeSkillsG[2], Assets.knowledgeSkills[2]}, arcaneMissile));
+        knowledgeSL.add(arcaneMissile);
+
+        //intelligence skills
+        Skill fireBall = new FireBall(handler);
+        intelligenceSU.add(new SkillIcon(skillL1X-10-skillIconSize/2.f, skillL1Y-skillIconSize-10, skillIconSize, skillIconSize,
+                new Bitmap[]{Assets.intelligenceSkillsG[0], Assets.intelligenceSkills[0]}, fireBall));
+        intelligenceSL.add(fireBall);
+        Skill iceSpike = new IceSpike(handler);
+        intelligenceSU.add(new SkillIcon(skillL1X, skillL1Y-skillIconSize*2-20, skillIconSize, skillIconSize,
+                new Bitmap[]{Assets.intelligenceSkillsG[1], Assets.intelligenceSkills[1]}, iceSpike));
+        intelligenceSL.add(iceSpike);
+        Skill windBlade = new WindBlade(handler);
+        intelligenceSU.add(new SkillIcon(skillL1X+10+skillIconSize/2.f, skillL1Y-skillIconSize-10, skillIconSize, skillIconSize,
+                new Bitmap[]{Assets.intelligenceSkillsG[2], Assets.intelligenceSkills[2]}, windBlade));
+        intelligenceSL.add(windBlade);
 
     }
 
@@ -507,6 +600,14 @@ public class PlayerSkillsManager implements TouchEventListener {
 
     public SimplePlayerSkill getIntelligence() {
         return intelligence;
+    }
+
+    public PassiveSkill getPhysics() {
+        return physics;
+    }
+
+    public PassiveSkill getChemistry() {
+        return chemistry;
     }
 
     public ArrayList<Skill> getStrengthSL() {

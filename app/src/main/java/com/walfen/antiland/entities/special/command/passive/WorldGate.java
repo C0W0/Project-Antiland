@@ -40,7 +40,7 @@ public class WorldGate extends PassiveCommandEntity {
             playerEnterTime = -1;
             return false;
         }
-        return playerEnterTime != -1 && System.currentTimeMillis() - playerEnterTime > 500;
+        return playerEnterTime != -1 && System.currentTimeMillis() - playerEnterTime > 100;
     }
 
     @Override

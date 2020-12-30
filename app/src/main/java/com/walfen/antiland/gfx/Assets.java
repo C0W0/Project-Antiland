@@ -58,9 +58,11 @@ public class Assets {
     public static Bitmap[] player_down, player_up, player_left, player_right;
     public static Bitmap[] player_attack_down, player_attack_up, player_attack_left, player_attack_right;
     public static Bitmap player_Attack;
-    public static Bitmap[] player_SharpWind;
+    public static Bitmap player_sharpWind;
+    public static Bitmap[] player_wind;
     public static Bitmap[] explosion;
 
+    public static Bitmap[] arcaneMissile, fireBall;
 
     //joystick
     public static Bitmap joystick_pad, joystick_controller;
@@ -72,11 +74,12 @@ public class Assets {
     public static Bitmap popup1, popup2, popupButton1, popupButton2;
     public static Bitmap greyDisk;
     public static Bitmap switchFlip, close;
-    public static Bitmap save, chat, operate, tradeInteract;
+    public static Bitmap save, chat, operate, tradeInteract, menuButton;
     public static Bitmap headSignOrange, headSignGray, hsoMissionComplete, hsgMissionComplete;
     public static Bitmap hsoGetMission, hsgGetMission, hsoTrade, hsgTrade;
     public static Bitmap extend, collapse;
     public static Bitmap splashScreen, splashBackground;
+    public static Bitmap[] invButton, mapButton;
 
     //entities
     public static Bitmap tree;
@@ -98,7 +101,9 @@ public class Assets {
 
     //items
     public static Bitmap wood, stone, bottle, slimeGel;
-    public static Bitmap apple, syrup, redPotion1, greenPotion1;
+    public static Bitmap apple, syrup, evilBook, steelNugget;
+    public static Bitmap leatherBoots, steelBoots;
+    public static Bitmap[] redPotions, greenPotions, bluePotions;
     public static Bitmap[] roundShields, heaterShields, swords, axes, armours;
     public static Bitmap key, brokenHammer, fish;
     public static Bitmap inventoryScreen, missionScreen, craftingScreen, statsScreen, skillScreen, tradeScreen;
@@ -109,8 +114,9 @@ public class Assets {
     //skills
     public static Bitmap strength, endurance, agility, knowledge, intelligence;
     public static Bitmap strengthR, enduranceR, agilityR, knowledgeR, intelligenceR;
-    public static Bitmap[] strengthSkillsG, strengthSkills;
-//    public static Bitmap sharpWindG, sharpWind;
+    public static Bitmap[] strengthSkillsG, strengthSkills, enduranceSkillsG, enduranceSkills, agilitySkillsG, agilitySkills;
+    public static Bitmap[] knowledgeSkillsG, knowledgeSkills, intelligenceSkillsG, intelligenceSkills;
+
     public static Bitmap unlock;
 
     public static void init(){
@@ -144,6 +150,7 @@ public class Assets {
         SpriteSheet ghostEntitySheet = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.spirit_entity));
         SpriteSheet staticEntities = new SpriteSheet(ImageLoader.loadImage(R.drawable.island_static_entity));
 
+        SpriteSheet magicSheet = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.magic_sheet));
 
         grass = newTownTiles.crop(width*11,0,width,height);
         grassStone = sheet1.crop(width*3,height,width,height);
@@ -385,30 +392,38 @@ public class Assets {
         player_icon = characterMovement.crop(0, 0, width, height);
 
         player_attack_left = new Bitmap[4];
-        player_attack_left[0] = characterAttack.crop(0,0,width,height*2);
-        player_attack_left[1] = characterAttack.crop(width,0,width,height*2);
-        player_attack_left[2] = characterAttack.crop(width*2,0,width,height*2);
-        player_attack_left[3] = characterAttack.crop(width*3,0,width,height*2);
+        player_attack_left[3] = characterAttack.crop(0,0,width,height*2);
+        player_attack_left[2] = characterAttack.crop(width,0,width,height*2);
+        player_attack_left[1] = characterAttack.crop(width*2,0,width,height*2);
+        player_attack_left[0] = characterAttack.crop(width*3,0,width,height*2);
         player_attack_right = new Bitmap[4];
-        player_attack_right[0] = characterAttack.crop(0,height*2,width,height*2);
-        player_attack_right[1] = characterAttack.crop(width,height*2,width,height*2);
-        player_attack_right[2] = characterAttack.crop(width*2,height*2,width,height*2);
-        player_attack_right[3] = characterAttack.crop(width*3,height*2,width,height*2);
+        player_attack_right[3] = characterAttack.crop(0,height*2,width,height*2);
+        player_attack_right[2] = characterAttack.crop(width,height*2,width,height*2);
+        player_attack_right[1] = characterAttack.crop(width*2,height*2,width,height*2);
+        player_attack_right[0] = characterAttack.crop(width*3,height*2,width,height*2);
         player_attack_up = new Bitmap[4];
-        player_attack_up[0] = characterAttack.crop(0,height*4,width,height*2);
-        player_attack_up[1] = characterAttack.crop(width,height*4,width,height*2);
-        player_attack_up[2] = characterAttack.crop(width*2,height*4,width,height*2);
-        player_attack_up[3] = characterAttack.crop(width*3,height*4,width,height*2);
+        player_attack_up[3] = characterAttack.crop(0,height*4,width,height*2);
+        player_attack_up[2] = characterAttack.crop(width,height*4,width,height*2);
+        player_attack_up[1] = characterAttack.crop(width*2,height*4,width,height*2);
+        player_attack_up[0] = characterAttack.crop(width*3,height*4,width,height*2);
         player_attack_down = new Bitmap[4];
-        player_attack_down[0] = characterAttack.crop(0,height*6,width,height*2);
-        player_attack_down[1] = characterAttack.crop(width,height*6,width,height*2);
-        player_attack_down[2] = characterAttack.crop(width*2,height*6,width,height*2);
-        player_attack_down[3] = characterAttack.crop(width*3,height*6,width,height*2);
+        player_attack_down[3] = characterAttack.crop(0,height*6,width,height*2);
+        player_attack_down[2] = characterAttack.crop(width,height*6,width,height*2);
+        player_attack_down[1] = characterAttack.crop(width*2,height*6,width,height*2);
+        player_attack_down[0] = characterAttack.crop(width*3,height*6,width,height*2);
 
 
         player_Attack = sheet.crop(width*3, height*2, width, height);
-        player_SharpWind = loadSpriteAsArray(new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.magic_firelion_big)), 4, 4, width, height);
+        player_sharpWind = sheet1.crop(0, height*6, width, height);
+        player_wind = loadSpriteAsArray(new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.magic_gray_big)), 4, 4, width, height);
         explosion = loadSpriteAsArray(new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.explosion_1)), 6, 1, width, height*2);
+
+        fireBall = new Bitmap[4];
+        for(int i = 0; i < 4; i++)
+            fireBall[i] = magicSheet.crop(width*i, 0, width, height);
+        arcaneMissile = new Bitmap[4];
+        for(int i = 0; i < 4; i++)
+            arcaneMissile[i] = magicSheet.crop(width*i, height, width, height);
 
         //entity
         tree = newTownTiles.crop(0, height*3, width, height*4);
@@ -523,8 +538,18 @@ public class Assets {
 
         apple = ImageLoader.loadImage(R.drawable.apple);
         syrup = items.crop(iWidth*2, 0, iWidth, iHeight);
-        redPotion1 = potions.crop(0, iHeight, iWidth, iHeight);
-        greenPotion1 = potions.crop(0, 0, iWidth, iHeight);
+        redPotions = new Bitmap[3];
+        redPotions[0] = potions.crop(0, iHeight, iWidth, iHeight);
+        redPotions[1] = potions.crop(0, iHeight*6, iWidth, iHeight);
+        redPotions[2] = potions.crop(iWidth*8, iHeight, iWidth, iHeight);
+        greenPotions = new Bitmap[3];
+        greenPotions[0] = potions.crop(0, 0, iWidth, iHeight);
+        greenPotions[1] = potions.crop(0, iHeight*5, iWidth, iHeight);
+        greenPotions[2] = potions.crop(iWidth*8, 0, iWidth, iHeight);
+        bluePotions = new Bitmap[3];
+        bluePotions[0] = potions.crop(0, iHeight*2, iWidth, iHeight);
+        bluePotions[1] = potions.crop(0, iHeight*7, iWidth, iHeight);
+        bluePotions[2] = potions.crop(iWidth*8, iHeight*2, iWidth, iHeight);
 
         swords = new Bitmap[5];
         for(int y = 0; y < 3; y++)
@@ -541,9 +566,13 @@ public class Assets {
         heaterShields = new Bitmap[5];
         for(int y = 0; y < 3; y++)
             heaterShields[y] = items.crop(iWidth*2, iHeight*2+2*y*iHeight, iWidth, iHeight);
+        leatherBoots = items.crop(iWidth*3, iHeight*3, iWidth, iHeight);
+        steelBoots = items.crop(iWidth*4, iHeight*3, iWidth, iHeight);
         brokenHammer = items.crop(iWidth*3, 0, iWidth, iHeight);
         key = items.crop(iWidth*4, 0, iWidth, iHeight);
         fish = items.crop(iWidth*3, iHeight, iWidth, iHeight);
+        steelNugget = items.crop(iWidth*4, iHeight, iWidth, iHeight);
+        evilBook = items.crop(iWidth*3, iHeight*2, iWidth, iHeight);
 
 
         blueSqr = ImageLoader.loadImage(R.drawable.selected);
@@ -572,6 +601,13 @@ public class Assets {
         chat = sheet1.crop(width, height*3, width, height);
         operate = sheet1.crop(width*2, height*3, width, height);
         tradeInteract = sheet1.crop(width*3, height*3, width, height);
+        invButton = new Bitmap[2];
+        invButton[0] = sheet1.crop(0, height*4, width, height);
+        invButton[1] = sheet1.crop(width, height*4, width, height);
+        mapButton = new Bitmap[2];
+        mapButton[0] = sheet1.crop(width*2, height*4, width, height);
+        mapButton[1] = sheet1.crop(width*3, height*4, width, height);
+        menuButton = sheet1.crop(0, height*5, width, height);
 
         joystick_pad = sheet1.crop(0, 0, width*3, height*3);
         joystick_controller = sheet1.crop(width*3, 0, width, height);
@@ -631,6 +667,46 @@ public class Assets {
             strengthSkillsG[i+1] = skillSheet.crop(width*2*i, height*2, width, height);
             strengthSkills[i+1] = skillSheet.crop(width*(2*i+1), height*2, width, height);
         }
+        strengthSkillsG[5] = skillSheet.crop(0, height*3, width, height);
+        strengthSkills[5] = skillSheet.crop(width, height*3, width, height);
+
+        enduranceSkills = new Bitmap[4];
+        enduranceSkillsG = new Bitmap[4];
+        for(int i = 0; i < 3; i++){
+            enduranceSkillsG[i] = skillSheet.crop(width*2*(i+1), height*3, width, height);
+            enduranceSkills[i] = skillSheet.crop(width*(2*(i+1)+1), height*3, width, height);
+        }
+        enduranceSkillsG[3] = skillSheet.crop(0, height*4, width, height);
+        enduranceSkills[3] = skillSheet.crop(width, height*4, width, height);
+
+        agilitySkills = new Bitmap[4];
+        agilitySkillsG = new Bitmap[4];
+        for(int i = 0; i < 3; i++){
+            agilitySkillsG[i] = skillSheet.crop(width*2*(i+1), height*4, width, height);
+            agilitySkills[i] = skillSheet.crop(width*(2*(i+1)+1), height*4, width, height);
+        }
+        agilitySkillsG[3] = skillSheet.crop(0, height*5, width, height);
+        agilitySkills[3] = skillSheet.crop(width, height*5, width, height);
+
+        knowledgeSkills = new Bitmap[5];
+        knowledgeSkillsG = new Bitmap[5];
+        for(int i = 0; i < 3; i++){
+            knowledgeSkillsG[i] = skillSheet.crop(width*2*(i+1), height*5, width, height);
+            knowledgeSkills[i] = skillSheet.crop(width*(2*(i+1)+1), height*5, width, height);
+        }
+        knowledgeSkillsG[3] = skillSheet.crop(0, height*6, width, height);
+        knowledgeSkills[3] = skillSheet.crop(width, height*6, width, height);
+        knowledgeSkillsG[4] = skillSheet.crop(width*2, height*6, width, height);
+        knowledgeSkills[4] = skillSheet.crop(width*3, height*6, width, height);
+
+        intelligenceSkills = new Bitmap[3];
+        intelligenceSkillsG = new Bitmap[3];
+        for(int i = 0; i < 2; i++){
+            intelligenceSkillsG[i] = skillSheet.crop(width*2*(i+2), height*6, width, height);
+            intelligenceSkills[i] = skillSheet.crop(width*(2*(i+2)+1), height*6, width, height);
+        }
+        intelligenceSkillsG[2] = skillSheet.crop(0, height*7, width, height);
+        intelligenceSkills[2] = skillSheet.crop(width, height*7, width, height);
 
         unlock = skillSheet.crop(width*5, 0, 250, 128);
 

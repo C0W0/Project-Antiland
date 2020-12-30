@@ -16,6 +16,14 @@ public class DestroyEntity extends KillingMission {
     @Override
     public void receiveReward() {
         handler.getPlayer().increaseXp(xpGain);
-        handler.getPlayer().getInventory().addItem(Item.items[rewardItemID].addToInv(rewardItemCount));
+        if(rewardItemCount == -1)
+            handler.getPlayer().changeWealth(30);
+        else
+            handler.getPlayer().getInventory().addItem(Item.items[rewardItemID].addToInv(rewardItemCount));
+    }
+
+    @Override
+    public boolean isCompleted() {
+        return super.isCompleted() && status != 2;
     }
 }

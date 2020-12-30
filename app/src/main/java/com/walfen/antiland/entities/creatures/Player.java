@@ -341,7 +341,7 @@ public class Player extends Creature implements TouchEventListener {
     public void update() {
         super.update();
 //        System.out.println(attackTimer);
-        System.out.println((int)x/128+" "+(int)y/128);
+//        System.out.println((int)x/128+" "+(int)y/128);
 //        System.out.println(x+" "+y);
         if(disable){
             handler.getGameCamera().centerOnEntity(this);

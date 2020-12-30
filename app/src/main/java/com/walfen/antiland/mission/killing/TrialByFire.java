@@ -24,7 +24,7 @@ public class TrialByFire extends DestroyEntity {
                         ArrayList<Conversation> c = new ArrayList<>();
                         c.add(new Conversation("... come ...", Assets.NULL, false));
                         handler.getUIManager().getConvBox().setConversationList(c, () -> handler.getUIManager().popUpAction("You feel the voice echo through your body." +
-                                        "The ancient helmet begins shaking more vigorously than before.", "What is happening?",
+                                        "The ancient magic book begins shaking more vigorously than before.", "What is happening?",
                                 () -> {handler.getPlayer().getMissionManager().addMission(7); complete(); handler.getGame().autoSave();}));
                         handler.getUIManager().hideUI();
                         handler.getUIManager().getConvBox().setActive();

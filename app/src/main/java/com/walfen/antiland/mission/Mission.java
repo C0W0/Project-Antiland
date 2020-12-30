@@ -6,6 +6,7 @@ import android.graphics.Point;
 import androidx.annotation.NonNull;
 
 import com.walfen.antiland.Handler;
+import com.walfen.antiland.entities.Entity;
 import com.walfen.antiland.items.Item;
 import com.walfen.antiland.mission.collector.CollectApple;
 import com.walfen.antiland.mission.collector.SimpleCollectorMission;
@@ -51,6 +52,8 @@ public abstract class Mission implements Cloneable{
 
     //repeated missions
     public static Mission aIsForApple = new CollectApple("A is for Apple", "Collect one Apple from a tree and give it to the Hermit.", 19, 1);
+    public static Mission slimySquishy = new DestroyEntity("Slimy n’ Squishy", "Kill three Slimes", new int[]{Entity.slime.getId()}, 20, new int[]{3}, 10,
+            1, -1);
 
 //    public static Mission collect10Woods = new CollectWood("Collect 10 woods",
 //            "Collect 10 woods for the construction of our town", 0, 10);

@@ -4,13 +4,11 @@ import android.graphics.Bitmap;
 
 import androidx.annotation.NonNull;
 
-import com.walfen.antiland.entities.Entity;
 import com.walfen.antiland.entities.creatures.Creature;
 import com.walfen.antiland.entities.properties.effect.passive.ArmourDebuff;
-import com.walfen.antiland.entities.properties.effect.passive.MentalUnrest;
 import com.walfen.antiland.entities.properties.effect.special.BraveHeart;
+import com.walfen.antiland.entities.properties.effect.special.SpeedBoost;
 import com.walfen.antiland.entities.properties.effect.special.Stung;
-import com.walfen.antiland.gfx.Assets;
 
 public abstract class StatusEffect implements Cloneable{
 
@@ -21,6 +19,7 @@ public abstract class StatusEffect implements Cloneable{
     /* Status Effect id:
     Stung: 1
     ArmourDebuff: 2
+    SpeedBoost: 3
     BraveHeart: 11
     (UPDATE HERE)
      */
@@ -29,8 +28,8 @@ public abstract class StatusEffect implements Cloneable{
     public static void initEffects(){
         new Stung();
         new ArmourDebuff();
+        new SpeedBoost();
         new BraveHeart();
-        new MentalUnrest();
     }
 
     public StatusEffect(Creature carrier, long activeDuration, int id){
@@ -86,9 +85,7 @@ public abstract class StatusEffect implements Cloneable{
         activeTime = System.currentTimeMillis();
     }
 
-    public Bitmap getTexture(){
-        return Assets.grass; //TODO: add texture for status effects
-    }
+    public abstract Bitmap getTexture();
 
     public int getId() {
         return id;

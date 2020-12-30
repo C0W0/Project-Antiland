@@ -43,7 +43,7 @@ public class SimpleShield extends Auxiliary {
 
     @Override
     public String getDesc() {
-        return "Something to block incoming attacks";
+        return "An old-fashioned shield";
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.walfen.antiland.entities.special.command.passive.island;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 
+import com.walfen.antiland.Constants;
 import com.walfen.antiland.entities.special.command.passive.tutorial.TutorialMessager;
 import com.walfen.antiland.gfx.Animation;
 import com.walfen.antiland.gfx.Assets;
@@ -16,23 +17,17 @@ public class IslandMessagers {
 
     public TutorialStatus() {
         super(1014);
+        actionBounds = new Rect(0, 0, 256, 384);
     }
 
     @Override
     protected void displayMessage() {
-
-    }
-}
-
-    public static class TutorialInventory extends TutorialMessager{
-
-        public TutorialInventory() {
-            super(1015);
-        }
-
-        @Override
-        protected void displayMessage() {
-
+        handler.getUIManager().activeTutorial("Tutorial: use your perk points", new Rect(16, 16,
+                16+144, 16+144), () ->
+                handler.getUIManager().popUpAction("This is your player status screen.",
+                        "Ok", () -> handler.getUIManager().activeTutorial("Tutorial: switch to the skills screen",
+                                handler.getPlayer().getMapManager().getSwitchButtonBounds(),
+                                () -> handler.getUIManager().popUpMessage("You can upgrade skills by spending perk points. You will get a perk point each time you upgrades."))));
         }
     }
 
@@ -59,7 +54,7 @@ public class IslandMessagers {
         @Override
         protected void displayMessage() {
             handler.getUIManager().popUpAction("You recognize the barricade from the Blacksmith’s description but the gaping hole suggests otherwise. " +
-                    "As you examine the barricade, you feel the ancient helmet shaking", "...",
+                    "As you examine the barricade, you feel the ancient magic book shaking", "...",
                     () ->{
                         ArrayList<Conversation> c = new ArrayList<>();
                         c.add(new Conversation("... come ...", Assets.NULL, false));

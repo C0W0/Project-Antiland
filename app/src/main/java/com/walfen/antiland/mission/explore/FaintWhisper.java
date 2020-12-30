@@ -22,7 +22,7 @@ public class FaintWhisper extends ExploreMission {
     public void update() {
         if(isCompleted() && !ctrl){
             handler.getUIManager().popUpAction("As you approach the peninsula, you see the spirit from the ruins. " +
-                            "It gestures towards you and the helmet starts shaking violently. " +
+                            "It gestures towards you and the book you got from the temple starts shaking violently. " +
                             "You pull it out and spiritual energy explodes into the air. " +
                             "The tempest torrent concentrates around the spirit as the figure of a warrior takes shape.", "So you are the sound in my head",
                     () ->{

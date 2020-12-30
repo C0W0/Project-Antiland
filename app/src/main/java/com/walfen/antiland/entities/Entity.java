@@ -9,9 +9,11 @@ import androidx.annotation.NonNull;
 import com.walfen.antiland.GameHierarchyElement;
 import com.walfen.antiland.Handler;
 import com.walfen.antiland.entities.creatures.active.AntiWraith;
+import com.walfen.antiland.entities.creatures.active.EnduranceSlime;
 import com.walfen.antiland.entities.creatures.active.EvilSpirit;
 import com.walfen.antiland.entities.creatures.active.IceSlime;
 import com.walfen.antiland.entities.creatures.active.LostGhost;
+import com.walfen.antiland.entities.creatures.active.MegaSlime;
 import com.walfen.antiland.entities.creatures.active.Slime;
 import com.walfen.antiland.entities.creatures.active.SpiritWarrior;
 import com.walfen.antiland.entities.creatures.active.TrappedSpirit;
@@ -27,6 +29,7 @@ import com.walfen.antiland.entities.properties.attack.Attack;
 import com.walfen.antiland.entities.special.command.active.TempleBossCoffin;
 import com.walfen.antiland.entities.special.command.passive.generators.entities.EntityGenerator;
 import com.walfen.antiland.entities.special.command.passive.generators.GenerationConstant;
+import com.walfen.antiland.entities.special.command.passive.generators.entities.GiantSlimeSpawner;
 import com.walfen.antiland.entities.special.command.passive.generators.entities.SlimeGenerator;
 import com.walfen.antiland.entities.special.command.passive.generators.entities.SpiritLeak;
 import com.walfen.antiland.entities.special.command.passive.WorldGate;
@@ -63,6 +66,8 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
     Ghost: 206
     SpiritWorrier: 207
     AntiWraith: 208
+    MegaSlime: 209
+    EnduranceSlime: 210
     ------------------------
     NPC: 401 ~ 700
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -102,6 +107,7 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
     SlimeSpawner: 1101
     SpiritSpawner: 1102
     SpiritLeak: 1103
+    GiantSlimeSpawner: 1104
     KeyGenerator: 1201
     MapleSyrupGenerator: 1202
     TempleBossCoffin: 1301
@@ -132,8 +138,11 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
         new LostGhost();
         new SpiritWarrior();
         new AntiWraith();
+        new MegaSlime();
+        new EnduranceSlime();
         new EntityGenerator(205, 256, 5, GenerationConstant.FAST_GENERATION, 1102);
         new SpiritLeak();
+        new GiantSlimeSpawner();
         new KeyGenerator();
         new MapleSyrupGenerator();
         new ForestTree();
@@ -151,6 +160,7 @@ public abstract class Entity implements GameHierarchyElement, Cloneable {
         new CactusNPC();
         new ChickenNPC();
         new Hermit();
+        new IslandMessagers.TutorialStatus();
         new IslandMessagers.EncounterMonster();
         new IslandMessagers.BarricadeBroken();
         new IslandMessagers.Indicator();

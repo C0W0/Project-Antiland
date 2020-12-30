@@ -15,6 +15,7 @@ import com.walfen.antiland.gfx.Assets;
 import com.walfen.antiland.gfx.ImageEditor;
 import com.walfen.antiland.items.Item;
 import com.walfen.antiland.ui.TouchEventListener;
+import com.walfen.antiland.ui.buttons.TextImageButton;
 import com.walfen.antiland.ui.buttons.UIImageButton;
 import com.walfen.antiland.untils.Utils;
 
@@ -34,7 +35,8 @@ public class Fabricator implements TouchEventListener {
     private int craftingWindowBaseX, craftingWindowBaseY, itemDescCX, itemDescY;
     private int[][] recipeLocations;
     private int lastSelection; // efficiency mechanic
-    private UIImageButton craftButton, invSwitchButton, closeButton;
+    private UIImageButton invSwitchButton, closeButton;
+    private TextImageButton craftButtonText;
     private final Bitmap craftingScreen, blueSquare, redSquare;
 
     public Fabricator(Handler handler, Inventory inventory){
@@ -58,10 +60,8 @@ public class Fabricator implements TouchEventListener {
         scroll = 0; // WIP
         lastSelection = -1;
         recipeLocations = new int[35][5];
-        craftButton = new UIImageButton(295.f / 512 * inventory.invWidth + inventory.xDispute,
-                321.f / 384 * inventory.invHeight + inventory.yDispute,
-                (int) (170.f / 512 * inventory.invWidth), (int) (18.f / 384 * inventory.invHeight),
-                new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, this::craft);
+        craftButtonText = new TextImageButton(379.f/512*inventory.invWidth+inventory.xDispute, 322.f/384*inventory.invHeight+inventory.yDispute,
+                38, "C r a f t", Color.argb(255, 0, 138, 0), Assets.popupButton2, this::craft);
         invSwitchButton = new UIImageButton(inventory.xDispute+5, inventory.yDispute+inventory.invHeight-Constants.UI_CLOSE_SIZE-5,
                 Constants.UI_CLOSE_SIZE, Constants.UI_CLOSE_SIZE,
                 Assets.switchFlip, this::setActive);
@@ -131,7 +131,7 @@ public class Fabricator implements TouchEventListener {
     public void onTouchEvent(MotionEvent event) {
         if(!active)
             return;
-        craftButton.onTouchEvent(event);
+        craftButtonText.onTouchEvent(event);
         if(buttonJustPressed) {
             buttonJustPressed = false;
             return;
@@ -175,7 +175,7 @@ public class Fabricator implements TouchEventListener {
                         Constants.getRenderPaint());
             }
         }
-        craftButton.draw(canvas);
+        craftButtonText.draw(canvas);
         invSwitchButton.draw(canvas);
         closeButton.draw(canvas);
         Recipe re = recipes.get(recipeLocations[selectedY][selectedX]);

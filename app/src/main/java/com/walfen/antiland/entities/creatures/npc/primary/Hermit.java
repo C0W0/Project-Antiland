@@ -139,9 +139,6 @@ public class Hermit extends MajorMissionNPC{
                                 Entity e = Entity.entityList[740].clone();
                                 e.initialize(handler, 5120, 7552, 5120, 7552, 0);
                                 handler.getWorld().getEntityManager().addEntityHot(e);
-                                e = Entity.entityList[1016].clone();
-                                e.initialize(handler, 4992, 7552, 4992, 7552, 0);
-                                handler.getWorld().getEntityManager().addEntityHot(e);
                             });
                             manager.getConvBox().setActive();
                         }}, false);

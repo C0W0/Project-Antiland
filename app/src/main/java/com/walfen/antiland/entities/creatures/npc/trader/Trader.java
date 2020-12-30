@@ -56,8 +56,8 @@ public abstract class Trader extends NPC {
         public static ArrayList<Item> getFootTraderInv(Handler handler){
             ArrayList<Item> items = new ArrayList<>();
             addItem(handler, Item.apple.addToInv(50), items);
-            addItem(handler, Item.lvOneHpPotion.addToInv(10), items);
-            addItem(handler, Item.lvOneGreenPotion.addToInv(10), items);
+            addItem(handler, Item.hpPotion1.addToInv(10), items);
+            addItem(handler, Item.greenPotion1.addToInv(10), items);
             addItem(handler, Item.bottle.addToInv(20), items);
             return items;
         }
@@ -68,10 +68,19 @@ public abstract class Trader extends NPC {
             addItem(handler, Item.apple.addToInv(50), items);
             addItem(handler, Item.coconut.addToInv(50), items);
             addItem(handler, Item.woodItem.addToInv(50), items);
-            addItem(handler, Item.lvOneHpPotion.addToInv(10), items);
-            addItem(handler, Item.lvOneGreenPotion.addToInv(10), items);
+            addItem(handler, Item.hpPotion1.addToInv(10), items);
+            addItem(handler, Item.greenPotion1.addToInv(10), items);
+            addItem(handler, Item.bluePotion1.addToInv(10), items);
+            addItem(handler, Item.hpPotion2.addToInv(10), items);
+            addItem(handler, Item.greenPotion2.addToInv(10), items);
+            addItem(handler, Item.bluePotion2.addToInv(10), items);
+            addItem(handler, Item.hpPotion3.addToInv(2), items);
+            addItem(handler, Item.greenPotion3.addToInv(2), items);
+            addItem(handler, Item.bluePotion3.addToInv(2), items);
+            addItem(handler, Item.steelNugget.addToInv(50), items);
             addItem(handler, Item.bottle.addToInv(20), items);
             addItem(handler, Item.fish.addToInv(20), items);
+            addItem(handler, Item.leatherBoots.addToInv(1), items);
             return items;
         }
     }

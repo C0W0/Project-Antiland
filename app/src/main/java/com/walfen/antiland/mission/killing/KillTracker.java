@@ -87,4 +87,8 @@ public class KillTracker {
     public Entity getTopEntity() {
         return topEntity;
     }
+
+    public ArrayList<Entity> getTrackingEntities() {
+        return trackingEntities;
+    }
 }

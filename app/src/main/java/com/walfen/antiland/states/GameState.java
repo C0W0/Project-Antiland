@@ -124,11 +124,17 @@ public class GameState extends State {
                 () -> Integer.toString(handler.getPlayer().getLevel()), 40, Constants.TEXT_COLOUR));
         uiManager.addUIObject(new UIImageButton(64, 224, 128, 128,
                 Assets.save, this::saveGame));
+        uiManager.addUIObject(new UIImageButton(64, 384, 128, 128,
+                Assets.menuButton, () -> {
+            autoSave();
+            State.setState(handler.getGame().getMenuState());
+            worlds.clear();
+        }));
         uiManager.addUIObject(new UIImageButton(8, Constants.SCREEN_HEIGHT-8-128, 128, 128,
-                new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, () -> handler.getPlayer().getInventory().setActive()));
+                Assets.invButton, () -> handler.getPlayer().getInventory().setActive()));
         uiManager.addUIObject(new UIImageButton(Constants.SCREEN_WIDTH-8-128, Constants.SCREEN_HEIGHT-8-128, 128, 128,
-                new Bitmap[]{Assets.joystick_pad, Assets.joystick_controller}, () -> handler.getPlayer().getMapManager().setActive()));
-        uiManager.addUIObject(new TextButton(128, 416, 40, "Debug", Color.BLUE, this::test));
+                Assets.mapButton, () -> handler.getPlayer().getMapManager().setActive()));
+//        uiManager.addUIObject(new TextButton(128, 416, 40, "Debug", Color.BLUE, this::test));
     }
 
     private void saveGame(){
