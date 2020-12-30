@@ -118,7 +118,7 @@ public class Hermit extends MajorMissionNPC{
                     c2.add(new Conversation("All the time in the world...", Assets.hermit[0], true));
                     c2.add(new Conversation("and you do this...", Assets.hermit[0], true));
 
-                    c3.add(new Conversation("Then you just wanted to bother me.", Assets.hermit[0], true));
+                    c3.add(new Conversation("Then you just wanted to bother me, Huh.", Assets.hermit[0], true));
                     c3.add(new Conversation("(The Hermit does a painfully slow clap to perfectly accentuate the time you’ve wasted)", Assets.NULL, true));
 
                     manager.getConvBox().setConversationList(c, () -> {

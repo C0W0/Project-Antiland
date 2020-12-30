@@ -1,0 +1,191 @@
+"Steampunk Town" by Hyptosis licensed CC-BY-NC-SA 3.0: http://www.lorestrome.com/pixel_archive/town01.png /s/s/
+
+"Pixel Art 2D Basic Menu Buttons" by Cayden Franklin licensed CC-BY-NC-SA 4.0: https://opengameart.org/content/pixel-art-2d-basic-menu-buttons /s/s/
+
+"RPG item set" by Jetrel licensed CC0: https://opengameart.org/content/rpg-item-set /s/s/
+
+"Colorful potions (animated)" by Buch licensed CC0: https://opengameart.org/content/colorful-potions-animated /s/s/
+
+"[LPC] Farming tilesets, magic animations and UI elements" by Daniel Eddeland licensed CC-BY-SA 3.0 or GPL 3.0:
+https://opengameart.org/content/lpc-farming-tilesets-magic-animations-and-ui-elements /s/s/
+
+"2d lost Garden tileset transition to Jetrel's Wood tileset" by Jetrel, Daniel Cook, Bertram and Zabin licensed 
+CC-BY-SA 3.0: https://opengameart.org/content/2d-lost-garden-tileset-transition-to-jetrels-wood-tileset /s/s/
+
+"Extended LPC Magic pack" by Daniel Eddeland licensed CC-BY-NC-SA 3.0 or GPL 3.0: https://opengameart.org/content/extended-lpc-magic-pack /s/s/
+
+"[LPC] Trees Mega-Pack" by bluecarrot16, Jetrel, Zabin, Hyptosis, Surt, Buch, Johann Charlot, Stephen Challener and the Open Surge team (http://opensnc.sourceforge.net), Gaurav Munjal, Ivan Voirol (Silver IV)
+Guido Bos, Yar, Paulina Riva (PauR), William.Thompsonj, Casper Nilsson, Hyptosis, ansimuz, qubodup, Bart K., Blarumyrran, Lanea Zimmerman (Sharm), Leonard Pabin, Chris Phillips, Barbara Rivera, and Talosaurus. 
+licensed CC-BY-SA 3.0:  /s/s/
+
+"[LPC] Items and game effects" by Sharm, ETTiNGRiNDER, wulax, Nila122, daneeklu, JaidynReiman, pennomi, laetissima, makrohn,and Jetrel
+licensed CC-BY-SA 3.0, GPL 3.0, or GPL 2.0: https://opengameart.org/content/lpc-items-and-game-effects /s/s/
+
+"rpg ui icons: inventory, map, quests, spells, status" by lukems-br licensed CC-BY 3.0: https://opengameart.org/content/rpg-ui-icons-inventory-map-quests-spells-status /s/s/
+
+"Lots of trees and plants from OGA (DB32) tilesets pack 1" by 
+Jetrel, Zabin, Hyptosis, Surt licensed 
+CC0: 
+https://opengameart.org/content/lots-of-trees-and-plants-from-oga-db32-tilesets-pack-1 /s/s/
+
+"The Field of the Floating Islands" by 
+Buch <https://opengameart.org/users/buch> licensed 
+CC0: 
+https://opengameart.org/content/the-field-of-the-floating-islands /s/s/
+
+"Outdoor tiles, again" by 
+Buch <https://opengameart.org/users/buch> licensed 
+CC-BY 2.0: 
+https://opengameart.org/content/outdoor-tiles-again /s/s/
+
+"Shoot'em up graphic kit" by 
+Johann Charlot licensed 
+CC-BY-SA 3.0 or GPL 3.0: 
+https://opengameart.org/content/shootem-up-graphic-kit /s/s/
+
+"32x32 (and 16x16) RPG Tiles--Forest and some Interior Tiles" by 
+Stephen Challener and the Open Surge team (http://opensnc.sourceforge.net)commissioned by Gaurav Munjal licensed 
+CC-BY 3.0: 
+https://opengameart.org/content/32x32-and-16x16-rpg-tiles-forest-and-some-interior-tiles /s/s/
+
+"Orthographic outdoor tiles" by 
+Buch licensed 
+CC0: 
+https://opengameart.org/content/orthographic-outdoor-tiles /s/s/
+
+"Basic map 32x32 by Silver IV" by 
+Ivan Voirol (Silver IV) licensed 
+CC-BY 3.0, GPL 3.0, or GPL 2.0: 
+https://opengameart.org/content/basic-map-32x32-by-silver-iv /s/s/
+
+"old frogatto tile art" by 
+Guido Bos licensed 
+CC0: 
+https://opengameart.org/content/old-frogatto-tile-art /s/s/
+
+"Generic Platformer Tiles" by 
+surt licensed 
+CC0: 
+http://opengameart.org/content/generic-platformer-tiles /s/s/
+
+"Isometric 64x64 Outside Tileset" by 
+Yar licensed 
+CC-BY 3.0: 
+https://opengameart.org/content/isometric-64x64-outside-tileset /s/s/
+
+"Nature tileset" by 
+Paulina Riva (PauR) licensed 
+CC-BY 3.0: 
+https://opengameart.org/content/nature-tileset /s/s/
+
+"[LPC] Tree Recolors" by 
+William.Thompsonj licensed 
+CC-BY-SA 3.0 or GPL 3.0: 
+https://opengameart.org/content/lpc-tree-recolors /s/s/
+
+"LPC C.Nilsson" by 
+Casper Nilsson licensed 
+CC-BY-SA 3.0 or GPL 3.0: 
+https://opengameart.org/content/lpc-cnilsson /s/s/
+
+"Lots of Hyptosis' tiles organized!" by 
+Hyptosis licensed 
+CC-BY 3.0: 
+https://opengameart.org/content/lots-of-hyptosis-tiles-organized /s/s/
+
+"Trees & Bushes" by 
+ansimuz licensed 
+CC0: 
+http://opengameart.org/content/trees-bushes /s/s/
+
+"OGA Community Tileset: Nature" by 
+qubodup, Bart K., Blarumyrran licensed 
+GPL 2.0, GPL 3.0, or CC-BY-SA 3.0: 
+https://opengameart.org/content/oga-community-tileset-nature /s/s/
+
+"Liberated Pixel Cup (LPC) Base Assets" by 
+Lanea Zimmerman (Sharm) licensed 
+CC-BY-SA 3.0, CC-BY 3.0, or GPL 3.0: 
+https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles /s/s/
+
+"Whispers of Avalon: Grassland Tileset" by 
+Leonard Pabin licensed 
+CC-BY 3.0, GPL 3.0, or GPL 2.0: 
+https://opengameart.org/content/whispers-of-avalon-grassland-tileset /s/s/
+
+"Team River Fox" by 
+Chris Phillips, Barbara Rivera licensed 
+CC-BY-SA 3.0 or GPL 3.0: 
+https://opengameart.org/content/team-river-fox /s/s/
+
+"Concept Art for LPC Entry" by 
+Barbara Rivera licensed 
+CC-BY-SA 3.0 or GPL 3.0: 
+https://opengameart.org/content/concept-art-for-lpc-entry /s/s/
+
+"Old Eastern Themed Building Tiles + Tree" by 
+Talosaurus licensed 
+CC0: 
+https://opengameart.org/content/old-eastern-themed-building-tiles-tree /s/s/
+
+
+"[LPC] Beach/Desert" by bluecarrot16, Guillaume Lecollinet, Johann Charlot, cynicmusic, Surt, vk, Yar, Buch, Jetrel, Zachariah Husiar aka (Zabin), Hyptosis, William Thompson, Frode Lindeijer aka (Modanung), Leonard Pabin, and Lanea Zimmerman aka (Sharm) 
+licensed CC-BY-SA 3.0 /s/s/
+
+"BrowserQuest Sprites and Tiles" by 
+Guillaume Lecollinet licensed 
+CC-BY-SA 3.0: 
+http://opengameart.org/content/browserquest-sprites-and-tiles /s/s/
+
+"Pixelsphere 32x32 Tileset + Grass + Trees" by 
+cynicmusic licensed 
+CC0: 
+http://opengameart.org/content/pixelsphere-32x32-tileset-grass-trees /s/s/
+
+"trees" by 
+Surt, vk licensed 
+CC0: 
+https://opengameart.org/content/trees-1 /s/s/
+
+"Tuxemon tileset" by 
+Buch licensed 
+CC-BY-SA 3.0: 
+https://opengameart.org/content/tuxemon-tileset /s/s/
+
+"Bone Planet" by 
+Hyptosis licensed 
+CC0: 
+https://opengameart.org/content/bone-planet /s/s/
+
+"Whispers of Avalon: Desert Tileset" by 
+Leonard Pabin, Ali-G licensed 
+CC-BY 3.0, GPL 3.0, or GPL 2.0: 
+https://opengameart.org/content/whispers-of-avalon-desert-tileset /s/s/
+
+"[LPC] Beach / Desert" by 
+bluecarrot16, Guillaume Lecollinet, Johann Charlot, cynicmusic, Surt, vk, Yar, Buch, Jetrel, Zabin, and Hyptosis licensed 
+CC-BY-SA 3.0: 
+https://opengameart.org/content/lpc-beach-desert /s/s/
+
+"[LPC] Sand+Rock Alt colors" by 
+William.Thompsonj, and Daniel Eddeland licensed 
+CC-BY 3.0 or GPL 3.0: 
+https://opengameart.org/content/lpc-sandrock-alt-colors /s/s/
+
+"[LPC] Arabic Elements" by 
+Lanea Zimmerman (Sharm), William Thompson licensed 
+CC-BY 3.0, GPL 3.0, GPL 2.0, or OGA-BY 3.0: 
+https://opengameart.org/content/lpc-arabic-elements /s/s/
+
+"Lots of free 2d tiles and sprites by Hyptosis" by 
+Hyptosis, Zabin licensed 
+CC-BY 3.0: 
+https://opengameart.org/content/lots-of-free-2d-tiles-and-sprites-by-hyptosis /s/s/
+
+"The Mana World, Evol Online Palm trees" by 
+Frode Lindeijer aka (Modanung) (big palm tree), and Leonard Pabin (small palm tree) licensed 
+CC-BY 3.0, GPL 3.0, or GPL 2.0: 
+https://faq.tuxfamily.org/Game:EvolOnline/En /s/s/
+
+
+Special Thanks to Glitch at www.glitchthegame.com

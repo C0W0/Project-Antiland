@@ -159,7 +159,7 @@ public class PlayerSkillsManager implements TouchEventListener {
         enduranceSL.add(endurance);
 
         agility = new SimplePlayerSkill(handler, 10,
-                () -> handler.getPlayer().changeSpeed((int)Math.floor(agility.getLevel()/2.f+0.5)), Assets.agilityR,
+                () -> handler.getPlayer().changeSpeed(2), Assets.agilityR,
                 "Agility", "Speed and agility.", "Increases speed and dodge.");
         agilitySU.add(new SkillStaticIcon(skillL1X, skillL1Y, skillIconSize, skillIconSize, Assets.agilityR, agility));
         agilitySL.add(agility);

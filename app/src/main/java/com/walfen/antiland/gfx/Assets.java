@@ -72,21 +72,23 @@ public class Assets {
     public static Bitmap horizontalSlideTrack, horizontalSlider, horizontalTickMark;
     public static Bitmap adjusterUp, adjusterDown;
     public static Bitmap popup1, popup2, popupButton1, popupButton2;
-    public static Bitmap greyDisk;
-    public static Bitmap switchFlip, close;
+    public static Bitmap greyDisk, menuFrame;
+    public static Bitmap switchFlip, close, goBack;
     public static Bitmap save, chat, operate, tradeInteract, menuButton;
     public static Bitmap headSignOrange, headSignGray, hsoMissionComplete, hsgMissionComplete;
     public static Bitmap hsoGetMission, hsgGetMission, hsoTrade, hsgTrade;
     public static Bitmap extend, collapse;
     public static Bitmap splashScreen, splashBackground;
     public static Bitmap[] invButton, mapButton;
+    public static Bitmap playButton, creditsButton;
+    public static Bitmap newGameButton, startFromSave, startFromAutoSave;
 
     //entities
     public static Bitmap tree;
 
     public static Bitmap[] npcSlime, slimeAttackLeft, slimeAttackRight, slimeMovementLeft, slimeMovementRight;
     public static Bitmap[] trappedSpiritAttackLeft, trappedSpiritAttackRight, trappedSpiritMovementLeft, trappedSpiritMovementRight;
-    public static Bitmap  trappedSpiritAttackUp, trappedSpiritAttackDown, trappedSpiritMovementUp, trappedSpiritMovementDown;
+    public static Bitmap trappedSpiritAttackUp, trappedSpiritAttackDown, trappedSpiritMovementUp, trappedSpiritMovementDown;
     public static Bitmap[] npcCrab, npcMushroom;
     public static Bitmap[] iceSlimeAttackLeft, iceSlimeAttackRight, iceSlimeMovementLeft, iceSlimeMovementRight;
     public static Bitmap[] ice_spike;
@@ -149,6 +151,7 @@ public class Assets {
         SpriteSheet npcSheet = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.island_npc));
         SpriteSheet ghostEntitySheet = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.spirit_entity));
         SpriteSheet staticEntities = new SpriteSheet(ImageLoader.loadImage(R.drawable.island_static_entity));
+        SpriteSheet buttonsSheet = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.buttons));
 
         SpriteSheet magicSheet = new SpriteSheet(ImageLoader.loadSpriteSheet(R.drawable.magic_sheet));
 
@@ -391,22 +394,30 @@ public class Assets {
         player_neutral = characterMovement.crop(0,0,width,height*2);
         player_icon = characterMovement.crop(0, 0, width, height);
 
-        player_attack_left = new Bitmap[4];
+        player_attack_left = new Bitmap[6];
+        player_attack_left[5] = characterAttack.crop(0,0,width,height*2);
+        player_attack_left[4] = characterAttack.crop(0,0,width,height*2);
         player_attack_left[3] = characterAttack.crop(0,0,width,height*2);
         player_attack_left[2] = characterAttack.crop(width,0,width,height*2);
         player_attack_left[1] = characterAttack.crop(width*2,0,width,height*2);
         player_attack_left[0] = characterAttack.crop(width*3,0,width,height*2);
-        player_attack_right = new Bitmap[4];
-        player_attack_right[3] = characterAttack.crop(0,height*2,width,height*2);
-        player_attack_right[2] = characterAttack.crop(width,height*2,width,height*2);
-        player_attack_right[1] = characterAttack.crop(width*2,height*2,width,height*2);
-        player_attack_right[0] = characterAttack.crop(width*3,height*2,width,height*2);
-        player_attack_up = new Bitmap[4];
+        player_attack_right = new Bitmap[6];
+        player_attack_right[0] = characterAttack.crop(0,height*2,width,height*2);
+        player_attack_right[1] = characterAttack.crop(width,height*2,width,height*2);
+        player_attack_right[2] = characterAttack.crop(width*2,height*2,width,height*2);
+        player_attack_right[3] = characterAttack.crop(width*3,height*2,width,height*2);
+        player_attack_right[4] = characterAttack.crop(width*3,height*2,width,height*2);
+        player_attack_right[5] = characterAttack.crop(width*3,height*2,width,height*2);
+        player_attack_up = new Bitmap[6];
+        player_attack_up[5] = characterAttack.crop(0,height*4,width,height*2);
+        player_attack_up[4] = characterAttack.crop(0,height*4,width,height*2);
         player_attack_up[3] = characterAttack.crop(0,height*4,width,height*2);
         player_attack_up[2] = characterAttack.crop(width,height*4,width,height*2);
         player_attack_up[1] = characterAttack.crop(width*2,height*4,width,height*2);
         player_attack_up[0] = characterAttack.crop(width*3,height*4,width,height*2);
-        player_attack_down = new Bitmap[4];
+        player_attack_down = new Bitmap[6];
+        player_attack_down[5] = characterAttack.crop(0,height*6,width,height*2);
+        player_attack_down[4] = characterAttack.crop(0,height*6,width,height*2);
         player_attack_down[3] = characterAttack.crop(0,height*6,width,height*2);
         player_attack_down[2] = characterAttack.crop(width,height*6,width,height*2);
         player_attack_down[1] = characterAttack.crop(width*2,height*6,width,height*2);
@@ -608,6 +619,16 @@ public class Assets {
         mapButton[0] = sheet1.crop(width*2, height*4, width, height);
         mapButton[1] = sheet1.crop(width*3, height*4, width, height);
         menuButton = sheet1.crop(0, height*5, width, height);
+
+        playButton = buttonsSheet.crop(0, 0, width*2, height);
+        creditsButton = buttonsSheet.crop(0, height, width*2, height);
+
+        menuFrame = sheet.crop(width*4-109, 0, 109, height);
+        newGameButton = sheet.crop(0, 0, width*2, height);
+        goBack = sheet.crop(width*2, 0, width, height);
+        startFromSave = sheet.crop(0, height*2, width*3, height);
+        startFromAutoSave = sheet.crop(0, height*3, width*4, height);
+
 
         joystick_pad = sheet1.crop(0, 0, width*3, height*3);
         joystick_controller = sheet1.crop(width*3, 0, width, height);

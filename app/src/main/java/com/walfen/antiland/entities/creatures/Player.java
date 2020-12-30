@@ -106,10 +106,10 @@ public class Player extends Creature implements TouchEventListener {
         rightAnim = new Animation(0.5f, Assets.player_right);
         leftAnim = new Animation(0.5f, Assets.player_left);
 
-        downAttackAnim = new Animation(0.8f, Assets.player_attack_down);
-        upAttackAnim = new Animation(0.8f, Assets.player_attack_up);
-        rightAttackAnim = new Animation(0.8f, Assets.player_attack_right);
-        leftAttackAnim = new Animation(0.8f, Assets.player_attack_left);
+        downAttackAnim = new Animation(0.55f, Assets.player_attack_down);
+        upAttackAnim = new Animation(0.55f, Assets.player_attack_up);
+        rightAttackAnim = new Animation(0.55f, Assets.player_attack_right);
+        leftAttackAnim = new Animation(0.55f, Assets.player_attack_left);
 
         neutralAnim = new Animation(1, new Bitmap[]{Assets.player_neutral});
         currentAnimation = neutralAnim;

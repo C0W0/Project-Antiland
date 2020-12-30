@@ -10,7 +10,7 @@ import com.walfen.antiland.gfx.Assets;
 public class DemoExpert extends PassiveSkill {
 
     public DemoExpert(Handler handler) {
-        super(handler, 10, null, Assets.strengthSkills[2]);
+        super(handler, 10, null, Assets.strengthSkills[4]);
     }
 
     @Override

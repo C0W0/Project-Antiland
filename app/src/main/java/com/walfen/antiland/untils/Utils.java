@@ -110,6 +110,25 @@ public class Utils {
         return output;
     }
 
+    public static ArrayList<String> splitStringLong(String string, int substringSize){
+        StringBuilder builder = new StringBuilder();
+        ArrayList<String> output = new ArrayList<>();
+        int size;
+        for(String str: string.split("\\s+")){
+            size = builder.length()+str.length();
+            if(str.startsWith("http")){
+                output.add(builder.toString());
+                builder = new StringBuilder();
+            } else if(size >= substringSize){
+                output.add(builder.toString());
+                builder = new StringBuilder();
+            }
+            builder.append(str).append(" ");
+        }
+        output.add(builder.toString());
+        return output;
+    }
+
     public static boolean deleteDirectory(File directory){
         File[] dirFiles = directory.listFiles();
         if(dirFiles != null)

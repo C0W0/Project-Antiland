@@ -14,7 +14,10 @@ import com.walfen.antiland.Handler;
 import com.walfen.antiland.gfx.Assets;
 import com.walfen.antiland.gfx.ImageEditor;
 import com.walfen.antiland.ui.UIManager;
+import com.walfen.antiland.ui.UIObject;
 import com.walfen.antiland.ui.buttons.TextButton;
+import com.walfen.antiland.ui.buttons.UIImageButton;
+import com.walfen.antiland.ui.decorative.UIDecoration;
 import com.walfen.antiland.untils.Utils;
 
 import java.io.File;
@@ -27,8 +30,10 @@ import java.util.Calendar;
 public class MenuState extends State {
 
     private UIManager uiManager;
+    private UIObject[] menuObjects;
     private Bitmap splashScreen, splashBackground;
     private int xDispute, yDispute;
+    private boolean isMenuOn = false;
 
     public MenuState(Handler handler){
         super(handler);
@@ -37,14 +42,22 @@ public class MenuState extends State {
         splashBackground = ImageEditor.scaleBitmapForced(Assets.splashBackground, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
         xDispute = Constants.SCREEN_WIDTH/2 - splashScreen.getWidth()/2;
         yDispute = Constants.SCREEN_HEIGHT/2 - splashScreen.getHeight()/2;
-        uiManager.addUIObject(new TextButton(Constants.SCREEN_WIDTH/2.f, Constants.SCREEN_HEIGHT/2.f-300,
-                40, "new game", Color.BLACK,
-                () -> uiManager.popUpMessage("This will wipe out all existing save files, " +
-                        "are you sure you want to proceed?", this::createNewSaveDocument)));
-        uiManager.addUIObject(new TextButton(Constants.SCREEN_WIDTH/2.f, Constants.SCREEN_HEIGHT/2.f-100,
-                40, "from save file", Color.BLACK, () -> startGameFromPath(Constants.DIR+"/main")));
-        uiManager.addUIObject(new TextButton(Constants.SCREEN_WIDTH/2.f, Constants.SCREEN_HEIGHT/2.f+100,
-                40, "from autosave file", Color.BLACK, () -> startGameFromPath(Constants.DIR+"/auto")));
+        menuObjects = new UIObject[7];
+        menuObjects[0] = new UIDecoration(Constants.SCREEN_WIDTH/2.f-300, Constants.SCREEN_HEIGHT/2.f-400+150, 600, 650, Assets.menuFrame);
+        menuObjects[1] = new UIImageButton(Constants.SCREEN_WIDTH/2.f-226, Constants.SCREEN_HEIGHT/2.f-332+150, 256, 128,
+                Assets.newGameButton, () -> uiManager.popUpMessage("This will wipe out all existing save files, " +
+                "are you sure you want to proceed?", this::createNewSaveDocument));
+        menuObjects[2] = new UIImageButton(Constants.SCREEN_WIDTH/2.f-226, Constants.SCREEN_HEIGHT/2.f-164+150, 384, 128,
+                Assets.startFromSave, () -> startGameFromPath(Constants.DIR+"/main"));
+        menuObjects[3] = new UIImageButton(Constants.SCREEN_WIDTH/2.f-226, Constants.SCREEN_HEIGHT/2.f+36+150, 512, 128,
+                Assets.startFromAutoSave, () -> startGameFromPath(Constants.DIR+"/auto"));
+        menuObjects[4] = new UIImageButton(8, Constants.SCREEN_HEIGHT-8-128, 128, 128, Assets.goBack, this::switchMenu);
+        for(int i = 0; i < 5; i++)
+            menuObjects[i].setActive(false);
+        menuObjects[5] = new UIImageButton(Constants.SCREEN_WIDTH/2.f-428, Constants.SCREEN_HEIGHT/2.f+236, 256, 128, Assets.playButton, this::switchMenu);
+        menuObjects[6] = new UIImageButton(Constants.SCREEN_WIDTH/2.f+172, Constants.SCREEN_HEIGHT/2.f+236, 256, 128, Assets.creditsButton,
+                () -> {handler.getGame().getCreditsState().init(); State.setState(handler.getGame().getCreditsState());});
+        uiManager.addUIObject(menuObjects);
     }
 
     //for debugging purpose
@@ -61,31 +74,35 @@ public class MenuState extends State {
     public void draw(Canvas canvas) {
         Paint paint = new Paint();
         paint.setColor(Color.BLUE);
-        canvas.drawRect(new Rect(0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT), paint); // placeholder for background
+//        canvas.drawRect(new Rect(0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT), paint); // placeholder for background
         canvas.drawBitmap(splashBackground, null, new Rect(0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT), Constants.getRenderPaint());
         canvas.drawBitmap(splashScreen, null, new Rect(xDispute, yDispute, xDispute+splashScreen.getWidth(), yDispute+splashScreen.getHeight()), Constants.getRenderPaint());
 
         paint.setColor(Color.WHITE);
+//        paint.setAlpha(180);
 //        canvas.drawRect(new Rect(Constants.SCREEN_WIDTH/2-300, Constants.SCREEN_HEIGHT/2-400,
-//                Constants.SCREEN_WIDTH/2+300, Constants.SCREEN_HEIGHT/2+400), paint); // placeholder for loading
+//                Constants.SCREEN_WIDTH/2+300, Constants.SCREEN_HEIGHT/2+300), paint); // placeholder for loading
+//        paint.setAlpha(255);
         Rect r = new Rect();
         paint.setTextSize(30);
         paint.getTextBounds(Constants.GAME_VERSION_DISPLAY, 0, Constants.GAME_VERSION_DISPLAY.length(), r);
         canvas.drawText(Constants.GAME_VERSION_DISPLAY, Constants.SCREEN_WIDTH-r.width()-100, Constants.SCREEN_HEIGHT-10, paint);
         paint.setColor(Color.BLACK);
-        try{
-            String date = Utils.loadFileAsArrayList(new FileInputStream(new File(Constants.DIR+"/main/save.wld"))).get(0);
-            paint.setTextSize(25);
-            paint.getTextBounds(date, 0, date.length(), r);
-            canvas.drawText(date, Constants.SCREEN_WIDTH/2.f-r.width()/2.f, Constants.SCREEN_HEIGHT/2.f-80+r.height(), paint);
-        }catch (IOException ignored){ }
-        try {
-            String date = Utils.loadFileAsArrayList(new FileInputStream(new File(Constants.DIR+"/auto/save.wld"))).get(0);
-            paint.getTextBounds(date, 0, date.length(), r);
-            canvas.drawText(date, Constants.SCREEN_WIDTH/2.f-r.width()/2.f, Constants.SCREEN_HEIGHT/2.f+120+r.height(), paint);
-        }catch (IOException ignored){ }
         uiManager.draw(canvas);
-        uiManager.postDraw(canvas);
+        if(isMenuOn){
+            try{
+                String date = Utils.loadFileAsArrayList(new FileInputStream(new File(Constants.DIR+"/main/save.wld"))).get(0);
+                paint.setTextSize(25);
+                paint.getTextBounds(date, 0, date.length(), r);
+                canvas.drawText(date, Constants.SCREEN_WIDTH/2.f-r.width()/2.f+20, Constants.SCREEN_HEIGHT/2.f-80+r.height()+140, paint);
+            }catch (IOException ignored){ }
+            try {
+                String date = Utils.loadFileAsArrayList(new FileInputStream(new File(Constants.DIR+"/auto/save.wld"))).get(0);
+                paint.getTextBounds(date, 0, date.length(), r);
+                canvas.drawText(date, Constants.SCREEN_WIDTH/2.f-r.width()/2.f+20, Constants.SCREEN_HEIGHT/2.f+120+r.height()+140, paint);
+            }catch (IOException ignored){ }
+            uiManager.postDraw(canvas);
+        }
     }
 
     private void createNewSaveDocument(){
@@ -186,6 +203,12 @@ public class MenuState extends State {
             }
             file.createNewFile();
         }
+    }
+
+    private void switchMenu(){
+        isMenuOn = !isMenuOn;
+        for(UIObject o: menuObjects)
+            o.setActive();
     }
 
     @Override

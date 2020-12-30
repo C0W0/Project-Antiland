@@ -10,7 +10,7 @@ import com.walfen.antiland.entities.special.command.passive.generators.Generatio
 public class GiantSlimeSpawner extends EntityGenerator {
 
     public GiantSlimeSpawner() {
-        super(209, 256, 1, GenerationConstant.SLOW_GENERATION, 1104);
+        super(209, 256, 1, GenerationConstant.FAST_GENERATION, 1104);
     }
 
     @Override
@@ -31,7 +31,7 @@ public class GiantSlimeSpawner extends EntityGenerator {
         }
 
         //chance to spawn in check
-        float spawnChance = 0.99f;
+        float spawnChance = 0.80f;
         if(Math.random() >= spawnChance)
             spawnEntity();
 

@@ -25,6 +25,8 @@ public class UIDecoration extends UIObject {
 
     @Override
     public void draw(Canvas canvas) {
+        if(!active)
+            return;
         canvas.drawBitmap(texture, null, new Rect((int)x, (int)y, (int)(x+width), (int)(y+height)), Constants.getRenderPaint());
     }
 }

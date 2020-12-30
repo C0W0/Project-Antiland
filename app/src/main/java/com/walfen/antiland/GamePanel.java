@@ -16,6 +16,7 @@ import com.walfen.antiland.entities.properties.effect.StatusEffect;
 import com.walfen.antiland.gfx.Assets;
 import com.walfen.antiland.gfx.GameCamera;
 import com.walfen.antiland.items.Item;
+import com.walfen.antiland.states.CreditsState;
 import com.walfen.antiland.states.GameState;
 import com.walfen.antiland.states.MenuState;
 import com.walfen.antiland.states.State;
@@ -34,7 +35,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback, Ke
     private MainThread thread;
     private Handler handler;
     private GameCamera gameCamera;
-    private State gameState, menuState;
+    private State gameState, menuState, creditsState;
     private boolean allowExit;
     private long lastAutoSaveTime;
 
@@ -62,6 +63,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback, Ke
         gameCamera = new GameCamera(handler, 0, 0);
         gameState = new GameState(handler);
         menuState = new MenuState(handler);
+        creditsState = new CreditsState(handler);
         File index = new File(Constants.DIR+"/Index.wld");
         if(!index.exists()){
             try {
@@ -187,6 +189,10 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback, Ke
 
     public MenuState getMenuState() {
         return (MenuState)menuState;
+    }
+
+    public CreditsState getCreditsState(){
+        return (CreditsState)creditsState;
     }
 
     public boolean allowsExit() {
