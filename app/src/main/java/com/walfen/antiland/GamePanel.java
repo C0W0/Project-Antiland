@@ -38,6 +38,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback, Ke
     private State gameState, menuState, creditsState;
     private boolean allowExit;
     private long lastAutoSaveTime;
+    private MusicController musicController;
 
     public GamePanel(Context context) {
         super(context);
@@ -60,6 +61,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback, Ke
         Assets.init();
         Constants.init();
         handler = new Handler(this);
+        musicController = new MusicController(handler);
         gameCamera = new GameCamera(handler, 0, 0);
         gameState = new GameState(handler);
         menuState = new MenuState(handler);
@@ -129,19 +131,20 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback, Ke
         if(System.currentTimeMillis() - lastAutoSaveTime > 10000)
             allowExit = false;
         State.getCurrentState().update();
+        musicController.update();
     }
 
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
         State.getCurrentState().draw(canvas);
-        Rect r = new Rect();
-        Paint paint = new Paint();
-        paint.setColor(Color.MAGENTA);
-        paint.setTextSize(40);
-        String frames = Integer.toString(thread.getFPS());
-        paint.getTextBounds(frames, 0, frames.length(), r);
-        canvas.drawText(frames, Constants.SCREEN_WIDTH-100-r.width(), r.height()+10, paint);
+//        Rect r = new Rect();
+//        Paint paint = new Paint();
+//        paint.setColor(Color.MAGENTA);
+//        paint.setTextSize(40);
+//        String frames = Integer.toString(thread.getFPS());
+//        paint.getTextBounds(frames, 0, frames.length(), r);
+//        canvas.drawText(frames, Constants.SCREEN_WIDTH-100-r.width(), r.height()+10, paint);
     }
 
     private void initDirectory() throws IOException{
@@ -197,5 +200,9 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback, Ke
 
     public boolean allowsExit() {
         return allowExit;
+    }
+
+    public MusicController getMusicController() {
+        return musicController;
     }
 }

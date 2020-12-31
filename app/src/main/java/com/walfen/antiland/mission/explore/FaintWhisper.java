@@ -3,6 +3,7 @@ package com.walfen.antiland.mission.explore;
 import android.graphics.Point;
 
 import com.walfen.antiland.Handler;
+import com.walfen.antiland.R;
 import com.walfen.antiland.entities.Entity;
 import com.walfen.antiland.gfx.Assets;
 import com.walfen.antiland.ui.conversation.Conversation;
@@ -50,7 +51,9 @@ public class FaintWhisper extends ExploreMission {
     @Override
     public void setHandler(Handler handler) {
         super.setHandler(handler);
-        if(handler != null)
+        if(handler != null){
             ctrl = false;
+            handler.getGame().getMusicController().changeMusic(R.raw.ghost_town);
+        }
     }
 }

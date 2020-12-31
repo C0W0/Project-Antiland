@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.walfen.antiland.Constants;
 import com.walfen.antiland.Handler;
+import com.walfen.antiland.R;
 import com.walfen.antiland.entities.creatures.Player;
 import com.walfen.antiland.gfx.Assets;
 import com.walfen.antiland.ui.bars.BarA;
@@ -33,6 +34,7 @@ public class GameState extends State {
     private boolean disabled;
     private int transparency;
     private World world;
+    private int[] worldMusic;
     private Player player;
     private String currentPath;
     private ArrayList<World> worlds;
@@ -41,6 +43,9 @@ public class GameState extends State {
     public GameState(Handler handler){
         super(handler);
         worlds = new ArrayList<>();
+        worldMusic = new int[3];
+        worldMusic[0] = worldMusic[1] = R.raw.ghost_town;
+        worldMusic[2] = R.raw.antiland_beach;
         disabled = false;
         transparency = 0;
     }
@@ -103,6 +108,8 @@ public class GameState extends State {
             worldIndex = Utils.parseInt(Utils.loadFileAsArrayList(new FileInputStream(new File(path+"/save.wld"))).get(1));
             world = worlds.get(worldIndex);
             handler.setWorld(world);
+            if(!handler.getGame().getMusicController().isMusicPlaying())
+                handler.getGame().getMusicController().playMusic(worldMusic[worldIndex]);
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -134,7 +141,7 @@ public class GameState extends State {
                 Assets.invButton, () -> handler.getPlayer().getInventory().setActive()));
         uiManager.addUIObject(new UIImageButton(Constants.SCREEN_WIDTH-8-128, Constants.SCREEN_HEIGHT-8-128, 128, 128,
                 Assets.mapButton, () -> handler.getPlayer().getMapManager().setActive()));
-//        uiManager.addUIObject(new TextButton(128, 416, 40, "Debug", Color.BLUE, this::test));
+//        uiManager.addUIObject(new TextButton(128, 640, 40, "Debug", Color.BLUE, this::test));
     }
 
     private void saveGame(){
@@ -190,7 +197,7 @@ public class GameState extends State {
 
     //for debugging purpose
     private void test(){
-        handler.setGameWorld(2, 2048, 2048);
+        handler.getUIManager().hideUI();
     }
 
     public void changePlayerRegion(int world, int playerX, int playerY) {

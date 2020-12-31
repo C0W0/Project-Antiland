@@ -11,7 +11,7 @@ public class EvilSpirit extends TrappedSpirit {
 
     @Override
     protected void onDeath() {
-
+        handler.getPlayer().changeWealth((int)(Math.random()*10+2));
     }
 
     @Override

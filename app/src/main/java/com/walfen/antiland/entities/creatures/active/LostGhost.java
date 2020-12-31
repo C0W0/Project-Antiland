@@ -56,6 +56,7 @@ public class LostGhost extends Active {
 
     @Override
     protected void onDeath() {
+        handler.getPlayer().changeWealth((int)(Math.random()*5+5));
         handler.getPlayer().increaseXp(2);
     }
 

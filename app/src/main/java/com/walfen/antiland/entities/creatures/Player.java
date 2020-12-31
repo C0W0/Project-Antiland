@@ -561,7 +561,7 @@ public class Player extends Creature implements TouchEventListener {
     }
 
     public int getCurrLevelMaxXp(){
-        return 5*level*level-5*level+10;
+        return 3*level*level-5*level+10;
     }
 
     public void increaseXp(int xp) {

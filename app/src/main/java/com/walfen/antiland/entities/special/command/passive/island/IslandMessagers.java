@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 
 import com.walfen.antiland.Constants;
+import com.walfen.antiland.R;
 import com.walfen.antiland.entities.special.command.passive.tutorial.TutorialMessager;
 import com.walfen.antiland.gfx.Animation;
 import com.walfen.antiland.gfx.Assets;
@@ -22,6 +23,7 @@ public class IslandMessagers {
 
     @Override
     protected void displayMessage() {
+        handler.getGame().getMusicController().playMusic(R.raw.antiland_beach);
         handler.getUIManager().activeTutorial("Tutorial: use your perk points", new Rect(16, 16,
                 16+144, 16+144), () ->
                 handler.getUIManager().popUpAction("This is your player status screen.",

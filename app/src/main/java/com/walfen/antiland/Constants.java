@@ -20,8 +20,8 @@ public class Constants {
     public static int iconSize;
     public static Resources RES;
 
-    public static final String GAME_VERSION = "A1200";
-    public static final String GAME_VERSION_DISPLAY = "Alpha - build 1200 (2020.12.29)";
+    public static final String GAME_VERSION = "v 0.1.0";
+    public static final String GAME_VERSION_DISPLAY = "v 0.1.0";
 
     public static final int DEFAULT_SIZE = 128;
 

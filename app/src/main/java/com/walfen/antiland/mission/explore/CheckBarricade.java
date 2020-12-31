@@ -2,6 +2,9 @@ package com.walfen.antiland.mission.explore;
 
 import android.graphics.Point;
 
+import com.walfen.antiland.Handler;
+import com.walfen.antiland.R;
+
 public class CheckBarricade extends ExploreMission {
 
     public CheckBarricade() {
@@ -17,5 +20,12 @@ public class CheckBarricade extends ExploreMission {
     @Override
     public void receiveReward() {
 
+    }
+
+    @Override
+    public void setHandler(Handler handler) {
+        super.setHandler(handler);
+        if(handler != null)
+            handler.getGame().getMusicController().changeMusic(R.raw.ghost_town);
     }
 }

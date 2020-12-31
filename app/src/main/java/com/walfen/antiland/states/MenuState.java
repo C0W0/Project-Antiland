@@ -73,16 +73,11 @@ public class MenuState extends State {
     @Override
     public void draw(Canvas canvas) {
         Paint paint = new Paint();
-        paint.setColor(Color.BLUE);
 //        canvas.drawRect(new Rect(0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT), paint); // placeholder for background
         canvas.drawBitmap(splashBackground, null, new Rect(0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT), Constants.getRenderPaint());
         canvas.drawBitmap(splashScreen, null, new Rect(xDispute, yDispute, xDispute+splashScreen.getWidth(), yDispute+splashScreen.getHeight()), Constants.getRenderPaint());
 
         paint.setColor(Color.WHITE);
-//        paint.setAlpha(180);
-//        canvas.drawRect(new Rect(Constants.SCREEN_WIDTH/2-300, Constants.SCREEN_HEIGHT/2-400,
-//                Constants.SCREEN_WIDTH/2+300, Constants.SCREEN_HEIGHT/2+300), paint); // placeholder for loading
-//        paint.setAlpha(255);
         Rect r = new Rect();
         paint.setTextSize(30);
         paint.getTextBounds(Constants.GAME_VERSION_DISPLAY, 0, Constants.GAME_VERSION_DISPLAY.length(), r);

@@ -1,6 +1,7 @@
 package com.walfen.antiland.mission.killing;
 
 import com.walfen.antiland.Handler;
+import com.walfen.antiland.R;
 import com.walfen.antiland.gfx.Assets;
 import com.walfen.antiland.ui.conversation.Conversation;
 
@@ -47,6 +48,7 @@ public class RestlessSouls extends KillingMission {
                         });
                         handler.getUIManager().hideUI();
                         handler.getUIManager().getConvBox().setActive();
+                        handler.getGame().getMusicController().playMusic(R.raw.antiland_beach);
                     });
             ctrl = true;
         }
@@ -60,7 +62,9 @@ public class RestlessSouls extends KillingMission {
     @Override
     public void setHandler(Handler handler) {
         super.setHandler(handler);
-        if(handler != null)
+        if(handler != null){
             ctrl = false;
+            handler.getGame().getMusicController().playMusic(R.raw.the_warrior);
+        }
     }
 }

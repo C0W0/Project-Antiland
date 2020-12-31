@@ -49,4 +49,10 @@ public class MainActivity extends Activity {
             gamePanel.autoSave();
         }
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        gamePanel.getMusicController().stopMusic();
+    }
 }

@@ -74,6 +74,7 @@ public class IceSlime extends Active {
 
     @Override
     protected void onDeath() {
+        handler.getPlayer().changeWealth((int)(Math.random()*5)+1);
         if(Math.random() <= 0.2)
             handler.getWorld().getItemManager().addItem(Item.slimeGel.createNew((int)(x + width/2 - Item.ITEMWIDTH/2), (int)(y + height - Item.ITEMHEIGHT), (int)(Math.random()*5)+1));
     }

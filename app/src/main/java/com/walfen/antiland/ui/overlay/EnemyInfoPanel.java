@@ -50,23 +50,27 @@ public class EnemyInfoPanel extends UIObject {
                 currEntityName = tracker.getTopEntity().getName();
             }
         }
-        entityHP.setTotalValue(tracker.getTopEntity().getMaxHp());
-        entityHP.setCurrentValue(tracker.getTopEntity().getHealth());
+        if(tracker.getTopEntity() != null){
+            entityHP.setTotalValue(tracker.getTopEntity().getMaxHp());
+            entityHP.setCurrentValue(tracker.getTopEntity().getHealth());
+        }
     }
 
     @Override
     public void draw(Canvas canvas) {
         if(!active)
             return;
-        canvas.drawBitmap(image, null, new Rect((int)x, (int)y, (int)x+width, (int)y+height), Constants.getRenderPaint());
-        canvas.drawBitmap(currEntityTexture, null, new Rect((int)x+32, (int)y+32, (int)x+32+128, (int)y+32+128), Constants.getRenderPaint());
-        Rect r = new Rect();
-        Paint paint = new Paint();
-        paint.setColor(Color.BLACK);
-        paint.setTextSize(35);
-        paint.setFakeBoldText(true);
-        paint.getTextBounds(currEntityName, 0, currEntityName.length(), r);
-        canvas.drawText(currEntityName, x+496-r.width()/2.f, y+48+r.height()/2.f, paint);
-        entityHP.draw(canvas);
+        try{
+            canvas.drawBitmap(image, null, new Rect((int)x, (int)y, (int)x+width, (int)y+height), Constants.getRenderPaint());
+            canvas.drawBitmap(currEntityTexture, null, new Rect((int)x+32, (int)y+32, (int)x+32+128, (int)y+32+128), Constants.getRenderPaint());
+            Rect r = new Rect();
+            Paint paint = new Paint();
+            paint.setColor(Color.BLACK);
+            paint.setTextSize(35);
+            paint.setFakeBoldText(true);
+            paint.getTextBounds(currEntityName, 0, currEntityName.length(), r);
+            canvas.drawText(currEntityName, x+496-r.width()/2.f, y+48+r.height()/2.f, paint);
+            entityHP.draw(canvas);
+        }catch (NullPointerException ignored){}
     }
 }

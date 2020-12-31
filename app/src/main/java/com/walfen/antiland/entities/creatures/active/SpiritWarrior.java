@@ -34,7 +34,7 @@ public class SpiritWarrior extends Active {
         movement.scale(width, height);
 
         currentAnimation = movement;
-        setEntityHealth(15);
+        setEntityHealth(45);
         magicalDamage = 10;
         setDefence(20);
         setMagicalDefence(5);

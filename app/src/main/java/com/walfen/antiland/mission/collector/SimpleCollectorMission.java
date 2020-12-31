@@ -32,8 +32,8 @@ public class SimpleCollectorMission extends CollectorMission {
         @Override
         public void receiveReward() {
             super.receiveReward();
-            handler.getGame().autoSave();
             handler.getWorld().getEntityManager().modifyEntityHot("Mr. Fox Keeper", 1);
+            handler.getGame().autoSave();
         }
 
     }
@@ -47,10 +47,10 @@ public class SimpleCollectorMission extends CollectorMission {
         @Override
         public void receiveReward() {
             super.receiveReward();
-            handler.getGame().autoSave();
             handler.getWorld().getEntityManager().modifyEntityHot("Ms. Chi-Ken", 1);
             handler.getWorld().getEntityManager().modifyEntityHot("Captain Cactus", 1);
             handler.getWorld().getEntityManager().modifyEntityHot("The Hermit", 1);
+            handler.getGame().autoSave();
         }
 
     }

@@ -7,6 +7,7 @@ import android.graphics.Rect;
 
 import com.walfen.antiland.Handler;
 import com.walfen.antiland.entities.creatures.Creature;
+import com.walfen.antiland.entities.creatures.npc.primary.MajorMissionNPC;
 import com.walfen.antiland.entities.properties.attack.meleeAttacks.SlimeBash;
 import com.walfen.antiland.entities.properties.attack.rangedAttacks.IceSpike;
 import com.walfen.antiland.entities.properties.attack.rangedAttacks.RangedAttack;
@@ -93,6 +94,7 @@ public class Slime extends Active {
 
     @Override
     protected void onDeath() {
+        handler.getPlayer().changeWealth((int)(Math.random()*3));
         if(Math.random() <= 0.2)
             handler.getWorld().getItemManager().addItem(Item.slimeGel.createNew((int)(x + width/2 - Item.ITEMWIDTH/2), (int)(y + height - Item.ITEMHEIGHT), (int)(Math.random()*5)+1));
     }
